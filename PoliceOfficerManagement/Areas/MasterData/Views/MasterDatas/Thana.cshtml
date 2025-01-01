@@ -1,0 +1,100 @@
+﻿@model MasterDataModel
+@{
+    ViewData["Title"] = "Zone/Circle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center"><h5>Range/Metro List</h5></div>
+        <div class="card-body">
+            <form asp-area="" asp-controller="" asp-action="">
+                <div class="row">
+                    <div class="col-md-4 pb-2">
+                        <label>Range/Metro</label>
+                        <select class="form-control">
+                            <option value="0"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 pb-2">
+                        <label>Dsitrict</label>
+                        <select class="form-control">
+                            <option value="0"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 pb-2">
+                        <label>Zone/Circle</label>
+                        <select class="form-control">
+                            <option value="0"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Range Name EN</label>
+                        <input class="form-control" name="rangeNameEn" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Range Name BN</label>
+                        <input class="form-control" name="rangeNameBn" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Active In-Active</label>
+                        <select id="IsAtive" name="IsActive" class="form-control">
+                            <option value="0">Active</option>
+                            <option value="1">In-Active</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="pt-3 text-center">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr />
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sl</th>
+                        <th>Range/Metro</th>
+                        <th>Districts</th>
+                        <th>Zone/Circle</th>
+                        <th>Name Bn</th>
+                        <th>Name En</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var data in Model.thanaInfo)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@data.rangeMetro.rangeMetroName</td>
+                            <td>@data.divisionDistrict.divisionDistrictName</td>
+                            <td>@data.zoneCircle.zoneName</td>
+                            <td>@data.policeThanaNameBn</td>
+                            <td>@data.policeThanaName</td>
+                            @if (@data.isActive == true)
+                            {
+                                <td>Active</td>
+                            }
+                            else
+                            {
+                                <td>In-Active</td>
+                            }
+
+                            <td><a onclick="Edit('@data.policeThanaNameBn','@data.policeThanaName',@data.isActive)">Edit</a></td>
+                        </tr>
+                        i++;
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

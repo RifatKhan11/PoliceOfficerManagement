@@ -1,0 +1,13 @@
+﻿{
+  "vehicleType": "যানবাহনের নাম",
+  "vehicleModel": "ব্র্যান্ড",
+  "vehicleModelBn": "ব্র্যান্ড বাংলা",
+  "photo": "ছবি",
+  "title": "যানবাহনের নিবন্ধন",
+  "listTitle": "যানবাহনের তালিকা",
+  "submitButton": "Save",
+  "refreshButton": "Refresh",
+  "modelTitle": "যানবাহনের ব্র্যান্ড নিবন্ধন",
+  "modelListTitle": "ব্র্যান্ড এর তালিকা",
+  "action": "প্রক্রিয়া"
+}

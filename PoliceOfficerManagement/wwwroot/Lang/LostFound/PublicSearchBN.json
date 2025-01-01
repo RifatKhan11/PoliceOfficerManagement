@@ -1,0 +1,97 @@
+﻿{
+  "GDNumber": "জিডি নম্বর",
+
+  "Gender": "লিঙ্গ",
+
+  "Mentallychallenged": "মানসিকভাবে বিকারগ্রস্থ",
+
+  "DocType": "ডকুমেন্টের ধরণ",
+
+  "DocNo": "ডকুমেন্টের নং",
+
+  "Religion": "ধর্ম ",
+
+  "BloodGroup": "রক্তের গ্রুপ",
+
+  "MaritalStatus": "বৈবাহিক অবস্থা",
+
+  "Occupation": "পেশা",
+
+  "Habit": "অভ্যাস",
+
+  "Regional": "আঞ্চলিক ভাষা",
+
+  "Eye": "চোখ এর ধরণ",
+
+  "Nose": "নাকের ধরণ",
+
+  "Hair": "চুলের ধরণ",
+
+  "Beard": "দাড়ির ধরণ",
+
+  "Forehead": "কপালের ধরণ",
+
+  "PhysicalConstitution": "মানসিক অবস্থা",
+
+  "FaceShape": "চেহারার ধরণ",
+
+  "Chin": "থুতনির ধরণ",
+
+  "Moustache": "গোফ ধরণ",
+
+  "Neck": "ঘাড়ের ধরণ",
+
+  "Teeth": "দাঁতের ধরণ",
+
+  "BirthMark": "জন্ম দাগ",
+
+  "SkinColor": "গায়ের রং",
+
+  "Ear": "কানের ধরণ",
+
+  "SpecialPhysical": "বিশেষ অঙ্গের ধরণ",
+
+  "BirthMarkPosition": "জন্ম দাগের অবস্থান",
+
+  "InHead": "মাথায় কি ছিল",
+
+  "InEye": "চোখে কি ছিল",
+
+  "InThroat": "গলায় কি ছিল",
+
+  "InBody": "গায়ে কি ছিল",
+
+  "InWaist": "হাতে কি ছিল",
+
+  "InLegs": "পায়ে কি ছিল",
+
+  "Color": "রং",
+
+  "VehicleType": "গাড়ির ধরণ",
+
+  "Brand": "ব্র্যান্ড",
+
+  "Model": "মডেল",
+
+  "Registration": "রেজিস্ট্রেশন নং",
+
+  "Engine": "ইঞ্জিন নং",
+
+  "Chassis": "চেসিস নং",
+
+  "CC": "সিসি",
+
+  "ComputerBrand": "কম্পিউটার ব্র্যান্ড",
+
+  "ComputerAccessories": "কম্পিউটার এক্সসেসোরিজ",
+
+  "IMEINumber": "আই এম ই নম্বর",
+
+  "SerialNo": "সিরিয়েল নং",
+
+  "OperatingSystem": "অপারেটিং সিস্টেম",
+
+  "AnimalType": "পশুপাখি ধরণ"
+
+
+}

@@ -1,0 +1,98 @@
+{
+  "GDNumber": "GD Number",
+
+  "Gender": "Gender",
+
+  "Mentallychallenged": "Mentally challenged",
+
+  "DocType": "Document Type",
+
+  "DocNo": "Document No",
+
+  "Religion": "Religion",
+
+  "BloodGroup": "Blood Group",
+
+  "MaritalStatus": "Marital Status",
+
+  "Occupation": "Occupation",
+
+  "Habit": "Habit",
+
+  "RegionalSpeech": "Regional Speech",
+
+  "Eye": "Eye",
+
+  "Nose": "Nose",
+
+  "Hair": "Hair",
+
+  "Beard": "Beard",
+
+  "Forehead": "Forehead",
+
+  "PhysicalConstitution": "Physical Constitution",
+
+  "FaceShape": "Face Shape",
+
+  "Chin": "Chin",
+
+  "Moustache": "Moustache",
+
+  "Neck": "Neck",
+
+  "Teeth": "Teeth",
+
+  "BirthMark": "Birth Mark",
+
+  "SkinColor": "Skin Color",
+
+  "Ear": "Ear",
+
+  "SpecialPhysical": "Special Physical",
+
+  "BirthMarkPosition": "Birth Mark Position",
+
+  "InHead": "In Head",
+
+  "InEye": "In Eye",
+
+  "InThroat": "In Throat",
+
+  "InBody": "In Body",
+
+  "InWaist": "In Waist",
+
+  "InLegs": "In Legs",
+
+  "Color": "Color",
+
+  "Regional": "Regional Speech",
+
+  "VehicleType": "Vehicle Type",
+
+  "Brand": "Brand",
+
+  "Model": "Model",
+
+  "Registration": "Registration No",
+
+  "Engine": "Engine No",
+
+  "Chassis": "Chassis No",
+
+  "CC": "CC",
+
+  "ComputerBrand": "Computer Brand",
+
+  "ComputerAccessories": "Computer Accessories",
+
+  "IMEINumber": "IMEI Number",
+
+  "SerialNo": "Serial No",
+
+  "OperatingSystem": "Operating System(OS)",
+
+  "AnimalType": "Animal Type"
+
+}

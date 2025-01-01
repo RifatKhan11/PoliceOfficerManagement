@@ -1,0 +1,91 @@
+﻿{
+  "title": "পদবি তথ্য",
+  "designationCode": "পদবি কোড",
+  "designationName": "পদবির নাম (ইংরেজি)",
+  "designationNameBn": "পদবির নাম (বাংলা)",
+  "shortName": "সংক্ষিপ্ত নাম",
+
+  "rangeMetroName": "রেন্জ/মেট্রো-র নাম",
+  "rangeMetroNameBn": "রেন্জ/মেট্রো-র নাম বাংলায়",
+  "rangetitle": "রেন্জ/মেট্রোর তথ্য",
+  "rangelistTitle": "রেন্জ/মেট্রোর তালিকা",
+
+  "divisionDistrictName": "ডিভিশন/ডিস্ট্রিক্ট-এর নাম",
+  "divisionDistrictNameBn": "ডিভিশন/ডিস্ট্রিক্ট-এর নাম বাংলায়",
+  "divisionDistricttitle": "ডিভিশন/ডিস্ট্রিক্ট-এর তথ্য",
+  "divisionDistrictlistTitle": "ডিভিশন/ডিস্ট্রিক্ট-এর তালিকা",
+
+  "zoneCircleName": "জোন/সার্কেল-এর নাম (ইংরেজি)",
+  "zoneCircleNameBn": "জোন/সার্কেল-এর নাম (বাংলা)",
+  "zoneCircletitle": "জোন/সার্কেল-এর তথ্য",
+  "zoneCirclelistTitle": "জোন/সার্কেল-এর তালিকা",
+
+  "policeThanaName": "পুলিশ থানার নাম (ইংরেজি)",
+  "policeThanaNameBn": "পুলিশ থানার নাম (বাংলা)",
+  "rangeMetro": "রেন্জ/মেট্রো",
+  "divisionDistrict": "ডিভিশন/ডিস্ট্রিক্ট",
+  "zoneCircle": "জোন/সার্কেল",
+  "policeThanatitle": "পুলিশ থানার তথ্য",
+  "policeThanalistTitle": "পুলিশ থানার তালিকা",
+
+  "policeUnitName": "পুলিশ ইউনিট-এর নাম",
+  "policeUnitNameBn": "পুলিশ ইউনিট-এর নাম বাংলায়",
+  "policeUnittitle": "পুলিশ ইউনিট-এর তথ্য",
+  "policeUnitlistTitle": "পুলিশ ইউনিট-এর তালিকা",
+  "policeThana": "পুলিশ থানা",
+  "isReportable": "প্রতিবেদনযোগ্য কিনা",
+
+  "policeSubUnitName": "পুলিশ সাব ইউনিট-এর নাম",
+  "policeSubUnitNameBn": "পুলিশ সাব ইউনিট-এর নাম বাংলায়",
+  "policeSubUnittitle": "পুলিশ সাব ইউনিট-এর তথ্য",
+  "policeSubUnitlistTitle": "পুলিশ সাব ইউনিট-এর তালিকা",
+
+  "countrytitle": "দেশের তথ্য",
+  "countryCode": "দেশের কোড",
+  "countryName": "দেশের নাম (ইংরেজি)",
+  "countryNameBn": "দেশের নাম (বাংলা)",
+  "countryshortName": "সংক্ষিপ্ত নাম",
+  "nationality": "জাতীয়তা",
+
+
+  "divisiontitle": "বিভাগের তথ্য",
+  "country": "দেশের নাম",
+  "divisionCode": "বিভাগের কোড",
+  "divisionName": "বিভাগের নাম (ইংরেজি)",
+  "divisionNameBn": "বিভাগের নাম (বাংলা)",
+  "divisionshortName": "সংক্ষিপ্ত নাম",
+
+  "districttitle": "জেলার তথ্য",
+  "division": "বিভাগ",
+  "districtCode": "জেলার কোড",
+  "districtName": "জেলার নাম (ইংরেজি)",
+  "districtNameBn": "জেলার নাম (বাংলা)",
+  "districtshortName": "সংক্ষিপ্ত নাম",
+
+  "thanatitle": "উপজেলার তথ্য",
+  "district": "জেলা",
+  "thanaCode": "উপজেলার কোড",
+  "thanaName": "উপজেলার নাম (ইংরেজি)",
+  "thanaNameBn": "উপজেলার নাম (বাংলা)",
+  "thanashortName": "সংক্ষিপ্ত নাম",
+
+  "unionCode": "ইউনিয়ন কোড",
+  "unionWardName": "ইউনিয়ন/ওয়ার্ড-এর নাম (ইংরেজি)",
+  "unionWardNameBn": "ইউনিয়ন/ওয়ার্ড-এর নাম (বাংলা)",
+  "unionWardtitle": "ইউনিয়ন/ওয়ার্ড-এর তথ্য",
+  "unionWardlistTitle": "ইউনিয়ন/ওয়ার্ড-এর তালিকা",
+  "upazilla": "উপজেলা/থানা",
+
+  "villageCode": "গ্রাম কোড",
+  "villageName": "গ্রামের নাম (ইংরেজি)",
+  "villageNameBn": "গ্রামের নাম বাংলায়",
+  "villagetitle": "গ্রামের তথ্য",
+  "villagelistTitle": "গ্রামের তালিকা",
+  "unionWard": "ইউনিয়ন/ওয়ার্ড",
+
+  "isActive": "সক্রিয় কিনা",
+  "submitButton": "সেভ",
+  "refreshButton": "রিফ্রেশ",
+  "action": "প্রক্রিয়া",
+  "isChild": "ইজ চাইল্ড"
+}

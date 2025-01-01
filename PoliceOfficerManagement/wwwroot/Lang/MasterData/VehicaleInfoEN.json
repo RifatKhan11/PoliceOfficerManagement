@@ -1,0 +1,13 @@
+{
+  "vehicleType": "Vehicle Name",
+  "vehicleModel": "Brand",
+  "vehicleModelBn": "Band BN",
+  "title": "Vehicle Entry",
+  "photo": "Photo",
+  "listTitle": "Vehicle List",
+  "submitButton": "Save",
+  "refreshButton": "Refresh",
+  "modelTitle": "Vehicle Brand Entry",
+  "modelListTitle": "Vehicle Brand List",
+  "action": "Action"
+}

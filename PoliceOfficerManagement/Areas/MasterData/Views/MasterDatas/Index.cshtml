@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Master Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    .bg-light-blue {
+        background-color: #f0f4f8;
+    }
+
+    .card-header h3 {
+        font-size: 1.5rem;
+        color: #343a40;
+    }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    .text-dark {
+        color: #343a40 !important;
+    }
+
+
+    .hover-card:hover {
+        transform: translateY(-7px);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+        .hover-card:hover i {
+            color: #0056b3;
+        }
+
+    .shadow-sm {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h3.fw-bold {
+        font-weight: 600;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+</style>
+<div class="container-fluid mt-4">
+    <div class="card shadow-sm mb-5">
+
+        <!-- Register User -->
+        <div class="card-header bg-light-blue text-white">
+            <h3 class="fw-bold">Police Area Info</h3>
+        </div>
+        <div class="card-body">
+            <div class="row g-4">
+                <a class="col-lg-3 col-md-6" href="/MasterData/MasterDatas/RangeMetro">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-list fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">Range Metro</h5>
+                        </div>
+                    </div>
+                </a>
+                <a class="col-lg-3 col-md-6" href="/MasterData/MasterDatas/District">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-list fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">District</h5>
+                        </div>
+                    </div>
+                </a>
+                <a class="col-lg-3 col-md-6" href="/MasterData/MasterDatas/ZoneCircle">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-list fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">Zone/Circle</h5>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="col-lg-3 col-md-6" href="/MasterData/MasterDatas/Thana">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-list fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">Thana</h5>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+       
+        <!-- Item Info Section -->
+
+    </div>
+    <div class="card shadow-sm mb-5">
+
+        <!-- Register User -->
+        <div class="card-header bg-light-blue text-white">
+            <h3 class="fw-bold">Employee Info</h3>
+        </div>
+        <div class="card-body">
+            <div class="row g-4">
+                <a class="col-lg-3 col-md-6" href="/MasterData/EmployeeInfo/AddEmployee">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-plus fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">Add Employee</h5>
+                        </div>
+                    </div>
+                </a>
+                <a class="col-lg-3 col-md-6" href="/MasterData/EmployeeInfo/EmployeeList">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-list fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">Employee List</h5>
+                        </div>
+                    </div>
+                </a>
+                <a class="col-lg-3 col-md-6" href="/Auth/Account/Register">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-plus fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">Add User</h5>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="col-lg-3 col-md-6" href="/Auth/Account/AllUserList">
+                    <div class="card text-center border-0 shadow hover-card">
+                        <div class="card-body p-4">
+                            <i class="fa-solid fa-list fa-3x text-primary"></i>
+                            <h5 class="mt-3 text-dark">User List</h5>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+       
+        <!-- Item Info Section -->
+
+    </div>
+</div>

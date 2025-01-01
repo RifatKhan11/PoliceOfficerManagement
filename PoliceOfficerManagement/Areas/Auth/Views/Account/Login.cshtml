@@ -1,0 +1,160 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LayoutInitial.cshtml";
+}  
+<style>
+    /* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.signup-link {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.signup-link a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Styles */
+@@media (max-width: 600px) {
+    .login-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .signup-link {
+        font-size: 12px;
+    }
+}
+
+</style>
+<div class="login-container">
+    <h2>Login</h2>
+    <form class="user" asp-area="Auth" asp-controller="Account" asp-action="LogIn" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="Name" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="Password" required>
+
+        <button type="submit">Login</button>
+        <p class="signup-link">Don't have an account? <a href="#">Sign Up</a></p>
+    </form>
+</div>
+
+@* @section Scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#userDropdown_05').addClass('navClass');
+        });
+
+        function handleClick(cb) {
+            if (cb.checked == true) {
+                $('#customCheck').val(true);
+            } else {
+                $('#customCheck').val(false);
+            }
+        }
+
+        function showPass(status) {
+            if (status == 'show') {
+                $('#iconPassword').removeClass('fa-eye');
+                $('#iconPassword').addClass('fa-eye-slash');
+                $('#inputPassword').attr('type', 'text');
+                $('#iconPassword').attr('onclick', `showPass('hide')`);
+            }
+            else {
+                $('#iconPassword').removeClass('fa-eye-slash');
+                $('#iconPassword').addClass('fa-eye');
+                $('#inputPassword').attr('type', 'password');
+                $('#iconPassword').attr('onclick', `showPass('show')`);
+            }
+        }
+    </script>
+} *@
