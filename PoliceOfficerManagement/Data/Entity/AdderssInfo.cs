@@ -5,7 +5,7 @@
         public int? employeeId { get; set; }
         public EmployeInfo employee { get; set; }
 
-        public int addressType { get; set; }
+        public int addressType { get; set; }// 1=PRESENT, 2=PERMANENT
         public string roadInfo { get; set; }
         public int? villegeId { get; set; }
         public int? unionId { get; set; }
