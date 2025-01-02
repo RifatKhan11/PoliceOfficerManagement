@@ -1,1 +1,553 @@
-﻿<h1>hello</h1>
+﻿@using PoliceOfficerManagement.Areas.EmployeeArea.Models
+@model EmployeInfoViewModel
+@{
+    ViewData["Title"] = "Employee Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="width: 100%; margin-top: 30px;" id="employeeCreate">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <h5>Employee Information</h5>
+
+            </div>
+            <div class="col-4">
+                @* <button type="button" class="btn btn-secondary" style="float: right" onclick="btnCreate()">Employee List</button> *@
+
+            </div>
+        </div>
+    </div>
+
+    <form class="user" asp-area="EmployeeArea" asp-controller="EmployeInfo" asp-action="CreateEmployeeProfile" method="post" id="employeeForm">
+    <div asp-validation-summary="All" class="text-danger"></div>
+       <div class="card-header" style="background-color: bisque">
+        <div class="row">
+            <div class="col-12">
+                <h5>Employee</h5>
+
+            </div>
+
+        </div>
+    </div>
+       <div class="card-body">
+           <div class="container-fluid">
+                
+                   <input name="Id" id="Id" hidden />
+                   <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4"> Name<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="nameEn" name="nameEn" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">nameBn<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="nameBn" name="nameBn" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">employeeCode<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="employeeCode" name="employeeCode" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">nidNumber<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="nidNumber" name="nidNumber" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Joining Date<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="date" id="joiningDate" name="joiningDate" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">retirementDate<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="date" id="retirementDate" name="retirementDate" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">joiningRankId<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="joiningRankId" name="joiningRankId" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">homeDistrict<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="homeDistrict" name="homeDistrict" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">homeUpazila<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="homeUpazila" name="homeUpazila" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">reMarks<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="reMarks" name="reMarks" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">personalPhoneNumber<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="personalPhoneNumber" name="personalPhoneNumber" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">officePhoneNumber<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="officePhoneNumber" name="officePhoneNumber" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                   <div style="height:20px;"></div>
+                    
+           </div>
+       </div>
+
+        <div class="card-header" style="background-color: bisque">
+            <div class="row">
+                <div class="col-12">
+                    <h5>Adderss Info</h5>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+ 
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4"> addressType<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="addressType" name="addressType">
+
+                                    <option value="PERMANENT">Permanent</option>
+                                    <option value="PRESENT">Present</option>
+                                     
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Division<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="divisionId" name="divisionId">
+
+                                    <option value="Select"></option> 
+                                     
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="districtId" name="districtId">
+
+                                    <option value="Select"></option> 
+                                     
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Thana<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="thanaId" name="thanaId">
+
+                                    <option value="Select"></option> 
+                                     
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Union<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="unionId" name="unionId">
+
+                                    <option value="Select"></option> 
+                                     
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Villege<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="villegeId" name="villegeId">
+
+                                    <option value="Select"></option> 
+                                     
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                       
+                     
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">roadInfo<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="nameBn" name="nameBn" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="button" id="btnAdress" class="btn btn-secondary" style="float: right" onclick="addAddress()">Add</button>
+
+                    </div>
+                </div>
+                <div style="height:20px;"></div>
+
+            </div>
+        </div>
+        
+        
+        
+        <div class="card-header" style="background-color: bisque">
+            <div class="row">
+                <div class="col-12">
+                    <h5>Educational Info</h5>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Institute<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="instituteId" name="instituteId">
+
+                                    <option value="">Select</option>
+ 
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Passing Year<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="passingYear" name="passingYear" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Batch No<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="batchNo" name="batchNo" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Grade<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="grade" name="grade" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Degree Name<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="degreeName" name="degreeName" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Achievement<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="achievement" name="achievement" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Course Duration<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="courseDuration" name="courseDuration" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="button" id="btnEducation" class="btn btn-secondary" style="float: right" onclick="addEducation()">Add</button>
+
+                    </div>
+                </div>
+                <div style="height:20px;"></div>
+
+            </div>
+        </div>
+
+        <hr />
+        <div class="card-body">
+            <div class="container-fluid">
+                 
+                <div style="height:20px;"></div>
+                <div class="form-group row">
+
+                    <div class="col-sm-12 mb-3">
+                        <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+ 
+
+
+@* <div class="card" style="width: 100%; margin-top: 30px;" id="employeeList">
+    <div class="card-header">
+          <div class="row">
+            <div class="col-8">
+                <h5>Employee List</h5>
+
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create Employee</button>
+
+            </div>
+          </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-hover table-bordered" id="InfoTbl1" style="overflow: scroll;">
+            <thead class="custom-thead">
+                <tr>
+                    <th>Sl Id</th>
+                    <th>Name</th>
+                    <th>Employee Code</th>
+                    <th>Nid Number</th>
+                    <th>Joining Date</th>
+                    <th>Retirement Date</th>
+                    <th>RankId</th>
+                    <th>Home District</th>
+                    <th>Home Upazila</th>
+                    <th>Marks</th>
+                    <th>Personal Phone Number</th>
+                    <th>Office Phone Number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                }
+                @if (Model.employeInfos.Count() != 0)
+                {
+                    @foreach (var item in Model.employeInfos)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.nameEn</td>
+                            <td>@item.employeeCode</td>
+                            <td>@item.nidNumber</td>
+                            <td>@item.joiningDate?.ToString("yyyy-MM-dd")</td>
+                            <td>@item.retirementDate?.ToString("yyyy-MM-dd")</td>
+                            <td>@item.joiningRankId</td>
+                            <td>@item.homeDistrict</td>
+                            <td>@item.homeUpazila</td>
+                            <td>@item.reMarks</td>
+                            <td>@item.personalPhoneNumber</td>
+                            <td>@item.officePhoneNumber</td>
+                            <td class="icon-container">
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.nameEn', '@item.nameBn','@item.employeeCode','@item.nidNumber','@item.joiningDate','@item.retirementDate','@item.joiningRankId','@item.homeDistrict','@item.homeUpazila','@item.reMarks','@item.personalPhoneNumber','@item.officePhoneNumber')"></i>
+                                <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="13" class="text-center">No data available</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+ *@
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> *@
+    <script type="text/javascript">
+         
+          function Delete(Id) {
+            swal({
+                title: 'Are you sure?',
+                text: 'Do you want to delete this data?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function (res) {
+                if (res) {
+                    $.ajax({
+                        url: "/EmployeeArea/EmployeInfo/InActiveEmployee",
+                        type: "POST",
+                        data: { id: Id },
+                        success: function (res) {
+                            if (res == '1') {
+                                swal('', 'Deleted Successfully!', 'success');
+                                location.reload(true);
+                            }
+                            else {
+                                swal('', 'Invalid Attempt!', 'warning');
+                            }
+                        }
+                    });
+                }
+            }, function (dismiss) {
+                if (dismiss === 'cancel' || dismiss === 'close') {
+                    return false;
+                }
+            });
+        }
+
+       function extractDate(dateString) {
+            return dateString ? dateString.match(/^\d{4}-\d{2}-\d{2}/)?.[0] : '';
+        }
+
+        function edit(Id,nameEn,nameBn, employeeCode, nidNumber,joiningDate,retirementDate,joiningRankId,homeDistrict,homeUpazila,reMarks,personalPhoneNumber,officePhoneNumber)
+        {
+            $('#Id').val(Id);
+            $('#nameEn').val(nameEn);
+            $('#nameBn').val(nameBn);
+            $('#employeeCode').val(employeeCode);
+            $('#nidNumber').val(nidNumber);
+             
+            $('#joiningDate').val(extractDate(joiningDate));
+            $('#retirementDate').val(extractDate(retirementDate));
+            $('#joiningRankId').val(joiningRankId);
+            $('#homeDistrict').val(homeDistrict);
+            $('#homeUpazila').val(homeUpazila);
+            $('#reMarks').val(reMarks);
+            $('#personalPhoneNumber').val(personalPhoneNumber);
+            $('#officePhoneNumber').val(officePhoneNumber);
+            // $('#employeeCreate').show();
+            // $('#employeeList').hide();
+            
+        }
+
+        function resetForm() {
+            $('#employeeForm')[0].reset();
+             
+        }
+        // function btnList() {
+        //     $('#employeeCreate').show();
+        //     $('#employeeList').hide();
+
+        // }
+        // function btnCreate() {
+        //     $('#employeeCreate').hide();
+        //     $('#employeeList').show();
+
+        // }
+         
+        function SaveData()
+        {
+            var data = $('#employeeForm').serialize();
+            swal({
+                title: 'Are you sure?',
+                text: 'Do you want to save this data?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Save It!'
+            }).then(function (res)
+            {
+                if (res) {
+                    $.ajax({
+                        url: "/EmployeeArea/EmployeInfo/CreateEmployeeProfile",
+                        type: "POST",
+                        data: data,
+                        success: function (res)
+                        {
+                            if (res != 0) {
+                                swal('', 'Save Successfully!', 'success');
+                                location.reload(true);
+                                //$('#employeeCreate').hide();
+                                //$('#employeeList').Show();
+                            }
+                            else {
+                                swal('', 'Invalid Attempt!', 'warning');
+                                return false;
+                            }
+                        }
+                    });
+                }
+            }, function (dismiss)
+            {
+                if (dismiss === 'cancel' || dismiss === 'close')
+                {
+                    return false;
+                }
+            });
+        }
+
+
+       
+
+    </script>
+}

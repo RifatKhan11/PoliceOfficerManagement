@@ -10,8 +10,12 @@ using PoliceOfficerManagement.Models;
 using PoliceOfficerManagement.Services.AuthServices;
 using PoliceOfficerManagement.Services.AuthServices.Interfaces;
 using PoliceOfficerManagement.Services.Dapper.IInterfaces;
+using PoliceOfficerManagement.Services.Employee;
+using PoliceOfficerManagement.Services.Employee.Interfaces;
 using PoliceOfficerManagement.Services.jwt;
 using PoliceOfficerManagement.Services.jwt.Interfaces;
+using PoliceOfficerManagement.Services.MasterData;
+using PoliceOfficerManagement.Services.MasterData.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +44,8 @@ builder.Services.AddControllersWithViews();
 
 #region User Manage
 builder.Services.AddScoped<IUserInfoes, UserInfoesService>();
+builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
+builder.Services.AddScoped<IMasterDataServices, MasterDataServices>();
 #endregion
 
 
