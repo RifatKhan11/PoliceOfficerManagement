@@ -79,10 +79,21 @@ namespace PoliceOfficerManagement.Data
         public DbSet<ZoneCircle> ZoneCircles { get; set; }
         public DbSet<PoliceThana> PoliceThanas { get; set; }
         public DbSet<Rank> ranks { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Village> Villages { get; set; }
+        public DbSet<UnionWard> UnionWards { get; set; }
+        public DbSet<Thana> Thanas { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Division> Divisions { get; set; }
         #endregion
 
         #region Employee Info
         public DbSet<EmployeInfo> employeeInfos { get; set; }
+        public DbSet<AdderssInfo> AdderssInfos { get; set; }
+        public DbSet<EducationalInfo> EducationalInfos { get; set; }
+        public DbSet<InstitutionInfo> InstitutionInfos { get; set; }
+        public DbSet<PostingPlace> PostingPlaces { get; set; }
+        public DbSet<TrainingInfo> TrainingInfos { get; set; }
         #endregion
     }
 }
