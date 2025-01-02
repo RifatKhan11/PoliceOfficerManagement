@@ -8,5 +8,9 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
         {
             return View();
         }
+        public IActionResult EmployeeList()
+        {
+            return View();
+        }
     }
 }
