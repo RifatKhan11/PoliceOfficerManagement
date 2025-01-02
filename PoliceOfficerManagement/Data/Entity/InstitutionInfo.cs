@@ -4,7 +4,7 @@ namespace PoliceOfficerManagement.Data.Entity
 {
     public class InstitutionInfo : Base
     {
-        public int? type { get; set; }// home,abroad
+        public int? type { get; set; }// 1=home,2=abroad
         
         [StringLength(400)]
         public string nameBn { get; set; }
