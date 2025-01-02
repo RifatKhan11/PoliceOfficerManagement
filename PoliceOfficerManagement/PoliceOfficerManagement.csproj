@@ -7,10 +7,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Auth\Data\" />
-    <Folder Include="Areas\EmployeeArea\Controllers\" />
     <Folder Include="Areas\EmployeeArea\Data\" />
     <Folder Include="Areas\EmployeeArea\Models\" />
-    <Folder Include="Areas\EmployeeArea\Views\" />
     <Folder Include="Areas\MasterData\Controllers\" />
     <Folder Include="Areas\MasterData\Data\" />
     <Folder Include="Areas\MasterData\Views\EmployeeInfo\" />
