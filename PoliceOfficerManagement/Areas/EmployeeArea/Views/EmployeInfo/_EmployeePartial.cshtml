@@ -6,38 +6,40 @@
 }
 
 <div class="col-12" id="divstatrt">
-    <div class="card mb-2">
+    <div class="mb-2">
         <div id="result">
             <table class="table table-striped" style="width:100%" id="empTable">
                 <thead class="thead-dark">
                     <tr style="text-align:center;">
 
-                        <th style='width:20%'><b>Employee Name</b></th>
-                        <th style='width:20%'><b>Department</b></th>
+                        <th style='width:20%'><b>Employee Info</b></th>
+                        <th style='width:20%'><b>Joining Rank</b></th>
                         <th style='width:15%'><b>Joining Date</b></th>
                         <th style='width:15%'><b>Phone Number</b></th>
-                        <th style='width:15%'><b>Position</b></th>
-                        <th style='width:15%'><b>Score</b></th>
+                        <th style='width:15%'><b>Current Rank</b></th>
+                        <th style='width:15%'><b>Home District</b></th>
+                        <th style='width:15%'><b>Action</b></th>
                     </tr>
                 </thead>
-                @* @foreach (var item in Model.employeeList)
+                @foreach (var item in Model.Employees)
                 {
                     <tbody style="text-align:center;">
 
                         <tr>
-                            <td>@item.name</td>
-                            <td>@item.departmentName</td>
+                            <td>@item.empName, BP-@item.employeeCode</td>
+                            <td>@item.joiningRank</td>
                             <td>@item?.joiningDate?.ToString("dd-MMM-yyyy")</td>
-                            <td>@item.phoneNumber</td>
-                            <td>@item.position</td>
-                            <td>@item.score</td>
+                            <td>@item.personalPhoneNumber</td>
+                            <td>@item.currentRank</td>
+                            <td>@item.homeDistrict</td>
+                            <td><a href="#" target="_blank"><i class="fa fa-eye"></i></a></td>
 
 
                         </tr>
 
                     </tbody>
 
-                } *@
+                }
             </table>
 
         </div>

@@ -28,11 +28,12 @@
             </div>
             <br />
             <div class="row" style="padding:10px;">
-                <div class="col-sm-6">
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group row">
-                        <label for="name" class="col-sm-4 col-form-label">Employee Name</label>
+                        <label for="score" class="col-sm-4 col-form-label">Officers' Name</label>
                         <div class="col-sm-8">
-                            <input id="name" name="name" class="form-control" autocomplete="off" />
+                            <input id="empName" name="empName" class="form-control" autocomplete="off" />
                         </div>
                     </div>
                 </div>
@@ -52,11 +53,12 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <select class="form-control" id="divisionDistrictId" name="districtId">
+                            <select class="form-control" id="districtId" name="districtId">
 
                                 <option value="Select"></option>
 
@@ -64,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Zone<span style="color: red">*</span></label>
@@ -78,15 +81,6 @@
                 </div>
 
 
-
-                <div class="col-sm-6">
-                    <div class="form-group row">
-                        <label for="score" class="col-sm-4 col-form-label">Officers' Name</label>
-                        <div class="col-sm-8">
-                            <input id="empName" name="empName" class="form-control" autocomplete="off" />
-                        </div>
-                    </div>
-                </div>
 
 
                 <div class="col-sm-6">
@@ -121,15 +115,15 @@
     <script>
 
         $("#searchShip").click(function () {
-            var name = encodeURIComponent($('#name').val());
-            var deptId = $('#deptId').val();
-            var position = encodeURIComponent($('#position option:selected').val());
-            var score = parseInt($('#score').val()) || 0;
+            var name = encodeURIComponent($('#empName').val());
+            var rangeId = $('#rangeId').val();
+            var districtId = $('#districtId').val();
+            var zoneId = $('#zoneId').val();
 
             $('#loadder').show();
 
             $('#LoadPartialData').empty();
-            $('#LoadPartialData').load("/Employee/EmployeeInfos/SearchEmployeePartial?name=" + name + "&deptId=" + deptId + "&position=" + position + "&score=" + score + "&page=" + 1);
+            $('#LoadPartialData').load("/EmployeeArea/EmployeInfo/SearchEmployeePartial?rangeId=" + rangeId + "&districtId=" + districtId + "&zoneId=" + zoneId + "&name=" + name);
         });
 
         function validateNumber(e) {

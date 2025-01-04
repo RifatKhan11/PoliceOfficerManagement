@@ -102,6 +102,14 @@ namespace PoliceOfficerManagement.Services.Employee
                             {
                                 empName = e.nameEn,
                                 empNameBn = e.nameEn,
+                                employeeCode=e.employeeCode,
+                                joiningRank =jr.rankName,
+                                joiningDate=e.joiningDate,
+                                currentPostingPlace= "",
+                                currentRank="",
+                                personalPhoneNumber=e.personalPhoneNumber,
+                                homeDistrict=e.homeDistrict,
+
 
                             }).ToListAsync();
 

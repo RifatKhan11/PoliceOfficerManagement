@@ -12,7 +12,6 @@
         public string officePhoneNumber { get; set; }
         public string currentRank { get; set; }
         public string currentPostingPlace { get; set; }
-        public string currentPosting { get; set; }
 
         public IEnumerable<EmployeeInfoModel> Employees { get; set; }
     }
