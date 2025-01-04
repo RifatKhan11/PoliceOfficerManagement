@@ -84,6 +84,11 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var data = await _masterDataServices.GetThanasByDistrictId(districtId);
             return Json(data);
         }
+        public async Task<IActionResult> GetThanasByRangeId(int rangeId)
+        {
+            var data = await _masterDataServices.GetThanasByRangeId(rangeId);
+            return Json(data);
+        }
         #endregion
         #region UnionWard
         public async Task<IActionResult> GetUnionWardsByThanaId(int thanaId)
@@ -99,6 +104,20 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             return Json(data);
         }
         #endregion
-         
+        #region Division District
+        public async Task<IActionResult> GetDivisionDistrictByRangeId(int rangeId)
+        {
+            var data = await _masterDataServices.GetDivisionDistrictByRangeId(rangeId);
+            return Json(data);
+        }
+        #endregion
+        #region Zone Circle
+        public async Task<IActionResult> GetZoneCircleByDivisionDistrictId(int divisionDistrictId)
+        {
+            var data = await _masterDataServices.GetZoneCircleByDivisionDistrictId(divisionDistrictId);
+            return Json(data);
+        }
+        #endregion
+
     }
 }

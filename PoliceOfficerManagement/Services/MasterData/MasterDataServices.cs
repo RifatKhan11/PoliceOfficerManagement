@@ -86,6 +86,11 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.Thanas.Where(x => x.districtId == districtId).ToListAsync();
             return data;
         }
+        public async Task<IEnumerable<Thana>> GetThanasByRangeId(int rangeId)
+        {
+            var data = await _context.Thanas.Where(x => x.rangeMetroId == rangeId).ToListAsync();
+            return data;
+        }
         #endregion
         #region UnionWard
         public async Task<IEnumerable<UnionWard>> GetUnionWardsByThanaId(int thanaId)
@@ -112,6 +117,20 @@ namespace PoliceOfficerManagement.Services.MasterData
         public async Task<IEnumerable<RangeMetro>> GetAllRangeMetros()
         {
             var data = await _context.RangeMetros.ToListAsync();
+            return data;
+        }
+        #endregion
+        #region Division District
+        public async Task<IEnumerable<DivisionDistrict>> GetDivisionDistrictByRangeId(int rangeId)
+        {
+            var data = await _context.DivisionDistricts.Where(x=>x.rangeMetroId == rangeId).ToListAsync();
+            return data;
+        }
+        #endregion
+        #region Zone Circle
+        public async Task<IEnumerable<ZoneCircle>> GetZoneCircleByDivisionDistrictId(int divisionDistrictId)
+        {
+            var data = await _context.ZoneCircles.Where(x => x.divisionDistrictId == divisionDistrictId).ToListAsync();
             return data;
         }
         #endregion

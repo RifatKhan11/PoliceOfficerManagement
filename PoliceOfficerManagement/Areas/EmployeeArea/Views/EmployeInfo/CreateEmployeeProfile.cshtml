@@ -596,7 +596,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Thana<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="thanaId" name="thanaId">
+                                <select class="form-control" id="thanaId2" name="thanaId">
 
                                     <option value="Select"></option>
 
@@ -770,11 +770,11 @@
                         type: 'GET',
                         data: { divisionId: divisionId },
                         success: function (response) {
-                            var districtDropdown = $('#districtId');
-                            districtDropdown.empty();  
-                            districtDropdown.append('<option value="">Select</option>'); 
+                            var selectDropdown = $('#districtId');
+                            selectDropdown.empty();
+                            selectDropdown.append('<option value="">Select</option>');
                             $.each(response, function (index, district) {
-                                districtDropdown.append('<option value="' + district.Id + '">' + district.districtName + '</option>');
+                                selectDropdown.append('<option value="' + district.Id + '">' + district.districtName + '</option>');
                             });
                         },
                         error: function () {
@@ -794,12 +794,12 @@
                         url: '/MasterData/MasterDatas/GetThanasByDistrictId',
                         type: 'GET',
                         data: { districtId: districtId },
-                        success: function (response) { 
-                            var districtDropdown = $('#thanaId');
-                            districtDropdown.empty();
-                            districtDropdown.append('<option value="">Select</option>');
-                            $.each(response, function (index, thana) { 
-                                districtDropdown.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
+                        success: function (response) {
+                            var selectDropdown = $('#thanaId');
+                            selectDropdown.empty();
+                            selectDropdown.append('<option value="">Select</option>');
+                            $.each(response, function (index, thana) {
+                                selectDropdown.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
                             });
                         },
                         error: function () {
@@ -820,11 +820,11 @@
                         type: 'GET',
                         data: { thanaId: thanaId },
                         success: function (response) {
-                            var districtDropdown = $('#unionId');
-                            districtDropdown.empty();
-                            districtDropdown.append('<option value="">Select</option>');
+                            var selectDropdown = $('#unionId');
+                            selectDropdown.empty();
+                            selectDropdown.append('<option value="">Select</option>');
                             $.each(response, function (index, union) {
-                                districtDropdown.append('<option value="' + union.Id + '">' + union.unionName + '</option>');
+                                selectDropdown.append('<option value="' + union.Id + '">' + union.unionName + '</option>');
                             });
                         },
                         error: function () {
@@ -845,11 +845,11 @@
                         type: 'GET',
                         data: { unionId: unionId },
                         success: function (response) {
-                            var districtDropdown = $('#villegeId');
-                            districtDropdown.empty();
-                            districtDropdown.append('<option value="">Select</option>');
+                            var selectDropdown = $('#villegeId');
+                            selectDropdown.empty();
+                            selectDropdown.append('<option value="">Select</option>');
                             $.each(response, function (index, villege) {
-                                districtDropdown.append('<option value="' + villege.Id + '">' + villege.villageName + '</option>');
+                                selectDropdown.append('<option value="' + villege.Id + '">' + villege.villageName + '</option>');
                             });
                         },
                         error: function () {
@@ -865,19 +865,67 @@
 
 
 
+            $('#rangeId').change(function () {
+                var rangeId = $(this).val();
+                if (rangeId) {
+                    $.ajax({
+                        url: '/MasterData/MasterDatas/GetDivisionDistrictByRangeId',
+                        type: 'GET',
+                        data: { rangeId: rangeId },
+                        success: function (response) {
+                            var selectDropdown = $('#divisionDistrictId');                             
+                            selectDropdown.empty(); 
+                            selectDropdown.append('<option value="0">Select</option>'); 
+                            $.each(response, function (index, districts) {
+                                selectDropdown.append('<option value="' + districts.Id + '">' + districts.divisionDistrictName + '</option>');
+                            });
+                             
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+
+                    $.ajax({
+                        url: '/MasterData/MasterDatas/GetThanasByRangeId',
+                        type: 'GET',
+                        data: { rangeId: rangeId },
+                        success: function (response) { 
+                            var selectDropdown = $('#thanaId2');
+                            selectDropdown.empty(); 
+                            selectDropdown.append('<option value="0">Select</option>'); 
+                            
+                            $.each(response, function (index, thana) {
+                                selectDropdown2.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+                    $('#divisionDistrictId').empty();
+                    $('#divisionDistrictId').append('<option value="0">Select</option>');
+                    $('#thanaId2').empty();
+                    $('#thanaId2').append('<option value="0">Select</option>');
+                }
+            });
+
+
+
             $('#divisionDistrictId').change(function () {
                 var divisionDistrictId = $(this).val();
                 if (divisionDistrictId) {
                     $.ajax({
-                        url: '/MasterData/MasterDatas/GetThanasByDistrictId',
+                        url: '/MasterData/MasterDatas/GetZoneCircleByDivisionDistrictId',
                         type: 'GET',
                         data: { districtId: divisionDistrictId },
                         success: function (response) {
-                            var districtDropdown = $('#zoneId');
-                            districtDropdown.empty();
-                            districtDropdown.append('<option value="">Select</option>');
+                            var selectDropdown = $('#zoneId');
+                            selectDropdown.empty();
+                            selectDropdown.append('<option value="">Select</option>');
                             $.each(response, function (index, zone) {
-                                districtDropdown.append('<option value="' + zone.Id + '">' + zone.zoneName + '</option>');
+                                selectDropdown.append('<option value="' + zone.Id + '">' + zone.zoneName + '</option>');
                             });
                         },
                         error: function () {
@@ -886,7 +934,7 @@
                     });
                 } else {
                     $('#thanaId').empty();
-                    $('#thanaId').append('<option value="">Select</option>');
+                    $('#thanaId').append('<option value="0">Select</option>');
                 }
             });
 

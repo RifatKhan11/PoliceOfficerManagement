@@ -14,5 +14,8 @@ namespace PoliceOfficerManagement.Services.MasterData.Interfaces
         Task<IEnumerable<Village>> GetUnionWardsByUnionWardId(int unionWardId);
         Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo();
         Task<IEnumerable<RangeMetro>> GetAllRangeMetros();
+        Task<IEnumerable<ZoneCircle>> GetZoneCircleByDivisionDistrictId(int divisionDistrictId);
+        Task<IEnumerable<DivisionDistrict>> GetDivisionDistrictByRangeId(int rangeId);
+        Task<IEnumerable<Thana>> GetThanasByRangeId(int rangeId);
     }
 }
