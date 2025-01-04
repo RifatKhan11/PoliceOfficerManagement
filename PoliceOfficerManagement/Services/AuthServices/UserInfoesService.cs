@@ -61,7 +61,8 @@ namespace PoliceOfficerManagement.Services.AuthServices
                               Citizenship = U.ImagePath,
                               roleId = R.Name,
                               isActive = U.isActive,
-                              ApplicationUserId = U.Id
+                              ApplicationUserId = U.Id,
+                              roleName=R.Name,
                           }).FirstOrDefaultAsync();
         }
         #endregion

@@ -162,7 +162,7 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
             var data = await _employeeServices.InActiveEmployeeById(Id);
             return Json(true);
         }
-        public IActionResult EmployeeList()
+        public async Task<IActionResult> EmployeeList()
         {
             return View();
         }

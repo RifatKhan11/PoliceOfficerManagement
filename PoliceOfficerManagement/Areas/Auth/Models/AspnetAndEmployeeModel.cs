@@ -13,6 +13,7 @@
         public string? NID { get; set; }
         public int? isActive { get; set; }
         public string? roleId { get; set; }
+        public string? roleName { get; set; }
 
         public int? empId { get; set; }
         public string? name { get; set; }

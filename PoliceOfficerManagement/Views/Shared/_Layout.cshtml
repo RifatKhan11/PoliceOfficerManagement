@@ -1,4 +1,9 @@
-﻿
+﻿@using PoliceOfficerManagement.Services.AuthServices.Interfaces
+@inject IUserInfoes iUserInfos;
+
+@{
+    var user = await iUserInfos.GetUserInfoByUserName(User.Identity.Name);
+}
 <!DOCTYPE html>
 <html translate="no">
 <head>
@@ -179,25 +184,28 @@
                                 <span style="color:black;font-size:20px" id="dashboard">Home</span>
                             </a>
                         </li>
+                        @if (user.roleName =="Admin")
+                        {
+                            <li class="nav-item" id="accordionSidebar_MasterData">
 
-                        <li class="nav-item" id="accordionSidebar_MasterData">
+                                <a class="nav-link collapsed apadding" href="javascript:void(0)" data-toggle="collapse" data-target="#collapse_MasterData" aria-expanded="true" aria-controls="collapse_MasterData">
 
-                            <a class="nav-link collapsed apadding" href="javascript:void(0)" data-toggle="collapse" data-target="#collapse_MasterData" aria-expanded="true" aria-controls="collapse_MasterData">
-
-                                <span class="btn" style="color:black;font-size:18px" id="Setting_MasterData">Master Data</span>
-                            </a>
-                            <div id="collapse_MasterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-
-                                <a class="nav-link" href="/MasterData/MasterData/DepartmentInfo">
-                                    <span class="c" style="color:black;">Educational Info</span>
+                                    <span class="btn" style="color:black;font-size:18px" id="Setting_MasterData">Master Data</span>
                                 </a>
-                                <a class="nav-link" href="/MasterData/MasterData/DepartmentInfo">
-                                    <span class="c" style="color:black;">Institute Info</span>
-                                </a>
+                                <div id="collapse_MasterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 
-                            </div>
-                        </li>
-                       
+                                    <a class="nav-link" href="/MasterData/MasterData/DepartmentInfo">
+                                        <span class="c" style="color:black;">Educational Info</span>
+                                    </a>
+                                    <a class="nav-link" href="/MasterData/MasterData/DepartmentInfo">
+                                        <span class="c" style="color:black;">Institute Info</span>
+                                    </a>
+
+                                </div>
+                            </li>
+
+                        }
+                        
                         
                         <li class="nav-item" id="accordionSidebar_Employee">
 
@@ -206,11 +214,13 @@
                                 <span class="btn" style="color:black;font-size:18px" id="Setting_Employee">Employee Info</span>
                             </a>
                             <div id="collapse_Employee" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-
-                                <a class="nav-link" href="/EmployeeArea/EmployeInfo/CreateEmployeeProfile">
-                                    <span class="c" style="color:black;">Create</span>
+                                @if (user.roleName == "Admin")
+                                {
+                                    <a class="nav-link" href="/EmployeeArea/EmployeInfo/CreateEmployeeProfile">
+                                        <span class="c" style="color:black;">Create</span>
                                 </a>
-                                <a class="nav-link" href="/Employee/EmployeeInfos/SearchEmployeeView">
+                                }
+                                <a class="nav-link" href="/EmployeeArea/EmployeInfo/EmployeeList">
                                     <span class="c" style="color:black;">Employee Infos</span>
                                 </a>
 
