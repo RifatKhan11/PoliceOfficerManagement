@@ -66,6 +66,8 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
             };
 
             var id = await _employeeServices.SaveEmployeeInfo(data);
+
+
             return Json(id);
         }
 
