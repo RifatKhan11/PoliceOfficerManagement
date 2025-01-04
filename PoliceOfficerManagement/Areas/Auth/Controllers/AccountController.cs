@@ -117,7 +117,7 @@ namespace PoliceOfficerManagement.Areas.Auth.Controllers
 
                             var userInfos = await _iUserInfoes.GetUserInfoByUserName(user.UserName);
                             
-                            return RedirectToAction("GeneralUserDashboard", "FileUpload", new { area = "UploadDocument" });
+                            return RedirectToAction("AdminDashboard", "Home", new { area = "Auth" });
                             
                         }
                         else
