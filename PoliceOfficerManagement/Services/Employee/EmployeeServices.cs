@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PoliceOfficerManagement.Areas.EmployeeArea.Models;
 using PoliceOfficerManagement.Data;
 using PoliceOfficerManagement.Data.Entity;
 using PoliceOfficerManagement.Services.Dapper.IInterfaces;
@@ -88,6 +89,23 @@ namespace PoliceOfficerManagement.Services.Employee
 
             }
             return 0;
+        }
+
+        public async Task<IEnumerable<EmployeeInfoModel>> GetEmployeInfoSearch(int rangeId,int districtId,int zoneId, string name)
+        {
+            var data= await(from e in _context.employeeInfos join 
+                            jr in _context.ranks on e.joiningRankId equals jr.Id
+
+                            where e.nameEn == (name != null ? name : e.nameEn)
+                            
+                            select new EmployeeInfoModel
+                            {
+                                empName = e.nameEn,
+                                empNameBn = e.nameEn,
+
+                            }).ToListAsync();
+
+            return data;
         }
 
 

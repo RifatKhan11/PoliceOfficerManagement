@@ -1,4 +1,4 @@
-﻿@model EmployeeInfoModel
+﻿@model EmployeInfoViewModel
 
 @{
     ViewData["Title"] = "Employee Search";
@@ -37,44 +37,53 @@
                     </div>
                 </div>
 
-                @* <div class="col-sm-6">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group row">
-                        <label for="deptId" class="col-sm-4 col-form-label">Department</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" id="deptId">
-                                <option value="0">Select Department</option>
-                                @foreach (var item in Model.deptList)
+                        <label class="col-form-label col-md-4">Range<span style="color: red">*</span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="rangeId" name="rangeId">
+
+                                <option value="" selected></option>
+                                @foreach (var range in Model.RangeMetros)
                                 {
-                                    <option value="@item.Id">@item.departmentName</option>
+                                    <option value="@range.Id">@range.rangeMetroName</option>
                                 }
                             </select>
                         </div>
                     </div>
-                </div> *@
-
-                <div class="col-sm-6">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group row">
-                        <label for="position" class="col-sm-4 col-form-label">Position</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" id="position">
-                                <option value="">Select Position</option>
-                                <option value="Manager">Manager</option>
-                                <option value="Executive">Executive</option>
-                                <option value="Jr Executive">Jr Executive</option>
-                                <option value="Accountant">Accountant</option>
-                                <option value="Hr">Hr</option>
-                                <option value="Peon">Peon</option>
+                        <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="divisionDistrictId" name="districtId">
+
+                                <option value="Select"></option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Zone<span style="color: red">*</span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="zoneId" name="zoneId">
+
+                                <option value="Select"></option>
 
                             </select>
                         </div>
                     </div>
                 </div>
 
+
+
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <label for="score" class="col-sm-4 col-form-label">Score</label>
+                        <label for="score" class="col-sm-4 col-form-label">Officers' Name</label>
                         <div class="col-sm-8">
-                            <input id="score" name="score" class="form-control" onkeypress="return validateNumber(event)" autocomplete="off" />
+                            <input id="empName" name="empName" class="form-control" autocomplete="off" />
                         </div>
                     </div>
                 </div>
@@ -127,6 +136,80 @@
             const pattern = /^[0-9]$/;
             return pattern.test(e.key)
         }
+
+        $('#rangeId').change(function () {
+            var rangeId = $(this).val();
+            if (rangeId) {
+                $.ajax({
+                    url: '/MasterData/MasterDatas/GetDivisionDistrictByRangeId',
+                    type: 'GET',
+                    data: { rangeId: rangeId },
+                    success: function (response) {
+                        var selectDropdown = $('#divisionDistrictId');
+                        selectDropdown.empty();
+                        selectDropdown.append('<option value="0">Select</option>');
+                        $.each(response, function (index, districts) {
+                            selectDropdown.append('<option value="' + districts.Id + '">' + districts.divisionDistrictName + '</option>');
+                        });
+
+                    },
+                    error: function () {
+                        alert("Error loading districts.");
+                    }
+                });
+
+                $.ajax({
+                    url: '/MasterData/MasterDatas/GetThanasByRangeId',
+                    type: 'GET',
+                    data: { rangeId: rangeId },
+                    success: function (response) {
+                        var selectDropdown = $('#thanaId2');
+                        selectDropdown.empty();
+                        selectDropdown.append('<option value="0">Select</option>');
+
+                        $.each(response, function (index, thana) {
+                            selectDropdown2.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
+                        });
+                    },
+                    error: function () {
+                        alert("Error loading districts.");
+                    }
+                });
+            } else {
+                $('#divisionDistrictId').empty();
+                $('#divisionDistrictId').append('<option value="0">Select</option>');
+                $('#thanaId2').empty();
+                $('#thanaId2').append('<option value="0">Select</option>');
+            }
+        });
+
+
+
+        $('#divisionDistrictId').change(function () {
+            var divisionDistrictId = $(this).val();
+            if (divisionDistrictId) {
+                $.ajax({
+                    url: '/MasterData/MasterDatas/GetZoneCircleByDivisionDistrictId',
+                    type: 'GET',
+                    data: { districtId: divisionDistrictId },
+                    success: function (response) {
+                        var selectDropdown = $('#zoneId');
+                        selectDropdown.empty();
+                        selectDropdown.append('<option value="">Select</option>');
+                        $.each(response, function (index, zone) {
+                            selectDropdown.append('<option value="' + zone.Id + '">' + zone.zoneName + '</option>');
+                        });
+                    },
+                    error: function () {
+                        alert("Error loading districts.");
+                    }
+                });
+            } else {
+                $('#thanaId').empty();
+                $('#thanaId').append('<option value="0">Select</option>');
+            }
+        });
+
 
     </script>
 }

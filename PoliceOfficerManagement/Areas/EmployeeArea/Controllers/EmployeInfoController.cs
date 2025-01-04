@@ -164,21 +164,20 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
         }
         public async Task<IActionResult> EmployeeList()
         {
-            return View();
-        }
-        public async Task<IActionResult> SearchEmployeePartial(string name, int deptId, string position, int score, int page = 1, int pageSize = 10)
-        {
-            //var employees = await _employeeRepository.GetEmployeeByFilter(name, deptId, position, score, page, pageSize);
-            //EmployeePaginationModel model = new EmployeePaginationModel
-            //{
-            //    employeeList = employees,
-            //    PageNumber = page,
-            //    PageSize = pageSize,
-            //    TotalPages = (int)Math.Ceiling((double)employees?.FirstOrDefault()?.countRow / pageSize),
-            //    totalItems = employees?.FirstOrDefault()?.countRow
-            //};
+            var model = new EmployeInfoViewModel
+            {
+                RangeMetros = await _masterDataServices.GetAllRangeMetros(),
 
-            return PartialView("_EmployeePartial");
+            };
+            return View(model);
+        }
+        public async Task<IActionResult> SearchEmployeePartial(int rangeId, int districtId, int zoneId, string name)
+        {
+
+            var emp = await _employeeServices.GetEmployeInfoSearch(rangeId, districtId, zoneId, name);
+            EmployeeInfoModel model =new EmployeeInfoModel();
+            model.Employees = emp;
+            return PartialView("_EmployeePartial", model);
         }
     }
 }
