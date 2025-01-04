@@ -1,0 +1,146 @@
+﻿@model EmployeePaginationModel
+@{
+
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+    // var startNumber = ((@Model.PageNumber - 1) * @Model.PageSize) + 1;
+    // var endNumber = @startNumber + @Model.PageSize;
+    // if (endNumber > @Model.totalItems)
+    // {
+    //     endNumber = @Model.totalItems;
+    // }
+}
+
+<div class="col-12" id="divstatrt">
+    <div class="card mb-2">
+        <div id="result">
+            <table class="table table-striped" style="width:100%" id="empTable">
+                <thead class="thead-dark">
+                    <tr style="text-align:center;">
+
+                        <th style='width:20%'><b>Employee Name</b></th>
+                        <th style='width:20%'><b>Department</b></th>
+                        <th style='width:15%'><b>Joining Date</b></th>
+                        <th style='width:15%'><b>Phone Number</b></th>
+                        <th style='width:15%'><b>Position</b></th>
+                        <th style='width:15%'><b>Score</b></th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.employeeList)
+                {
+                    <tbody style="text-align:center;">
+
+                        <tr>
+                            <td>@item.name</td>
+                            <td>@item.departmentName</td>
+                            <td>@item?.joiningDate?.ToString("dd-MMM-yyyy")</td>
+                            <td>@item.phoneNumber</td>
+                            <td>@item.position</td>
+                            <td>@item.score</td>
+
+
+                        </tr>
+
+                    </tbody>
+
+                }
+            </table>
+
+        </div>
+       @*  <div class="col-12">
+            <nav class="float-right">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" onclick="pageChange(0)" aria-label="Previous">
+                            <span>First</span>
+                        </a>
+                    </li>
+                    @if (Model.PageNumber > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" onclick="pageChange((@Model.PageNumber-1))" aria-label="Previous">
+                                <span>&laquo; Previous</span>
+                            </a>
+                        </li>
+                    }
+                    @for (int i = (Convert.ToInt32(Model.PageNumber) < 2 ? (Convert.ToInt32(Model.PageNumber) + 1) - Convert.ToInt32(Model.PageNumber) : Convert.ToInt32(Model.PageNumber) - 2); i <= (Convert.ToInt32(Model.PageNumber + 2)); i++)
+                    {
+                        if (i <= Model.TotalPages && i > 0)
+                        {
+                            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                <a class="page-link" onclick="pageChange(@i)">@i</a>
+                            </li>
+                        }
+                    }
+
+                    @if (Model.PageNumber < Model.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" onclick="pageChange((@Model.PageNumber+1))" aria-label="Next">
+                                <span>Next &raquo;</span>
+                            </a>
+                        </li>
+                    }
+                    <li class="page-item">
+                        <a class="page-link" onclick="pageChange(@Model.TotalPages)" aria-label="Next">
+                            <span>Last</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div> *@
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            //$('#loadder').hide();
+            $('#empTable').DataTable({
+                // order: [[0, 'asc']],
+                // paging: false,
+                // searching: false,
+                // language: {
+                //     info: @Model.TotalPages ? 'Showing ' + @startNumber+' to ' + @endNumber+' of ' + @Model.totalItems+' entries' : ''
+                // }
+            });
+        })
+
+        // function pageChange(sPage) {
+
+        //     var name = encodeURIComponent($('#name').val());
+        //     var deptId = $('#deptId').val();
+        //     var position = encodeURIComponent($('#position').val());
+        //     var score = parseInt($('#score').val()) || 0;
+
+        //     var oldPageSize = parseInt(@Model.PageSize);
+        //     var newPageSize = 5;
+        //     var newPageNumber = (oldPageSize * sPage) / newPageSize;
+        //     if (newPageNumber == 0) {
+        //         newPageNumber = 1;
+        //     }
+
+        //     $('#LoadPartialData').empty();
+        //     $('#LoadPartialData').load("/Employee/EmployeeInfos/SearchEmployeePartial?name=" + name + "&deptId=" + deptId + "&position=" + position + "&score=" + score + "&page=" + Math.round(newPageNumber));
+        // }
+
+        // function myFunction() {
+        //     var input, filter, table, tr, td, i, txtValue;
+        //     input = document.getElementById("myInput");
+        //     filter = input.value.toUpperCase();
+        //     table = document.getElementById("empTable");
+        //     tr = table.getElementsByTagName("tr");
+        //     for (i = 0; i < tr.length; i++) {
+        //         td = tr[i].getElementsByTagName("td")[0];
+        //         if (td) {
+        //             txtValue = tr[i].textContent || tr[i].innerText;
+        //             if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        //                 tr[i].style.display = "";
+        //             } else {
+        //                 tr[i].style.display = "none";
+        //             }
+        //         }
+        //     }
+        // }
+
+    </script>
+}

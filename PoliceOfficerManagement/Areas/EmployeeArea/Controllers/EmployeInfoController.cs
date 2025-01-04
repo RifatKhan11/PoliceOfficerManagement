@@ -166,5 +166,19 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> SearchEmployeePartial(string name, int deptId, string position, int score, int page = 1, int pageSize = 10)
+        {
+            //var employees = await _employeeRepository.GetEmployeeByFilter(name, deptId, position, score, page, pageSize);
+            //EmployeePaginationModel model = new EmployeePaginationModel
+            //{
+            //    employeeList = employees,
+            //    PageNumber = page,
+            //    PageSize = pageSize,
+            //    TotalPages = (int)Math.Ceiling((double)employees?.FirstOrDefault()?.countRow / pageSize),
+            //    totalItems = employees?.FirstOrDefault()?.countRow
+            //};
+
+            return PartialView("_EmployeePartial");
+        }
     }
 }
