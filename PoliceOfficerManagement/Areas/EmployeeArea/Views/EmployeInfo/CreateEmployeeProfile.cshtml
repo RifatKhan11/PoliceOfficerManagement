@@ -39,7 +39,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4"> Name<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="nameEn" name="nameEn" class="form-control" />
+                                <input type="text" id="nameEn" name="nameEn" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">employeeCode<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="employeeCode" name="employeeCode" class="form-control" />
+                                <input type="text" id="employeeCode" name="employeeCode" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">nidNumber<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="nidNumber" name="nidNumber" class="form-control" />
+                                <input type="text" id="nidNumber" name="nidNumber" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Joining Date<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="date" id="joiningDate" name="joiningDate" class="form-control" />
+                                <input type="date" id="joiningDate" name="joiningDate" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">retirementDate<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="date" id="retirementDate" name="retirementDate" class="form-control" />
+                                <input type="date" id="retirementDate" name="retirementDate" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                             <label class="col-form-label col-md-4">joiningRankId<span style="color: red">*</span></label>
                             <div class="col-md-8">
                                  
-                                <select class="form-control" id="joiningRankId" name="joiningRankId">
+                                <select class="form-control" id="joiningRankId" value="" name="joiningRankId">
 
                                     <option value="">Select</option>
                                     @foreach (var rank in Model.Ranks)
@@ -103,7 +103,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">homeDistrict<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="homeDistrict" name="homeDistrict" class="form-control" />
+                                <input type="text" id="homeDistrict" name="homeDistrict" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">homeUpazila<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="homeUpazila" name="homeUpazila" class="form-control" />
+                                <input type="text" id="homeUpazila" name="homeUpazila" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">reMarks<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="reMarks" name="reMarks" class="form-control" />
+                                <input type="text" id="reMarks" name="reMarks" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">personalPhoneNumber<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="personalPhoneNumber" name="personalPhoneNumber" class="form-control" />
+                                <input type="text" id="personalPhoneNumber" name="personalPhoneNumber" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">officePhoneNumber<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="officePhoneNumber" name="officePhoneNumber" class="form-control" />
+                                <input type="text" id="officePhoneNumber" name="officePhoneNumber" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4"> addressType<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="addressType" name="addressType">
+                                <select class="form-control" id="addressType" >
 
                                     <option value="PERMANENT">Permanent</option>
                                     <option value="PRESENT">Present</option>
@@ -176,7 +176,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Division<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="divisionId" name="divisionId">
+                                <select class="form-control" id="divisionId">
 
                                     <option value="">Select</option>
                                     @foreach (var divisions in Model.divisions)
@@ -191,7 +191,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="districtId" name="districtId">
+                                <select class="form-control" id="districtId">
 
                                     <option value="Select"></option> 
                                      
@@ -203,7 +203,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Thana<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="thanaId" name="thanaId">
+                                <select class="form-control" id="thanaId">
 
                                     <option value="Select"></option> 
                                      
@@ -215,7 +215,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Union<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="unionId" name="unionId">
+                                <select class="form-control" id="unionId">
 
                                     <option value="Select"></option> 
                                      
@@ -227,7 +227,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Villege<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="villegeId" name="villegeId">
+                                <select class="form-control" id="villegeId">
 
                                     <option value="Select"></option> 
                                      
@@ -241,7 +241,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">roadInfo<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="roadInfo" name="roadInfo" class="form-control" />
+                                <input type="text" id="roadInfo" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -298,7 +298,7 @@
                             <label class="col-form-label col-md-4">Institute<span style="color: red">*</span></label>
                             <div class="col-md-8">
                                 
-                                <select class="form-control" id="instituteId" name="instituteId">
+                                <select class="form-control" id="instituteId">
 
                                     <option value="">Select</option>
                                     @foreach (var institution in Model.institutionInfos)
@@ -314,7 +314,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Passing Year<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="passingYear" name="passingYear" class="form-control" />
+                                <input type="text" id="passingYear" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -322,7 +322,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Batch No<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="batchNo" name="batchNo" class="form-control" />
+                                <input type="text" id="batchNo" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -330,7 +330,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Grade<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="grade" name="grade" class="form-control" />
+                                <input type="text" id="grade" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -338,7 +338,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Degree Name<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="degreeName" name="degreeName" class="form-control" />
+                                <input type="text" id="degreeName"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -346,7 +346,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Achievement<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="achievement" name="achievement" class="form-control" />
+                                <input type="text" id="achievement" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -354,7 +354,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Course Duration<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="courseDuration" name="courseDuration" class="form-control" />
+                                <input type="text" id="courseDuration" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -412,7 +412,7 @@
                             <label class="col-form-label col-md-4">Institute<span style="color: red">*</span></label>
                             <div class="col-md-8">
 
-                                <select class="form-control" id="instituteId2" name="instituteId">
+                                <select class="form-control" id="instituteId2">
 
                                     <option value="">Select</option>
                                     @foreach (var institution in Model.institutionInfos)
@@ -428,7 +428,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Passing Year<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="passingYear2" name="passingYear" class="form-control" />
+                                <input type="text" id="passingYear2" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -436,7 +436,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Batch No<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="batchNo2" name="batchNo" class="form-control" />
+                                <input type="text" id="batchNo2"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -444,7 +444,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Grade<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="grade2" name="grade" class="form-control" />
+                                <input type="text" id="grade2"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -452,7 +452,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Degree Name<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="degreeName2" name="degreeName" class="form-control" />
+                                <input type="text" id="degreeName2"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -460,7 +460,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Achievement<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="achievement2" name="achievement" class="form-control" />
+                                <input type="text" id="achievement2"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -468,7 +468,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Course Duration<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="courseDuration2" name="courseDuration" class="form-control" />
+                                <input type="text" id="courseDuration2"   class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -524,7 +524,7 @@
                             <label class="col-form-label col-md-4">Rank<span style="color: red">*</span></label>
                             <div class="col-md-8">
 
-                                <select class="form-control" id="rankId" name="rankId">
+                                <select class="form-control" id="rankId">
 
                                     <option value="" selected>Select</option>
                                     @foreach (var rank1 in Model.Ranks)
@@ -540,7 +540,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Posting From<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="date" id="postingFrom" name="postingFrom" class="form-control" />
+                                <input type="date" id="postingFrom"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -548,7 +548,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Posting To<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="date" id="postingTo" name="postingTo" class="form-control" />
+                                <input type="date" id="postingTo"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -556,7 +556,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Range<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="rangeId" name="rangeId">
+                                <select class="form-control" id="rangeId">
 
                                     <option value="" selected></option>
                                     @foreach (var range in Model.RangeMetros)
@@ -571,7 +571,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="divisionDistrictId" name="districtId">
+                                <select class="form-control" id="divisionDistrictId">
 
                                     <option value="Select"></option>
 
@@ -583,7 +583,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Zone<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="zoneId" name="zoneId">
+                                <select class="form-control" id="zoneId">
 
                                     <option value="Select"></option>
 
@@ -596,7 +596,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Thana<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="thanaId2" name="thanaId">
+                                <select class="form-control" id="thanaId2" >
 
                                     <option value="Select"></option>
 
@@ -608,7 +608,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Promotion Date<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="date" id="promotionDate" name="promotionDate" class="form-control" />
+                                <input type="date" id="promotionDate"   value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -617,14 +617,14 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Remarks<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="reMarks" name="reMarks" class="form-control" />
+                                <input type="text" id="reMarks2"  value="" class="form-control" />
                             </div>
                         </div>
                     </div>
 
 
                     <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
-                        <button type="button" id="btnTraining" class="btn btn-secondary" style="float: right" onclick="addPosting()">Add</button>
+                        <button type="button" id="btnPosting" class="btn btn-secondary" style="float: right" onclick="addPosting()">Add</button>
 
                     </div>
                 </div>
@@ -667,7 +667,8 @@
                 <div class="form-group row">
 
                     <div class="col-sm-12 mb-3">
-                        <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button>
+                        @* <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button> *@
+                        <button type="submit" id="btnCheck" class="btn btn-secondary" style="float: right">Submit</button>
                     </div>
                 </div>
 
@@ -886,17 +887,25 @@
                         }
                     });
 
+                     
+                } else {
+                    $('#divisionDistrictId').empty();
+                    $('#divisionDistrictId').append('<option value="0">Select</option>');
+                     
+                }
+                if (rangeId) {
+                    
                     $.ajax({
                         url: '/MasterData/MasterDatas/GetThanasByRangeId',
                         type: 'GET',
                         data: { rangeId: rangeId },
-                        success: function (response) { 
+                        success: function (response) {
                             var selectDropdown = $('#thanaId2');
-                            selectDropdown.empty(); 
-                            selectDropdown.append('<option value="0">Select</option>'); 
-                            
+                            selectDropdown.empty();
+                            selectDropdown.append('<option value="0">Select</option>');
+
                             $.each(response, function (index, thana) {
-                                selectDropdown2.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
+                                selectDropdown.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
                             });
                         },
                         error: function () {
@@ -904,8 +913,7 @@
                         }
                     });
                 } else {
-                    $('#divisionDistrictId').empty();
-                    $('#divisionDistrictId').append('<option value="0">Select</option>');
+                     
                     $('#thanaId2').empty();
                     $('#thanaId2').append('<option value="0">Select</option>');
                 }
@@ -919,7 +927,7 @@
                     $.ajax({
                         url: '/MasterData/MasterDatas/GetZoneCircleByDivisionDistrictId',
                         type: 'GET',
-                        data: { districtId: divisionDistrictId },
+                        data: { divisionDistrictId: divisionDistrictId },
                         success: function (response) {
                             var selectDropdown = $('#zoneId');
                             selectDropdown.empty();
@@ -933,137 +941,154 @@
                         }
                     });
                 } else {
-                    $('#thanaId').empty();
-                    $('#thanaId').append('<option value="0">Select</option>');
+                    $('#zoneId').empty();
+                    $('#zoneId').append('<option value="0">Select</option>');
                 }
             });
 
 
 
-            function addAddress() {
-                // Get values from the form
-                const addressType = $('#addressType').val();
-                const division = $('#divisionId option:selected').text();
-                const district = $('#districtId option:selected').text();
-                const thana = $('#thanaId option:selected').text();
-                const union = $('#unionId option:selected').text();
-                const villege = $('#villegeId option:selected').text();
-                const roadInfo = $('#roadInfo').val(); 
-                if (!addressType || !division || !district || !thana || !union || !villege || !roadInfo) {
-                    alert('Please fill all required fields.');
-                    return;
-                } 
-                const newRow = `
-                    <tr>
-                        <td>${addressType}</td>
-                        <td>${division}</td>
-                        <td>${district}</td>
-                        <td>${thana}</td>
-                        <td>${union}</td>
-                        <td>${union}</td>  
-                        <td>${villege}</td>
-                        <td>${roadInfo}</td>
-                        <td><button type="button" class="btn btn-danger btn-sm remove-Address">Remove</button></td>
-                    </tr>
-                `;
+           
 
-                $('#AddressTbl tbody').append(newRow);
+        });
 
-                // Clear the form fields after adding
-                $('#addressType').val('');
-                $('#divisionId').val('');
-                $('#districtId').val('');
-                $('#thanaId').val('');
-                $('#unionId').val('');
-                $('#villegeId').val('');
-                $('#roadInfo').val('');
+
+        // function addAddress() {
+        //     // Get values from the form
+        //     const addressType = $('#addressType').val();
+        //     const division = $('#divisionId option:selected').text();
+        //     const district = $('#districtId option:selected').text();
+        //     const thana = $('#thanaId option:selected').text();
+        //     const union = $('#unionId option:selected').text();
+        //     const villege = $('#villegeId option:selected').text();
+        //     const roadInfo = $('#roadInfo').val();
+        //     if (!addressType || !division || !district || !thana || !union || !villege || !roadInfo) {
+        //         alert('Please fill all required fields.');
+        //         return;
+        //     }
+        //     const newRow = `
+        //                     <tr>
+        //                         <td>${addressType}</td>
+        //                         <td>${division}</td>
+        //                         <td>${district}</td>
+        //                         <td>${thana}</td>
+        //                         <td>${union}</td>
+        //                         <td>${union}</td>
+        //                         <td>${villege}</td>
+        //                         <td>${roadInfo}</td>
+        //                         <td><button type="button" class="btn btn-danger btn-sm remove-Address">Remove</button></td>
+        //                     </tr>
+        //                 `;
+
+        //     $('#AddressTbl tbody').append(newRow);
+
+        //     // Clear the form fields after adding
+        //     $('#addressType').val('');
+        //     $('#divisionId').val('');
+        //     $('#districtId').val('');
+        //     $('#thanaId').val('');
+        //     $('#unionId').val('');
+        //     $('#villegeId').val('');
+        //     $('#roadInfo').val('');
+        // }
+
+
+
+        function addAddress() {
+            // Get values from the form
+            const addressType = $('#addressType').val();
+            const division = $('#divisionId').val();  // Keep values (not text) for input fields
+            const district = $('#districtId').val();
+            const thana = $('#thanaId').val();
+            const union = $('#unionId').val();
+            const villege = $('#villegeId').val();
+            const roadInfo = $('#roadInfo').val();
+
+            // Validate required fields
+            if (!addressType || !division || !district || !thana || !union || !villege || !roadInfo) {
+                alert('Please fill all required fields.');
+                return;
             }
 
-            // Add the address when the "Add" button is clicked
-            $('#btnAdress').click(function () {
-                addAddress();
-            });
-
-            // Remove a row from the table
-            $(document).on('click', '.remove-Address', function () {
-                $(this).closest('tr').remove();
-            });
-            function removeAdressRow(button) {
-                $(button).closest('tr').remove();
-            }
-
-
-            function addEducation() {
-                // Get values from input fields
-                const institute = $('#instituteId option:selected').text();
-                const passingYear = $('#passingYear').val();
-                const batchNo = $('#batchNo').val();
-                const grade = $('#grade').val();
-                const degreeName = $('#degreeName').val();
-                const achievement = $('#achievement').val();
-                const courseDuration = $('#courseDuration').val();
-
-                // Validate input values
-                if (!institute || institute === "Select" || !passingYear || !batchNo || !grade || !degreeName || !achievement || !courseDuration) {
-                    alert('Please fill in all fields before adding.');
-                    return;
-                }
-
-                // Create a new table row
-                const newRow = `
+            // Create new row with input fields
+            const newRow = `
                 <tr>
-                    <td>${institute}</td>
-                    <td>${passingYear}</td>
-                    <td>${batchNo}</td>
-                    <td>${grade}</td>
-                    <td>${degreeName}</td>
-                    <td>${achievement}</td>
-                    <td>${courseDuration}</td>
+                    <td><input type="text" name="addressType[]" value="${addressType}" class="form-control" /></td>
                     <td>
-                       <button type="button" class="btn btn-danger btn-sm remove-Edu">Remove</button>
+                        <select name="aDivisionId[]" class="form-control">
+                            <option value="${division}" selected>${$('#divisionId option:selected').text()}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="aDistrictId[]" class="form-control">
+                            <option value="${district}" selected>${$('#districtId option:selected').text()}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="aThanaId[]" class="form-control">
+                            <option value="${thana}" selected>${$('#thanaId option:selected').text()}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="aUnionId[]" class="form-control">
+                            <option value="${union}" selected>${$('#unionId option:selected').text()}</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="aVillegeId[]" value="${villege}" class="form-control" /></td>
+                    <td><input type="text" name="roadInfo[]" value="${roadInfo}" class="form-control" /></td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm remove-Address">Remove</button>
                     </td>
                 </tr>
             `;
 
-                // Append the row to the table body
-                $('#EduTbl tbody').append(newRow);
+            // Append the new row to the table body
+            $('#AddressTbl tbody').append(newRow);
 
-                // Clear input fields
-                $('#instituteId').val('');
-                $('#passingYear').val('');
-                $('#batchNo').val('');
-                $('#grade').val('');
-                $('#degreeName').val('');
-                $('#achievement').val('');
-                $('#courseDuration').val('');
+            // Clear the form fields after adding
+            $('#addressType').val('');
+            $('#divisionId').val('');
+            $('#districtId').val('');
+            $('#thanaId').val('');
+            $('#unionId').val('');
+            $('#villegeId').val('');
+            $('#roadInfo').val('');
+        }
+
+
+
+        // Add the address when the "Add" button is clicked
+        $('#btnAdress').click(function () {
+            addAddress();
+        });
+
+        // Remove a row from the table
+        $(document).on('click', '.remove-Address', function () {
+            $(this).closest('tr').remove();
+        });
+        function removeAdressRow(button) {
+            $(button).closest('tr').remove();
+        }
+
+
+        function addEducation() {
+            // Get values from input fields
+            const institute = $('#instituteId option:selected').text();
+            const passingYear = $('#passingYear').val();
+            const batchNo = $('#batchNo').val();
+            const grade = $('#grade').val();
+            const degreeName = $('#degreeName').val();
+            const achievement = $('#achievement').val();
+            const courseDuration = $('#courseDuration').val();
+
+            // Validate input values
+            if (!institute || institute === "Select" || !passingYear || !batchNo || !grade || !degreeName || !achievement || !courseDuration) {
+                alert('Please fill in all fields before adding.');
+                return;
             }
 
-            $(document).on('click', '.remove-Edu', function () {
-                $(this).closest('tr').remove();
-            });
-            $('#btnEducation').click(function () {
-                addEducation();
-            });
-
-
-            function addTraining() {
-                // Get values from input fields
-                const institute = $('#instituteId2 option:selected').text();
-                const passingYear = $('#passingYear2').val();
-                const batchNo = $('#batchNo2').val();
-                const grade = $('#grade2').val();
-                const degreeName = $('#degreeName2').val();
-                const achievement = $('#achievement2').val();
-                const courseDuration = $('#courseDuration2').val();
-
-                // Validate input values
-                if (!institute || institute === "Select" || !passingYear || !batchNo || !grade || !degreeName || !achievement || !courseDuration) {
-                    alert('Please fill in all fields before adding.');
-                    return;
-                }
-
-                // Create a new table row
-                const newRow = `
+            // Create a new table row
+            const newRow = `
                         <tr>
                             <td>${institute}</td>
                             <td>${passingYear}</td>
@@ -1073,32 +1098,146 @@
                             <td>${achievement}</td>
                             <td>${courseDuration}</td>
                             <td>
-                               <button type="button" class="btn btn-danger btn-sm remove-Training">Remove</button>
+                               <button type="button" class="btn btn-danger btn-sm remove-Edu">Remove</button>
                             </td>
                         </tr>
                     `;
 
-                // Append the row to the table body
-                $('#TrainingTbl tbody').append(newRow);
+            // Append the row to the table body
+            $('#EduTbl tbody').append(newRow);
 
-                // Clear input fields
-                $('#instituteId2').val('');
-                $('#passingYear2').val('');
-                $('#batchNo2').val('');
-                $('#grade2').val('');
-                $('#degreeName2').val('');
-                $('#achievement2').val('');
-                $('#courseDuration2').val('');
+            // Clear input fields
+            $('#instituteId').val('');
+            $('#passingYear').val('');
+            $('#batchNo').val('');
+            $('#grade').val('');
+            $('#degreeName').val('');
+            $('#achievement').val('');
+            $('#courseDuration').val('');
+        }
+
+        $(document).on('click', '.remove-Edu', function () {
+            $(this).closest('tr').remove();
+        });
+        $('#btnEducation').click(function () {
+            addEducation();
+        });
+
+
+        function addTraining() {
+            // Get values from input fields
+            const institute = $('#instituteId2 option:selected').text();
+            const passingYear = $('#passingYear2').val();
+            const batchNo = $('#batchNo2').val();
+            const grade = $('#grade2').val();
+            const degreeName = $('#degreeName2').val();
+            const achievement = $('#achievement2').val();
+            const courseDuration = $('#courseDuration2').val();
+
+            // Validate input values
+            if (!institute || institute === "Select" || !passingYear || !batchNo || !grade || !degreeName || !achievement || !courseDuration) {
+                alert('Please fill in all fields before adding.');
+                return;
             }
 
-            $(document).on('click', '.remove-Training', function () {
-                $(this).closest('tr').remove();
-            });
-            $('#btnTraining').click(function () {
-                addTraining();
-            });
+            // Create a new table row
+            const newRow = `
+                                <tr>
+                                    <td>${institute}</td>
+                                    <td>${passingYear}</td>
+                                    <td>${batchNo}</td>
+                                    <td>${grade}</td>
+                                    <td>${degreeName}</td>
+                                    <td>${achievement}</td>
+                                    <td>${courseDuration}</td>
+                                    <td>
+                                       <button type="button" class="btn btn-danger btn-sm remove-Training">Remove</button>
+                                    </td>
+                                </tr>
+                            `;
 
+            // Append the row to the table body
+            $('#TrainingTbl tbody').append(newRow);
+
+            // Clear input fields
+            $('#instituteId2').val('');
+            $('#passingYear2').val('');
+            $('#batchNo2').val('');
+            $('#grade2').val('');
+            $('#degreeName2').val('');
+            $('#achievement2').val('');
+            $('#courseDuration2').val('');
+        }
+
+        $(document).on('click', '.remove-Training', function () {
+            $(this).closest('tr').remove();
         });
+        $('#btnTraining').click(function () {
+            addTraining();
+        });
+
+
+        function addPosting() {
+            // Retrieve values from the input fields
+            const rank = $('#rankId option:selected').text();
+            const postingFrom = $('#postingFrom').val();
+            const postingTo = $('#postingTo').val();
+            const range = $('#rangeId option:selected').text();
+            const district = $('#divisionDistrictId option:selected').text();
+            const zone = $('#zoneId option:selected').text();
+            const thana = $('#thanaId2 option:selected').text();
+            const promotionDate = $('#promotionDate').val();
+            const remarks = $('#reMarks2').val();
+
+            // Validate that all fields are filled
+            if (!rank || rank === "Select" || !postingFrom || !postingTo || !range || range === "Select" ||
+                !district || district === "Select" || !zone || zone === "Select" || !thana || thana === "Select" ||
+                !promotionDate || !remarks) {
+                alert('Please fill in all required fields before adding.');
+                return;
+            }
+
+            // Create a new row
+            const newRow = `
+                        <tr>
+                            <td>${rank}</td>
+                            <td>${postingFrom}</td>
+                            <td>${postingTo}</td>
+                            <td>${range}</td>
+                            <td>${district}</td>
+                            <td>${zone}</td>
+                            <td>${thana}</td>
+                            <td>${promotionDate}</td>
+                            <td>${remarks}</td>
+                            <td>
+                                        <button type="button" class="btn btn-danger btn-sm remove-Posting">Remove</button>
+                            </td>
+                        </tr>
+                    `;
+
+            // Append the row to the table body
+            $('#PostingTbl tbody').append(newRow);
+
+            // Clear input fields after adding the row
+            $('#rankId').val('');
+            $('#postingFrom').val('');
+            $('#postingTo').val('');
+            $('#rangeId').val('');
+            $('#divisionDistrictId').val('');
+            $('#zoneId').val('');
+            $('#thanaId2').val('');
+            $('#promotionDate').val('');
+            $('#reMarks2').val('');
+        }
+
+        // Function to remove a table row
+        $(document).on('click', '.remove-Posting', function () {
+            $(this).closest('tr').remove();
+        });
+        $('#btnPosting').click(function () {
+            addPosting();
+        });
+
 
          
           function Delete(Id) {
@@ -1173,10 +1312,296 @@
         //     $('#employeeList').show();
 
         // }
+
+
+ 
+
          
-        function SaveData()
-        {
-            var data = $('#employeeForm').serialize();
+        // function SaveData()
+        // {
+        //     var data = $('#employeeForm').serialize();
+        //     swal({
+        //         title: 'Are you sure?',
+        //         text: 'Do you want to save this data?',
+        //         type: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes, Save It!'
+        //     }).then(function (res)
+        //     {
+        //         if (res) {
+        //             $.ajax({
+        //                 url: "/EmployeeArea/EmployeInfo/CreateEmployeeProfile",
+        //                 type: "POST",
+        //                 data: data,
+        //                 success: function (res)
+        //                 {
+        //                     if (res != 0) {
+        //                         swal('', 'Save Successfully!', 'success');
+        //                         location.reload(true);
+        //                         //$('#employeeCreate').hide();
+        //                         //$('#employeeList').Show();
+        //                     }
+        //                     else {
+        //                         swal('', 'Invalid Attempt!', 'warning');
+        //                         return false;
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     }, function (dismiss)
+        //     {
+        //         if (dismiss === 'cancel' || dismiss === 'close')
+        //         {
+        //             return false;
+        //         }
+        //     });
+        // }
+
+
+        // function SaveData() {
+        //     // Serialize the form data
+        //     var formData = $('#employeeForm').serializeArray(); // Serialize as an array to combine later
+
+        //     // Collect Posting data
+        //     let postings = [];
+        //     $('#PostingTbl tbody tr').each(function () {
+        //         let row = $(this);
+        //         postings.push({
+        //             rank: row.find('td:eq(0)').text(),
+        //             postingFrom: row.find('td:eq(1)').text(),
+        //             postingTo: row.find('td:eq(2)').text(),
+        //             range: row.find('td:eq(3)').text(),
+        //             district: row.find('td:eq(4)').text(),
+        //             zone: row.find('td:eq(5)').text(),
+        //             thana: row.find('td:eq(6)').text(),
+        //             promotionDate: row.find('td:eq(7)').text(),
+        //             remarks: row.find('td:eq(8)').text()
+        //         });
+        //     });
+
+        //     // Collect Training data
+        //     let trainings = [];
+        //     $('#TrainingTbl tbody tr').each(function () {
+        //         let row = $(this);
+        //         trainings.push({
+        //             institute: row.find('td:eq(0)').text(),
+        //             passingYear: row.find('td:eq(1)').text(),
+        //             batchNo: row.find('td:eq(2)').text(),
+        //             grade: row.find('td:eq(3)').text(),
+        //             degreeName: row.find('td:eq(4)').text(),
+        //             achievement: row.find('td:eq(5)').text(),
+        //             courseDuration: row.find('td:eq(6)').text()
+        //         });
+        //     });
+
+        //     // Collect Education data
+        //     let educations = [];
+        //     $('#EduTbl tbody tr').each(function () {
+        //         let row = $(this);
+        //         educations.push({
+        //             institute: row.find('td:eq(0)').text(),
+        //             passingYear: row.find('td:eq(1)').text(),
+        //             batchNo: row.find('td:eq(2)').text(),
+        //             grade: row.find('td:eq(3)').text(),
+        //             degreeName: row.find('td:eq(4)').text(),
+        //             achievement: row.find('td:eq(5)').text(),
+        //             courseDuration: row.find('td:eq(6)').text()
+        //         });
+        //     });
+
+        //     // Collect Address data
+        //     let addresses = [];
+        //     $('#AddressTbl tbody tr').each(function () {
+        //         let row = $(this);
+        //         addresses.push({
+        //             addressType: row.find('td:eq(0)').text(),
+        //             division: row.find('td:eq(1)').text(),
+        //             district: row.find('td:eq(2)').text(),
+        //             thana: row.find('td:eq(3)').text(),
+        //             union: row.find('td:eq(4)').text(),
+        //             villege: row.find('td:eq(5)').text(),
+        //             roadInfo: row.find('td:eq(6)').text()
+        //         });
+        //     });
+
+        //     // Combine all data into one object
+        //     let combinedData = {
+        //         formData: formData,
+        //         postings: postings,
+        //         trainings: trainings,
+        //         educations: educations,
+        //         addresses: addresses
+        //     };
+
+        //     // Show confirmation dialog
+        //     swal({
+        //         title: 'Are you sure?',
+        //         text: 'Do you want to save this data?',
+        //         type: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes, Save It!'
+        //     }).then(function (res) {
+        //         if (res) {
+        //             // Send the data via AJAX
+        //             $.ajax({
+        //                 url: "/EmployeeArea/EmployeInfo/CreateEmployeeProfile",
+        //                 type: "POST",
+        //                 contentType: "application/json", // Set content type to JSON
+        //                 data: JSON.stringify(combinedData),
+        //                 success: function (response) {
+        //                     if (response != 0) {
+        //                         swal('', 'Save Successfully!', 'success');
+        //                         location.reload(true);
+        //                     } else {
+        //                         swal('', 'Invalid Attempt!', 'warning');
+        //                         return false;
+        //                     }
+        //                 },
+        //                 error: function (error) {
+        //                     console.error('Error saving data:', error);
+        //                     swal('', 'An error occurred while saving data.', 'error');
+        //                 }
+        //             });
+        //         }
+        //     }, function (dismiss) {
+        //         if (dismiss === 'cancel' || dismiss === 'close') {
+        //             return false;
+        //         }
+        //     });
+        // }
+
+        function SaveData() {
+            // Serialize form data into an object
+            let formData = $('#employeeForm').serializeArray();
+            let employeeData = {};
+            formData.forEach(field => {
+                employeeData[field.name] = field.value;
+            });
+
+            // Collect Educational Info
+            let eInstituteId = [];
+            let ePassingYear = [];
+            let eBatchNo = [];
+            let eGrade = [];
+            let eDegreeName = [];
+            let eAchievement = [];
+            let eCourseDuration = [];
+
+            $('#EduTbl tbody tr').each(function () {
+                let row = $(this);
+                eInstituteId.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the institute
+                ePassingYear.push(row.find('td:eq(1)').text());
+                eBatchNo.push(row.find('td:eq(2)').text());
+                eGrade.push(row.find('td:eq(3)').text());
+                eDegreeName.push(row.find('td:eq(4)').text());
+                eAchievement.push(row.find('td:eq(5)').text());
+                eCourseDuration.push(row.find('td:eq(6)').text());
+            });
+
+            // Collect Institute Info
+            let instituteId = [];
+            let passingYear = [];
+            let batchNo = [];
+            let grade = [];
+            let degreeName = [];
+            let achievement = [];
+            let courseDuration = [];
+
+            $('#TrainingTbl tbody tr').each(function () {
+                let row = $(this);
+                instituteId.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the institute
+                passingYear.push(row.find('td:eq(1)').text());
+                batchNo.push(row.find('td:eq(2)').text());
+                grade.push(row.find('td:eq(3)').text());
+                degreeName.push(row.find('td:eq(4)').text());
+                achievement.push(row.find('td:eq(5)').text());
+                courseDuration.push(row.find('td:eq(6)').text());
+            });
+
+            // Collect Posting Info
+            let rankId = [];
+            let postingFrom = [];
+            let postingTo = [];
+            let rangeId = [];
+            let districtId = [];
+            let zoneId = [];
+            let thanaId = [];
+            let pReMarks = [];
+            let promotionDate = [];
+
+            $('#PostingTbl tbody tr').each(function () {
+                let row = $(this);
+                rankId.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the rank
+                postingFrom.push(row.find('td:eq(1)').text());
+                postingTo.push(row.find('td:eq(2)').text());
+                rangeId.push(row.find('td:eq(3)').data('id'));
+                districtId.push(row.find('td:eq(4)').data('id'));
+                zoneId.push(row.find('td:eq(5)').data('id'));
+                thanaId.push(row.find('td:eq(6)').data('id'));
+                promotionDate.push(row.find('td:eq(7)').text());
+                pReMarks.push(row.find('td:eq(8)').text());
+            });
+
+            // Collect Address Info
+            let addressType = [];
+            let roadInfo = [];
+            let aVillegeId = [];
+            let aUnionId = [];
+            let aThanaId = [];
+            let aDistrictId = [];
+            let aDivisionId = [];
+
+            $('#AddressTbl tbody tr').each(function () {
+                let row = $(this);
+                addressType.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the address type
+                aDivisionId.push(row.find('td:eq(1)').data('id'));
+                aDistrictId.push(row.find('td:eq(2)').data('id'));
+                aThanaId.push(row.find('td:eq(3)').data('id'));
+                aUnionId.push(row.find('td:eq(4)').data('id'));
+                aVillegeId.push(row.find('td:eq(5)').data('id'));
+                roadInfo.push(row.find('td:eq(6)').text());
+            });
+
+            // Prepare the final object
+            let combinedData = {
+                ...employeeData,
+                eInstituteId,
+                ePassingYear,
+                eBatchNo,
+                eGrade,
+                eDegreeName,
+                eAchievement,
+                eCourseDuration,
+                instituteId,
+                passingYear,
+                batchNo,
+                grade,
+                degreeName,
+                achievement,
+                courseDuration,
+                rankId,
+                postingFrom,
+                postingTo,
+                rangeId,
+                districtId,
+                zoneId,
+                thanaId,
+                promotionDate,
+                pReMarks,
+                addressType,
+                roadInfo,
+                aVillegeId,
+                aUnionId,
+                aThanaId,
+                aDistrictId,
+                aDivisionId
+            };
+
+            // Confirmation dialog
             swal({
                 title: 'Are you sure?',
                 text: 'Do you want to save this data?',
@@ -1185,39 +1610,35 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, Save It!'
-            }).then(function (res)
-            {
+            }).then(function (res) {
                 if (res) {
+                    // AJAX request
                     $.ajax({
                         url: "/EmployeeArea/EmployeInfo/CreateEmployeeProfile",
                         type: "POST",
-                        data: data,
-                        success: function (res)
-                        {
-                            if (res != 0) {
+                        contentType: "application/json", // Send as JSON
+                        data: JSON.stringify(combinedData),
+                        success: function (response) {
+                            if (response != 0) {
                                 swal('', 'Save Successfully!', 'success');
                                 location.reload(true);
-                                //$('#employeeCreate').hide();
-                                //$('#employeeList').Show();
-                            }
-                            else {
+                            } else {
                                 swal('', 'Invalid Attempt!', 'warning');
                                 return false;
                             }
+                        },
+                        error: function (error) {
+                            console.error('Error saving data:', error);
+                            swal('', 'An error occurred while saving data.', 'error');
                         }
                     });
                 }
-            }, function (dismiss)
-            {
-                if (dismiss === 'cancel' || dismiss === 'close')
-                {
+            }, function (dismiss) {
+                if (dismiss === 'cancel' || dismiss === 'close') {
                     return false;
                 }
             });
         }
-
-
-       
 
     </script>
 }
