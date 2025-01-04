@@ -526,7 +526,7 @@
 
                                 <select class="form-control" id="rankId" name="rankId">
 
-                                    <option value="">Select</option>
+                                    <option value="" selected>Select</option>
                                     @foreach (var rank1 in Model.Ranks)
                                     {
                                         <option value="@rank1.Id">@rank1.rankName</option>
@@ -558,8 +558,11 @@
                             <div class="col-md-8">
                                 <select class="form-control" id="rangeId" name="rangeId">
 
-                                    <option value="Select"></option>
-
+                                    <option value="" selected></option>
+                                    @foreach (var range in Model.RangeMetros)
+                                    {
+                                        <option value="@range.Id">@range.rangeMetroName</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -568,7 +571,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="districtId" name="districtId">
+                                <select class="form-control" id="divisionDistrictId" name="districtId">
 
                                     <option value="Select"></option>
 
@@ -858,6 +861,35 @@
                     $('#villegeId').append('<option value="">Select</option>');
                 }
             });
+
+
+
+
+            $('#divisionDistrictId').change(function () {
+                var divisionDistrictId = $(this).val();
+                if (divisionDistrictId) {
+                    $.ajax({
+                        url: '/MasterData/MasterDatas/GetThanasByDistrictId',
+                        type: 'GET',
+                        data: { districtId: divisionDistrictId },
+                        success: function (response) {
+                            var districtDropdown = $('#zoneId');
+                            districtDropdown.empty();
+                            districtDropdown.append('<option value="">Select</option>');
+                            $.each(response, function (index, zone) {
+                                districtDropdown.append('<option value="' + zone.Id + '">' + zone.zoneName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+                    $('#thanaId').empty();
+                    $('#thanaId').append('<option value="">Select</option>');
+                }
+            });
+
 
 
             function addAddress() {

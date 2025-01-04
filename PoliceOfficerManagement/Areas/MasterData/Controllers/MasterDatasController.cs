@@ -99,5 +99,6 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             return Json(data);
         }
         #endregion
+         
     }
 }

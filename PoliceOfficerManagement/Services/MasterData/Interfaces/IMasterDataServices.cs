@@ -13,5 +13,6 @@ namespace PoliceOfficerManagement.Services.MasterData.Interfaces
         Task<IEnumerable<UnionWard>> GetUnionWardsByThanaId(int thanaId);
         Task<IEnumerable<Village>> GetUnionWardsByUnionWardId(int unionWardId);
         Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo();
+        Task<IEnumerable<RangeMetro>> GetAllRangeMetros();
     }
 }

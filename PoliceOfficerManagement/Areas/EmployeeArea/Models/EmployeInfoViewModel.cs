@@ -70,5 +70,6 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Models
         public int[] aDistrictId { get; set; }
         public int[] aDivisionId { get; set; }
         #endregion
+        public IEnumerable<RangeMetro> RangeMetros { get; set; }
     }
 }
