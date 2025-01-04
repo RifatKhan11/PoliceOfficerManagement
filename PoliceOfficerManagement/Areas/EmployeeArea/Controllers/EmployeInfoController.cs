@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PoliceOfficerManagement.Areas.EmployeeArea.Models;
 using PoliceOfficerManagement.Areas.MasterData.Models;
@@ -6,6 +7,7 @@ using PoliceOfficerManagement.Data;
 using PoliceOfficerManagement.Data.Entity;
 using PoliceOfficerManagement.Services.AuthServices.Interfaces;
 using PoliceOfficerManagement.Services.Employee.Interfaces;
+using PoliceOfficerManagement.Services.MasterData.Interfaces;
 
 namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
 {
@@ -13,16 +15,18 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
     public class EmployeInfoController : Controller
     {
         private readonly IEmployeeServices _employeeServices;
+        private readonly IMasterDataServices _masterDataServices;
         private readonly IUserInfoes userInfoes;
         private readonly string rootPath;
         public string FileName;
 
-        public EmployeInfoController(IWebHostEnvironment hostingEnvironment, IUserInfoes userInfoes, IEmployeeServices employeeServices)
+        public EmployeInfoController(IWebHostEnvironment hostingEnvironment, IMasterDataServices masterDataServices,IUserInfoes userInfoes, IEmployeeServices employeeServices)
         {
             
 
             this.userInfoes = userInfoes;
             this._employeeServices = employeeServices;
+            this._masterDataServices = masterDataServices;
             rootPath = hostingEnvironment.ContentRootPath;
         }
 
@@ -32,6 +36,9 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
             var model = new EmployeInfoViewModel
             {
                 employeInfos = await _employeeServices.GetEmployeeInfo(),
+                divisions = await _masterDataServices.GetAllDivision(),
+                institutionInfos = await _masterDataServices.GetAllInstitutionInfo(),
+                Ranks = await _masterDataServices.GetRank()
 
             };
             return View(model);

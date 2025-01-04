@@ -204,7 +204,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
     name: "default",
     //pattern: "{area=PublicArea}/{controller=Menu}/{action=Index}/{id?}");
-    pattern: "{area=Auth}/{controller=Account}/{action=Index}/{id?}");
+    pattern: "{area=Auth}/{controller=Account}/{action=Login}/{id?}");
 
 });
 //app.MapHub<OrderHub>("/orderHub");

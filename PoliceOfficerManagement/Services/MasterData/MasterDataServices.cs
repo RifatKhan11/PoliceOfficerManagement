@@ -63,5 +63,50 @@ namespace PoliceOfficerManagement.Services.MasterData
         }
 
 
+
+        #region Division
+
+        public async Task<IEnumerable<Division>> GetAllDivision()
+        {
+            var data = await _context.Divisions.ToListAsync();
+            return data;
+        }
+        #endregion
+
+        #region Districts
+        public async Task<IEnumerable<District>> GetDistrictsByDivisionId(int divisionId)
+        {
+            var data = await _context.Districts.Where(x=>x.divisionId == divisionId).ToListAsync();
+            return data;
+        }
+        #endregion
+        #region Thanas
+        public async Task<IEnumerable<Thana>> GetThanasByDistrictId(int districtId)
+        {
+            var data = await _context.Thanas.Where(x => x.districtId == districtId).ToListAsync();
+            return data;
+        }
+        #endregion
+        #region UnionWard
+        public async Task<IEnumerable<UnionWard>> GetUnionWardsByThanaId(int thanaId)
+        {
+            var data = await _context.UnionWards.Where(x => x.thanaId == thanaId).ToListAsync();
+            return data;
+        }
+        #endregion
+        #region Village
+        public async Task<IEnumerable<Village>> GetUnionWardsByUnionWardId(int unionWardId)
+        {
+            var data = await _context.Villages.Where(x => x.unionWardId == unionWardId).ToListAsync();
+            return data;
+        }
+        #endregion
+        #region Institution Info
+        public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo()
+        {
+            var data = await _context.InstitutionInfos.ToListAsync();
+            return data;
+        }
+        #endregion
     }
 }

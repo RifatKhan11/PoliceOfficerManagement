@@ -47,7 +47,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">nameBn<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="nameBn" name="nameBn" class="form-control" />
+                                <input type="text" id="nameBn" name="nameBn" value="" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,15 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">joiningRankId<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="joiningRankId" name="joiningRankId" class="form-control" />
+                                 
+                                <select class="form-control" id="joiningRankId" name="joiningRankId">
+
+                                    <option value="">Select</option>
+                                    @foreach (var rank in Model.Ranks)
+                                    {
+                                        <option value="@rank.Id">@rank.rankName</option>
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -170,8 +178,11 @@
                             <div class="col-md-8">
                                 <select class="form-control" id="divisionId" name="divisionId">
 
-                                    <option value="Select"></option> 
-                                     
+                                    <option value="">Select</option>
+                                    @foreach (var divisions in Model.divisions)
+                                    {
+                                        <option value="@divisions.Id">@divisions.divisionName</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -230,16 +241,38 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">roadInfo<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="nameBn" name="nameBn" class="form-control" />
+                                <input type="text" id="roadInfo" name="roadInfo" class="form-control" />
                             </div>
                         </div>
                     </div>
                      
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
                         <button type="button" id="btnAdress" class="btn btn-secondary" style="float: right" onclick="addAddress()">Add</button>
 
                     </div>
                 </div>
+
+                <div class="row" id="addressDiv">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="AddressTbl" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Address Type</th>
+                                    <th>Division</th>
+                                    <th>District</th>
+                                    <th>Thana</th> 
+                                    <th>Union</th>
+                                    <th>Union</th>
+                                    <th>Villege</th>
+                                    <th>roadInfo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                
                 <div style="height:20px;"></div>
 
             </div>
@@ -264,10 +297,14 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Institute<span style="color: red">*</span></label>
                             <div class="col-md-8">
+                                
                                 <select class="form-control" id="instituteId" name="instituteId">
 
                                     <option value="">Select</option>
- 
+                                    @foreach (var institution in Model.institutionInfos)
+                                    {
+                                        <option value="@institution.Id">@institution.nameEn</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -323,15 +360,301 @@
                     </div>
                     
 
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
                         <button type="button" id="btnEducation" class="btn btn-secondary" style="float: right" onclick="addEducation()">Add</button>
 
                     </div>
                 </div>
+
+                <div class="row" id="eduDiv">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="EduTbl" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Institute</th>
+                                    <th>Passing Year</th>
+                                    <th>Batch No</th>
+                                    <th>Grade</th>
+                                    <th>Degree Name</th>
+                                    <th>Achievement</th>
+                                    <th>Course Duration</th> 
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <div style="height:20px;"></div>
 
             </div>
         </div>
+
+
+
+
+        <div class="card-header" style="background-color: bisque">
+            <div class="row">
+                <div class="col-12">
+                    <h5>Training Info</h5>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Institute<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+
+                                <select class="form-control" id="instituteId2" name="instituteId">
+
+                                    <option value="">Select</option>
+                                    @foreach (var institution in Model.institutionInfos)
+                                    {
+                                        <option value="@institution.Id">@institution.nameEn</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Passing Year<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="passingYear2" name="passingYear" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Batch No<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="batchNo2" name="batchNo" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Grade<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="grade2" name="grade" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Degree Name<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="degreeName2" name="degreeName" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Achievement<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="achievement2" name="achievement" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Course Duration<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="courseDuration2" name="courseDuration" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                        <button type="button" id="btnTraining" class="btn btn-secondary" style="float: right" onclick="addTraining()">Add</button>
+
+                    </div>
+                </div>
+
+                <div class="row" id="eduDiv">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="TrainingTbl" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Institute</th>
+                                    <th>Passing Year</th>
+                                    <th>Batch No</th>
+                                    <th>Grade</th>
+                                    <th>Degree Name</th>
+                                    <th>Achievement</th>
+                                    <th>Course Duration</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="height:20px;"></div>
+
+            </div>
+        </div>
+
+
+        <div class="card-header" style="background-color: bisque">
+            <div class="row">
+                <div class="col-12">
+                    <h5>Posting Place</h5>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Rank<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+
+                                <select class="form-control" id="rankId" name="rankId">
+
+                                    <option value="">Select</option>
+                                    @foreach (var rank1 in Model.Ranks)
+                                    {
+                                        <option value="@rank1.Id">@rank1.rankName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Posting From<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="date" id="postingFrom" name="postingFrom" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Posting To<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="date" id="postingTo" name="postingTo" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Range<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="rangeId" name="rangeId">
+
+                                    <option value="Select"></option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="districtId" name="districtId">
+
+                                    <option value="Select"></option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Zone<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="zoneId" name="zoneId">
+
+                                    <option value="Select"></option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Thana<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="thanaId" name="thanaId">
+
+                                    <option value="Select"></option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Promotion Date<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="date" id="promotionDate" name="promotionDate" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Remarks<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="reMarks" name="reMarks" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                        <button type="button" id="btnTraining" class="btn btn-secondary" style="float: right" onclick="addPosting()">Add</button>
+
+                    </div>
+                </div>
+
+                <div class="row" id="eduDiv">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="PostingTbl" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Posting From</th>
+                                    <th>Posting To</th>
+                                    <th>Range</th>
+                                    <th>District</th>
+                                    <th>Zone</th>
+                                    <th>Thana</th>
+                                    <th>Promotion Date</th>
+                                    <th>Remarks</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="height:20px;"></div>
+
+            </div>
+        </div>
+
+
+
 
         <hr />
         <div class="card-body">
@@ -427,9 +750,276 @@
 
  *@
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    @* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> *@
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>  
     <script type="text/javascript">
+
+
+        $(document).ready(function () { 
+
+            $('#divisionId').change(function () {
+                var divisionId = $(this).val();  
+                if (divisionId) {
+                    $.ajax({
+                        url: '/MasterData/MasterDatas/GetDistrictsByDivisionId',   
+                        type: 'GET',
+                        data: { divisionId: divisionId },
+                        success: function (response) {
+                            var districtDropdown = $('#districtId');
+                            districtDropdown.empty();  
+                            districtDropdown.append('<option value="">Select</option>'); 
+                            $.each(response, function (index, district) {
+                                districtDropdown.append('<option value="' + district.Id + '">' + district.districtName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else { 
+                    $('#districtId').empty();
+                    $('#districtId').append('<option value="">Select</option>');
+                }
+            });
+
+            $('#districtId').change(function () {
+                var districtId = $(this).val();
+                if (districtId) {
+                    $.ajax({
+                        url: '/MasterData/MasterDatas/GetThanasByDistrictId',
+                        type: 'GET',
+                        data: { districtId: districtId },
+                        success: function (response) { 
+                            var districtDropdown = $('#thanaId');
+                            districtDropdown.empty();
+                            districtDropdown.append('<option value="">Select</option>');
+                            $.each(response, function (index, thana) { 
+                                districtDropdown.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+                    $('#thanaId').empty();
+                    $('#thanaId').append('<option value="">Select</option>');
+                }
+            });
+            
+            $('#thanaId').change(function () {
+                var thanaId = $(this).val();
+                if (thanaId) {
+                    $.ajax({
+                        url: '/MasterData/MasterDatas/GetUnionWardsByThanaId',
+                        type: 'GET',
+                        data: { thanaId: thanaId },
+                        success: function (response) {
+                            var districtDropdown = $('#unionId');
+                            districtDropdown.empty();
+                            districtDropdown.append('<option value="">Select</option>');
+                            $.each(response, function (index, union) {
+                                districtDropdown.append('<option value="' + union.Id + '">' + union.unionName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+                    $('#unionId').empty();
+                    $('#unionId').append('<option value="">Select</option>');
+                }
+            });
+
+            $('#unionId').change(function () {
+                var unionId = $(this).val();
+                if (unionId) {
+                    $.ajax({
+                        url: '/MasterData/MasterDatas/GetUnionWardsByUnionWardId',
+                        type: 'GET',
+                        data: { unionId: unionId },
+                        success: function (response) {
+                            var districtDropdown = $('#villegeId');
+                            districtDropdown.empty();
+                            districtDropdown.append('<option value="">Select</option>');
+                            $.each(response, function (index, villege) {
+                                districtDropdown.append('<option value="' + villege.Id + '">' + villege.villageName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+                    $('#villegeId').empty();
+                    $('#villegeId').append('<option value="">Select</option>');
+                }
+            });
+
+
+            function addAddress() {
+                // Get values from the form
+                const addressType = $('#addressType').val();
+                const division = $('#divisionId option:selected').text();
+                const district = $('#districtId option:selected').text();
+                const thana = $('#thanaId option:selected').text();
+                const union = $('#unionId option:selected').text();
+                const villege = $('#villegeId option:selected').text();
+                const roadInfo = $('#roadInfo').val(); 
+                if (!addressType || !division || !district || !thana || !union || !villege || !roadInfo) {
+                    alert('Please fill all required fields.');
+                    return;
+                } 
+                const newRow = `
+                    <tr>
+                        <td>${addressType}</td>
+                        <td>${division}</td>
+                        <td>${district}</td>
+                        <td>${thana}</td>
+                        <td>${union}</td>
+                        <td>${union}</td>  
+                        <td>${villege}</td>
+                        <td>${roadInfo}</td>
+                        <td><button type="button" class="btn btn-danger btn-sm remove-Address">Remove</button></td>
+                    </tr>
+                `;
+
+                $('#AddressTbl tbody').append(newRow);
+
+                // Clear the form fields after adding
+                $('#addressType').val('');
+                $('#divisionId').val('');
+                $('#districtId').val('');
+                $('#thanaId').val('');
+                $('#unionId').val('');
+                $('#villegeId').val('');
+                $('#roadInfo').val('');
+            }
+
+            // Add the address when the "Add" button is clicked
+            $('#btnAdress').click(function () {
+                addAddress();
+            });
+
+            // Remove a row from the table
+            $(document).on('click', '.remove-Address', function () {
+                $(this).closest('tr').remove();
+            });
+            function removeAdressRow(button) {
+                $(button).closest('tr').remove();
+            }
+
+
+            function addEducation() {
+                // Get values from input fields
+                const institute = $('#instituteId option:selected').text();
+                const passingYear = $('#passingYear').val();
+                const batchNo = $('#batchNo').val();
+                const grade = $('#grade').val();
+                const degreeName = $('#degreeName').val();
+                const achievement = $('#achievement').val();
+                const courseDuration = $('#courseDuration').val();
+
+                // Validate input values
+                if (!institute || institute === "Select" || !passingYear || !batchNo || !grade || !degreeName || !achievement || !courseDuration) {
+                    alert('Please fill in all fields before adding.');
+                    return;
+                }
+
+                // Create a new table row
+                const newRow = `
+                <tr>
+                    <td>${institute}</td>
+                    <td>${passingYear}</td>
+                    <td>${batchNo}</td>
+                    <td>${grade}</td>
+                    <td>${degreeName}</td>
+                    <td>${achievement}</td>
+                    <td>${courseDuration}</td>
+                    <td>
+                       <button type="button" class="btn btn-danger btn-sm remove-Edu">Remove</button>
+                    </td>
+                </tr>
+            `;
+
+                // Append the row to the table body
+                $('#EduTbl tbody').append(newRow);
+
+                // Clear input fields
+                $('#instituteId').val('');
+                $('#passingYear').val('');
+                $('#batchNo').val('');
+                $('#grade').val('');
+                $('#degreeName').val('');
+                $('#achievement').val('');
+                $('#courseDuration').val('');
+            }
+
+            $(document).on('click', '.remove-Edu', function () {
+                $(this).closest('tr').remove();
+            });
+            $('#btnEducation').click(function () {
+                addEducation();
+            });
+
+
+            function addTraining() {
+                // Get values from input fields
+                const institute = $('#instituteId2 option:selected').text();
+                const passingYear = $('#passingYear2').val();
+                const batchNo = $('#batchNo2').val();
+                const grade = $('#grade2').val();
+                const degreeName = $('#degreeName2').val();
+                const achievement = $('#achievement2').val();
+                const courseDuration = $('#courseDuration2').val();
+
+                // Validate input values
+                if (!institute || institute === "Select" || !passingYear || !batchNo || !grade || !degreeName || !achievement || !courseDuration) {
+                    alert('Please fill in all fields before adding.');
+                    return;
+                }
+
+                // Create a new table row
+                const newRow = `
+                        <tr>
+                            <td>${institute}</td>
+                            <td>${passingYear}</td>
+                            <td>${batchNo}</td>
+                            <td>${grade}</td>
+                            <td>${degreeName}</td>
+                            <td>${achievement}</td>
+                            <td>${courseDuration}</td>
+                            <td>
+                               <button type="button" class="btn btn-danger btn-sm remove-Training">Remove</button>
+                            </td>
+                        </tr>
+                    `;
+
+                // Append the row to the table body
+                $('#TrainingTbl tbody').append(newRow);
+
+                // Clear input fields
+                $('#instituteId2').val('');
+                $('#passingYear2').val('');
+                $('#batchNo2').val('');
+                $('#grade2').val('');
+                $('#degreeName2').val('');
+                $('#achievement2').val('');
+                $('#courseDuration2').val('');
+            }
+
+            $(document).on('click', '.remove-Training', function () {
+                $(this).closest('tr').remove();
+            });
+            $('#btnTraining').click(function () {
+                addTraining();
+            });
+
+        });
+
          
           function Delete(Id) {
             swal({
@@ -468,26 +1058,26 @@
             return dateString ? dateString.match(/^\d{4}-\d{2}-\d{2}/)?.[0] : '';
         }
 
-        function edit(Id,nameEn,nameBn, employeeCode, nidNumber,joiningDate,retirementDate,joiningRankId,homeDistrict,homeUpazila,reMarks,personalPhoneNumber,officePhoneNumber)
-        {
-            $('#Id').val(Id);
-            $('#nameEn').val(nameEn);
-            $('#nameBn').val(nameBn);
-            $('#employeeCode').val(employeeCode);
-            $('#nidNumber').val(nidNumber);
+        // function edit(Id,nameEn,nameBn, employeeCode, nidNumber,joiningDate,retirementDate,joiningRankId,homeDistrict,homeUpazila,reMarks,personalPhoneNumber,officePhoneNumber)
+        // {
+        //     $('#Id').val(Id);
+        //     $('#nameEn').val(nameEn);
+        //     $('#nameBn').val(nameBn);
+        //     $('#employeeCode').val(employeeCode);
+        //     $('#nidNumber').val(nidNumber);
              
-            $('#joiningDate').val(extractDate(joiningDate));
-            $('#retirementDate').val(extractDate(retirementDate));
-            $('#joiningRankId').val(joiningRankId);
-            $('#homeDistrict').val(homeDistrict);
-            $('#homeUpazila').val(homeUpazila);
-            $('#reMarks').val(reMarks);
-            $('#personalPhoneNumber').val(personalPhoneNumber);
-            $('#officePhoneNumber').val(officePhoneNumber);
-            // $('#employeeCreate').show();
-            // $('#employeeList').hide();
+        //     $('#joiningDate').val(extractDate(joiningDate));
+        //     $('#retirementDate').val(extractDate(retirementDate));
+        //     $('#joiningRankId').val(joiningRankId);
+        //     $('#homeDistrict').val(homeDistrict);
+        //     $('#homeUpazila').val(homeUpazila);
+        //     $('#reMarks').val(reMarks);
+        //     $('#personalPhoneNumber').val(personalPhoneNumber);
+        //     $('#officePhoneNumber').val(officePhoneNumber);
+        //     // $('#employeeCreate').show();
+        //     // $('#employeeList').hide();
             
-        }
+        // }
 
         function resetForm() {
             $('#employeeForm')[0].reset();
