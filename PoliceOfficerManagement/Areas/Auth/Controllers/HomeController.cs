@@ -30,7 +30,7 @@ namespace PoliceOfficerManagement.Controllers
 
         }
         //[Authorize(Roles = "Super Admin,Admin,Reader")]
-        public async Task<IActionResult> ReaderDashboard()
+        public async Task<IActionResult> AdminDashboard()
         {
             return View();
         }
