@@ -38,7 +38,8 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
                 employeInfos = await _employeeServices.GetEmployeeInfo(),
                 divisions = await _masterDataServices.GetAllDivision(),
                 institutionInfos = await _masterDataServices.GetAllInstitutionInfo(),
-                Ranks = await _masterDataServices.GetRank()
+                Ranks = await _masterDataServices.GetRank(),
+                RangeMetros =await _masterDataServices.GetAllRangeMetros(),
 
             };
             return View(model);

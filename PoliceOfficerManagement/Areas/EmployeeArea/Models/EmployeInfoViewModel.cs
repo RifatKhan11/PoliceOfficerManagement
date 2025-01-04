@@ -23,5 +23,6 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Models
         public IEnumerable<InstitutionInfo> institutionInfos { get; set; }
         public IEnumerable<Division> divisions { get; set; }
         public IEnumerable<Rank> Ranks { get; set; }
+        public IEnumerable<RangeMetro> RangeMetros { get; set; }
     }
 }

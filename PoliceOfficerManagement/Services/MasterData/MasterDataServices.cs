@@ -108,5 +108,12 @@ namespace PoliceOfficerManagement.Services.MasterData
             return data;
         }
         #endregion
+        #region RangeMetros
+        public async Task<IEnumerable<RangeMetro>> GetAllRangeMetros()
+        {
+            var data = await _context.RangeMetros.ToListAsync();
+            return data;
+        }
+        #endregion
     }
 }
