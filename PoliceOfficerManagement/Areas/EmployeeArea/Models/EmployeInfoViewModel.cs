@@ -29,7 +29,7 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Models
 
         #region Educational Info
         public int[] eInstituteId { get; set; }
-        public string[] rPassingYear { get; set; }
+        public string[] ePassingYear { get; set; }
         public string[] eBatchNo { get; set; }
         public string[] eGrade { get; set; }
         public string[] eDegreeName { get; set; }
