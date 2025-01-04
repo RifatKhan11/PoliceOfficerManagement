@@ -66,10 +66,94 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
 
             };
 
-            var id = await _employeeServices.SaveEmployeeInfo(data);
+            var empId = await _employeeServices.SaveEmployeeInfo(data);
 
+            List<EducationalInfo> edu = new List<EducationalInfo>();
+            List<TrainingInfo> train = new List<TrainingInfo>();
+            List<PostingPlace> post = new List<PostingPlace>();
+            List<AdderssInfo> add = new List<AdderssInfo>();
+            if (model.eInstituteId.Count() > 0)
+            {
+               ;
+                for (int i = 0; i < model.eInstituteId.Length; i++)
+                {
+                    var edus = new EducationalInfo
+                    {
+                        instituteId = model.eInstituteId[i],
+                        passingYear= model.ePassingYear[i],
+                        batchNo = model.eBatchNo[i],
+                        grade = model.eGrade[i],
+                        degreeName = model.eDegreeName[i],
+                        achievement = model.eAchievement[i],
+                        courseDuration = model.eCourseDuration[i],
+                        employeeId = empId,
+                    };
+                    edu.Add(edus);
+                }
+            }
+            
+            if (model.instituteId.Count() > 0)
+            {
+                
+                for (int i = 0; i < model.instituteId.Length; i++)
+                {
+                    var trn = new TrainingInfo
+                    {
+                        instituteId = model.instituteId[i],
+                        passingYear= model.passingYear[i],
+                        batchNo = model.batchNo[i],
+                        grade = model.grade[i],
+                        degreeName = model.degreeName[i],
+                        achievement = model.achievement[i],
+                        courseDuration = model.courseDuration[i],
+                        employeeId = empId,
+                    };
+                    train.Add(trn);
+                }
+            }
+            if (model.rankId.Count() > 0)
+            {
+                
+                for (int i = 0; i < model.rankId.Length; i++)
+                {
+                    var trn = new PostingPlace
+                    {
+                        rankId = model.rankId[i],
+                        postingFrom= model.postingFrom[i],
+                        postingTo = model.postingTo[i],
+                        thanaId = model.thanaId[i],
+                        zoneId = model.zoneId[i],
+                        districtId = model.districtId[i],
+                        rangeId = model.rangeId[i],
+                        reMarks = model.pReMarks[i],
+                        promotionDate = model.promotionDate[i],
+                        employeeId = empId,
+                    };
+                    post.Add(trn);
+                }
+            }
+            if (model.addressType.Count() > 0)
+            {
+                
+                for (int i = 0; i < model.addressType.Length; i++)
+                {
+                    var trn = new AdderssInfo
+                    {
+                        addressType = model.addressType[i],
+                        roadInfo = model.roadInfo[i],
+                        villegeId = model.aVillegeId[i],
+                        unionId = model.aUnionId[i],
+                        thanaId = model.aThanaId[i],
+                        districtId = model.aDistrictId[i],
+                        divisionId = model.aDivisionId[i],                       
+                        employeeId = empId,
+                    };
+                    add.Add(trn);
+                }
+            }
 
-            return Json(id);
+            await _employeeServices.SaveEmployeeOtherInfo(edu, train, post, add);
+            return Json(empId);
         }
 
         [HttpPost]

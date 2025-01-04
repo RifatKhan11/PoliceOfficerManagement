@@ -44,6 +44,34 @@ namespace PoliceOfficerManagement.Services.Employee
 
         }
 
+        public async Task<int> SaveEmployeeOtherInfo(List<EducationalInfo> edu, List<TrainingInfo> train, List<PostingPlace> post, List<AdderssInfo> add)
+        {
+            try 
+            {
+                if (edu.Count > 0)
+                {
+                  await  _context.EducationalInfos.AddRangeAsync(edu);
+                }
+                if (train.Count > 0)
+                {
+                    await _context.TrainingInfos.AddRangeAsync(train);
+                }
+                if(post.Count > 0)
+                {
+                    await _context.AddRangeAsync(post);
+                }
+                if (add.Count > 0)
+                {
+                    await _context.AddRangeAsync(add);
+                }
+                await _context.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
         public async Task<IEnumerable<EmployeInfo>> GetEmployeeInfo()
         {
             return await _context.employeeInfos.Where(x=>x.isActive != true).ToListAsync();
@@ -61,6 +89,7 @@ namespace PoliceOfficerManagement.Services.Employee
             }
             return 0;
         }
+
 
 
     }
