@@ -59,11 +59,11 @@ namespace PoliceOfficerManagement.Services.Employee
                 }
                 if(post.Count > 0)
                 {
-                    await _context.AddRangeAsync(post);
+                    await _context.PostingPlaces.AddRangeAsync(post);
                 }
                 if (add.Count > 0)
                 {
-                    await _context.AddRangeAsync(add);
+                    await _context.AdderssInfos.AddRangeAsync(add);
                 }
                 await _context.SaveChangesAsync();
                 return 1;
