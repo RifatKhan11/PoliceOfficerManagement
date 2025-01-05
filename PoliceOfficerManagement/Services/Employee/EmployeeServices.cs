@@ -100,6 +100,7 @@ namespace PoliceOfficerManagement.Services.Employee
                             
                             select new EmployeeInfoModel
                             {
+                                empId=e.Id,
                                 empName = e.nameEn,
                                 empNameBn = e.nameEn,
                                 employeeCode=e.employeeCode,

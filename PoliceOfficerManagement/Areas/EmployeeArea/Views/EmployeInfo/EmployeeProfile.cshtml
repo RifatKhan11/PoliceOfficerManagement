@@ -1,6 +1,7 @@
 ﻿@using PoliceOfficerManagement.Areas.EmployeeArea.Models;
 @model EmployeeProfileModel
-    ViewData["Title"] = "Employee Information";
+@{
+    ViewData["Title"] = "Employee Profile Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,151 +19,151 @@
         </div>
     </div>
 
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="card-header" style="background-color: bisque">
-            <div class="row">
-                <div class="col-12">
-                    <h5>Employee</h5>
-
-                </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="card-header" style="background-color: bisque">
+        <div class="row">
+            <div class="col-12">
+                <h5>Employee</h5>
 
             </div>
-        </div>
-        <div class="card-body">
-            <div class="container-fluid">
 
-                <input name="Id" id="Id" hidden />
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Name<span style="color: red">*</span></label>
-                            <div class="col-md-8">
-                                <span type="text" id="nameEn" name="nameEn" value="" class="form-control" >@Model.EmployeeInfo.empName</span>
-                            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+
+            <input name="Id" id="Id" hidden />
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Name<span style="color: red">*</span></label>
+                        <div class="col-md-8">
+                            <span type="text" id="nameEn" name="nameEn" value="" class="form-control">@Model.EmployeeInfo.empName</span>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Name Bn<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Name Bn<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="nameBn" name="nameBn" value="" class="form-control">@Model.EmployeeInfo.empNameBn</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Employee BP<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Employee BP<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="employeeCode" name="employeeCode" value="" class="form-control">@Model.EmployeeInfo.employeeCode</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Nid Number<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Nid Number<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="nidNumber" name="nidNumber" value="" class="form-control">@Model.EmployeeInfo.nidNumber</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Joining Date<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Joining Date<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="date" id="joiningDate" name="joiningDate" value="" class="form-control">@Model.EmployeeInfo.joiningDate?.ToString("dd-MMM-yyyy")</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Retirement Date<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Retirement Date<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="date" id="retirementDate" name="retirementDate" value="" class="form-control">@Model.EmployeeInfo.retirmentDate?.ToString("dd-MMM-yyyy")</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Joining Rank<span style="color: red">*</span></label>
-                            <div class="col-md-8">
-                            <span>@Model.EmployeeInfo.joiningRank</span>
-                            </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Joining Rank<span style="color: red">*</span></label>
+                        <div class="col-md-8">
+                            <span class="form-control">@Model.EmployeeInfo.joiningRank</span>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Home District<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Home District<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="homeDistrict" name="homeDistrict" value="" class="form-control">@Model.EmployeeInfo.homeDistrict</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Home Upazila<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Home Upazila<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="homeUpazila" name="homeUpazila" value="" class="form-control">@Model.EmployeeInfo.homeUpazila</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Re-Marks<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Re-Marks<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="reMarks" name="reMarks" value="" class="form-control">@Model.EmployeeInfo.reMarks</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Personal Phone Number<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Personal Phone Number<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="personalPhoneNumber" name="personalPhoneNumber" value="" class="form-control">@Model.EmployeeInfo.personalPhoneNumber</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Office Phone Number<span style="color: red">*</span></label>
-                            <div class="col-md-8">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-4">Office Phone Number<span style="color: red">*</span></label>
+                        <div class="col-md-8">
                             <span type="text" id="officePhoneNumber" name="officePhoneNumber" value="" class="form-control">@Model.EmployeeInfo.officePhoneNumber</span>
-                            </div>
                         </div>
                     </div>
-
-                </div>
-                <div style="height:20px;"></div>
-
-            </div>
-        </div>
-
-        <div class="card-header" style="background-color: bisque">
-            <div class="row">
-                <div class="col-12">
-                    <h5>Adderss Info</h5>
-
                 </div>
 
             </div>
-        </div>
-        <div class="card-body">
-            <div class="container-fluid">
+            <div style="height:20px;"></div>
 
-                <div class="row" id="addressDiv">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="AddressTbl" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Division</th>
-                                    <th>District</th>
-                                    <th>Thana</th>
-                                    <th>Union</th>
-                                    <th>Villege</th>
-                                    <th>roadInfo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.AdderssInfo.Where(x=>x.addressType==1))
+        </div>
+    </div>
+
+    <div class="card-header" style="background-color: bisque">
+        <div class="row">
+            <div class="col-12">
+                <h5>Adderss Info</h5>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+
+            <div class="row" id="addressDiv">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="AddressTbl" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Division</th>
+                                <th>District</th>
+                                <th>Thana</th>
+                                <th>Union</th>
+                                <th>Villege</th>
+                                <th>roadInfo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.AdderssInfo.Where(x => x.addressType == 1))
                             {
                                 <tr><td colspan="6">Parmanent Address</td></tr>
                                 <tr>
@@ -174,58 +175,62 @@
                                     <td>@item.roadInfo</td>
                                 </tr>
                             }
-                            <tr><td colspan="6">Present Address</td></tr>
-                            @foreach (var item in Model.AdderssInfo.Where(x => x.addressType != 1))
+                            @if (Model.AdderssInfo.Where(x => x.addressType != 1).Count()>0)
                             {
-                                <tr>
-                                    <td>@item.division.divisionNameBn</td>
-                                    <td>@item.district.districtNameBn</td>
-                                    <td>@item.thana.thanaNameBn</td>
-                                    <td>@item.union.unionNameBn</td>
-                                    <td>@item.villege.villageNameBn</td>
-                                    <td>@item.roadInfo</td>
-                                </tr>
+                                <tr><td colspan="6">Present Address</td></tr>
+                                @foreach (var item in Model.AdderssInfo.Where(x => x.addressType != 1))
+                                {
+                                    <tr>
+                                        <td>@item.division.divisionNameBn</td>
+                                        <td>@item.district.districtNameBn</td>
+                                        <td>@item.thana.thanaNameBn</td>
+                                        <td>@item.union.unionNameBn</td>
+                                        <td>@item.villege.villageNameBn</td>
+                                        <td>@item.roadInfo</td>
+                                    </tr>
+                                }
                             }
-                            </tbody>
-                        </table>
-                    </div>
+                            
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div style="height:20px;"></div>
+            <div style="height:20px;"></div>
+
+        </div>
+    </div>
+
+
+
+    <div class="card-header" style="background-color: bisque">
+        <div class="row">
+            <div class="col-12">
+                <h5>Educational Info</h5>
 
             </div>
+
         </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
 
-
-
-        <div class="card-header" style="background-color: bisque">
-            <div class="row">
-                <div class="col-12">
-                    <h5>Educational Info</h5>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="container-fluid">
-
-                <div class="row" id="eduDiv">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="EduTbl" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Institute</th>
-                                    <th>Passing Year</th>
-                                    <th>Batch No</th>
-                                    <th>Grade</th>
-                                    <th>Degree Name</th>
-                                    <th>Achievement</th>
-                                    <th>Course Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.EducationalInfo)
+            <div class="row" id="eduDiv">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="EduTbl" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Institute</th>
+                                <th>Passing Year</th>
+                                <th>Batch No</th>
+                                <th>Grade</th>
+                                <th>Degree Name</th>
+                                <th>Achievement</th>
+                                <th>Course Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.EducationalInfo)
                             {
                                 <tr>
                                     <td>@item.institute.nameBn</td>
@@ -237,46 +242,46 @@
                                     <td>@item.courseDuration</td>
                                 </tr>
                             }
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div style="height:20px;"></div>
+            <div style="height:20px;"></div>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="card-header" style="background-color: bisque">
+        <div class="row">
+            <div class="col-12">
+                <h5>Training Info</h5>
 
             </div>
+
         </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
 
-
-
-
-        <div class="card-header" style="background-color: bisque">
-            <div class="row">
-                <div class="col-12">
-                    <h5>Training Info</h5>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="container-fluid">
-
-                <div class="row" id="eduDiv">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="TrainingTbl" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Institute</th>
-                                    <th>Passing Year</th>
-                                    <th>Batch No</th>
-                                    <th>Grade</th>
-                                    <th>Degree Name</th>
-                                    <th>Achievement</th>
-                                    <th>Course Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+            <div class="row" id="eduDiv">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="TrainingTbl" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Institute</th>
+                                <th>Passing Year</th>
+                                <th>Batch No</th>
+                                <th>Grade</th>
+                                <th>Degree Name</th>
+                                <th>Achievement</th>
+                                <th>Course Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach (var item in Model.TrainingInfo)
                             {
                                 <tr>
@@ -289,46 +294,46 @@
                                     <td>@item.courseDuration</td>
                                 </tr>
                             }
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div style="height:20px;"></div>
+            <div style="height:20px;"></div>
+
+        </div>
+    </div>
+
+
+    <div class="card-header" style="background-color: bisque">
+        <div class="row">
+            <div class="col-12">
+                <h5>Posting Place</h5>
 
             </div>
+
         </div>
-
-
-        <div class="card-header" style="background-color: bisque">
-            <div class="row">
-                <div class="col-12">
-                    <h5>Posting Place</h5>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="container-fluid">
-                <div class="row" id="eduDiv">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="PostingTbl" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Posting From</th>
-                                    <th>Posting To</th>
-                                    <th>Range</th>
-                                    <th>District</th>
-                                    <th>Zone</th>
-                                    <th>Thana</th>
-                                    <th>Promotion Date</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.PostingPlace)
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="row" id="eduDiv">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="PostingTbl" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Posting From</th>
+                                <th>Posting To</th>
+                                <th>Range</th>
+                                <th>District</th>
+                                <th>Zone</th>
+                                <th>Thana</th>
+                                <th>Promotion Date</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PostingPlace)
                             {
                                 <tr>
                                     <td>@item.rank.rankNameBN</td>
@@ -342,15 +347,15 @@
                                     <td>@item.reMarks</td>
                                 </tr>
                             }
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
-
-                <div style="height:20px;"></div>
-
             </div>
+
+            <div style="height:20px;"></div>
+
         </div>
+    </div>
 
 
 </div>

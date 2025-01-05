@@ -2,6 +2,7 @@
 {
     public class EmployeeInfoModel
     {
+        public int? empId {  get; set; }
         public string employeeCode { get; set; }
         public string empName { get; set; }
         public string empNameBn { get; set; }
