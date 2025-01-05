@@ -983,28 +983,36 @@
             // Create new row with input fields
             const newRow = `
                         <tr>
-                            <td><input type="text" name="addressType" value="${addressType}" class="form-control" /></td>
                             <td>
-                                <select name="aDivisionId" class="form-control">
-                                    <option value="${division}" selected>${$('#divisionId option:selected').text()}</option>
-                                </select>
+                               <span>${addressType}</span> 
+                            <input type="hidden" name="addressType" value="${addressType}" class="form-control" />
                             </td>
                             <td>
-                                <select name="aDistrictId" class="form-control">
-                                    <option value="${district}" selected>${$('#districtId option:selected').text()}</option>
-                                </select>
+                                <span>${$('#divisionId option:selected').text()}</span>
+                                <input type="hidden" name="aDivisionId" value="${division}" class="form-control" />
+
+                                 
                             </td>
                             <td>
+                                <span>${$('#districtId option:selected').text()}</span>
+                                 <input type="hidden" name="aDistrictId" value="${district}" class="form-control" />                                 
+                            </td>
+                            <td>
+                             
                                 <select name="aThanaId" class="form-control">
                                     <option value="${thana}" selected>${$('#thanaId option:selected').text()}</option>
                                 </select>
                             </td>
                             <td>
-                                <select name="aUnionId" class="form-control">
+
+                                 
+                                        <select name="aUnionId" class="form-control">
                                     <option value="${union}" selected>${$('#unionId option:selected').text()}</option>
                                 </select>
                             </td>
-                            <td><input type="text" name="aVillegeI" value="${villege}" class="form-control" /></td>
+                            <td>
+                                     
+                                    <input type="text" name="aVillegeI" value="${villege}" class="form-control" /></td>
                             <td><input type="text" name="roadInfo" value="${roadInfo}" class="form-control" /></td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-sm remove-Address">Remove</button>
