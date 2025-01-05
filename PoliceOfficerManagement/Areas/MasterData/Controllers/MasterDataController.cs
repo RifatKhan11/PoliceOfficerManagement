@@ -191,11 +191,13 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
                 latitude = model.latitude,
                 longitude = model.longitude,
                 pimsRangeId = model.pimsRangeId,
-                pimsRangeName = model.pimsRangeName
+                pimsRangeName = model.pimsRangeName,
+                isActive = model.IsActive,
             };
 
             var id = await _masterDataServices.SaveRangeMetro(data);
-            return Json(id);
+            return RedirectToAction("RangeMetros");
+            //return Json(id);
         }
 
         [HttpPost]
@@ -240,7 +242,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             };
 
             var id = await _masterDataServices.SaveDivisionDistrict(data);
-            return Json(id);
+            return RedirectToAction("DivisionDistrict");
+            //return Json(id);
         }
 
         [HttpPost]
@@ -284,7 +287,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             };
 
             var id = await _masterDataServices.SaveZoneCircle(data);
-            return Json(id);
+            return RedirectToAction("ZoneCircle");
+            //return Json(id);
         }
 
         [HttpPost]
@@ -337,7 +341,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             };
 
             var id = await _masterDataServices.SavePoliceThana(data);
-            return Json(id);
+            return RedirectToAction("PoliceThana");
+            //return Json(id);
         }
 
         [HttpPost]

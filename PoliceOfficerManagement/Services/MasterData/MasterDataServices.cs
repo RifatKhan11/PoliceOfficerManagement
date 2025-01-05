@@ -50,18 +50,19 @@ namespace PoliceOfficerManagement.Services.MasterData
 
         public async Task<IEnumerable<InstitutionInfo>> GetInstitutionInfo()
         {
-            return await _context.InstitutionInfos.Where(x => x.instituteType == 1 && x.isActive != true).ToListAsync();
+            return await _context.InstitutionInfos.Where(x => x.instituteType == 1 && x.isActive != false).ToListAsync();
         }
         public async Task<IEnumerable<InstitutionInfo>> GetInstitutionInfoTraning()
         {
-            return await _context.InstitutionInfos.Where(x => x.instituteType == 2 && x.isActive != true).ToListAsync();
+            return await _context.InstitutionInfos.Where(x => x.instituteType == 2 && x.isActive != false).ToListAsync();
         }
         public async Task<int> InActiveInstitutionInfoById(int Id)
         {
-            var data = await _context.InstitutionInfos.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            var data = await _context.InstitutionInfos.Where(x => x.Id == Id && x.isActive != false).FirstOrDefaultAsync();
             if (data != null)
             {
-                data.isActive = true;
+                data.isActive = false;
+                data.isDelete = 1;
                 _context.InstitutionInfos.Update(data);
                 await _context.SaveChangesAsync();
 
@@ -108,7 +109,8 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.ranks.Where(x => x.Id == Id).FirstOrDefaultAsync();
             if (data != null)
             {
-                data.isActive = true;
+                data.isActive = false;
+                data.isDelete = 1;
                 _context.ranks.Update(data);
                 await _context.SaveChangesAsync();
 
@@ -138,7 +140,7 @@ namespace PoliceOfficerManagement.Services.MasterData
         #region Thanas
         public async Task<IEnumerable<Thana>> GetThanasByDistrictId(int districtId)
         {
-            var data = await _context.Thanas.Where(x => x.districtId == districtId).ToListAsync();
+            var data = await _context.Thanas.Where(x => x.districtId == districtId && x.isActive != false).ToListAsync();
             return data;
         }
         
@@ -160,19 +162,19 @@ namespace PoliceOfficerManagement.Services.MasterData
         #region Institution Info
         public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfoForTraning()
         {
-            var data = await _context.InstitutionInfos.Where(x=>x.instituteType == 2 && x.isActive != true).ToListAsync();
+            var data = await _context.InstitutionInfos.Where(x=>x.instituteType == 2 && x.isActive != false).ToListAsync();
             return data;
         }
         public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo()
         {
-            var data = await _context.InstitutionInfos.Where(x => x.instituteType == 1 && x.isActive != true).ToListAsync();
+            var data = await _context.InstitutionInfos.Where(x => x.instituteType == 1 && x.isActive != false).ToListAsync();
             return data;
         }
         #endregion
         #region RangeMetros
         public async Task<IEnumerable<RangeMetro>> GetAllRangeMetros()
         {
-            var data = await _context.RangeMetros.Where(x => x.isActive != true).ToListAsync();
+            var data = await _context.RangeMetros.Where(x => x.isActive != false).ToListAsync();
             return data;
         }
         public async Task<int> SaveRangeMetro(RangeMetro model)
@@ -207,7 +209,8 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.RangeMetros.Where(x => x.Id == Id).FirstOrDefaultAsync();
             if (data != null)
             {
-                data.isActive = true;
+                data.isActive = false;
+                data.isDelete = 1;
                 _context.RangeMetros.Update(data);
                 await _context.SaveChangesAsync();
 
@@ -227,7 +230,7 @@ namespace PoliceOfficerManagement.Services.MasterData
 
         public async Task<IEnumerable<DivisionDistrict>> GetAllDivisionDistrict()
         {
-            var data = await _context.DivisionDistricts.Where(x => x.isActive != true).Include(x=>x.rangeMetro).ToListAsync();
+            var data = await _context.DivisionDistricts.Where(x => x.isActive != false).Include(x=>x.rangeMetro).ToListAsync();
             return data;
         }
         public async Task<int> SaveDivisionDistrict(DivisionDistrict model)
@@ -262,7 +265,8 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.DivisionDistricts.Where(x => x.Id == Id).FirstOrDefaultAsync();
             if (data != null)
             {
-                data.isActive = true;
+                data.isActive = false;
+                data.isDelete = 1;
                 _context.DivisionDistricts.Update(data);
                 await _context.SaveChangesAsync();
 
@@ -274,13 +278,13 @@ namespace PoliceOfficerManagement.Services.MasterData
         #region Zone Circle
         public async Task<IEnumerable<ZoneCircle>> GetZoneCircleByDivisionDistrictId(int divisionDistrictId)
         {
-            var data = await _context.ZoneCircles.Where(x => x.divisionDistrictId == divisionDistrictId).ToListAsync();
+            var data = await _context.ZoneCircles.Where(x => x.divisionDistrictId == divisionDistrictId && x.isActive != false).ToListAsync();
             return data;
         }
 
         public async Task<IEnumerable<ZoneCircle>> GetAllZoneCircle()
         {
-            var data = await _context.ZoneCircles.Where(x => x.isActive != true).Include(x=>x.divisionDistrict).ToListAsync();
+            var data = await _context.ZoneCircles.Where(x => x.isActive != false).Include(x=>x.divisionDistrict).ToListAsync();
             return data;
         }
         public async Task<int> SaveZoneCircle(ZoneCircle model)
@@ -315,7 +319,8 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.ZoneCircles.Where(x => x.Id == Id).FirstOrDefaultAsync();
             if (data != null)
             {
-                data.isActive = true;
+                data.isActive = false;
+                data.isDelete = 1;
                 _context.ZoneCircles.Update(data);
                 await _context.SaveChangesAsync();
 
@@ -329,14 +334,14 @@ namespace PoliceOfficerManagement.Services.MasterData
          
         public async Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId)
         {
-            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId).ToListAsync();
+            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId && x.isActive != false).ToListAsync();
             return data;
         }
 
         public async Task<IEnumerable<PoliceThana>> GetAllPoliceThana()
         {
             var data = await _context.PoliceThanas
-                                    .Where(x => x.isActive != true)
+                                    .Where(x => x.isActive != false)
                                     .Include(x=>x.policeThana)
                                     .Include(x=>x.rangeMetro)
                                     .Include(x=>x.divisionDistrict)
@@ -377,7 +382,8 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.PoliceThanas.Where(x => x.Id == Id).FirstOrDefaultAsync();
             if (data != null)
             {
-                data.isActive = true;
+                data.isActive = false;
+                data.isDelete = 1;
                 _context.PoliceThanas.Update(data);
                 await _context.SaveChangesAsync();
 

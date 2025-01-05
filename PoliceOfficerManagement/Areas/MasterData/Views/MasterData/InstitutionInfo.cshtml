@@ -73,18 +73,23 @@
                             <label class="col-form-label col-md-4">Institute Type<span style="color: red">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" id="instituteType" name="instituteType" value="Educational" class="form-control"  readonly />
-                                @* <select class="form-control" id="instituteType" name="instituteType">
-
-                                    <option value="0" selected >Select</option>
-                                    <option value="1" >Educational</option>
-                                    <option value="2">Training</option>
-
-                                </select> *@
+                                 
                             </div>
                         </div>
                     </div>
-                     
 
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Active In-Active<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select id="IsActive" name="IsActive" class="form-control">
+                                    <option value="True">Active</option>
+                                    <option value="False">In-Active</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
 
                 </div>
                 <div style="height:20px;"></div>
@@ -125,6 +130,7 @@
                     <th>Establish Year</th>
                     <th>Place Info</th>
                     <th>Institute Type</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -138,7 +144,7 @@
                     {
                         <tr>
                             <td>@i</td>
-                            <td>@* @(@item.type == 1 ? "Home" : "Abroad") *@
+                            <td> 
                                 @if (@item.type == 1)
                                 {
                                     @:Home
@@ -156,9 +162,19 @@
                             <td>@item.establishYear</td>
                             <td>@item.placeInfo</td>
                             <td>Educational</td>
+                            <td>
+                                @if (@item.isActive == true)
+                                {
+                                    @:Active
+                                }
+                                else if (@item.isActive == false)
+                                {
+                                    @:InActive
+                                }
+                             </td>
                              
                             <td class="icon-container">
-                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.type', '@item.nameEn','@item.nameBn','@item.establishYear','@item.placeInfo')"></i>
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.type', '@item.nameEn','@item.nameBn','@item.establishYear','@item.placeInfo','@item.isActive')"></i>
                                 <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
                             </td>
                         </tr>
@@ -217,11 +233,12 @@
 
 
 
-        function edit(Id, type, nameEn, nameBn, establishYear, placeInfo) {
+        function edit(Id, type, nameEn, nameBn, establishYear, placeInfo, isActive) {
              $('#Id').val(Id);
             $('#type').val(type);
             $('#nameEn').val(nameEn);
             $('#nameBn').val(nameBn);
+            $('#isActive').val(isActive);
             //$('#establishYear').val(establishYear);
             if (establishYear) {
                 let date = new Date(establishYear);

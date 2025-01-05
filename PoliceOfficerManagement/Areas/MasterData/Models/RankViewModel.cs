@@ -13,6 +13,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public string shortName { get; set; }
         public int? shortOrder { get; set; }
         public int? forceCatId { get; set; }
+        public bool IsActive { get; set; }
+
         public IEnumerable<Rank> Ranks { get;set; }
     }
 
@@ -25,6 +27,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public string establishYear { get; set; } 
         public string placeInfo { get; set; } 
         public string instituteType { get; set; }// educational=1,training=2
+        public bool IsActive { get; set; }
+
         public IEnumerable<InstitutionInfo> InstitutionInfos { get; set; }
     }
 
@@ -32,7 +36,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
     {
         public int Id { get; set; }
         public string rangeMetroName { get; set; } 
-        public string rangeMetroNameBn { get; set; } 
+        public string rangeMetroNameBn { get; set; }
+        public bool IsActive { get; set; }
         public string latitude { get; set; } 
         public string longitude { get; set; } 
         public int? pimsRangeId { get; set; }
@@ -50,6 +55,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public string longitude { get; set; } 
         public int? pimsZoneId { get; set; }
         public string pimsZoneName { get; set; }
+        public bool IsActive { get; set; }
 
         public IEnumerable<ZoneCircle> zones { get; set; }
         public IEnumerable<DivisionDistrict> divisionDistricts { get; set; }
@@ -66,6 +72,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public string longitude { get; set; } 
         public int? pimsDistrictId { get; set; }
         public string pimsDistrictName { get; set; }
+        public bool IsActive { get; set; }
 
         public IEnumerable<DivisionDistrict> divisionDistricts { get; set; }
         public IEnumerable<RangeMetro> Ranges { get; set; }
@@ -89,6 +96,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public int? isChild { get; set; }
         public int? pimsThanaId { get; set; }
         public string pimsThanaName { get; set; }
+        public bool IsActive { get; set; }
+
         public IEnumerable<RangeMetro> Ranges { get; set; }
         public IEnumerable<DivisionDistrict> divisionDistricts { get; set; }
         public IEnumerable<ZoneCircle> zone { get; set; }
