@@ -23,7 +23,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public string nameEn { get; set; } 
         public string establishYear { get; set; } 
         public string placeInfo { get; set; } 
-        public int? instituteType { get; set; }// educational=1,training=2
+        public string instituteType { get; set; }// educational=1,training=2
         public IEnumerable<InstitutionInfo> InstitutionInfos { get; set; }
     }
 }

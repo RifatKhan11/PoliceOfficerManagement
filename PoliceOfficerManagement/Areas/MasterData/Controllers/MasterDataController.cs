@@ -37,9 +37,29 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> InstitutionInfoTraining()
+        {
+            var model = new InstitutionInfoViewModel
+            {
+                InstitutionInfos = await _masterDataServices.GetInstitutionInfoTraning(),
+
+            };
+            return View(model);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> InstitutionInfo(InstitutionInfoViewModel model)
         {
+            var instituteTypeId = 0;
+            if(model.instituteType == "Educational")
+            {
+                instituteTypeId = 1;
+            }
+            else if(model.instituteType == "Training")
+            {
+                instituteTypeId = 2;
+            }
             InstitutionInfo data = new InstitutionInfo
             {
                 Id = model.Id,
@@ -48,11 +68,21 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
                 nameEn = model.nameEn,
                 establishYear = model.establishYear,
                 placeInfo = model.placeInfo,
-                instituteType = model.instituteType
+                instituteType = instituteTypeId
             };
 
             var id = await _masterDataServices.SaveInstitutionInfo(data);
-            return RedirectToAction("InstitutionInfo");
+
+             
+            if (model.instituteType == "Educational")
+            {
+                return RedirectToAction("InstitutionInfo");
+            }
+            else if (model.instituteType == "Training")
+            {
+                return RedirectToAction("InstitutionInfoTraining");
+            }
+            return RedirectToAction("AdminDashboard", "Home", new { area = "Auth" });
         }
 
         [HttpPost]

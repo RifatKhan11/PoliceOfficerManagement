@@ -1,13 +1,13 @@
 ﻿ @model InstitutionInfoViewModel
 @{
-    ViewData["Title"] = "Employee Information";
+    ViewData["Title"] = "Training Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="card" style="width: 100%; margin-top: 30px; display: none" id="employeeCreate">
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Institute Information</h5>
+                <h5>Training Information</h5>
 
             </div>
             <div class="col-4">
@@ -67,23 +67,17 @@
                             </div>
                         </div>
                     </div>
-                     
-                     <div class="col-lg-6 col-md-6 col-sm-12">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Institute Type<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="instituteType" name="instituteType" value="Educational" class="form-control"  readonly />
-                                @* <select class="form-control" id="instituteType" name="instituteType">
-
-                                    <option value="0" selected >Select</option>
-                                    <option value="1" >Educational</option>
-                                    <option value="2">Training</option>
-
-                                </select> *@
+                                <input type="text" id="instituteType" name="instituteType" value="Training" class="form-control" readonly />
+                                 
                             </div>
                         </div>
                     </div>
-                     
+
 
 
                 </div>
@@ -106,11 +100,11 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Institution Info List</h5>
+                <h5>Training Info List</h5>
 
             </div>
             <div class="col-4">
-                 <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create Institution</button>
+                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create Institution</button>
 
             </div>
         </div>
@@ -138,7 +132,8 @@
                     {
                         <tr>
                             <td>@i</td>
-                            <td>@* @(@item.type == 1 ? "Home" : "Abroad") *@
+                            <td>
+                                @* @(@item.type == 1 ? "Home" : "Abroad") *@
                                 @if (@item.type == 1)
                                 {
                                     @:Home
@@ -149,14 +144,14 @@
                                 }
                                 else
                                 {
-                                    @: 
+                                    @:
                                 }
                             </td>
                             <td>@item.nameEn</td>
                             <td>@item.establishYear</td>
                             <td>@item.placeInfo</td>
-                            <td>Educational</td>
-                             
+                            <td>Training</td>
+
                             <td class="icon-container">
                                 <i class="fa fa-edit" onclick="edit(@item.Id, '@item.type', '@item.nameEn','@item.nameBn','@item.establishYear','@item.placeInfo')"></i>
                                 <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
@@ -250,50 +245,7 @@
 
          }
 
-         // function SaveData()
-         // {
-         //     var data = $('#employeeForm').serialize();
-         //     swal({
-         //         title: 'Are you sure?',
-         //         text: 'Do you want to save this data?',
-         //         type: 'warning',
-         //         showCancelButton: true,
-         //         confirmButtonColor: '#3085d6',
-         //         cancelButtonColor: '#d33',
-         //         confirmButtonText: 'Yes, Save It!'
-         //     }).then(function (res)
-         //     {
-         //         if (res) {
-         //             $.ajax({
-         //                url: "/MasterData/MasterData/InstitutionInfo",
-         //                 type: "POST",
-         //                 data: data,
-         //                 success: function (res)
-         //                 {
-         //                     if (res != 0) {
-         //                         swal('', 'Save Successfully!', 'success');
-         //                         location.reload(true);
-         //                          $('#employeeCreate').hide();
-         //                          $('#employeeList').Show();
-         //                     }
-         //                     else {
-         //                         swal('', 'Invalid Attempt!', 'warning');
-         //                         return false;
-         //                     }
-         //                 }
-         //             });
-         //         }
-         //     }, function (dismiss)
-         //     {
-         //         if (dismiss === 'cancel' || dismiss === 'close')
-         //         {
-         //             return false;
-         //         }
-         //     });
-         // }
-
-
-
+         
 
     </script>
 }
