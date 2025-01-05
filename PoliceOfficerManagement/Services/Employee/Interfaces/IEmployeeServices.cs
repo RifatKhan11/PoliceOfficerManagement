@@ -10,5 +10,10 @@ namespace PoliceOfficerManagement.Services.Employee.Interfaces
         Task<IEnumerable<EmployeInfo>> GetEmployeeInfo();
         Task<int> InActiveEmployeeById(int Id);
         Task<IEnumerable<EmployeeInfoModel>> GetEmployeInfoSearch(int rangeId, int districtId, int zoneId, string name);
+        Task<EmployeeInfoModel> GetEmployeInfoById(int empId);
+        Task<IEnumerable<TrainingInfo>> GetTrainingInfoByEmpId(int empId);
+        Task<IEnumerable<EducationalInfo>> GetEducationalInfoByEmpId(int empId);
+        Task<IEnumerable<AdderssInfo>> GetAdderssInfoByEmpId(int empId);
+        Task<IEnumerable<PostingPlace>> GetPostingPlaceByEmpId(int empId);
     }
 }

@@ -182,8 +182,20 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
 
         public async Task<IActionResult> EmployeeProfile(int empId)
         {
-            var data = "";
-            return Json(data);
+            var employee = await _employeeServices.GetEmployeInfoById(empId);
+            var traing= await _employeeServices.GetTrainingInfoByEmpId(empId);
+            var edu= await _employeeServices.GetEducationalInfoByEmpId(empId);
+            var addr= await _employeeServices.GetAdderssInfoByEmpId(empId);
+            var post= await _employeeServices.GetPostingPlaceByEmpId(empId);
+            var model = new EmployeeProfileModel
+            {
+                EmployeeInfo = employee,
+                TrainingInfo = traing,
+                EducationalInfo = edu,
+                AdderssInfo = addr,
+                PostingPlace = post
+            };
+            return View(model);
         }
     }
 }

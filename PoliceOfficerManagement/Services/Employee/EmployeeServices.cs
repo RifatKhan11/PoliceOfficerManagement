@@ -116,6 +116,51 @@ namespace PoliceOfficerManagement.Services.Employee
 
             return data;
         }
+        public async Task<EmployeeInfoModel> GetEmployeInfoById(int empId)
+        {
+            var data= await(from e in _context.employeeInfos join 
+                            jr in _context.ranks on e.joiningRankId equals jr.Id
+
+                            where e.Id == empId
+
+                            select new EmployeeInfoModel
+                            {
+                                empName = e.nameEn,
+                                empNameBn = e.nameEn,
+                                employeeCode=e.employeeCode,
+                                joiningRank =jr.rankName,
+                                joiningDate=e.joiningDate,
+                                currentPostingPlace= "",
+                                currentRank="",
+                                personalPhoneNumber=e.personalPhoneNumber,
+                                homeDistrict=e.homeDistrict,
+                                nidNumber=e.nidNumber,
+
+
+                            }).FirstOrDefaultAsync();
+            return data;
+        }
+
+        public async Task<IEnumerable<TrainingInfo>> GetTrainingInfoByEmpId(int empId)
+        {
+            var data = await _context.TrainingInfos.Where(x=>x.employeeId== empId).Include(x=>x.institute).ToListAsync();
+            return data;
+        }
+        public async Task<IEnumerable<EducationalInfo>> GetEducationalInfoByEmpId(int empId)
+        {
+            var data=await _context.EducationalInfos.Where(x=>x.employeeId==empId).Include(x => x.institute).ToListAsync();
+            return data;
+        }
+        public async Task<IEnumerable<AdderssInfo>> GetAdderssInfoByEmpId(int empId)
+        {
+            var data= await _context.AdderssInfos.Where(x=>x.employeeId==empId).Include(x=>x.division).Include(x=>x.district).Include(x=>x.thana).Include(x=>x.union).Include(x=>x.villege).ToListAsync();
+            return data;
+        }
+        public async Task<IEnumerable<PostingPlace>> GetPostingPlaceByEmpId(int empId)
+        {
+            var data= await _context.PostingPlaces.Include(x=>x.range).Include(x=>x.district).Include(x=>x.zone).Include(x=>x.thana).Where(x=>x.employeeId==empId).ToListAsync();
+            return data;
+        }
 
 
 

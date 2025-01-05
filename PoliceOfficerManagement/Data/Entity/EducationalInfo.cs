@@ -5,6 +5,7 @@ namespace PoliceOfficerManagement.Data.Entity
     public class EducationalInfo:Base
     {
         public int? instituteId { get; set; }
+        public InstitutionInfo institute { get; set; }
 
         [StringLength(100)]
         public string passingYear { get; set; }
