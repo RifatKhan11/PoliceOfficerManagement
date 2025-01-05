@@ -18,6 +18,57 @@ namespace PoliceOfficerManagement.Services.MasterData
             this.roleManager = roleManager;
             this._dapper = dapper;
         }
+
+
+
+        #region InstitutionInfo
+        public async Task<int> SaveInstitutionInfo(InstitutionInfo model)
+        {
+            try
+            {
+                if (model.Id != 0)
+                {
+                    _context.InstitutionInfos.Update(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+                else
+                {
+                    await _context.InstitutionInfos.AddAsync(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+
+        }
+
+        public async Task<IEnumerable<InstitutionInfo>> GetInstitutionInfo()
+        {
+            return await _context.InstitutionInfos.Where(x => x.isActive != true).ToListAsync();
+        }
+        public async Task<int> InActiveInstitutionInfoById(int Id)
+        {
+            var data = await _context.InstitutionInfos.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (data != null)
+            {
+                data.isActive = true;
+                _context.InstitutionInfos.Update(data);
+                await _context.SaveChangesAsync();
+
+
+            }
+            return 0;
+        }
+
+        #endregion
+
+        #region Rank
         public async Task<int> SaveRank(Rank model)
         {
             try
@@ -62,7 +113,7 @@ namespace PoliceOfficerManagement.Services.MasterData
             return 0;
         }
 
-
+        #endregion
 
         #region Division
 
@@ -86,9 +137,9 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.Thanas.Where(x => x.districtId == districtId).ToListAsync();
             return data;
         }
-        public async Task<IEnumerable<Thana>> GetThanasByRangeId(int rangeId)
+        public async Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId)
         {
-            var data = await _context.Thanas.Where(x => x.rangeMetroId == rangeId).ToListAsync();
+            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId).ToListAsync();
             return data;
         }
         #endregion
@@ -107,9 +158,14 @@ namespace PoliceOfficerManagement.Services.MasterData
         }
         #endregion
         #region Institution Info
+        public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfoForTraning()
+        {
+            var data = await _context.InstitutionInfos.Where(x=>x.instituteType == 2).ToListAsync();
+            return data;
+        }
         public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo()
         {
-            var data = await _context.InstitutionInfos.ToListAsync();
+            var data = await _context.InstitutionInfos.Where(x => x.instituteType == 1).ToListAsync();
             return data;
         }
         #endregion

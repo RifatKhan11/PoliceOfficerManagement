@@ -8,14 +8,14 @@ using PoliceOfficerManagement.Services.AuthServices.Interfaces;
 namespace PoliceOfficerManagement.Areas.MasterData.Controllers
 {
     [Area("MasterData")]
-    public class MasterDatasController : Controller
+    public class MasterDataController : Controller
     {
         private readonly IMasterDataServices _masterDataServices;
         private readonly IUserInfoes userInfoes;
         private readonly string rootPath;
         public string FileName;
 
-        public MasterDatasController(IWebHostEnvironment hostingEnvironment, IUserInfoes userInfoes, IMasterDataServices masterDataServices)
+        public MasterDataController(IWebHostEnvironment hostingEnvironment, IUserInfoes userInfoes, IMasterDataServices masterDataServices)
         {
 
 
@@ -23,6 +23,47 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             this._masterDataServices = masterDataServices;
             rootPath = hostingEnvironment.ContentRootPath;
         }
+
+
+
+        #region Institution Info
+        public async Task<IActionResult> InstitutionInfo()
+        {
+            var model = new InstitutionInfoViewModel
+            {
+                InstitutionInfos = await _masterDataServices.GetInstitutionInfo(),
+
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InstitutionInfo(InstitutionInfoViewModel model)
+        {
+            InstitutionInfo data = new InstitutionInfo
+            {
+                Id = model.Id,
+                type = model.type,
+                nameBn = model.nameBn,
+                nameEn = model.nameEn,
+                establishYear = model.establishYear,
+                placeInfo = model.placeInfo,
+                instituteType = model.instituteType
+            };
+
+            var id = await _masterDataServices.SaveInstitutionInfo(data);
+            return RedirectToAction("InstitutionInfo");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveInstitutionInfo(int Id)
+        {
+            var data = await _masterDataServices.InActiveInstitutionInfoById(Id);
+            return Json(true);
+        }
+
+        #endregion
+
 
 
         #region Rank
@@ -84,9 +125,9 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var data = await _masterDataServices.GetThanasByDistrictId(districtId);
             return Json(data);
         }
-        public async Task<IActionResult> GetThanasByRangeId(int rangeId)
+        public async Task<IActionResult> GetThanasByRangeId(int zoneId)
         {
-            var data = await _masterDataServices.GetThanasByRangeId(rangeId);
+            var data = await _masterDataServices.GetThanasByRangeId(zoneId);
             return Json(data);
         }
         #endregion

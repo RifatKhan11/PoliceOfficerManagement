@@ -14,4 +14,16 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public int? forceCatId { get; set; }
         public IEnumerable<Rank> Ranks { get;set; }
     }
+
+    public class InstitutionInfoViewModel
+    {
+        public int Id { get; set; }
+        public int? type { get; set; }// 1=home,2=abroad 
+        public string nameBn { get; set; } 
+        public string nameEn { get; set; } 
+        public string establishYear { get; set; } 
+        public string placeInfo { get; set; } 
+        public int? instituteType { get; set; }// educational=1,training=2
+        public IEnumerable<InstitutionInfo> InstitutionInfos { get; set; }
+    }
 }

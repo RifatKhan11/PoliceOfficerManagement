@@ -1,0 +1,310 @@
+﻿ @model InstitutionInfoViewModel
+@{
+    ViewData["Title"] = "Employee Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card" style="width: 100%; margin-top: 30px; display: none" id="employeeCreate">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <h5>Institute Information</h5>
+
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnCreate()">Employee List</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="InstitutionInfo" method="post" id="employeeForm">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input name="Id" id="Id" hidden />
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4"> Type<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="type" name="type">
+
+                                    <option value="1" selected>Home</option>
+                                    <option value="2">Abroad</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Name<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="nameEn" name="nameEn" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Name Bn<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="nameBn" name="nameBn" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Establish Year<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="date" id="establishYear" name="establishYear" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Place Info<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="placeInfo" name="placeInfo" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                     
+                     <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Institute Type<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="instituteType" name="instituteType">
+
+                                    <option value="0" selected >Select</option>
+                                    <option value="1" >Educational</option>
+                                    <option value="2">Training</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                     
+
+
+                </div>
+                <div style="height:20px;"></div>
+                <div class="form-group row">
+
+                    <div class="col-sm-12 mb-3">
+                        <button type="submit" id="btnCheck" class="btn btn-secondary" style="float: right">Submit</button>
+                        @* <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button> *@
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card" style="width: 100%; margin-top: 30px;" id="employeeList">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <h5>Institution Info List</h5>
+
+            </div>
+            <div class="col-4">
+                 <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create Institution</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-hover table-bordered" id="InfoTbl1" style="overflow: scroll;">
+            <thead class="custom-thead">
+                <tr>
+                    <th>Sl Id</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Establish Year</th>
+                    <th>Place Info</th>
+                    <th>Institute Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                }
+                @if (Model.InstitutionInfos.Count() != 0)
+                {
+                    @foreach (var item in Model.InstitutionInfos)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@* @(@item.type == 1 ? "Home" : "Abroad") *@
+                                @if (@item.type == 1)
+                                {
+                                    @:Home
+                                }
+                                else if (@item.type == 2)
+                                {
+                                    @:Abroad
+                                }
+                                else
+                                {
+                                    @: 
+                                }
+                            </td>
+                            <td>@item.nameEn</td>
+                            <td>@item.establishYear</td>
+                            <td>@item.placeInfo</td>
+                            <td>
+                                @if (@item.instituteType == 1)
+                                {
+                                    @:Educational
+                                }
+                                else if (@item.instituteType == 2)
+                                {
+                                    @:Training
+                                }
+                                else
+                                {
+                                    @: 
+                                }
+                            </td>
+                            <td class="icon-container">
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.type', '@item.nameEn','@item.nameBn','@item.establishYear','@item.placeInfo','@item.instituteType')"></i>
+                                <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center">No data available</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> *@
+    <script type="text/javascript">
+
+           function Delete(Id) {
+             swal({
+                 title: 'Are you sure?',
+                 text: 'Do you want to delete this data?',
+                 type: 'warning',
+                 showCancelButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Yes, delete it!'
+             }).then(function (res) {
+                 if (res) {
+                     $.ajax({
+                        url: "/MasterData/MasterData/InActiveInstitutionInfo",
+                         type: "POST",
+                         data: { id: Id },
+                         success: function (res) {
+                             if (res == '1') {
+                                 swal('', 'Deleted Successfully!', 'success');
+                                 location.reload(true);
+                             }
+                             else {
+                                 swal('', 'Invalid Attempt!', 'warning');
+                             }
+                         }
+                     });
+                 }
+             }, function (dismiss) {
+                 if (dismiss === 'cancel' || dismiss === 'close') {
+                     return false;
+                 }
+             });
+         }
+
+
+
+        function edit(Id, type, nameEn, nameBn, establishYear, placeInfo, instituteType) {
+             $('#Id').val(Id);
+            $('#type').val(type);
+            $('#nameEn').val(nameEn);
+            $('#nameBn').val(nameBn);
+            //$('#establishYear').val(establishYear);
+            if (establishYear) {
+                let date = new Date(establishYear);
+                let formattedDate = date.toISOString().split('T')[0];  // This gives 'yyyy-MM-dd' format
+                $('#establishYear').val(formattedDate);
+            }
+            $('#placeInfo').val(placeInfo);
+            $('#instituteType').val(instituteType);
+             $('#employeeCreate').show();
+             $('#employeeList').hide();
+
+         }
+
+         function resetForm() {
+             $('#employeeForm')[0].reset();
+
+         }
+         function btnList() {
+             $('#employeeCreate').show();
+             $('#employeeList').hide();
+
+         }
+         function btnCreate() {
+             $('#employeeCreate').hide();
+             $('#employeeList').show();
+
+         }
+
+         // function SaveData()
+         // {
+         //     var data = $('#employeeForm').serialize();
+         //     swal({
+         //         title: 'Are you sure?',
+         //         text: 'Do you want to save this data?',
+         //         type: 'warning',
+         //         showCancelButton: true,
+         //         confirmButtonColor: '#3085d6',
+         //         cancelButtonColor: '#d33',
+         //         confirmButtonText: 'Yes, Save It!'
+         //     }).then(function (res)
+         //     {
+         //         if (res) {
+         //             $.ajax({
+         //                url: "/MasterData/MasterData/InstitutionInfo",
+         //                 type: "POST",
+         //                 data: data,
+         //                 success: function (res)
+         //                 {
+         //                     if (res != 0) {
+         //                         swal('', 'Save Successfully!', 'success');
+         //                         location.reload(true);
+         //                          $('#employeeCreate').hide();
+         //                          $('#employeeList').Show();
+         //                     }
+         //                     else {
+         //                         swal('', 'Invalid Attempt!', 'warning');
+         //                         return false;
+         //                     }
+         //                 }
+         //             });
+         //         }
+         //     }, function (dismiss)
+         //     {
+         //         if (dismiss === 'cancel' || dismiss === 'close')
+         //         {
+         //             return false;
+         //         }
+         //     });
+         // }
+
+
+
+
+    </script>
+}
