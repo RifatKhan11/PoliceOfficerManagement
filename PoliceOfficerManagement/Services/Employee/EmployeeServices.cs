@@ -100,6 +100,7 @@ namespace PoliceOfficerManagement.Services.Employee
                             
                             select new EmployeeInfoModel
                             {
+                                empId=e.Id,
                                 empName = e.nameEn,
                                 empNameBn = e.nameEn,
                                 employeeCode=e.employeeCode,
@@ -130,11 +131,14 @@ namespace PoliceOfficerManagement.Services.Employee
                                 employeeCode=e.employeeCode,
                                 joiningRank =jr.rankName,
                                 joiningDate=e.joiningDate,
+                                retirmentDate = e.retirementDate,
                                 currentPostingPlace= "",
                                 currentRank="",
                                 personalPhoneNumber=e.personalPhoneNumber,
                                 homeDistrict=e.homeDistrict,
+                                homeUpazila = e.homeUpazila,
                                 nidNumber=e.nidNumber,
+                                reMarks = e.reMarks,
 
 
                             }).FirstOrDefaultAsync();
@@ -158,7 +162,7 @@ namespace PoliceOfficerManagement.Services.Employee
         }
         public async Task<IEnumerable<PostingPlace>> GetPostingPlaceByEmpId(int empId)
         {
-            var data= await _context.PostingPlaces.Include(x=>x.range).Include(x=>x.district).Include(x=>x.zone).Include(x=>x.thana).Where(x=>x.employeeId==empId).ToListAsync();
+            var data= await _context.PostingPlaces.Where(x => x.employeeId == empId).Include(x=>x.rank).Include(x=>x.range).Include(x=>x.district).Include(x=>x.zone).Include(x=>x.thana).ToListAsync();
             return data;
         }
 
