@@ -153,7 +153,9 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
             }
 
             await _employeeServices.SaveEmployeeOtherInfo(edu, train, post, add);
-            return Json(empId);
+            return RedirectToAction("CreateEmployeeProfile");
+            //return Json(empId);
+
         }
 
         [HttpPost]
