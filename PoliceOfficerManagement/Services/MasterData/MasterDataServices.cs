@@ -50,11 +50,11 @@ namespace PoliceOfficerManagement.Services.MasterData
 
         public async Task<IEnumerable<InstitutionInfo>> GetInstitutionInfo()
         {
-            return await _context.InstitutionInfos.Where(x => x.instituteType == 1 && x.isActive != false).ToListAsync();
+            return await _context.InstitutionInfos.Where(x => x.instituteType == 1 && x.isDelete != 1).ToListAsync();
         }
         public async Task<IEnumerable<InstitutionInfo>> GetInstitutionInfoTraning()
         {
-            return await _context.InstitutionInfos.Where(x => x.instituteType == 2 && x.isActive != false).ToListAsync();
+            return await _context.InstitutionInfos.Where(x => x.instituteType == 2 && x.isDelete != 1).ToListAsync();
         }
         public async Task<int> InActiveInstitutionInfoById(int Id)
         {
