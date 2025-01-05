@@ -68,7 +68,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
                 nameEn = model.nameEn,
                 establishYear = model.establishYear,
                 placeInfo = model.placeInfo,
-                instituteType = instituteTypeId
+                instituteType = instituteTypeId,
+                isActive = model.IsActive,
             };
 
             var id = await _masterDataServices.SaveInstitutionInfo(data);
@@ -238,7 +239,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
                 latitude = model.latitude,
                 longitude = model.longitude,
                 pimsDistrictId = model.pimsDistrictId,
-                pimsDistrictName = model.pimsDistrictName
+                pimsDistrictName = model.pimsDistrictName,
+                isActive = model.IsActive,
             };
 
             var id = await _masterDataServices.SaveDivisionDistrict(data);
