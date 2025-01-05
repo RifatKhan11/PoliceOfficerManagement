@@ -18,7 +18,7 @@
     </div>
     <div class="card-body">
         <div class="container-fluid">
-            <form class="user" asp-area="MasterData" asp-controller="MasterDatas" asp-action="Rank" method="post" id="employeeForm">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="Rank" method="post" id="employeeForm">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input name="Id" id="Id" hidden />
                 <div class="row">
@@ -163,7 +163,7 @@
              }).then(function (res) {
                  if (res) {
                      $.ajax({
-                        url: "/MasterData/MasterDatas/InActiveRank",
+                        url: "/MasterData/MasterData/InActiveRank",
                          type: "POST",
                          data: { id: Id },
                          success: function (res) {
@@ -229,7 +229,7 @@
              {
                  if (res) {
                      $.ajax({
-                        url: "/MasterData/MasterDatas/Rank",
+                        url: "/MasterData/MasterData/Rank",
                          type: "POST",
                          data: data,
                          success: function (res)

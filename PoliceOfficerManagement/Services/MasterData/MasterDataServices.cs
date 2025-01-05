@@ -18,6 +18,57 @@ namespace PoliceOfficerManagement.Services.MasterData
             this.roleManager = roleManager;
             this._dapper = dapper;
         }
+
+
+
+        #region InstitutionInfo
+        public async Task<int> SaveInstitutionInfo(InstitutionInfo model)
+        {
+            try
+            {
+                if (model.Id != 0)
+                {
+                    _context.InstitutionInfos.Update(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+                else
+                {
+                    await _context.InstitutionInfos.AddAsync(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+
+        }
+
+        public async Task<IEnumerable<InstitutionInfo>> GetInstitutionInfo()
+        {
+            return await _context.InstitutionInfos.Where(x => x.isActive != true).ToListAsync();
+        }
+        public async Task<int> InActiveInstitutionInfoById(int Id)
+        {
+            var data = await _context.InstitutionInfos.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (data != null)
+            {
+                data.isActive = true;
+                _context.InstitutionInfos.Update(data);
+                await _context.SaveChangesAsync();
+
+
+            }
+            return 0;
+        }
+
+        #endregion
+
+        #region Rank
         public async Task<int> SaveRank(Rank model)
         {
             try
@@ -62,7 +113,7 @@ namespace PoliceOfficerManagement.Services.MasterData
             return 0;
         }
 
-
+        #endregion
 
         #region Division
 

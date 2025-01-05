@@ -4,6 +4,9 @@ namespace PoliceOfficerManagement.Services.MasterData.Interfaces
 {
     public interface IMasterDataServices
     {
+        Task<int> SaveInstitutionInfo(InstitutionInfo model);
+        Task<IEnumerable<InstitutionInfo>> GetInstitutionInfo();
+        Task<int> InActiveInstitutionInfoById(int Id);
         Task<int> SaveRank(Rank model);
         Task<IEnumerable<Rank>> GetRank();
         Task<int> InActiveRankById(int Id);
