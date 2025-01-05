@@ -21,6 +21,7 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Models
 
         public IEnumerable<EmployeInfo> employeInfos { get; set; }
         public IEnumerable<InstitutionInfo> institutionInfos { get; set; }
+        public IEnumerable<InstitutionInfo> institutionInfoTraning { get; set; }
         public IEnumerable<Division> divisions { get; set; }
         public IEnumerable<Rank> Ranks { get; set; }
 

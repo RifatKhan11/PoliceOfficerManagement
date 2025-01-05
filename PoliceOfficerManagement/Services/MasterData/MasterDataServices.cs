@@ -158,9 +158,14 @@ namespace PoliceOfficerManagement.Services.MasterData
         }
         #endregion
         #region Institution Info
+        public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfoForTraning()
+        {
+            var data = await _context.InstitutionInfos.Where(x=>x.instituteType == 2).ToListAsync();
+            return data;
+        }
         public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo()
         {
-            var data = await _context.InstitutionInfos.ToListAsync();
+            var data = await _context.InstitutionInfos.Where(x => x.instituteType == 1).ToListAsync();
             return data;
         }
         #endregion

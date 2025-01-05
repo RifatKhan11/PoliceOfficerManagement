@@ -20,5 +20,6 @@ namespace PoliceOfficerManagement.Services.MasterData.Interfaces
         Task<IEnumerable<ZoneCircle>> GetZoneCircleByDivisionDistrictId(int divisionDistrictId);
         Task<IEnumerable<DivisionDistrict>> GetDivisionDistrictByRangeId(int rangeId);
         Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId);
+        Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfoForTraning();
     }
 }

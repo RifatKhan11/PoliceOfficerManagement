@@ -59,6 +59,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Place Info<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="placeInfo" name="placeInfo" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
                      
                      <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
@@ -82,7 +90,8 @@
                 <div class="form-group row">
 
                     <div class="col-sm-12 mb-3">
-                        <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button>
+                        <button type="submit" id="btnCheck" class="btn btn-secondary" style="float: right">Submit</button>
+                        @* <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button> *@
                     </div>
                 </div>
             </form>
@@ -100,7 +109,7 @@
 
             </div>
             <div class="col-4">
-                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create Institution</button>
+                 <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create Institution</button>
 
             </div>
         </div>
@@ -252,47 +261,47 @@
 
          }
 
-         function SaveData()
-         {
-             var data = $('#employeeForm').serialize();
-             swal({
-                 title: 'Are you sure?',
-                 text: 'Do you want to save this data?',
-                 type: 'warning',
-                 showCancelButton: true,
-                 confirmButtonColor: '#3085d6',
-                 cancelButtonColor: '#d33',
-                 confirmButtonText: 'Yes, Save It!'
-             }).then(function (res)
-             {
-                 if (res) {
-                     $.ajax({
-                        url: "/MasterData/MasterData/InstitutionInfo",
-                         type: "POST",
-                         data: data,
-                         success: function (res)
-                         {
-                             if (res != 0) {
-                                 swal('', 'Save Successfully!', 'success');
-                                 location.reload(true);
-                                  $('#employeeCreate').hide();
-                                  $('#employeeList').Show();
-                             }
-                             else {
-                                 swal('', 'Invalid Attempt!', 'warning');
-                                 return false;
-                             }
-                         }
-                     });
-                 }
-             }, function (dismiss)
-             {
-                 if (dismiss === 'cancel' || dismiss === 'close')
-                 {
-                     return false;
-                 }
-             });
-         }
+         // function SaveData()
+         // {
+         //     var data = $('#employeeForm').serialize();
+         //     swal({
+         //         title: 'Are you sure?',
+         //         text: 'Do you want to save this data?',
+         //         type: 'warning',
+         //         showCancelButton: true,
+         //         confirmButtonColor: '#3085d6',
+         //         cancelButtonColor: '#d33',
+         //         confirmButtonText: 'Yes, Save It!'
+         //     }).then(function (res)
+         //     {
+         //         if (res) {
+         //             $.ajax({
+         //                url: "/MasterData/MasterData/InstitutionInfo",
+         //                 type: "POST",
+         //                 data: data,
+         //                 success: function (res)
+         //                 {
+         //                     if (res != 0) {
+         //                         swal('', 'Save Successfully!', 'success');
+         //                         location.reload(true);
+         //                          $('#employeeCreate').hide();
+         //                          $('#employeeList').Show();
+         //                     }
+         //                     else {
+         //                         swal('', 'Invalid Attempt!', 'warning');
+         //                         return false;
+         //                     }
+         //                 }
+         //             });
+         //         }
+         //     }, function (dismiss)
+         //     {
+         //         if (dismiss === 'cancel' || dismiss === 'close')
+         //         {
+         //             return false;
+         //         }
+         //     });
+         // }
 
 
 

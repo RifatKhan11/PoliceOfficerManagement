@@ -52,7 +52,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             };
 
             var id = await _masterDataServices.SaveInstitutionInfo(data);
-            return Json(id);
+            return RedirectToAction("InstitutionInfo");
         }
 
         [HttpPost]
