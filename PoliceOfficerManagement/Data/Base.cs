@@ -8,5 +8,6 @@
         public DateTime? updatedAt { get; set; }
         public string updatedBy { get; set; }
         public bool isActive { get; set; }
+        public int? isDelete { get; set; }
     }
 }

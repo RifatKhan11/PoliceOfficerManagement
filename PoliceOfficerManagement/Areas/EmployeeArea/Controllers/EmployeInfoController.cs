@@ -179,5 +179,11 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
             model.Employees = emp;
             return PartialView("_EmployeePartial", model);
         }
+
+        public async Task<IActionResult> EmployeeProfile(int empId)
+        {
+            var data = "";
+            return Json(data);
+        }
     }
 }

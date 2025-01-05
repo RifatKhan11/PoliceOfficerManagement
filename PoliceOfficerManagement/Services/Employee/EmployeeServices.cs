@@ -109,6 +109,7 @@ namespace PoliceOfficerManagement.Services.Employee
                                 currentRank="",
                                 personalPhoneNumber=e.personalPhoneNumber,
                                 homeDistrict=e.homeDistrict,
+                                nidNumber=e.nidNumber,
 
 
                             }).ToListAsync();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PoliceOfficerManagement.Data;
 
@@ -11,9 +12,11 @@ using PoliceOfficerManagement.Data;
 namespace PoliceOfficerManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250105041047_insinfocolumupdate")]
+    partial class insinfocolumupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,9 +307,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<int?>("logTypeId")
                         .HasColumnType("int");
 
@@ -345,9 +345,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<int?>("shortOrder")
                         .HasColumnType("int");
 
@@ -384,9 +381,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<int?>("shortOrder")
                         .HasColumnType("int");
@@ -433,9 +427,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("roadInfo")
                         .HasColumnType("nvarchar(max)");
@@ -487,9 +478,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
@@ -543,9 +531,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
 
@@ -597,9 +582,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
 
@@ -644,9 +626,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
@@ -719,9 +698,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<string>("passingYear")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -767,9 +743,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("joiningDate")
                         .HasColumnType("datetime2");
@@ -839,9 +812,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<string>("nameBn")
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
@@ -895,9 +865,6 @@ namespace PoliceOfficerManagement.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("isChild")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("isDelete")
                         .HasColumnType("int");
 
                     b.Property<string>("isReportable")
@@ -977,9 +944,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("postingFrom")
                         .HasColumnType("datetime2");
 
@@ -1034,9 +998,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
 
@@ -1085,9 +1046,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("rankCode")
                         .HasMaxLength(100)
@@ -1138,9 +1096,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
@@ -1221,9 +1176,6 @@ namespace PoliceOfficerManagement.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
-
                     b.Property<string>("passingYear")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -1260,9 +1212,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
@@ -1319,9 +1268,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");
@@ -1383,9 +1329,6 @@ namespace PoliceOfficerManagement.Migrations
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("isDelete")
-                        .HasColumnType("int");
 
                     b.Property<string>("latitude")
                         .HasColumnType("NVARCHAR(120)");

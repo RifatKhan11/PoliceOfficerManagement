@@ -44,7 +44,7 @@
                         <div class="col-md-8">
                             <select class="form-control" id="rangeId" name="rangeId">
 
-                                <option value="" selected></option>
+                                <option value="0" selected>Select</option>
                                 @foreach (var range in Model.RangeMetros)
                                 {
                                     <option value="@range.Id">@range.rangeMetroName</option>
@@ -60,7 +60,7 @@
                         <div class="col-md-8">
                             <select class="form-control" id="districtId" name="districtId">
 
-                                <option value="Select"></option>
+                                <option value="0"></option>
 
                             </select>
                         </div>
@@ -73,7 +73,7 @@
                         <div class="col-md-8">
                             <select class="form-control" id="zoneId" name="zoneId">
 
-                                <option value="Select"></option>
+                                <option value="0"></option>
 
                             </select>
                         </div>
@@ -189,7 +189,7 @@
                     success: function (response) {
                         var selectDropdown = $('#zoneId');
                         selectDropdown.empty();
-                        selectDropdown.append('<option value="">Select</option>');
+                        selectDropdown.append('<option value="0">Select</option>');
                         $.each(response, function (index, zone) {
                             selectDropdown.append('<option value="' + zone.Id + '">' + zone.zoneName + '</option>');
                         });
