@@ -17,5 +17,8 @@ namespace PoliceOfficerManagement.Data.Entity
 
         [StringLength(420)]
         public string placeInfo { get; set; }
+
+        [StringLength(420)]
+        public int? instituteType { get; set; }// educational=1,training=2
     }
 }
