@@ -147,18 +147,34 @@
 
             <div class="col-4  col-md-4 row">
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div style="margin-top:20px">
-                                <span class="mr-2 d-none d-lg-inline text-white-600 small" style="font-size:16px;">Hello</span><br />
-                                <span class="mr-2 d-none d-lg-inline text-white-600 small" style="font-size:16px;">Welcome</span>
+                                <span class="mr-2 d-none d-lg-inline text-white-600 small" style="font-size:16px;">Welcome @user.roleName</span>
                             </div>
-
-                            <img src="~/images/manimage.png" class="img-profile rounded-circle" height="32" width="32" style="height:40px;width:40px; margin-top:20px" />
-
-
+                            <img src="~/logo/user.png" class="img-profile rounded-circle" height="32" width="32" style="height:40px;width:40px; margin-top:20px" />
                         </a>
+
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" style="width:300px">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group row">
+
+                                        <img class="img-profile rounded-circle" src="~/images/user.png" height="80" width="80" style="margin-left:110px;margin-top:10px;margin-bottom:10px">
+                                    </div>
+                                </div>                                
+                                <br />
+                               
+                            </div>
+                            @* <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal">
+                                <i class="fas fa-user-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Change Password
+                            </a> *@
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
 
                     </li>
 
@@ -266,6 +282,30 @@
 
         </div>
 
+    </div>
+
+
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="border-radius: 15px; box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);">
+            <div class="modal-content" style="border-radius: 15px;">
+                <div class="modal-header" style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 600;">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="color: white; opacity: 0.8;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-family: 'Segoe UI', sans-serif; color: #444; text-align: center; padding: 20px;">
+                    Select "Logout" below if you are ready to end your current session.
+                </div>
+                <div class="modal-footer" style="display: flex; justify-content: space-between;">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal" style="padding: 10px 20px; border-radius: 30px; font-weight: 500; transition: background-color 0.3s ease;">Cancel</button>
+                    <form asp- method="post" asp-area="Auth" asp-controller="Account" asp-action="Logout" id="logoutForm" class="navbar-right">
+                        <button type="submit" onclick="ClearLocalStorage()" class="btn btn-success" style="padding: 10px 20px; border-radius: 30px; font-weight: 500; transition: background-color 0.3s ease;">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <a class="scroll-to-top rounded" href="#page-top">

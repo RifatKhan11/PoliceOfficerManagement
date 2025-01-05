@@ -283,8 +283,7 @@ namespace PoliceOfficerManagement.Areas.Auth.Controllers
             #endregion
 
             await _signInManager.SignOutAsync();
-
-            return RedirectToAction("Index", "Account", new { area = "Auth" });
+            return RedirectToAction("Login", "Account", new { area = "Auth" });
             //}
 
 
