@@ -555,7 +555,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Range<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="rangeId">
+                                <select class="form-control" id="rangeId" value="">
 
                                     <option value="0" selected>Select</option>
                                     @foreach (var range in Model.RangeMetros)
@@ -766,7 +766,7 @@
                 var divisionId = $(this).val();
                 if (divisionId) {
                     $.ajax({
-                        url: '/MasterData/MasterDatas/GetDistrictsByDivisionId',
+                        url: '/MasterData/MasterData/GetDistrictsByDivisionId',
                         type: 'GET',
                         data: { divisionId: divisionId },
                         success: function (response) {
@@ -791,7 +791,7 @@
                 var districtId = $(this).val();
                 if (districtId) {
                     $.ajax({
-                        url: '/MasterData/MasterDatas/GetThanasByDistrictId',
+                        url: '/MasterData/MasterData/GetThanasByDistrictId',
                         type: 'GET',
                         data: { districtId: districtId },
                         success: function (response) {
@@ -816,7 +816,7 @@
                 var thanaId = $(this).val();
                 if (thanaId) {
                     $.ajax({
-                        url: '/MasterData/MasterDatas/GetUnionWardsByThanaId',
+                        url: '/MasterData/MasterData/GetUnionWardsByThanaId',
                         type: 'GET',
                         data: { thanaId: thanaId },
                         success: function (response) {
@@ -841,7 +841,7 @@
                 var unionId = $(this).val();
                 if (unionId) {
                     $.ajax({
-                        url: '/MasterData/MasterDatas/GetUnionWardsByUnionWardId',
+                        url: '/MasterData/MasterData/GetUnionWardsByUnionWardId',
                         type: 'GET',
                         data: { unionId: unionId },
                         success: function (response) {
@@ -866,10 +866,11 @@
 
 
             $('#rangeId').change(function () {
-                var rangeId = $(this).val();
+                
+                var rangeId = $(this).val(); 
                 if (rangeId) {
                     $.ajax({
-                        url: '/MasterData/MasterDatas/GetDivisionDistrictByRangeId',
+                        url: '/MasterData/MasterData/GetDivisionDistrictByRangeId',
                         type: 'GET',
                         data: { rangeId: rangeId },
                         success: function (response) {
@@ -892,30 +893,7 @@
                     $('#divisionDistrictId').append('<option value="0" selected>Select</option>');
 
                 }
-                if (rangeId) {
-
-                    $.ajax({
-                        url: '/MasterData/MasterDatas/GetThanasByRangeId',
-                        type: 'GET',
-                        data: { rangeId: rangeId },
-                        success: function (response) {
-                            var selectDropdown = $('#thanaId2');
-                            selectDropdown.empty();
-                            selectDropdown.append('<option value="0" selected>Select</option>');
-
-                            $.each(response, function (index, thana) {
-                                selectDropdown.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
-                            });
-                        },
-                        error: function () {
-                            alert("Error loading districts.");
-                        }
-                    });
-                } else {
-
-                    $('#thanaId2').empty();
-                    $('#thanaId2').append('<option value="0" selected>Select</option>');
-                }
+                 
             });
 
 
@@ -924,7 +902,7 @@
                 var divisionDistrictId = $(this).val();
                 if (divisionDistrictId) {
                     $.ajax({
-                        url: '/MasterData/MasterDatas/GetZoneCircleByDivisionDistrictId',
+                        url: '/MasterData/MasterData/GetZoneCircleByDivisionDistrictId',
                         type: 'GET',
                         data: { divisionDistrictId: divisionDistrictId },
                         success: function (response) {
@@ -946,6 +924,34 @@
             });
 
 
+
+            $('#zoneId').change(function () {
+                var zoneId = $(this).val();
+                if (zoneId) {
+
+                    $.ajax({
+                        url: '/MasterData/MasterData/GetThanasByRangeId',
+                        type: 'GET',
+                        data: { zoneId: zoneId },
+                        success: function (response) {
+                            var selectDropdown = $('#thanaId2');
+                            selectDropdown.empty();
+                            selectDropdown.append('<option value="0" selected>Select</option>');
+
+                            $.each(response, function (index, thana) {
+                                selectDropdown.append('<option value="' + thana.Id + '">' + thana.policeThanaName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+
+                    $('#thanaId2').empty();
+                    $('#thanaId2').append('<option value="0" selected>Select</option>');
+                }
+            });
 
 
 

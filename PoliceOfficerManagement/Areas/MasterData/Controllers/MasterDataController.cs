@@ -125,9 +125,9 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var data = await _masterDataServices.GetThanasByDistrictId(districtId);
             return Json(data);
         }
-        public async Task<IActionResult> GetThanasByRangeId(int rangeId)
+        public async Task<IActionResult> GetThanasByRangeId(int zoneId)
         {
-            var data = await _masterDataServices.GetThanasByRangeId(rangeId);
+            var data = await _masterDataServices.GetThanasByRangeId(zoneId);
             return Json(data);
         }
         #endregion

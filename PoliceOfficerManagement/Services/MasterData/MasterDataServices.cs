@@ -137,9 +137,9 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.Thanas.Where(x => x.districtId == districtId).ToListAsync();
             return data;
         }
-        public async Task<IEnumerable<Thana>> GetThanasByRangeId(int rangeId)
+        public async Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId)
         {
-            var data = await _context.Thanas.Where(x => x.rangeMetroId == rangeId).ToListAsync();
+            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId).ToListAsync();
             return data;
         }
         #endregion
