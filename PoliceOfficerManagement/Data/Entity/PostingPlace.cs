@@ -3,6 +3,7 @@
     public class PostingPlace:Base
     {
         public int? rankId { get; set; }
+        public Rank rank { get; set; }
         public DateTime? postingFrom { get; set; }
         public DateTime? postingTo { get; set; }
 
