@@ -966,12 +966,24 @@
         }
         function addAddress() {
             // Get values from the form
-            const addressType = $('#addressType').val();
-            const division = $('#divisionId').val();  // Keep values (not text) for input fields
-            const district = $('#districtId').val();
-            const thana = $('#thanaId').val();
-            const union = $('#unionId').val();
-            const villege = $('#villegeId').val();
+            const addressType = $('#addressType option:selected').text();
+            const addressTypeId = $('#addressType option:selected').val();
+          
+            const division = $('#divisionId option:selected').text();
+            const divisionId = $('#divisionId option:selected').val();
+
+            const district = $('#districtId option:selected').text();
+            const districtId = $('#districtId option:selected').val();
+
+            const thana = $('#thanaId option:selected').text();
+            const thanaId = $('#thanaId option:selected').val();
+
+            const union = $('#unionId option:selected').text();
+            const unionId = $('#unionId option:selected').val();
+
+            const villege = $('#villegeId option:selected').text();
+            const villegeId = $('#villegeId option:selected').val();
+
             const roadInfo = $('#roadInfo').val();
 
             // Validate required fields
@@ -984,8 +996,8 @@
             const newRow = `
                         <tr>
                             <td>
-                               <span>${addressType}</span> 
-                            <input type="hidden" name="addressType" value="${addressType}" class="form-control" />
+                               <span>${addressType}</span>
+                                    <input type="hidden" name="addressType" value="${addressTypeId}" class="form-control" />
                             </td>
                             <td>
                                 <span>${$('#divisionId option:selected').text()}</span>
@@ -1092,6 +1104,7 @@
         function addTraining() {
             // Get values from input fields
             const institute = $('#instituteId2 option:selected').text();
+            const instituteId = $('#instituteId2 option:selected').val();
             const passingYear = $('#passingYear2').val();
             const batchNo = $('#batchNo2').val();
             const grade = $('#grade2').val();
