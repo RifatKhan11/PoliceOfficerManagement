@@ -17,10 +17,21 @@ namespace PoliceOfficerManagement.Services.MasterData.Interfaces
         Task<IEnumerable<Village>> GetUnionWardsByUnionWardId(int unionWardId);
         Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo();
         Task<IEnumerable<RangeMetro>> GetAllRangeMetros();
+        Task<int> SaveRangeMetro(RangeMetro model);
+        Task<int> InActiveRangeMetroById(int Id);
         Task<IEnumerable<ZoneCircle>> GetZoneCircleByDivisionDistrictId(int divisionDistrictId);
         Task<IEnumerable<DivisionDistrict>> GetDivisionDistrictByRangeId(int rangeId);
         Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId);
         Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfoForTraning();
         Task<IEnumerable<InstitutionInfo>> GetInstitutionInfoTraning();
+        Task<IEnumerable<DivisionDistrict>> GetAllDivisionDistrict();
+        Task<int> SaveDivisionDistrict(DivisionDistrict model);
+        Task<int> InActiveDivisionDistrictById(int Id);
+        Task<IEnumerable<ZoneCircle>> GetAllZoneCircle();
+        Task<int> SaveZoneCircle(ZoneCircle model);
+        Task<int> InActiveZoneCircleById(int Id);
+        Task<int> InActivePoliceThanaById(int Id);
+        Task<int> SavePoliceThana(PoliceThana model);
+        Task<IEnumerable<PoliceThana>> GetAllPoliceThana();
     }
 }

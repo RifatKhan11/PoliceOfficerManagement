@@ -92,9 +92,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             return Json(true);
         }
 
-        #endregion
-
-
+        #endregion 
 
         #region Rank
         public async Task<IActionResult> Rank()
@@ -133,8 +131,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
         }
 
         #endregion
-
-
+         
         #region Divisions
         public async Task<IActionResult> getAllDivisions()
         {
@@ -155,11 +152,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var data = await _masterDataServices.GetThanasByDistrictId(districtId);
             return Json(data);
         }
-        public async Task<IActionResult> GetThanasByRangeId(int zoneId)
-        {
-            var data = await _masterDataServices.GetThanasByRangeId(zoneId);
-            return Json(data);
-        }
+         
         #endregion
         #region UnionWard
         public async Task<IActionResult> GetUnionWardsByThanaId(int thanaId)
@@ -175,12 +168,88 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             return Json(data);
         }
         #endregion
+
+        #region Range Metros
+        public async Task<IActionResult> RangeMetros()
+        {
+            var model = new RangeMetrosViewModel
+            {
+                Ranges = await _masterDataServices.GetAllRangeMetros(),
+
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RangeMetros(RangeMetrosViewModel model)
+        {
+            RangeMetro data = new RangeMetro
+            {
+                Id = model.Id,
+                rangeMetroName = model.rangeMetroName,
+                rangeMetroNameBn = model.rangeMetroNameBn,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                pimsRangeId = model.pimsRangeId,
+                pimsRangeName = model.pimsRangeName
+            };
+
+            var id = await _masterDataServices.SaveRangeMetro(data);
+            return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveRangeMetros(int Id)
+        {
+            var data = await _masterDataServices.InActiveRangeMetroById(Id);
+            return Json(true);
+        }
+
+        #endregion
+
+
         #region Division District
         public async Task<IActionResult> GetDivisionDistrictByRangeId(int rangeId)
         {
             var data = await _masterDataServices.GetDivisionDistrictByRangeId(rangeId);
             return Json(data);
         }
+        public async Task<IActionResult> DivisionDistrict()
+        {
+            var model = new DivisionDistrictViewModel
+            {
+                Ranges = await _masterDataServices.GetAllRangeMetros(),
+                divisionDistricts = await _masterDataServices.GetAllDivisionDistrict(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DivisionDistrict(DivisionDistrictViewModel model)
+        {
+            DivisionDistrict data = new DivisionDistrict
+            {
+                Id = model.Id, 
+                rangeMetroId = model.rangeMetroId,
+                divisionDistrictName = model.divisionDistrictName,
+                divisionDistrictNameBn = model.divisionDistrictNameBn,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                pimsDistrictId = model.pimsDistrictId,
+                pimsDistrictName = model.pimsDistrictName
+            };
+
+            var id = await _masterDataServices.SaveDivisionDistrict(data);
+            return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveDivisionDistrict(int Id)
+        {
+            var data = await _masterDataServices.InActiveDivisionDistrictById(Id);
+            return Json(true);
+        }
+
         #endregion
         #region Zone Circle
         public async Task<IActionResult> GetZoneCircleByDivisionDistrictId(int divisionDistrictId)
@@ -188,7 +257,96 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var data = await _masterDataServices.GetZoneCircleByDivisionDistrictId(divisionDistrictId);
             return Json(data);
         }
+
+        public async Task<IActionResult> ZoneCircle()
+        {
+            var model = new ZoneCircleViewModel
+            {
+                zones = await _masterDataServices.GetAllZoneCircle(),
+                divisionDistricts = await _masterDataServices.GetAllDivisionDistrict(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ZoneCircle(ZoneCircleViewModel model)
+        {
+            ZoneCircle data = new ZoneCircle
+            {
+                Id = model.Id, 
+                divisionDistrictId = model.divisionDistrictId,
+                zoneName = model.zoneName,
+                zoneNameBn = model.zoneNameBn,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                pimsZoneId = model.pimsZoneId,
+                pimsZoneName = model.pimsZoneName
+            };
+
+            var id = await _masterDataServices.SaveZoneCircle(data);
+            return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveZoneCircle(int Id)
+        {
+            var data = await _masterDataServices.InActiveZoneCircleById(Id);
+            return Json(true);
+        }
         #endregion
 
+        #region Police Thana
+        public async Task<IActionResult> GetThanasByRangeId(int zoneId)
+        {
+            var data = await _masterDataServices.GetThanasByRangeId(zoneId);
+            return Json(data);
+        }
+
+        public async Task<IActionResult> PoliceThana()
+        {
+            var model = new PoliceThanaViewModel
+            {
+                Ranges = await _masterDataServices.GetAllRangeMetros(),
+                divisionDistricts = await _masterDataServices.GetAllDivisionDistrict(),
+                policeThanas = await _masterDataServices.GetAllPoliceThana(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> PoliceThana(PoliceThanaViewModel model)
+        {
+            PoliceThana data = new PoliceThana
+            {
+                Id = model.Id,
+                rangeMetroId = model.rangeMetroId,
+                divisionDistrictId = model.divisionDistrictId, 
+                zoneCircleId = model.zoneCircleId,
+                upazillaId = model.upazillaId,
+                policeThanaName = model.policeThanaName,
+                policeThanaNameBn = model.policeThanaNameBn,
+                isReportable = model.isReportable,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                policeThanaId = model.policeThanaId,
+                address = model.address,
+                fariType   = model.fariType , 
+                isChild = model.isChild,
+                pimsThanaId = model.pimsThanaId,
+                pimsThanaName = model.pimsThanaName
+            };
+
+            var id = await _masterDataServices.SavePoliceThana(data);
+            return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActivePoliceThana(int Id)
+        {
+            var data = await _masterDataServices.InActivePoliceThanaById(Id);
+            return Json(true);
+        }
+
+        #endregion
     }
 }

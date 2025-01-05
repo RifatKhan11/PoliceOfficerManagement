@@ -141,11 +141,7 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.Thanas.Where(x => x.districtId == districtId).ToListAsync();
             return data;
         }
-        public async Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId)
-        {
-            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId).ToListAsync();
-            return data;
-        }
+        
         #endregion
         #region UnionWard
         public async Task<IEnumerable<UnionWard>> GetUnionWardsByThanaId(int thanaId)
@@ -164,21 +160,62 @@ namespace PoliceOfficerManagement.Services.MasterData
         #region Institution Info
         public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfoForTraning()
         {
-            var data = await _context.InstitutionInfos.Where(x=>x.instituteType == 2).ToListAsync();
+            var data = await _context.InstitutionInfos.Where(x=>x.instituteType == 2 && x.isActive != true).ToListAsync();
             return data;
         }
         public async Task<IEnumerable<InstitutionInfo>> GetAllInstitutionInfo()
         {
-            var data = await _context.InstitutionInfos.Where(x => x.instituteType == 1).ToListAsync();
+            var data = await _context.InstitutionInfos.Where(x => x.instituteType == 1 && x.isActive != true).ToListAsync();
             return data;
         }
         #endregion
         #region RangeMetros
         public async Task<IEnumerable<RangeMetro>> GetAllRangeMetros()
         {
-            var data = await _context.RangeMetros.ToListAsync();
+            var data = await _context.RangeMetros.Where(x => x.isActive != true).ToListAsync();
             return data;
         }
+        public async Task<int> SaveRangeMetro(RangeMetro model)
+        {
+            try
+            {
+                if (model.Id != 0)
+                {
+                    _context.RangeMetros.Update(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+                else
+                {
+                    await _context.RangeMetros.AddAsync(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+
+        }
+
+        
+        public async Task<int> InActiveRangeMetroById(int Id)
+        {
+            var data = await _context.RangeMetros.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (data != null)
+            {
+                data.isActive = true;
+                _context.RangeMetros.Update(data);
+                await _context.SaveChangesAsync();
+
+
+            }
+            return 0;
+        }
+
         #endregion
         #region Division District
         public async Task<IEnumerable<DivisionDistrict>> GetDivisionDistrictByRangeId(int rangeId)
@@ -186,12 +223,167 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.DivisionDistricts.Where(x=>x.rangeMetroId == rangeId).ToListAsync();
             return data;
         }
+
+
+        public async Task<IEnumerable<DivisionDistrict>> GetAllDivisionDistrict()
+        {
+            var data = await _context.DivisionDistricts.Where(x => x.isActive != true).Include(x=>x.rangeMetro).ToListAsync();
+            return data;
+        }
+        public async Task<int> SaveDivisionDistrict(DivisionDistrict model)
+        {
+            try
+            {
+                if (model.Id != 0)
+                {
+                    _context.DivisionDistricts.Update(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+                else
+                {
+                    await _context.DivisionDistricts.AddAsync(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+
+        }
+
+
+        public async Task<int> InActiveDivisionDistrictById(int Id)
+        {
+            var data = await _context.DivisionDistricts.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (data != null)
+            {
+                data.isActive = true;
+                _context.DivisionDistricts.Update(data);
+                await _context.SaveChangesAsync();
+
+
+            }
+            return 0;
+        }
         #endregion
         #region Zone Circle
         public async Task<IEnumerable<ZoneCircle>> GetZoneCircleByDivisionDistrictId(int divisionDistrictId)
         {
             var data = await _context.ZoneCircles.Where(x => x.divisionDistrictId == divisionDistrictId).ToListAsync();
             return data;
+        }
+
+        public async Task<IEnumerable<ZoneCircle>> GetAllZoneCircle()
+        {
+            var data = await _context.ZoneCircles.Where(x => x.isActive != true).Include(x=>x.divisionDistrict).ToListAsync();
+            return data;
+        }
+        public async Task<int> SaveZoneCircle(ZoneCircle model)
+        {
+            try
+            {
+                if (model.Id != 0)
+                {
+                    _context.ZoneCircles.Update(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+                else
+                {
+                    await _context.ZoneCircles.AddAsync(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+
+        }
+
+
+        public async Task<int> InActiveZoneCircleById(int Id)
+        {
+            var data = await _context.ZoneCircles.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (data != null)
+            {
+                data.isActive = true;
+                _context.ZoneCircles.Update(data);
+                await _context.SaveChangesAsync();
+
+
+            }
+            return 0;
+        }
+        #endregion
+
+        #region Police Thanas
+         
+        public async Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId)
+        {
+            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId).ToListAsync();
+            return data;
+        }
+
+        public async Task<IEnumerable<PoliceThana>> GetAllPoliceThana()
+        {
+            var data = await _context.PoliceThanas
+                                    .Where(x => x.isActive != true)
+                                    .Include(x=>x.policeThana)
+                                    .Include(x=>x.rangeMetro)
+                                    .Include(x=>x.divisionDistrict)
+                                    .Include(x=>x.zoneCircle)
+                                    .Include(x=>x.upazilla)
+                                    .ToListAsync();
+            return data;
+        }
+        public async Task<int> SavePoliceThana(PoliceThana model)
+        {
+            try
+            {
+                if (model.Id != 0)
+                {
+                    _context.PoliceThanas.Update(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+                else
+                {
+                    await _context.PoliceThanas.AddAsync(model);
+                    await _context.SaveChangesAsync();
+                    return model.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+
+        }
+
+
+        public async Task<int> InActivePoliceThanaById(int Id)
+        {
+            var data = await _context.PoliceThanas.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            if (data != null)
+            {
+                data.isActive = true;
+                _context.PoliceThanas.Update(data);
+                await _context.SaveChangesAsync();
+
+
+            }
+            return 0;
         }
         #endregion
     }
