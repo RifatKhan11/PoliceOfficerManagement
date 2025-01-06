@@ -1,4 +1,4 @@
-﻿ @model RangeMetrosViewModel
+﻿ @model PoliceThanaViewModel
 @{
     ViewData["Title"] = "Employee Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +7,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Range Metros Information</h5>
+                <h5>Police Thana Information</h5>
 
             </div>
             <div class="col-4">
@@ -18,16 +18,16 @@
     </div>
     <div class="card-body">
         <div class="container-fluid">
-            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="RangeMetros" method="post" id="employeeForm">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="PoliceThana" method="post" id="employeeForm">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input name="Id" id="Id" hidden />
                 <div class="row">
-                     
+
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Name English<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="rangeMetroName" name="rangeMetroName" class="form-control" />
+                                <input type="text" id="policeThanaName" name="policeThanaName" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -35,23 +35,63 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Name Bangla<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="rangeMetroNameBn" name="rangeMetroNameBn" class="form-control" />
+                                <input type="text" id="policeThanaNameBn" name="policeThanaNameBn" class="form-control" />
                             </div>
                         </div>
                     </div>
-                     
+                     <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Is Reportable<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="isReportable" name="isReportable" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Range Metro<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="rangeMetroId" value="" name="rangeMetroId">
+
+                                    <option value="0" selected>Select</option>
+                                    @foreach (var rank in Model.Ranges)
+                                    {
+                                        <option value="@rank.Id">@rank.rangeMetroName</option>
+                                    }
+                                </select>
+                            </div> 
+                        </div>
+                    </div>
+                    @* <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Police Thana<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="policeThanaId" value="" name="policeThanaId">
+
+                                    <option value="0" selected>Select</option>
+                                    @foreach (var police in Model.policeThanas2)
+                                    {
+                                        <option value="@police.Id">@police.policeThanaName</option>
+                                    }
+                                </select>
+                            </div> 
+                        </div>
+                    </div> *@
+
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Active In-Active<span style="color: red">*</span></label>
                             <div class="col-md-8">
                                 <select id="IsActive" name="IsActive" class="form-control">
+
                                     <option value="True">Active</option>
                                     <option value="False">In-Active</option>
                                 </select>
                             </div>
 
-                            
-                             
+
+
                         </div>
                     </div>
 
@@ -75,7 +115,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Range Metros List</h5>
+                <h5>Police Thana List</h5>
 
             </div>
             <div class="col-4">
@@ -90,6 +130,9 @@
                 <tr>
                     <th>Sl Id</th>
                     <th>Name</th>
+                    <th>Range Metro</th>
+                    @* <th>Police Thana</th> *@
+                    <th>Is Reportable</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -98,14 +141,17 @@
                 @{
                     int i = 1;
                 }
-                @if (Model.Ranges.Count() != 0)
+                @if (Model.policeThanas.Count() != 0)
                 {
-                    @foreach (var item in Model.Ranges)
+                    @foreach (var item in Model.policeThanas)
                     {
                         <tr>
                             <td>@i</td>
 
-                            <td>@item.rangeMetroName</td>
+                            <td>@item.policeThanaName</td>
+                            <td>@item.rangeMetro.rangeMetroName</td>
+                            @* <td>@item.policeThanaId</td> *@
+                            <td>@item.isReportable</td>
                             <td>
                                 @if (@item.isActive == true)
                                 {
@@ -116,8 +162,9 @@
                                     @:InActive
                                 }
                             </td>
+
                             <td class="icon-container">
-                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.rangeMetroName', '@item.rangeMetroNameBn','@item.isActive')"></i>
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.policeThanaName', '@item.policeThanaNameBn', '@item.rangeMetroId', '@item.policeThanaId','@item.isReportable','@item.isActive')"></i>
                                 <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
                             </td>
                         </tr>
@@ -127,7 +174,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="3" class="text-center">No data available</td>
+                        <td colspan="5" class="text-center">No data available</td>
                     </tr>
                 }
             </tbody>
@@ -153,7 +200,7 @@
              }).then(function (res) {
                  if (res) {
                      $.ajax({
-                        url: "/MasterData/MasterData/InActiveRangeMetros",
+                        url: "/MasterData/MasterData/InActivePoliceThana",
                          type: "POST",
                          data: { id: Id },
                          success: function (res) {
@@ -176,10 +223,13 @@
 
 
 
-        function edit(Id, rangeMetroName, rangeMetroNameBn, isActive) {
+        function edit(Id, policeThanaName, policeThanaNameBn, rangeMetroId, policeThanaId, isReportable, isActive) {
              $('#Id').val(Id);
-            $('#rangeMetroNameBn').val(rangeMetroNameBn);
-            $('#rangeMetroName').val(rangeMetroName);
+            $('#policeThanaName').val(policeThanaName);
+            $('#policeThanaNameBn').val(policeThanaNameBn);
+            $('#rangeMetroId').val(rangeMetroId);
+            // $('#policeThanaId').val(policeThanaId);
+            $('#isReportable').val(isReportable);
             $('#IsActive').val(isActive);
             $('#employeeCreate').show();
              $('#employeeList').hide();
@@ -201,7 +251,7 @@
 
          }
 
-          
+
 
     </script>
 }

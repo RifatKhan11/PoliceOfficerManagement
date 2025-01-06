@@ -103,5 +103,6 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public IEnumerable<ZoneCircle> zone { get; set; }
         public IEnumerable<Thana> upazilla { get; set; }
         public IEnumerable<PoliceThana> policeThanas { get; set; } 
+        public IEnumerable<PoliceThana> policeThanas2 { get; set; } 
      }
 }

@@ -33,5 +33,8 @@ namespace PoliceOfficerManagement.Services.MasterData.Interfaces
         Task<int> InActivePoliceThanaById(int Id);
         Task<int> SavePoliceThana(PoliceThana model);
         Task<IEnumerable<PoliceThana>> GetAllPoliceThana();
+        Task<IEnumerable<RangeMetro>> GetAllRangeMetros2();
+        Task<IEnumerable<DivisionDistrict>> GetAllDivisionDistrict2();
+        Task<IEnumerable<PoliceThana>> GetAllPoliceThana2();
     }
 }

@@ -177,6 +177,11 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.RangeMetros.Where(x => x.isActive != false).ToListAsync();
             return data;
         }
+        public async Task<IEnumerable<RangeMetro>> GetAllRangeMetros2()
+        {
+            var data = await _context.RangeMetros.Where(x => x.isDelete != 1).ToListAsync();
+            return data;
+        }
         public async Task<int> SaveRangeMetro(RangeMetro model)
         {
             try
@@ -233,6 +238,11 @@ namespace PoliceOfficerManagement.Services.MasterData
             var data = await _context.DivisionDistricts.Where(x => x.isActive != false).Include(x=>x.rangeMetro).ToListAsync();
             return data;
         }
+        public async Task<IEnumerable<DivisionDistrict>> GetAllDivisionDistrict2()
+        {
+            var data = await _context.DivisionDistricts.Where(x => x.isDelete != 1).Include(x => x.rangeMetro).ToListAsync();
+            return data;
+        }
         public async Task<int> SaveDivisionDistrict(DivisionDistrict model)
         {
             try
@@ -284,7 +294,7 @@ namespace PoliceOfficerManagement.Services.MasterData
 
         public async Task<IEnumerable<ZoneCircle>> GetAllZoneCircle()
         {
-            var data = await _context.ZoneCircles.Where(x => x.isActive != false).Include(x=>x.divisionDistrict).ToListAsync();
+            var data = await _context.ZoneCircles.Where(x => x.isDelete != 1).Include(x=>x.divisionDistrict).ToListAsync();
             return data;
         }
         public async Task<int> SaveZoneCircle(ZoneCircle model)
@@ -334,19 +344,26 @@ namespace PoliceOfficerManagement.Services.MasterData
          
         public async Task<IEnumerable<PoliceThana>> GetThanasByRangeId(int zoneId)
         {
-            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId && x.isActive != false).ToListAsync();
+            var data = await _context.PoliceThanas.Where(x => x.zoneCircleId == zoneId && x.isDelete != 1).ToListAsync();
             return data;
         }
 
         public async Task<IEnumerable<PoliceThana>> GetAllPoliceThana()
         {
             var data = await _context.PoliceThanas
-                                    .Where(x => x.isActive != false)
+                                    .Where(x => x.isDelete != 1)
                                     .Include(x=>x.policeThana)
                                     .Include(x=>x.rangeMetro)
                                     .Include(x=>x.divisionDistrict)
                                     .Include(x=>x.zoneCircle)
                                     .Include(x=>x.upazilla)
+                                    .ToListAsync();
+            return data;
+        }
+        public async Task<IEnumerable<PoliceThana>> GetAllPoliceThana2()
+        {
+            var data = await _context.PoliceThanas
+                                    .Where(x => x.isActive != false)
                                     .ToListAsync();
             return data;
         }

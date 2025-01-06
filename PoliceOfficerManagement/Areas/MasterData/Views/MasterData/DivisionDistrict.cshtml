@@ -18,7 +18,7 @@
     </div>
     <div class="card-body">
         <div class="container-fluid">
-            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="RangeMetros" method="post" id="employeeForm">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="DivisionDistrict" method="post" id="employeeForm">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input name="Id" id="Id" hidden />
                 <div class="row">
@@ -42,9 +42,29 @@
 
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
+                            <label class="col-form-label col-md-4">Range Metro<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="rangeMetroId" value="" name="rangeMetroId">
+
+                                    <option value="0" selected>Select</option>
+                                    @foreach (var rank in Model.Ranges)
+                                    {
+                                        <option value="@rank.Id">@rank.rangeMetroName</option>
+                                    }
+                                </select>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
                             <label class="col-form-label col-md-4">Active In-Active<span style="color: red">*</span></label>
                             <div class="col-md-8">
                                 <select id="IsActive" name="IsActive" class="form-control">
+
                                     <option value="True">Active</option>
                                     <option value="False">In-Active</option>
                                 </select>
@@ -156,7 +176,7 @@
              }).then(function (res) {
                  if (res) {
                      $.ajax({
-                        url: "/MasterData/MasterData/InActiveRangeMetros",
+                        url: "/MasterData/MasterData/InActiveDivisionDistrict",
                          type: "POST",
                          data: { id: Id },
                          success: function (res) {
@@ -179,10 +199,12 @@
 
 
 
-        function edit(Id, rangeMetroName, rangeMetroNameBn) {
-             $('#Id').val(Id);
-            $('#rangeMetroNameBn').val(rangeMetroNameBn);
-            $('#rangeMetroName').val(rangeMetroName);
+        function edit(Id, divisionDistrictName, divisionDistrictNameBn, rangeMetroId, isActive) {
+             $('#Id').val(Id); 
+            $('#divisionDistrictName').val(divisionDistrictName);
+            $('#divisionDistrictNameBn').val(divisionDistrictNameBn);
+            $('#rangeMetroId').val(rangeMetroId);
+            $('#IsActive').val(isActive);
             $('#employeeCreate').show();
              $('#employeeList').hide();
 

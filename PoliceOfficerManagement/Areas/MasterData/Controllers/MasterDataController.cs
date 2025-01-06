@@ -175,7 +175,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
         {
             var model = new RangeMetrosViewModel
             {
-                Ranges = await _masterDataServices.GetAllRangeMetros(),
+                Ranges = await _masterDataServices.GetAllRangeMetros2(),
 
             };
             return View(model);
@@ -222,7 +222,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var model = new DivisionDistrictViewModel
             {
                 Ranges = await _masterDataServices.GetAllRangeMetros(),
-                divisionDistricts = await _masterDataServices.GetAllDivisionDistrict(),
+                divisionDistricts = await _masterDataServices.GetAllDivisionDistrict2(),
 
             };
             return View(model);
@@ -285,7 +285,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
                 latitude = model.latitude,
                 longitude = model.longitude,
                 pimsZoneId = model.pimsZoneId,
-                pimsZoneName = model.pimsZoneName
+                pimsZoneName = model.pimsZoneName,
+                isActive = model.IsActive,
             };
 
             var id = await _masterDataServices.SaveZoneCircle(data);
@@ -315,6 +316,7 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
                 Ranges = await _masterDataServices.GetAllRangeMetros(),
                 divisionDistricts = await _masterDataServices.GetAllDivisionDistrict(),
                 policeThanas = await _masterDataServices.GetAllPoliceThana(),
+                policeThanas2 = await _masterDataServices.GetAllPoliceThana2(),
 
             };
             return View(model);
@@ -339,7 +341,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
                 fariType   = model.fariType , 
                 isChild = model.isChild,
                 pimsThanaId = model.pimsThanaId,
-                pimsThanaName = model.pimsThanaName
+                pimsThanaName = model.pimsThanaName,
+                isActive = model.IsActive,
             };
 
             var id = await _masterDataServices.SavePoliceThana(data);
