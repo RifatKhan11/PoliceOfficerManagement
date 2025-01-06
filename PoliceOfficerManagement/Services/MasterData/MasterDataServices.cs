@@ -174,7 +174,7 @@ namespace PoliceOfficerManagement.Services.MasterData
         #region RangeMetros
         public async Task<IEnumerable<RangeMetro>> GetAllRangeMetros()
         {
-            var data = await _context.RangeMetros.Where(x => x.isActive != false).ToListAsync();
+            var data = await _context.RangeMetros.Where(x => x.isActive != false && x.isDelete != 1).ToListAsync();
             return data;
         }
         public async Task<IEnumerable<RangeMetro>> GetAllRangeMetros2()
@@ -228,7 +228,7 @@ namespace PoliceOfficerManagement.Services.MasterData
         #region Division District
         public async Task<IEnumerable<DivisionDistrict>> GetDivisionDistrictByRangeId(int rangeId)
         {
-            var data = await _context.DivisionDistricts.Where(x=>x.rangeMetroId == rangeId).ToListAsync();
+            var data = await _context.DivisionDistricts.Where(x=>x.rangeMetroId == rangeId && x.isDelete != 1 && x.isActive != false).ToListAsync();
             return data;
         }
 
