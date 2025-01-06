@@ -132,19 +132,135 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
         }
 
         #endregion
-         
+
+        #region Country
+        public async Task<IActionResult> Country()
+        {
+            var model = new CountryViewModel
+            {
+                countries = await _masterDataServices.GetCountry(), 
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Country(CountryViewModel model)
+        {
+            Country data = new Country
+            {
+                Id = model.Id, 
+                countryCode = model.countryCode,
+                countryName = model.countryName,
+                countryNameBn = model.countryNameBn,
+                nationality = model.nationality,
+                shortName = model.shortName,
+                latitude = model.latitude,
+                longitude = model.longitude,                  
+                isActive = model.IsActive,
+            };
+
+            var id = await _masterDataServices.SaveCountry(data);
+            return RedirectToAction("Country");
+            //return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveCountry(int Id)
+        {
+            var data = await _masterDataServices.InActiveCountryById(Id);
+            return Json(true);
+        }
+        #endregion
+
         #region Divisions
         public async Task<IActionResult> getAllDivisions()
         {
             var data = await _masterDataServices.GetAllDivision();
             return Json(data);
         }
+
+        public async Task<IActionResult> Division()
+        {
+            var model = new DivisionViewModel
+            {
+                Countries = await _masterDataServices.GetCountry(),
+                Divisions = await _masterDataServices.GetDivision(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Division(DivisionViewModel model)
+        {
+            Division data = new Division
+            {
+                Id = model.Id,
+                divisionCode = model.divisionCode,
+                divisionName = model.divisionName,
+                divisionNameBn = model.divisionNameBn,
+                countryId = model.countryId,
+                shortName = model.shortName,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                isActive = model.IsActive,
+            };
+
+            var id = await _masterDataServices.SaveDivision(data);
+            return RedirectToAction("Division");
+            //return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveDivision(int Id)
+        {
+            var data = await _masterDataServices.InActiveDivisionById(Id);
+            return Json(true);
+        }
+
         #endregion
         #region Districts
         public async Task<IActionResult> GetDistrictsByDivisionId(int divisionId)
         {
             var data = await _masterDataServices.GetDistrictsByDivisionId(divisionId);
             return Json(data);
+        }
+
+        public async Task<IActionResult> District()
+        {
+            var model = new DistrictViewModel
+            {
+                Districts = await _masterDataServices.GetDistrict(),
+                Divisions = await _masterDataServices.GetAllDivision(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> District(DistrictViewModel model)
+        {
+            District data = new District
+            {
+                Id = model.Id,
+                districtCode = model.districtCode,
+                districtName = model.districtName,
+                districtNameBn = model.districtNameBn,
+                divisionId = model.divisionId,
+                shortName = model.shortName,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                isActive = model.IsActive,
+            };
+
+            var id = await _masterDataServices.SaveDistrict(data);
+            return RedirectToAction("District");
+            //return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveDistrict(int Id)
+        {
+            var data = await _masterDataServices.InActiveDistrictById(Id);
+            return Json(true);
         }
         #endregion
         #region Thanas
@@ -153,7 +269,46 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var data = await _masterDataServices.GetThanasByDistrictId(districtId);
             return Json(data);
         }
-         
+
+        public async Task<IActionResult> Thana()
+        {
+            var model = new ThanaViewModel
+            {
+                Districts = await _masterDataServices.GetDistrict2(),
+                RangeMetros = await _masterDataServices.GetAllRangeMetros(),
+                Thanas = await _masterDataServices.GetThana(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Thana(ThanaViewModel model)
+        {
+            Thana data = new Thana
+            {
+                Id = model.Id,
+                thanaCode = model.thanaCode,
+                thanaName = model.thanaName,
+                thanaNameBn = model.thanaNameBn,
+                rangeMetroId = model.rangeMetroId,
+                districtId = model.districtId,
+                shortName = model.shortName,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                isActive = model.IsActive,
+            };
+
+            var id = await _masterDataServices.SaveThana(data);
+            return RedirectToAction("Thana");
+            //return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveThana(int Id)
+        {
+            var data = await _masterDataServices.InActiveThanaById(Id);
+            return Json(true);
+        }
         #endregion
         #region UnionWard
         public async Task<IActionResult> GetUnionWardsByThanaId(int thanaId)
@@ -161,12 +316,99 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
             var data = await _masterDataServices.GetUnionWardsByThanaId(thanaId);
             return Json(data);
         }
+
+        public async Task<IActionResult> UnionWard()
+        {
+            var model = new UnionWardViewModel
+            {
+                Districts = await _masterDataServices.GetDistrict2(),                 
+                Thanas = await _masterDataServices.GetThana(),
+                UnionWards = await _masterDataServices.GetUnionWard2(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UnionWard(UnionWardViewModel model)
+        {
+            UnionWard data = new UnionWard
+            {
+                Id = model.Id,
+                unionCode = model.unionCode,
+                unionName = model.unionName,
+                unionNameBn = model.unionNameBn,
+                districtsId = model.districtsId,
+                thanaId = model.thanaId,
+                shortName = model.shortName,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                isActive = model.IsActive,
+            };
+
+            var id = await _masterDataServices.SaveUnionWard(data);
+            return RedirectToAction("UnionWard");
+            //return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveUnionWard(int Id)
+        {
+            var data = await _masterDataServices.InActiveUnionWardById(Id);
+            return Json(true);
+        }
         #endregion
         #region Village
         public async Task<IActionResult> GetUnionWardsByUnionWardId(int unionId)
         {
             var data = await _masterDataServices.GetUnionWardsByUnionWardId(unionId);
             return Json(data);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetVillageData()
+        {
+            var data = await _masterDataServices.GetVillage();
+            return Json(data);
+        }
+        public async Task<IActionResult> Village()
+        {
+            var model = new VillageViewModel
+            {
+                Districts = await _masterDataServices.GetDistrict2(),
+                Thanas = await _masterDataServices.GetThana2(),
+                UnionWards = await _masterDataServices.GetUnionWard2(),
+                Villages = await _masterDataServices.GetVillage(),
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Village(VillageViewModel model)
+        {
+            Village data = new Village
+            {
+                Id = model.Id,
+                villageCode = model.villageCode,
+                villageName = model.villageName,
+                villageNameBn = model.villageNameBn,
+                districtsId = model.districtsId,
+                thanaId = model.thanaId,
+                unionWardId = model.unionWardId,
+                shortName = model.shortName,
+                latitude = model.latitude,
+                longitude = model.longitude,
+                isActive = model.IsActive,
+            };
+
+            var id = await _masterDataServices.SaveVillage(data);
+            return RedirectToAction("Village");
+            //return Json(id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InActiveVillage(int Id)
+        {
+            var data = await _masterDataServices.InActiveVillageById(Id);
+            return Json(true);
         }
         #endregion
 
@@ -358,5 +600,8 @@ namespace PoliceOfficerManagement.Areas.MasterData.Controllers
         }
 
         #endregion
+
+
+         
     }
 }

@@ -105,4 +105,107 @@ namespace PoliceOfficerManagement.Areas.MasterData.Models
         public IEnumerable<PoliceThana> policeThanas { get; set; } 
         public IEnumerable<PoliceThana> policeThanas2 { get; set; } 
      }
+
+    public class CountryViewModel
+    {
+        public int Id { get; set; }
+        public string countryCode { get; set; } 
+        public string countryName { get; set; } 
+        public string countryNameBn { get; set; }
+        public string nationality { get; set; } 
+        public string shortName { get; set; } 
+        public string latitude { get; set; } 
+        public string longitude { get; set; }
+        public bool IsActive { get; set; }
+
+        public IEnumerable<Country> countries { get; set; }
+    }
+
+    public class DivisionViewModel
+    {
+        public int Id { get; set; }
+        public int? countryId { get; set; } 
+        public string divisionCode { get; set; } 
+        public string divisionName { get; set; }
+        public string divisionNameBn { get; set; } 
+        public string shortName { get; set; } 
+        public string latitude { get; set; } 
+        public string longitude { get; set; }
+        public bool IsActive { get; set; }
+
+        public IEnumerable<Country> Countries { get; set; }
+        public IEnumerable<Division> Divisions { get; set; }
+     }
+
+    public class DistrictViewModel
+    {
+        public int Id { get; set; }
+        public int divisionId { get; set; } 
+        public string districtCode { get; set; } 
+        public string districtName { get; set; } 
+        public string districtNameBn { get; set; } 
+        public string shortName { get; set; } 
+        public string latitude { get; set; } 
+        public string longitude { get; set; }
+        public bool IsActive { get; set; }
+
+        public IEnumerable<Division> Divisions { get; set; }
+        public IEnumerable<District> Districts { get; set; }
+     }
+    public class ThanaViewModel
+    {
+        public int Id { get; set; }
+        public int? districtId { get; set; } 
+        public int? rangeMetroId { get; set; } 
+        public string thanaCode { get; set; } 
+        public string thanaName { get; set; } 
+        public string thanaNameBn { get; set; } 
+        public string shortName { get; set; } 
+        public string latitude { get; set; } 
+        public string longitude { get; set; }
+        public bool IsActive { get; set; }
+
+        public IEnumerable<RangeMetro> RangeMetros { get; set; }
+        public IEnumerable<District> Districts { get; set; }
+        public IEnumerable<Thana> Thanas { get; set; }
+    }
+
+    public class UnionWardViewModel
+    {
+        public int Id { get; set; }
+        public int thanaId { get; set; } 
+        public int? districtsId { get; set; } 
+        public string unionCode { get; set; } 
+        public string unionName { get; set; } 
+        public string unionNameBn { get; set; } 
+        public string shortName { get; set; } 
+        public string latitude { get; set; } 
+        public string longitude { get; set; }
+        public bool IsActive { get; set; }
+
+        public IEnumerable<District> Districts { get; set; }
+        public IEnumerable<Thana> Thanas { get; set; }
+        public IEnumerable<UnionWard> UnionWards { get; set; }
+    }
+
+    public class VillageViewModel
+    {
+        public int Id { get; set; }
+        public int unionWardId { get; set; } 
+        public int? thanaId { get; set; } 
+        public int? districtsId { get; set; } 
+        public string villageCode { get; set; } 
+        public string villageName { get; set; } 
+        public string villageNameBn { get; set; } 
+        public string shortName { get; set; } 
+        public string latitude { get; set; } 
+        public string longitude { get; set; }
+        public bool IsActive { get; set; }
+
+        public IEnumerable<District> Districts { get; set; }
+        public IEnumerable<Thana> Thanas { get; set; }
+        public IEnumerable<UnionWard> UnionWards { get; set; }
+        public IEnumerable<Village> Villages { get; set; }
+
+    }
 }

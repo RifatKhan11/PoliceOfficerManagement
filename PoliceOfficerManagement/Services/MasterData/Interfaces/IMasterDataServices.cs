@@ -36,5 +36,27 @@ namespace PoliceOfficerManagement.Services.MasterData.Interfaces
         Task<IEnumerable<RangeMetro>> GetAllRangeMetros2();
         Task<IEnumerable<DivisionDistrict>> GetAllDivisionDistrict2();
         Task<IEnumerable<PoliceThana>> GetAllPoliceThana2();
+        Task<int> SaveCountry(Country model);
+        Task<IEnumerable<Country>> GetCountry();
+        Task<int> InActiveCountryById(int Id);
+        Task<int> SaveVillage(Village model);
+        Task<IEnumerable<Village>> GetVillage();
+        Task<int> InActiveVillageById(int Id);
+        Task<int> SaveUnionWard(UnionWard model);
+        Task<IEnumerable<UnionWard>> GetUnionWard();
+        Task<int> InActiveUnionWardById(int Id);
+        Task<int> SaveThana(Thana model);
+        Task<IEnumerable<Thana>> GetThana();
+        Task<int> InActiveThanaById(int Id);
+        Task<int> SaveDistrict(District model);
+        Task<IEnumerable<District>> GetDistrict();
+        Task<int> InActiveDistrictById(int Id);
+        Task<int> SaveDivision(Division model);
+        Task<IEnumerable<Division>> GetDivision();
+        Task<int> InActiveDivisionById(int Id);
+        Task<IEnumerable<District>> GetDistrict2();
+        Task<IEnumerable<UnionWard>> GetUnionWard2();
+        Task<IEnumerable<Thana>> GetThana2();
+
     }
 }

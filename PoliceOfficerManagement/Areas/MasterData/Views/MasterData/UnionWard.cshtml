@@ -1,13 +1,13 @@
-﻿ @model ThanaViewModel
+﻿ @model UnionWardViewModel
 @{
-    ViewData["Title"] = "Thana Information";
+    ViewData["Title"] = "UnionWard Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="card" style="width: 100%; margin-top: 30px; display: none" id="employeeCreate">
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Thana Information</h5>
+                <h5>Union Ward Information</h5>
 
             </div>
             <div class="col-4">
@@ -18,7 +18,7 @@
     </div>
     <div class="card-body">
         <div class="container-fluid">
-            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="Thana" method="post" id="employeeForm">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="UnionWard" method="post" id="employeeForm">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input name="Id" id="Id" hidden />
                 <div class="row">
@@ -26,7 +26,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Name English<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="thanaName" name="thanaName" class="form-control" />
+                                <input type="text" id="unionName" name="unionName" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Code<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="thanaCode" name="thanaCode" class="form-control" />
+                                <input type="text" id="unionCode" name="unionCode" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Name Bangla<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="thanaNameBn" name="thanaNameBn" class="form-control" />
+                                <input type="text" id="unionNameBn" name="unionNameBn" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="districtId" name="districtId">
+                                <select class="form-control" id="districtsId" name="districtsId">
 
                                     <option value="0" selected>Select</option>
                                     @foreach (var district in Model.Districts)
@@ -69,20 +69,32 @@
                             </div>
                         </div>
                     </div>
-                   @*  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4">Range Metros<span style="color: red">*</span></label>
+                            <label class="col-form-label col-md-4">Thana<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control" id="rangeMetroId" name="rangeMetroId">
+                                <select class="form-control" id="thanaId" name="thanaId">
 
                                     <option value="0" selected>Select</option>
-                                    @foreach (var range in Model.RangeMetros)
-                                    {
-                                        <option value="@range.Id">@range.rangeMetroName</option>
-                                    }
+
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    @*  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group row">
+                    <label class="col-form-label col-md-4">Thana<span style="color: red">*</span></label>
+                    <div class="col-md-8">
+                                <select class="form-control" id="thanaId" name="thanaId">
+
+                    <option value="0" selected>Select</option>
+                    @foreach (var thana in Model.Thanas)
+                    {
+                    <option value="@thana.Id">@thana.thanaName</option>
+                    }
+                    </select>
+                    </div>
+                    </div>
                     </div> *@
 
                     <div class="col-lg-6 col-md-6 col-sm-12">
@@ -121,7 +133,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Thana List</h5>
+                <h5>Union Ward List</h5>
 
             </div>
             <div class="col-4">
@@ -137,8 +149,8 @@
                     <th>Sl Id</th>
                     <th>Name</th>
                     <th>Code</th>
-                    @* <th>Range Metros</th> *@
                     <th>District</th>
+                    <th>Thana</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -147,17 +159,27 @@
                 @{
                     int i = 1;
                 }
-                @if (Model.Thanas.Count() != 0)
+                @if (Model.UnionWards.Count() != 0)
                 {
-                    @foreach (var item in Model.Thanas)
+                    @foreach (var item in Model.UnionWards)
                     {
                         <tr>
                             <td>@i</td>
-                            <td>@item.thanaName</td>
-                            <td>@item.thanaCode</td>
-                            @* <td>@item.rangeMetro?.rangeMetroName</td> *@
-                            <td>@item.district?.districtName</td>
-                             <td>
+                            <td>@item.unionName</td>
+                            @* <td>@item.unionCode</td> *@
+                            <td>
+                                @if (@item.unionCode == "null")
+                                {
+                                    @:
+                                }
+                                else  
+                                {
+                                    @item.unionCode
+                                }
+                            </td>
+                             <td>@item.districts?.districtName</td> 
+                            <td>@item.thana?.thanaName</td>
+                            <td>
                                 @if (@item.isActive == true)
                                 {
                                     @:Active
@@ -168,7 +190,7 @@
                                 }
                             </td>
                             <td class="icon-container">
-                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.thanaName', '@item.thanaNameBn','@item.thanaCode','@item.districtId','@item.rangeMetroId','@item.shortName','@item.isActive')"></i>
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.unionName', '@item.unionNameBn','@item.unionCode','@item.districtsId','@item.thanaId','@item.shortName','@item.isActive')"></i>
                                 <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
                             </td>
                         </tr>
@@ -178,7 +200,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="6" class="text-center">No data available</td>
+                        <td colspan="7" class="text-center">No data available</td>
                     </tr>
                 }
             </tbody>
@@ -191,7 +213,32 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> *@
     <script type="text/javascript">
-
+        $(document).ready(function () {
+            $('#districtsId').change(function () {
+                var districtId = $(this).val();
+                if (districtId) {
+                    $.ajax({
+                        url: '/MasterData/MasterData/GetThanasByDistrictId',
+                        type: 'GET',
+                        data: { districtId: districtId },
+                        success: function (response) {
+                            var selectDropdown = $('#thanaId');
+                            selectDropdown.empty();
+                            //selectDropdown.append('<option value="0" selected>Select</option>');
+                            $.each(response, function (index, thana) {
+                                selectDropdown.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+                    $('#thanaId').empty();
+                    $('#thanaId').append('<option value="0" selected>Select</option>');
+                }
+            });
+        });
         function Delete(Id) {
             swal({
                 title: 'Are you sure?',
@@ -204,7 +251,7 @@
             }).then(function (res) {
                 if (res) {
                     $.ajax({
-                        url: "/MasterData/MasterData/InActiveThana",
+                        url: "/MasterData/MasterData/InActiveUnionWard",
                         type: "POST",
                         data: { id: Id },
                         success: function (res) {
@@ -227,17 +274,23 @@
 
 
 
-        function edit(Id, thanaName, thanaNameBn, thanaCode, districtId, rangeMetroId, shortName, isActive) {
+        function edit(Id, unionName, unionNameBn, unionCode, districtsId, thanaId, shortName, isActive) {
             $('#Id').val(Id);
-            $('#thanaName').val(thanaName);
-            $('#thanaNameBn').val(thanaNameBn);
-            $('#thanaCode').val(thanaCode);
-            $('#districtId').val(districtId);
-            //$('#rangeMetroId').val(rangeMetroId);
+            $('#unionName').val(unionName);
+            $('#unionNameBn').val(unionNameBn);
+            $('#unionCode').val(unionCode);
+            $('#districtsId').val(districtsId);
+            $('#thanaId').val(thanaId);
             $('#shortName').val(shortName);
             $('#IsActive').val(isActive);
             $('#employeeCreate').show();
             $('#employeeList').hide();
+
+            $('#districtsId').trigger('change');
+            setTimeout(function () {
+                $('#thanaId').trigger('change');
+            }, 500);
+            
 
         }
 
@@ -269,7 +322,7 @@
             }).then(function (res) {
                 if (res) {
                     $.ajax({
-                        url: "/MasterData/MasterData/Thana",
+                        url: "/MasterData/MasterData/UnionWard",
                         type: "POST",
                         data: data,
                         success: function (res) {
