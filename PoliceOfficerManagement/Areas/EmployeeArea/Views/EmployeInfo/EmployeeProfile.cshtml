@@ -38,7 +38,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Name<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="nameEn" name="nameEn" value="" class="form-control">@Model.EmployeeInfo.empName</span>
+                            <span type="text" id="nameEn" name="nameEn" value="" class="form-control">@Model.EmployeeInfo?.empName</span>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Name Bn<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="nameBn" name="nameBn" value="" class="form-control">@Model.EmployeeInfo.empNameBn</span>
+                            <span type="text" id="nameBn" name="nameBn" value="" class="form-control">@Model.EmployeeInfo?.empNameBn</span>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Employee BP<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="employeeCode" name="employeeCode" value="" class="form-control">@Model.EmployeeInfo.employeeCode</span>
+                            <span type="text" id="employeeCode" name="employeeCode" value="" class="form-control">@Model.EmployeeInfo?.employeeCode</span>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Nid Number<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="nidNumber" name="nidNumber" value="" class="form-control">@Model.EmployeeInfo.nidNumber</span>
+                            <span type="text" id="nidNumber" name="nidNumber" value="" class="form-control">@Model.EmployeeInfo?.nidNumber</span>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Joining Date<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="date" id="joiningDate" name="joiningDate" value="" class="form-control">@Model.EmployeeInfo.joiningDate?.ToString("dd-MMM-yyyy")</span>
+                            <span type="date" id="joiningDate" name="joiningDate" value="" class="form-control">@Model.EmployeeInfo?.joiningDate?.ToString("dd-MMM-yyyy")</span>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Retirement Date<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="date" id="retirementDate" name="retirementDate" value="" class="form-control">@Model.EmployeeInfo.retirmentDate?.ToString("dd-MMM-yyyy")</span>
+                            <span type="date" id="retirementDate" name="retirementDate" value="" class="form-control">@Model.EmployeeInfo?.retirmentDate?.ToString("dd-MMM-yyyy")</span>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Joining Rank<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span class="form-control">@Model.EmployeeInfo.joiningRank</span>
+                            <span class="form-control">@Model.EmployeeInfo?.joiningRank</span>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Home District<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="homeDistrict" name="homeDistrict" value="" class="form-control">@Model.EmployeeInfo.homeDistrict</span>
+                            <span type="text" id="homeDistrict" name="homeDistrict" value="" class="form-control">@Model.EmployeeInfo?.homeDistrict</span>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Home Upazila<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="homeUpazila" name="homeUpazila" value="" class="form-control">@Model.EmployeeInfo.homeUpazila</span>
+                            <span type="text" id="homeUpazila" name="homeUpazila" value="" class="form-control">@Model.EmployeeInfo?.homeUpazila</span>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Re-Marks<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="reMarks" name="reMarks" value="" class="form-control">@Model.EmployeeInfo.reMarks</span>
+                            <span type="text" id="reMarks" name="reMarks" value="" class="form-control">@Model.EmployeeInfo?.reMarks</span>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Personal Phone Number<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="personalPhoneNumber" name="personalPhoneNumber" value="" class="form-control">@Model.EmployeeInfo.personalPhoneNumber</span>
+                            <span type="text" id="personalPhoneNumber" name="personalPhoneNumber" value="" class="form-control">@Model.EmployeeInfo?.personalPhoneNumber</span>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-4">Office Phone Number<span style="color: red">*</span></label>
                         <div class="col-md-8">
-                            <span type="text" id="officePhoneNumber" name="officePhoneNumber" value="" class="form-control">@Model.EmployeeInfo.officePhoneNumber</span>
+                            <span type="text" id="officePhoneNumber" name="officePhoneNumber" value="" class="form-control">@Model.EmployeeInfo?.officePhoneNumber</span>
                         </div>
                     </div>
                 </div>
@@ -167,11 +167,11 @@
                             {
                                 <tr><td colspan="6">Parmanent Address</td></tr>
                                 <tr>
-                                    <td>@item.division.divisionNameBn</td>
-                                    <td>@item.district.districtNameBn</td>
-                                    <td>@item.thana.thanaNameBn</td>
-                                    <td>@item.union.unionNameBn</td>
-                                    <td>@item.villege.villageNameBn</td>
+                                    <td>@item.division?.divisionNameBn</td>
+                                    <td>@item.district?.districtNameBn</td>
+                                    <td>@item.thana?.thanaNameBn</td>
+                                    <td>@item.union?.unionNameBn</td>
+                                    <td>@item.villege?.villageNameBn</td>
                                     <td>@item.roadInfo</td>
                                 </tr>
                             }
@@ -181,11 +181,11 @@
                                 @foreach (var item in Model.AdderssInfo.Where(x => x.addressType != 1))
                                 {
                                     <tr>
-                                        <td>@item.division.divisionNameBn</td>
-                                        <td>@item.district.districtNameBn</td>
-                                        <td>@item.thana.thanaNameBn</td>
-                                        <td>@item.union.unionNameBn</td>
-                                        <td>@item.villege.villageNameBn</td>
+                                        <td>@item.division?.divisionNameBn</td>
+                                        <td>@item.district?.districtNameBn</td>
+                                        <td>@item.thana?.thanaNameBn</td>
+                                        <td>@item.union?.unionNameBn</td>
+                                        <td>@item.villege?.villageNameBn</td>
                                         <td>@item.roadInfo</td>
                                     </tr>
                                 }
@@ -233,13 +233,13 @@
                             @foreach (var item in Model.EducationalInfo)
                             {
                                 <tr>
-                                    <td>@item.institute.nameBn</td>
-                                    <td>@item.passingYear</td>
-                                    <td>@item.batchNo</td>
-                                    <td>@item.grade</td>
-                                    <td>@item.degreeName</td>
-                                    <td>@item.achievement</td>
-                                    <td>@item.courseDuration</td>
+                                    <td>@item.institute?.nameBn</td>
+                                    <td>@item?.passingYear</td>
+                                    <td>@item?.batchNo</td>
+                                    <td>@item?.grade</td>
+                                    <td>@item?.degreeName</td>
+                                    <td>@item?.achievement</td>
+                                    <td>@item?.courseDuration</td>
                                 </tr>
                             }
                         </tbody>
@@ -285,13 +285,13 @@
                             @foreach (var item in Model.TrainingInfo)
                             {
                                 <tr>
-                                    <td>@item.institute.nameBn</td>
-                                    <td>@item.passingYear</td>
-                                    <td>@item.batchNo</td>
-                                    <td>@item.grade</td>
-                                    <td>@item.degreeName</td>
-                                    <td>@item.achievement</td>
-                                    <td>@item.courseDuration</td>
+                                    <td>@item?.institute.nameBn</td>
+                                    <td>@item?.passingYear</td>
+                                    <td>@item?.batchNo</td>
+                                    <td>@item?.grade</td>
+                                    <td>@item?.degreeName</td>
+                                    <td>@item?.achievement</td>
+                                    <td>@item?.courseDuration</td>
                                 </tr>
                             }
                         </tbody>
@@ -336,15 +336,15 @@
                             @foreach (var item in Model.PostingPlace)
                             {
                                 <tr>
-                                    <td>@item.rank.rankNameBN</td>
+                                    <td>@item.rank?.rankNameBN</td>
                                     <td>@item.postingFrom?.ToString("dd-MMM-yyyy")</td>
                                     <td>@item.postingTo?.ToString("dd-MMM-yyyy")</td>
-                                    <td>@item.range.rangeMetroNameBn</td>
-                                    <td>@item.district.divisionDistrictNameBn</td>
-                                    <td>@item.zone.zoneNameBn</td>
-                                    <td>@item.thana.policeThanaNameBn</td>
+                                    <td>@item.range?.rangeMetroNameBn</td>
+                                    <td>@item.district?.divisionDistrictNameBn</td>
+                                    <td>@item.zone?.zoneNameBn</td>
+                                    <td>@item.thana?.policeThanaNameBn</td>
                                     <td>@item.promotionDate?.ToString("dd-MMM-yyyy")</td>
-                                    <td>@item.reMarks</td>
+                                    <td>@item?.reMarks</td>
                                 </tr>
                             }
                         </tbody>
