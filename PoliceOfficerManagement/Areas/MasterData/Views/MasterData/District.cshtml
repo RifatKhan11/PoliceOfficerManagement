@@ -1,237 +1,282 @@
-﻿@model MasterDataModel
+﻿ @model DistrictViewModel
 @{
-    ViewData["Title"] = "Upload File";
+    ViewData["Title"] = "District Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="card" style="width: 100%; margin-top: 30px; display: none" id="employeeCreate">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <h5>District Information</h5>
 
-<div class="container mt-3">
-    <div class="card">
-        <div class="card-header text-center"><h5>District List</h5></div>
-        <div class="card-body">
-            <form asp-area="MasterData" asp-controller="MasterDatas" asp-action="SaveDistrict" method="post" id="districtForm">
-                <div class="row">
-                    <input type="hidden" name="Id" id="Id" value="0" />
-                    <div class="col-md-4">
-                        <label>Range/Metro</label>
-                        <select class="form-control" name="rangeMetroId" id="rangeMetroId">
-                            <option value="0">Select Range/Metro</option>
-                            <!-- Populate options dynamically -->
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label>District Name EN</label>
-                        <input class="form-control" name="divisionDistrictName" id="divisionDistrictName" />
-                    </div>
-                    <div class="col-md-4">
-                        <label>District Name BN</label>
-                        <input class="form-control" name="divisionDistrictNameBn" id="divisionDistrictNameBn" />
-                    </div>
-                    <div class="col-md-4 mt-3">
-                        <label>Active/In-Active</label>
-                        <select id="IsActive" name="IsActive" class="form-control">
-                            <option value="1">Active</option>
-                            <option value="0">In-Active</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="pt-3" style="text-align:right">
-                    <button type="button" class="btn btn-success submitBtn" id="submitBtn">Save</button>
-                </div>
-            </form>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnCreate()">View List</button>
+
+            </div>
         </div>
     </div>
-    <hr />
-    <div class="card">
-        <div class="card-body">
-            <table class="table table-bordered" id="districtTable">
-                <thead>
-                    <tr>
-                        <th>Sl</th>
-                        <th>Range/Metro</th>
-                        <th>Name BN</th>
-                        <th>Name EN</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int i = 1;
-                    }
-                    @foreach (var data in Model.districts)
+    <div class="card-body">
+        <div class="container-fluid">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="District" method="post" id="employeeForm">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input name="Id" id="Id" hidden />
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Name English<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="districtName" name="districtName" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Code<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="districtCode" name="districtCode" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Name Bangla<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="districtNameBn" name="districtNameBn" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Short Name<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="shortName" name="shortName" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Division<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="divisionId" name="divisionId">
+
+                                    <option value="0" selected>Select</option>
+                                    @foreach (var division in Model.Divisions)
+                                    {
+                                        <option value="@division.Id">@division.divisionName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Active In-Active<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select id="IsActive" name="IsActive" class="form-control">
+
+                                    <option value="True">Active</option>
+                                    <option value="False">In-Active</option>
+                                </select>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div style="height:20px;"></div>
+                <div class="form-group row">
+
+                    <div class="col-sm-12 mb-3">
+                        <button type="submit" id="btnCheck" class="btn btn-secondary" style="float: right">Submit</button>
+                        @* <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button> *@
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card" style="width: 100%; margin-top: 30px;" id="employeeList">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <h5>District List</h5>
+
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create New</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-hover table-bordered" id="InfoTbl1" style="overflow: scroll;">
+            <thead class="custom-thead">
+                <tr>
+                    <th>Sl Id</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Division</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                }
+                @if (Model.Districts.Count() != 0)
+                {
+                    @foreach (var item in Model.Districts)
                     {
                         <tr>
                             <td>@i</td>
-                            <td>@data.rangeMetro.rangeMetroName</td>
-                            <td>@data.divisionDistrictNameBn</td>
-                            <td>@data.divisionDistrictName</td>
-                            <td style="width: 70px;">
-                                @if (data.isActive == true)
+                            <td>@item.districtName</td>
+                            <td>@item.districtCode</td>
+                            <td>@item.division?.divisionName</td>
+                            <td>
+                                @if (@item.isActive == true)
                                 {
-                                    <span class="text-success font-weight-bold">Active</span>
+                                    @:Active
                                 }
-                                else
+                                else if (@item.isActive == false)
                                 {
-                                    <span class="text-danger font-weight-bold">In-Active</span>
+                                    @:InActive
                                 }
                             </td>
-                            <td style="width: 150px;">
-                                <a class="btn btn-primary text-white" href="javascript:void(0);" onclick="Edit(@data.Id, '@data.divisionDistrictNameBn', '@data.divisionDistrictName', @data.isActive)">
-                                    <i class="fa fa-edit"></i> Edit
-                                </a>
-                                <a class="btn btn-secondary text-white" href="javascript:void(0);" onclick="toggleStatus('@data.Id', @data.isActive)">
-                                    <i class="fa fa-toggle-on"></i> Toggle Status
-                                </a>
+                            <td class="icon-container">
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.districtName', '@item.districtNameBn','@item.districtCode','@item.divisionId','@item.shortName','@item.isActive')"></i>
+                                <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
                             </td>
                         </tr>
                         i++;
                     }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for editing district information -->
-<div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit District</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="Id">
-                <div class="form-group">
-                    <label>District Name EN</label>
-                    <input type="text" id="divisionDistrictName" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>District Name BN</label>
-                    <input type="text" id="divisionDistrictNameBn" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Active/In-Active</label>
-                    <select id="IsActive" class="form-control">
-                        <option value="1">Active</option>
-                        <option value="0">In-Active</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary submitBtn" id="submitBtn">Save Changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">No data available</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
 
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> *@
+    <script type="text/javascript">
 
-<script>
-    $(document).ready(function () {
-        $('#districtTable').DataTable();
-    });
-
-    function toggleStatus(districtId, isActive) {
-        debugger
-        const statusText = isActive === 0 ? "Deactivate" : "Activate";
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: `Do you want to ${statusText} this district?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: `Yes, ${statusText} it!`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: `/MasterData/MasterDatas/ChangeDistrictStatus?districtId=${districtId}`,
-                    type: "GET",
-                    success: function (response) {
-                        if (response === true) {
-                            Swal.fire({
-                                title: 'Success!',
-                                text: `District ${statusText}d Successfully!`,
-                                icon: 'success',
-                                timer: 2000,
-                                showConfirmButton: false,
-                            }).then(() => {
-                                location.reload();
-                            });
-                        } else {
-                            Swal.fire('Error!', 'Something went wrong. Please try again.', 'error');
+        function Delete(Id) {
+            swal({
+                title: 'Are you sure?',
+                text: 'Do you want to delete this data?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function (res) {
+                if (res) {
+                    $.ajax({
+                        url: "/MasterData/MasterData/InActiveDistrict",
+                        type: "POST",
+                        data: { id: Id },
+                        success: function (res) {
+                            if (res == '1') {
+                                swal('', 'Deleted Successfully!', 'success');
+                                location.reload(true);
+                            }
+                            else {
+                                swal('', 'Invalid Attempt!', 'warning');
+                            }
                         }
-                    },
-                    error: function () {
-                        Swal.fire('Error!', 'Server error. Please try again later.', 'error');
-                    }
-                });
-            }
-        });
-    }
-
-    function Edit(districtId, divisionDistrictNameBn, divisionDistrictName, isActive) {
-        $("#Id").val(districtId);
-        $("#divisionDistrictName").val(divisionDistrictName);
-        $("#divisionDistrictNameBn").val(divisionDistrictNameBn);
-        $("#IsActive").val(isActive);
-        $('#EditModal').modal('show');
-        $('#submitBtn').text('Update');
-    }
-
-    $('.submitBtn').click(function () {
-        var Id = $('#Id').val();
-        var divisionDistrictName = $('#divisionDistrictName').val();
-        var divisionDistrictNameBn = $('#divisionDistrictNameBn').val();
-        var isActive = $('#IsActive').val();
-
-        if (!divisionDistrictName) {
-            Swal.fire('Warning', 'District Name EN is required', 'warning');
-            return false;
-        }
-        if (!divisionDistrictNameBn) {
-            Swal.fire('Warning', 'District Name BN is required', 'warning');
-            return false;
-        }
-        if (isActive === "") {
-            Swal.fire('Warning', 'Please select Active/In-Active status', 'warning');
-            return false;
+                    });
+                }
+            }, function (dismiss) {
+                if (dismiss === 'cancel' || dismiss === 'close') {
+                    return false;
+                }
+            });
         }
 
-        var message = Id > 0 ? "Updated" : "Saved";
 
-        var data = $('#districtForm').serializeArray();
 
-        Swal.fire({
-            title: 'Are you sure?',
-            text: `Do you want to ${message} this record?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: `Yes, ${message} it!`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '/MasterData/MasterDatas/SaveDistrict',
-                    type: 'POST',
-                    data: data
-                }).done(function (res) {
-                    if (res.success === true) {
-                        let successMessage = res.message.includes('Updated') ? "Updated successfully!" : "Saved successfully!";
-                        Swal.fire('Success', successMessage, 'success').then(function () {
-                            window.location.href = "/MasterData/MasterDatas/DistrictList";
-                        });
-                    } else {
-                        Swal.fire('Error', res.message || 'Something went wrong. Please try again!', 'error');
-                    }
-                }).fail(function () {
-                    Swal.fire('Error', 'Server error. Please try again later.', 'error');
-                });
-            }
-        });
-    });
-</script>
+        function edit(Id, districtName, districtNameBn, districtCode, divisionId, shortName, isActive) {
+            $('#Id').val(Id);
+            $('#districtName').val(districtName);
+            $('#districtNameBn').val(districtNameBn);
+            $('#districtCode').val(districtCode);
+            $('#divisionId').val(divisionId);
+            $('#shortName').val(shortName);
+            $('#IsActive').val(isActive);
+            $('#employeeCreate').show();
+            $('#employeeList').hide();
+
+        }
+
+        function resetForm() {
+            $('#employeeForm')[0].reset();
+
+        }
+        function btnList() {
+            $('#employeeCreate').show();
+            $('#employeeList').hide();
+
+        }
+        function btnCreate() {
+            $('#employeeCreate').hide();
+            $('#employeeList').show();
+
+        }
+
+        function SaveData() {
+            var data = $('#employeeForm').serialize();
+            swal({
+                title: 'Are you sure?',
+                text: 'Do you want to save this data?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Save It!'
+            }).then(function (res) {
+                if (res) {
+                    $.ajax({
+                        url: "/MasterData/MasterData/District",
+                        type: "POST",
+                        data: data,
+                        success: function (res) {
+                            if (res != 0) {
+                                swal('', 'Save Successfully!', 'success');
+                                location.reload(true);
+                                $('#employeeCreate').hide();
+                                $('#employeeList').Show();
+                            }
+                            else {
+                                swal('', 'Invalid Attempt!', 'warning');
+                                return false;
+                            }
+                        }
+                    });
+                }
+            }, function (dismiss) {
+                if (dismiss === 'cancel' || dismiss === 'close') {
+                    return false;
+                }
+            });
+        }
+
+
+
+
+    </script>
+}

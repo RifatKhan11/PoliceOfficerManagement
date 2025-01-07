@@ -1,0 +1,398 @@
+﻿ @model PoliceThanaViewModel
+@{
+    ViewData["Title"] = "Employee Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card" style="width: 100%; margin-top: 30px; display: none" id="employeeCreate">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <h5>Police Thana Information</h5>
+
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnCreate()">View List</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="PoliceThana" method="post" id="employeeForm">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input name="Id" id="Id" hidden />
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Name English<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="policeThanaName" name="policeThanaName" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Name Bangla<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="policeThanaNameBn" name="policeThanaNameBn" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    @*  <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Is Reportable<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="isReportable" name="isReportable" class="form-control" />
+                            </div>
+                        </div>
+                    </div> *@
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Range Metro<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="rangeMetroId" value="" name="rangeMetroId">
+
+                                    <option value="0" selected>Select</option>
+                                    @foreach (var rank in Model.Ranges)
+                                    {
+                                        <option value="@rank.Id">@rank.rangeMetroName</option>
+                                    }
+                                </select>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">District<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="divisionDistrictId" name="divisionDistrictId">
+
+                                    <option value="0" selected>Select</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Zone<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="zoneCircleId" name="zoneCircleId">
+
+                                    <option value="0" selected>Select</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Police Thana<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="policeThanaId" name="policeThanaId">
+
+                                    <option value="0" selected>Select</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                     
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Active In-Active<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <select id="IsActive" name="IsActive" class="form-control">
+
+                                    <option value="True">Active</option>
+                                    <option value="False">In-Active</option>
+                                </select>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div style="height:20px;"></div>
+                <div class="form-group row">
+
+                    <div class="col-sm-12 mb-3">
+                        <button type="submit" id="btnCheck" class="btn btn-secondary" style="float: right">Submit</button>
+                        @* <button type="button" id="btnCheck" class="btn btn-secondary" style="float: right" onclick="SaveData()">Submit</button> *@
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card" style="width: 100%; margin-top: 30px;" id="employeeList">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <h5>Police Thana List</h5>
+
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-secondary" style="float: right" onclick="btnList()">Create New</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-hover table-bordered" id="InfoTbl1" style="overflow: scroll;">
+            <thead class="custom-thead">
+                <tr>
+                    <th>Sl Id</th>
+                    <th>Name</th>
+                    <th>Range Metro</th>
+                    <th>District</th>
+                    <th>Zone</th>
+                    <th>Police Thana</th>
+                     <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                }
+                @if (Model.policeThanas.Count() != 0)
+                {
+                    @foreach (var item in Model.policeThanas)
+                    {
+                        <tr>
+                            <td>@i</td>
+
+                            <td>@item.policeThanaName</td>
+                            <td>@item.rangeMetro.rangeMetroName</td>
+                            <td>@item.divisionDistrict?.divisionDistrictName</td>
+                            <td>@item.zoneCircle?.zoneName</td>
+                            <td>@item.policeThana?.policeThanaName</td>
+                             <td>
+                                @if (@item.isActive == true)
+                                {
+                                    @:Active
+                                }
+                                else if (@item.isActive == false)
+                                {
+                                    @:InActive
+                                }
+                            </td>
+
+                            <td class="icon-container">
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.policeThanaName', '@item.policeThanaNameBn', '@item.rangeMetroId','@item.divisionDistrictId', '@item.zoneCircleId','@item.policeThanaId','@item.isActive')"></i>
+                                <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">No data available</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> *@
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $('#rangeMetroId').change(function () {
+
+                var rangeId = $(this).val();
+                if (rangeId) {
+                    $.ajax({
+                        url: '/MasterData/MasterData/GetDivisionDistrictByRangeId',
+                        type: 'GET',
+                        data: { rangeId: rangeId },
+                        success: function (response) {
+                            var selectDropdown = $('#divisionDistrictId');
+                            selectDropdown.empty();
+                            //selectDropdown.append('<option value="0" selected>Select</option>');
+                            $.each(response, function (index, districts) {
+                                selectDropdown.append('<option value="' + districts.Id + '">' + districts.divisionDistrictName + '</option>');
+                            });
+
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+
+
+                } else {
+                    $('#divisionDistrictId').empty();
+                    $('#divisionDistrictId').append('<option value="0" selected>Select</option>');
+
+                }
+
+            });
+
+
+
+            $('#divisionDistrictId').change(function () {
+                var divisionDistrictId = $(this).val();
+                if (divisionDistrictId) {
+                    $.ajax({
+                        url: '/MasterData/MasterData/GetZoneCircleByDivisionDistrictId',
+                        type: 'GET',
+                        data: { divisionDistrictId: divisionDistrictId },
+                        success: function (response) {
+                            var selectDropdown = $('#zoneCircleId');
+                            selectDropdown.empty();
+                            //selectDropdown.append('<option value="0" selected>Select</option>');
+                            $.each(response, function (index, zone) {
+                                selectDropdown.append('<option value="' + zone.Id + '">' + zone.zoneName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+                    $('#zoneCircleId').empty();
+                    $('#zoneCircleId').append('<option value="0" selected>Select</option>');
+                }
+            });
+
+
+
+            $('#zoneCircleId').change(function () {
+                var zoneId = $(this).val();
+                if (zoneId) {
+
+                    $.ajax({
+                        url: '/MasterData/MasterData/GetThanasByRangeId',
+                        type: 'GET',
+                        data: { zoneId: zoneId },
+                        success: function (response) {
+                            var selectDropdown = $('#policeThanaId');
+                            selectDropdown.empty();
+                            //selectDropdown.append('<option value="0" selected>Select</option>');
+
+                            $.each(response, function (index, thana) {
+                                selectDropdown.append('<option value="' + thana.Id + '">' + thana.policeThanaName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading districts.");
+                        }
+                    });
+                } else {
+
+                    $('#policeThanaId').empty();
+                    $('#policeThanaId').append('<option value="0" selected>Select</option>');
+                }
+            });
+
+
+        });
+
+           function Delete(Id) {
+             swal({
+                 title: 'Are you sure?',
+                 text: 'Do you want to delete this data?',
+                 type: 'warning',
+                 showCancelButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Yes, delete it!'
+             }).then(function (res) {
+                 if (res) {
+                     $.ajax({
+                        url: "/MasterData/MasterData/InActivePoliceThana",
+                         type: "POST",
+                         data: { id: Id },
+                         success: function (res) {
+                             if (res == '1') {
+                                 swal('', 'Deleted Successfully!', 'success');
+                                 location.reload(true);
+                             }
+                             else {
+                                 swal('', 'Invalid Attempt!', 'warning');
+                             }
+                         }
+                     });
+                 }
+             }, function (dismiss) {
+                 if (dismiss === 'cancel' || dismiss === 'close') {
+                     return false;
+                 }
+             });
+         }
+
+
+ 
+        function edit(Id, policeThanaName, policeThanaNameBn, rangeMetroId, divisionDistrictId, zoneCircleId, policeThanaId, isActive) {
+            console.log("Id:", Id);
+            console.log("policeThanaName:", policeThanaName);
+            console.log("policeThanaNameBn:", policeThanaNameBn);
+            console.log("rangeMetroId:", rangeMetroId);
+            console.log("divisionDistrictId:", divisionDistrictId);
+            console.log("zoneCircleId:", zoneCircleId);
+            console.log("policeThanaId:", policeThanaId);
+            console.log("isActive:", isActive);
+
+
+
+            $('#Id').val(Id); 
+            $('#policeThanaName').val(policeThanaName);
+            $('#policeThanaNameBn').val(policeThanaNameBn);
+            $('#rangeMetroId').val(rangeMetroId);  
+            $('#divisionDistrictId').val(divisionDistrictId); 
+            $('#zoneCircleId').val(zoneCircleId);  
+            $('#policeThanaId').val(policeThanaId);
+            $('#IsActive').val(isActive); 
+            $('#employeeCreate').show(); 
+            $('#employeeList').hide();  
+
+             //$('#divisionDistrictId').trigger('change');  
+            //$('#zoneCircleId').trigger('change');
+            $('#rangeMetroId').trigger('change'); 
+            setTimeout(function () {
+                $('#divisionDistrictId').trigger('change'); 
+            }, 500); 
+            setTimeout(function () {
+                $('#zoneCircleId').trigger('change'); 
+            }, 1000);
+        }
+
+
+         function resetForm() {
+             $('#employeeForm')[0].reset();
+
+         }
+         function btnList() {
+             $('#employeeCreate').show();
+             $('#employeeList').hide();
+
+         }
+         function btnCreate() {
+             $('#employeeCreate').hide();
+             $('#employeeList').show();
+
+         }
+
+
+
+    </script>
+}

@@ -1,4 +1,4 @@
-﻿ @model ZoneCircleViewModel
+﻿ @model RangeMetrosViewModel
 @{
     ViewData["Title"] = "Employee Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +7,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Zone Circle Information</h5>
+                <h5>Range Metros Information</h5>
 
             </div>
             <div class="col-4">
@@ -18,16 +18,16 @@
     </div>
     <div class="card-body">
         <div class="container-fluid">
-            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="ZoneCircle" method="post" id="employeeForm">
+            <form class="user" asp-area="MasterData" asp-controller="MasterData" asp-action="RangeMetros" method="post" id="employeeForm">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input name="Id" id="Id" hidden />
                 <div class="row">
-
+                     
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Name English<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="zoneName" name="zoneName" class="form-control" />
+                                <input type="text" id="rangeMetroName" name="rangeMetroName" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -35,43 +35,23 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Name Bangla<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" id="zoneNameBn" name="zoneNameBn" class="form-control" />
+                                <input type="text" id="rangeMetroNameBn" name="rangeMetroNameBn" class="form-control" />
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Division District<span style="color: red">*</span></label>
-                            <div class="col-md-8">
-                                <select class="form-control" id="divisionDistrictId" value="" name="divisionDistrictId">
-
-                                    <option value="0" selected>Select</option>
-                                    @foreach (var division in Model.divisionDistricts)
-                                    {
-                                        <option value="@division.Id">@division.divisionDistrictName</option>
-                                    }
-                                </select>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-
+                     
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Active In-Active<span style="color: red">*</span></label>
                             <div class="col-md-8">
                                 <select id="IsActive" name="IsActive" class="form-control">
-
                                     <option value="True">Active</option>
                                     <option value="False">In-Active</option>
                                 </select>
                             </div>
 
-
-
+                            
+                             
                         </div>
                     </div>
 
@@ -95,7 +75,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-8">
-                <h5>Zone Circle List</h5>
+                <h5>Range Metros List</h5>
 
             </div>
             <div class="col-4">
@@ -110,7 +90,6 @@
                 <tr>
                     <th>Sl Id</th>
                     <th>Name</th>
-                    <th>Range Metro</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -119,15 +98,14 @@
                 @{
                     int i = 1;
                 }
-                @if (Model.zones.Count() != 0)
+                @if (Model.Ranges.Count() != 0)
                 {
-                    @foreach (var item in Model.zones)
+                    @foreach (var item in Model.Ranges)
                     {
                         <tr>
                             <td>@i</td>
 
-                            <td>@item.zoneName</td>
-                            <td>@item.divisionDistrict.divisionDistrictName</td>
+                            <td>@item.rangeMetroName</td>
                             <td>
                                 @if (@item.isActive == true)
                                 {
@@ -138,9 +116,8 @@
                                     @:InActive
                                 }
                             </td>
-
                             <td class="icon-container">
-                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.zoneName', '@item.zoneNameBn', '@item.divisionDistrictId','@item.isActive')"></i>
+                                <i class="fa fa-edit" onclick="edit(@item.Id, '@item.rangeMetroName', '@item.rangeMetroNameBn','@item.isActive')"></i>
                                 <i class="fa fa-window-close" style="color: red;" onclick="Delete(@item.Id)" title="Is Active"></i>
                             </td>
                         </tr>
@@ -150,7 +127,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="5" class="text-center">No data available</td>
+                        <td colspan="3" class="text-center">No data available</td>
                     </tr>
                 }
             </tbody>
@@ -164,68 +141,67 @@
     @* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> *@
     <script type="text/javascript">
 
-        function Delete(Id) {
-            swal({
-                title: 'Are you sure?',
-                text: 'Do you want to delete this data?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function (res) {
-                if (res) {
-                    $.ajax({
-                        url: "/MasterData/MasterData/InActiveZoneCircle",
-                        type: "POST",
-                        data: { id: Id },
-                        success: function (res) {
-                            if (res == '1') {
-                                swal('', 'Deleted Successfully!', 'success');
-                                location.reload(true);
-                            }
-                            else {
-                                swal('', 'Invalid Attempt!', 'warning');
-                            }
-                        }
-                    });
-                }
-            }, function (dismiss) {
-                if (dismiss === 'cancel' || dismiss === 'close') {
-                    return false;
-                }
-            });
-        }
+           function Delete(Id) {
+             swal({
+                 title: 'Are you sure?',
+                 text: 'Do you want to delete this data?',
+                 type: 'warning',
+                 showCancelButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Yes, delete it!'
+             }).then(function (res) {
+                 if (res) {
+                     $.ajax({
+                        url: "/MasterData/MasterData/InActiveRangeMetros",
+                         type: "POST",
+                         data: { id: Id },
+                         success: function (res) {
+                             if (res == '1') {
+                                 swal('', 'Deleted Successfully!', 'success');
+                                 location.reload(true);
+                             }
+                             else {
+                                 swal('', 'Invalid Attempt!', 'warning');
+                             }
+                         }
+                     });
+                 }
+             }, function (dismiss) {
+                 if (dismiss === 'cancel' || dismiss === 'close') {
+                     return false;
+                 }
+             });
+         }
 
 
 
-        function edit(Id, zoneName, zoneNameBn, divisionDistrictId, isActive) {
-            $('#Id').val(Id);
-            $('#zoneName').val(zoneName);
-            $('#zoneNameBn').val(zoneNameBn);
-            $('#divisionDistrictId').val(divisionDistrictId);
+        function edit(Id, rangeMetroName, rangeMetroNameBn, isActive) {
+             $('#Id').val(Id);
+            $('#rangeMetroNameBn').val(rangeMetroNameBn);
+            $('#rangeMetroName').val(rangeMetroName);
             $('#IsActive').val(isActive);
             $('#employeeCreate').show();
-            $('#employeeList').hide();
+             $('#employeeList').hide();
 
-        }
+         }
 
-        function resetForm() {
-            $('#employeeForm')[0].reset();
+         function resetForm() {
+             $('#employeeForm')[0].reset();
 
-        }
-        function btnList() {
-            $('#employeeCreate').show();
-            $('#employeeList').hide();
+         }
+         function btnList() {
+             $('#employeeCreate').show();
+             $('#employeeList').hide();
 
-        }
-        function btnCreate() {
-            $('#employeeCreate').hide();
-            $('#employeeList').show();
+         }
+         function btnCreate() {
+             $('#employeeCreate').hide();
+             $('#employeeList').show();
 
-        }
+         }
 
-
+          
 
     </script>
 }
