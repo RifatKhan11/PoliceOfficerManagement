@@ -101,7 +101,7 @@ namespace PoliceOfficerManagement.Services.MasterData
 
         public async Task<IEnumerable<Rank>> GetRank()
         {
-            return await _context.ranks.Where(x => x.isActive != true).ToListAsync();
+            return await _context.ranks.Where(x => x.isActive == true).ToListAsync();
         }
         public async Task<int> InActiveRankById(int Id)
         {
