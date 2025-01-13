@@ -49,19 +49,19 @@ namespace PoliceOfficerManagement.Services.Employee
         {
             try 
             {
-                if (edu.Count > 0)
+                if (edu !=null && edu.Count > 0)
                 {
                   await  _context.EducationalInfos.AddRangeAsync(edu);
                 }
-                if (train.Count > 0)
+                if (train !=null && train.Count > 0)
                 {
                     await _context.TrainingInfos.AddRangeAsync(train);
                 }
-                if(post.Count > 0)
+                if(post != null && post.Count > 0)
                 {
                     await _context.PostingPlaces.AddRangeAsync(post);
                 }
-                if (add.Count > 0)
+                if (add!=null && add.Count > 0)
                 {
                     await _context.AdderssInfos.AddRangeAsync(add);
                 }

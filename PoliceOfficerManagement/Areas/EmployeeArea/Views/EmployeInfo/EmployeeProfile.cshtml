@@ -328,7 +328,7 @@
                                 <th>District</th>
                                 <th>Zone</th>
                                 <th>Thana</th>
-                                <th>Promotion Date</th>
+                                @* <th>Promotion Date</th> *@
                                 <th>Remarks</th>
                             </tr>
                         </thead>
@@ -343,7 +343,7 @@
                                     <td>@item.district?.divisionDistrictNameBn</td>
                                     <td>@item.zone?.zoneNameBn</td>
                                     <td>@item.thana?.policeThanaNameBn</td>
-                                    <td>@item.promotionDate?.ToString("dd-MMM-yyyy")</td>
+                                    @* <td>@item.promotionDate?.ToString("dd-MMM-yyyy")</td> *@
                                     <td>@item?.reMarks</td>
                                 </tr>
                             }

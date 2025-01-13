@@ -73,7 +73,7 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
             List<TrainingInfo> train = new List<TrainingInfo>();
             List<PostingPlace> post = new List<PostingPlace>();
             List<AdderssInfo> add = new List<AdderssInfo>();
-            if (model.eInstituteId.Count() > 0)
+            if (model.eInstituteId != null && model.eInstituteId.Count() > 0)
             {
                ;
                 for (int i = 0; i < model.eInstituteId.Length; i++)
@@ -93,7 +93,7 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
                 }
             }
             
-            if (model.instituteId.Count() > 0)
+            if (model.instituteId != null && model.instituteId.Count() > 0)
             {
                 
                 for (int i = 0; i < model.instituteId.Length; i++)
@@ -112,7 +112,7 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
                     train.Add(trn);
                 }
             }
-            if (model.rankId.Count() > 0)
+            if (model.rankId != null && model.rankId.Count() > 0)
             {
                 
                 for (int i = 0; i < model.rankId.Length; i++)
@@ -127,13 +127,13 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Controllers
                         districtId = model.districtId[i] == 0 ? null : model.districtId[i],
                         rangeId = model.rangeId[i] == 0 ? null : model.rangeId[i],
                         reMarks = model.pReMarks[i],
-                        promotionDate = model.promotionDate[i],
+                        //promotionDate = model.promotionDate[i],
                         employeeId = empId,
                     };
                     post.Add(trn);
                 }
             }
-            if (model.addressType.Count() > 0)
+            if (model.addressType != null && model.addressType.Count() > 0)
             {
                 
                 for (int i = 0; i < model.addressType.Length; i++)

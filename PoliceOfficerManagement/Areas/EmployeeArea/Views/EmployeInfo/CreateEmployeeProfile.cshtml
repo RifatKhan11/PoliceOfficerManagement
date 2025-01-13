@@ -4,6 +4,10 @@
     ViewData["Title"] = "Employee Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Style {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+
+}
 
 <div class="card" style="width: 100%; margin-top: 30px;" id="employeeCreate">
     <div class="card-header">
@@ -71,7 +75,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Joining Date<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="date" id="joiningDate" name="joiningDate" value="" class="form-control" />
+                                <input id="joiningDate" name="joiningDate" class="form-control" readonly />
                             </div>
                         </div>
                     </div>
@@ -79,7 +83,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Retirement Date<span style="color: red">*</span></label>
                             <div class="col-md-8">
-                                <input type="date" id="retirementDate" name="retirementDate" value="" class="form-control" />
+                                <input id="retirementDate" name="retirementDate" value="" class="form-control" readonly/>
                             </div>
                         </div>
                     </div>
@@ -518,6 +522,24 @@
             <div class="container-fluid">
 
                 <div class="row">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Posting From<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input id="postingFrom" value="@DateTime.Now.ToString("dd-MMM-yyyy")" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4">Posting To<span style="color: red">*</span></label>
+                            <div class="col-md-8">
+                                <input id="postingTo" value="@DateTime.Now.ToString("dd-MMM-yyyy")" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Rank<span style="color: red">*</span></label>
@@ -531,23 +553,6 @@
                                         <option value="@rank1.Id">@rank1.rankName</option>
                                     }
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Posting From<span style="color: red">*</span></label>
-                            <div class="col-md-8">
-                                <input type="date" id="postingFrom" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4">Posting To<span style="color: red">*</span></label>
-                            <div class="col-md-8">
-                                <input type="date" id="postingTo" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -603,14 +608,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    @* <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
                             <label class="col-form-label col-md-4">Promotion Date<span style="color: red">*</span></label>
                             <div class="col-md-8">
                                 <input type="date" id="promotionDate" value="" class="form-control" />
                             </div>
                         </div>
-                    </div>
+                    </div> *@
 
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group row">
@@ -753,14 +758,21 @@
 
  *@
 @section Scripts {
-    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
 
 
         $(document).ready(function () {
+
+            $("#joiningDate").datepicker({ maxDate: new Date(),changeYear: true,changeMonth: true,dateFormat: 'dd-M-yy',yearRange: "1970:2100" });
+            $("#retirementDate").datepicker({ maxDate: new Date(),changeYear: true,changeMonth: true,dateFormat: 'dd-M-yy',yearRange: "1970:2100" });
+            $("#postingFrom").datepicker({ maxDate: new Date(),changeYear: true,changeMonth: true,dateFormat: 'dd-M-yy',yearRange: "1970:2100" });
+            $("#postingTo").datepicker({ maxDate: new Date(),changeYear: true,changeMonth: true,dateFormat: 'dd-M-yy',yearRange: "1970:2100" });
 
             $('#divisionId').change(function () {
                 var divisionId = $(this).val();
@@ -1248,172 +1260,8 @@
 
         }
 
-        // function SaveData() {
-        //     // Serialize form data into an object
-        //     let formData = $('#employeeForm').serializeArray();
-        //     let employeeData = {};
-        //     formData.forEach(field => {
-        //         employeeData[field.name] = field.value;
-        //     });
-
-        //     // Collect Educational Info
-        //     let eInstituteId = [];
-        //     let ePassingYear = [];
-        //     let eBatchNo = [];
-        //     let eGrade = [];
-        //     let eDegreeName = [];
-        //     let eAchievement = [];
-        //     let eCourseDuration = [];
-
-        //     $('#EduTbl tbody tr').each(function () {
-        //         let row = $(this);
-        //         eInstituteId.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the institute
-        //         ePassingYear.push(row.find('td:eq(1)').text());
-        //         eBatchNo.push(row.find('td:eq(2)').text());
-        //         eGrade.push(row.find('td:eq(3)').text());
-        //         eDegreeName.push(row.find('td:eq(4)').text());
-        //         eAchievement.push(row.find('td:eq(5)').text());
-        //         eCourseDuration.push(row.find('td:eq(6)').text());
-        //     });
-
-        //     // Collect Institute Info
-        //     let instituteId = [];
-        //     let passingYear = [];
-        //     let batchNo = [];
-        //     let grade = [];
-        //     let degreeName = [];
-        //     let achievement = [];
-        //     let courseDuration = [];
-
-        //     $('#TrainingTbl tbody tr').each(function () {
-        //         let row = $(this);
-        //         instituteId.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the institute
-        //         passingYear.push(row.find('td:eq(1)').text());
-        //         batchNo.push(row.find('td:eq(2)').text());
-        //         grade.push(row.find('td:eq(3)').text());
-        //         degreeName.push(row.find('td:eq(4)').text());
-        //         achievement.push(row.find('td:eq(5)').text());
-        //         courseDuration.push(row.find('td:eq(6)').text());
-        //     });
-
-        //     // Collect Posting Info
-        //     let rankId = [];
-        //     let postingFrom = [];
-        //     let postingTo = [];
-        //     let rangeId = [];
-        //     let districtId = [];
-        //     let zoneId = [];
-        //     let thanaId = [];
-        //     let pReMarks = [];
-        //     let promotionDate = [];
-
-        //     $('#PostingTbl tbody tr').each(function () {
-        //         let row = $(this);
-        //         rankId.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the rank
-        //         postingFrom.push(row.find('td:eq(1)').text());
-        //         postingTo.push(row.find('td:eq(2)').text());
-        //         rangeId.push(row.find('td:eq(3)').data('id'));
-        //         districtId.push(row.find('td:eq(4)').data('id'));
-        //         zoneId.push(row.find('td:eq(5)').data('id'));
-        //         thanaId.push(row.find('td:eq(6)').data('id'));
-        //         promotionDate.push(row.find('td:eq(7)').text());
-        //         pReMarks.push(row.find('td:eq(8)').text());
-        //     });
-
-        //     // Collect Address Info
-        //     let addressType = [];
-        //     let roadInfo = [];
-        //     let aVillegeId = [];
-        //     let aUnionId = [];
-        //     let aThanaId = [];
-        //     let aDistrictId = [];
-        //     let aDivisionId = [];
-
-        //     $('#AddressTbl tbody tr').each(function () {
-        //         let row = $(this);
-        //         addressType.push(row.find('td:eq(0)').data('id')); // Assuming there's an ID for the address type
-        //         aDivisionId.push(row.find('td:eq(1)').data('id'));
-        //         aDistrictId.push(row.find('td:eq(2)').data('id'));
-        //         aThanaId.push(row.find('td:eq(3)').data('id'));
-        //         aUnionId.push(row.find('td:eq(4)').data('id'));
-        //         aVillegeId.push(row.find('td:eq(5)').data('id'));
-        //         roadInfo.push(row.find('td:eq(6)').text());
-        //     });
-
-        //     // Prepare the final object
-        //     let combinedData = {
-        //         ...employeeData,
-        //         eInstituteId,
-        //         ePassingYear,
-        //         eBatchNo,
-        //         eGrade,
-        //         eDegreeName,
-        //         eAchievement,
-        //         eCourseDuration,
-        //         instituteId,
-        //         passingYear,
-        //         batchNo,
-        //         grade,
-        //         degreeName,
-        //         achievement,
-        //         courseDuration,
-        //         rankId,
-        //         postingFrom,
-        //         postingTo,
-        //         rangeId,
-        //         districtId,
-        //         zoneId,
-        //         thanaId,
-        //         promotionDate,
-        //         pReMarks,
-        //         addressType,
-        //         roadInfo,
-        //         aVillegeId,
-        //         aUnionId,
-        //         aThanaId,
-        //         aDistrictId,
-        //         aDivisionId
-        //     };
-
-        //     // Confirmation dialog
-        //     swal({
-        //         title: 'Are you sure?',
-        //         text: 'Do you want to save this data?',
-        //         type: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#d33',
-        //         confirmButtonText: 'Yes, Save It!'
-        //     }).then(function (res) {
-        //         if (res) {
-        //             // AJAX request
-        //             $.ajax({
-        //                 url: "/EmployeeArea/EmployeInfo/CreateEmployeeProfile",
-        //                 type: "POST",
-        //                 contentType: "application/json", // Send as JSON
-        //                 data: JSON.stringify(combinedData),
-        //                 success: function (response) {
-        //                     if (response != 0) {
-        //                         swal('', 'Save Successfully!', 'success');
-        //                         location.reload(true);
-        //                     } else {
-        //                         swal('', 'Invalid Attempt!', 'warning');
-        //                         return false;
-        //                     }
-        //                 },
-        //                 error: function (error) {
-        //                     console.error('Error saving data:', error);
-        //                     swal('', 'An error occurred while saving data.', 'error');
-        //                 }
-        //             });
-        //         }
-        //     }, function (dismiss) {
-        //         if (dismiss === 'cancel' || dismiss === 'close') {
-        //             return false;
-        //         }
-        //     });
-        // }
-
+       
+        
         function SaveData(event) {
              
 
