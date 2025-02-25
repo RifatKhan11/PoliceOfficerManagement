@@ -59,7 +59,7 @@ namespace PoliceOfficerManagement.Areas.EmployeeArea.Models
         public int[] districtId { get; set; }
         public int[] rangeId { get; set; }
         public string[] pReMarks { get; set; }
-        public DateTime[] promotionDate { get; set; }
+        //public DateTime[] promotionDate { get; set; }
         #endregion
 
         #region Address Info
