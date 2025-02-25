@@ -95,9 +95,7 @@ namespace PoliceOfficerManagement.Services.Employee
         {
             var data= await(from e in _context.employeeInfos join 
                             jr in _context.ranks on e.joiningRankId equals jr.Id
-
-                            where e.nameEn == (name != null ? name : e.nameEn)
-                            
+                            where e.nameEn == (name != null ? name : e.nameEn) 
                             select new EmployeeInfoModel
                             {
                                 empId=e.Id,

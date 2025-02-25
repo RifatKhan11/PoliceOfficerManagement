@@ -135,11 +135,11 @@
             var rangeId = $(this).val();
             if (rangeId) {
                 $.ajax({
-                    url: '/MasterData/MasterDatas/GetDivisionDistrictByRangeId',
+                    url: '/MasterData/MasterData/GetDivisionDistrictByRangeId',
                     type: 'GET',
                     data: { rangeId: rangeId },
                     success: function (response) {
-                        var selectDropdown = $('#divisionDistrictId');
+                        var selectDropdown = $('#districtId');
                         selectDropdown.empty();
                         selectDropdown.append('<option value="0">Select</option>');
                         $.each(response, function (index, districts) {
@@ -151,41 +151,24 @@
                         alert("Error loading districts.");
                     }
                 });
-
-                $.ajax({
-                    url: '/MasterData/MasterDatas/GetThanasByRangeId',
-                    type: 'GET',
-                    data: { rangeId: rangeId },
-                    success: function (response) {
-                        var selectDropdown = $('#thanaId2');
-                        selectDropdown.empty();
-                        selectDropdown.append('<option value="0">Select</option>');
-
-                        $.each(response, function (index, thana) {
-                            selectDropdown2.append('<option value="' + thana.Id + '">' + thana.thanaName + '</option>');
-                        });
-                    },
-                    error: function () {
-                        alert("Error loading districts.");
-                    }
-                });
+               
             } else {
-                $('#divisionDistrictId').empty();
-                $('#divisionDistrictId').append('<option value="0">Select</option>');
-                $('#thanaId2').empty();
-                $('#thanaId2').append('<option value="0">Select</option>');
+                $('#districtId').empty();
+                $('#districtId').append('<option value="0">Select</option>');
+                $('#zoneId').empty();
+                $('#zoneId').append('<option value="0">Select</option>');
             }
         });
 
 
 
-        $('#divisionDistrictId').change(function () {
-            var divisionDistrictId = $(this).val();
+        $('#districtId').change(function () {
+            var divisionDistrictId = $(this).val();       
             if (divisionDistrictId) {
                 $.ajax({
-                    url: '/MasterData/MasterDatas/GetZoneCircleByDivisionDistrictId',
+                    url: '/MasterData/MasterData/GetZoneCircleByDivisionDistrictId',
                     type: 'GET',
-                    data: { districtId: divisionDistrictId },
+                    data: { divisionDistrictId: divisionDistrictId },
                     success: function (response) {
                         var selectDropdown = $('#zoneId');
                         selectDropdown.empty();
@@ -199,8 +182,7 @@
                     }
                 });
             } else {
-                $('#thanaId').empty();
-                $('#thanaId').append('<option value="0">Select</option>');
+                
             }
         });
 
