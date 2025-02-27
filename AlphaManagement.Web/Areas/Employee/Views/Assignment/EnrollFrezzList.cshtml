@@ -1,0 +1,101 @@
+﻿@model EnlistedAssignmentViewModel
+<div class="card col-12 row">
+    <div class="card-header" id="loaderId" style="display:none">
+        <div class="col-12 row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <img src="~/images/Circles-loader.gif" height="400" width="400"/>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+    <div class="card-header" id="showingDiv">
+        <div class="card">
+            <div class="card-header">
+                <h3>Enlisted List</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="enlistList">
+                        <thead>
+                            <tr>
+                                <td>Sl</td>
+                                <td>Created by</td>
+                                <td>Rank</td>
+                                <td>Date</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var i = 1; }
+                            @foreach (var item in Model.enlistedMasterAssignments)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.employeeInfo?.nameEnglish</td>
+                                    <td>@item.enlistedEmployee?.FirstOrDefault()?.employee?.rank?.rankName</td>
+                                    <td>@item.enlistedAssignmentMasters?.refDate?.ToString("dd-MMM-yyyy")</td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" onclick="OpenConfirmPage('@item.enlistedAssignmentMasters?.refNo')"><i class="fa fa-edit"></i></a>
+                                        @*<a class="btn btn-success btn-sm" onclick="OpenConfirmPage('@item.enlistedAssignmentMasters?.refNo')" href="/employee/assignment/EmployeePostingConfirm?refNum=@item.enlistedAssignmentMasters?.refNo"><i class="fa fa-edit"></i></a>*@
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Freez List</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="frezzList">
+                        <thead>
+                            <tr>
+                                <td>Sl</td>
+                                <td>Created by</td>
+                                <td>Rank</td>
+                                <td>Date</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var j = 1; }
+                            @foreach (var item in Model.frezzMasterAssignments)
+                            {
+                            <tr>
+                                <td>@j</td>
+                                <td>@item.employeeInfo?.nameEnglish</td>
+                                <td>@item.enlistedEmployee?.FirstOrDefault()?.employee?.rank?.rankName</td>
+                                <td>@item.enlistedAssignmentMasters?.refDate?.ToString("dd-MMM-yyyy")</td>
+                                <td>
+                                    <a class="btn btn-success btn-sm" href="/employee/assignment/EmployeePostingConfirmNew?refNum=@item.enlistedAssignmentMasters?.refNo"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                                j++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{ 
+    <script>
+        $(document).ready(function () {
+            $('#enlistList').DataTable();
+            $('#frezzList').DataTable();
+        })
+
+        function OpenConfirmPage(refNo) {
+            $('#loaderId').show();
+            $('#showingDiv').hide();
+            window.location.href = '/employee/assignment/EmployeePostingConfirmNew?refNum=' + refNo
+        }
+    </script>
+}

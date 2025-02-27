@@ -1,0 +1,12 @@
+﻿{
+  "title": "দপ্তর তথ্য",
+  "deptName": "দপ্তর কোড",
+  "departmentName": "দপ্তর নাম (ইংরেজি)",
+  "deptNameBn": "দপ্তর নাম (বাংলা)",
+  "shortName": "সংক্ষিপ্ত নাম",
+  "startDate": "শুরুর তারিখ",
+  "action": "প্রক্রিয়া",
+  "name": "নাম",
+  "description": "বর্ননা",
+  "shortOrder": "শর্ট র্অডার"
+}

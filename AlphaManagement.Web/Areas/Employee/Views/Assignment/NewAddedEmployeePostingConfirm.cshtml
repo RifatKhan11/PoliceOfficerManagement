@@ -1,0 +1,872 @@
+﻿@model AssignmentViewModel
+@{
+    ViewData["Title"] = "Employee Posting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .nestable-color-2 .dd-handle {
+        background-color: #0069D1;
+        color: #fff;
+    }
+
+    .nestable-color-2 .dd-handle1 {
+        background-color: red !important;
+    }
+
+
+    .wosue .dd-handle {
+        width: auto !important;
+        height: 35px !important;
+        position: relative !important;
+    }
+
+    .previewCls {
+        color: black;
+        font-weight: bolder;
+        border-radius: 7px;
+        padding: 8px;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="card bg-white m-b-30">
+                    <div class="card bg-white m-b-30">
+                        <input type="hidden" value="" id="EmployeeIdHdn" />
+                        <input type="hidden" value="" id="DraggedHdn" />
+                        <input type="hidden" value="" id="DraggedHdnWithLi" />
+                        <div style="display:none">
+                            <input type="hidden" value="" id="movToEmpId" />
+                            <input type="hidden" value="" id="previewEmpId" />
+                        </div>
+                        <div class="card-body new-user">
+                            <div class="row">
+                                <div class="col-lg-6 col-12">
+                                    <h5 class="header-title mb-2">Employee List for posting</h5>
+                                </div>
+                                <div class="col-lg-4 col-12">
+                                    <div class="search-content">
+                                        <input type="text" id="txtSearchEmployee" class="form-control" style="width:85%;" autocomplete="off" name="keyword" placeholder="Search...">
+                                        <span class="search-button" style="cursor:pointer;" id="btnSearchEmployee"><i class="ti ti-search"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-12">
+                                    <a class="btn btn-success" target="_blank" href="/Employee/Report/PostingConfrimPdf?refNum=@Model.refNumber"><i class="fa  fa-print"></i></a>                                    
+                                </div>
+                                @*<div class="col-lg-3 col-md-3 col-sm-4"></div>*@
+                            </div>
+                            <div id="olEmpHolder" style="position: static;overflow: hidden;">
+                                <div class="dd nestable_list_2 nestable-color-2" id="olEmpList" style="height:540px;overflow-y:scroll">
+                                    <ol class="dd-list" id="enlistLiApp">
+                                        @{
+                                            int i = 0;
+                                            @foreach (var data in Model.enlistedAssignments)
+                                            {
+                                                string colorCode = "";
+                                                if (Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-2))
+                                                {
+                                                    colorCode = "#f17878";
+                                                }
+                                                else if (Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-1) && Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date > DateTime.Now.AddYears(-2))
+                                                {
+                                                    colorCode = "yellow";
+                                                }
+                                                else
+                                                {
+                                                    colorCode = "#00BCD2";
+                                                }
+                                                <li class="dd-item enrollst" id="DragableList-@data.employeeId" data-id="@data.Id">
+                                                    <div class="dd-handle ui-state-default" id="DragableEle-@data.employeeId" style="background-color: @colorCode;color:black;font-weight:bolder;border-radius:7px">
+                                                        <input type="hidden" name="employeeId" id="txtEmpId-@data.Id" value="@data.employeeId" />
+                                                        <input type="hidden" name="employeeCode" value="@data.employee?.employeeCode" />
+                                                        <input type="hidden" name="employeeName" value="@data.employee?.nameEnglish" />
+                                                        <input type="hidden" name="employeeRank" value="@data.employee?.rank?.rankName" />
+                                                        <input type="hidden" name="employeeUnit" value="@data.employee?.branch?.branchUnitName" />
+                                                        <input type="hidden" name="employeeSection" value="@data.employee?.section?.Name" />
+                                                        <input type="hidden" name="employeeColor" value="@colorCode" />
+                                                        <input type="hidden" name="employeeRankId" value="@data.employee.rankId" />
+                                                        <input type="hidden" name="refNo" value="@data.enlistedAssignmentMaster?.refNo" />
+                                                        @data.employee?.nameEnglish - @data.employee?.bCSBatch?.batchName, @data.employee?.rank?.rankName (@data.employee?.section?.Name)
+                                                        @{
+                                                            int?[] doctor = { 69 };
+                                                            int?[] eng = { 59 };
+                                                            int?[] llb = { 79 };
+
+                                                            int? doctorInfo = Model.educations.Where(x => doctor.Contains(x.degreeId) && x.employeeId == data.employeeId).Count();
+                                                            int? engInfo = Model.educations.Where(x => eng.Contains(x.degreeId) && x.employeeId == data.employeeId).Count();
+                                                            int? llbInfo = Model.educations.Where(x => llb.Contains(x.degreeId) && x.employeeId == data.employeeId).Count();
+
+                                                            @if (doctorInfo > 0)
+                                                            {
+                                                                <img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+                                                                <input type="hidden" name="employeeBatch" value="doctor.png" />
+                                                            }
+                                                            else if (engInfo > 0)
+                                                            {
+                                                                <img src="~/batch/engineer.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+                                                                <input type="hidden" name="employeeBatch" value="engineer.png" />
+                                                            }
+
+                                                            else if (llbInfo > 0)
+                                                            {
+                                                                <img src="~/batch/advocate.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+                                                                <input type="hidden" name="employeeBatch" value="advocate.png" />
+                                                            }
+                                                            else
+                                                            {
+                                                                @*<img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:50px; height:50px" />*@
+                                                            }
+                                                        }
+                                                        <span onclick="LoadSuggestedNew(@data.employeeId,@data.employee.rankId,'@data.enlistedAssignmentMaster?.refNo','@data.employee.nameEnglish')" class="badge move pull-right  ml-2" style="height:100%!important;background-color:#040825;cursor:pointer">
+                                                            <i class="ti-more" title="Move"></i>
+                                                        </span>
+
+
+                                                    </div>
+                                                </li>
+
+                                            }
+                                        }
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-12">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header text-center"><h3>New Assigned Officers' List</h3></div>
+                    <div class="card-body">
+                        <div class="dd nestable_list_2 nestable-color-2">
+                            <form id="postingForm">
+                                <div class="col-12" style="padding:0">
+                                    <ul class="dd-list" id="assignedEmpList1" style="height:620px;overflow-y:scroll"></ul>
+                                </div>
+                                <div class="col-12 row">
+                                    <div style="display:none">
+                                        <input type="hidden" name="referenceNum" id="refNumId" value="@Model?.refNumber" />
+                                        <input type="hidden" name="AssignmentId" id="AssignmentId" value="@Model?.assignMasterId" />
+                                        <input type="hidden" name="enlistedId" id="enlistedId" value="@Model?.enlistedId" />
+                                        <input type="submit" class="col-12 btn btn-danger" style="font-weight: bolder;" id="submitPosting" />
+                                    </div>
+                                    <input type="button" class="col-9 ml-3 btn btn-sm btn-success" style="font-weight: bolder;" id="postingBtnClick" value="Next" />
+                                    <a class="col-1 btn btn-success ml-2" href="#" onclick="UnDo()" title="Undo"><i class="mdi mdi-undo-variant"></i></a>
+                                    <a class="col-1 btn btn-danger ml-2" href="#" onclick="ReDo()" title="Redo"><i class="mdi mdi-redo-variant"></i></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:1250px;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Suggested Posting Place </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="dd mt-2 nestable_list_2 nestable-color-2 collapse show" id="olPPListSuggested" style="max-height:600px; overflow-y:scroll">
+
+                    <div class=" new-user" id="olPPListForSuggestedUnitList">
+
+                    </div>
+                    <div class="col-12 row" style="display:none" id="divLoader1">
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <img src="~/images/Circles-loader.gif" height="400" width="400" />
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="empDetailsModal" role="dialog" aria-labelledby="empDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:1300px;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Details Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="col-12 row" id="empDetails" style="overflow: scroll; height: 800px;margin:0">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="moveToModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:1700px;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="col-4 modal-title" id="exampleModalLabel"> Suggested Place for <span id="NameOfPostedEmp"></span> </h5>
+                <input type="text" id="moveModalSearchInput" class="col-2 form-control" autocomplete="off" name="keyword" placeholder="Search by Unit . . .">&nbsp;
+                <input type="text" id="moveModalSearchInputName" class="col-2 form-control" autocomplete="off" name="keyword" placeholder="Search by Name . . .">
+                <input type="hidden" id="pageNumber" value="1" />
+                <input type="hidden" id="rankIdForPrvNxt" />
+                <input type="hidden" id="refNoForPrvNxt" />
+                <div class="col-3 text-center" row" id="addAllSuggBtn">
+
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="dd mt-2 nestable_list_2 nestable-color-2 collapse show" style="max-height:700px; overflow-y:scroll">
+
+                            <div class=" new-user" id="moveToDiv">
+
+                            </div>
+
+                            <div class="col-12 row" style="display:none" id="divLoader">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <img src="~/images/Circles-loader.gif" height="400" width="400" />
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4 class="text-center">Basic Information </h4>
+                        <center>
+                            <img class="text-center" src="" id="EmpImage" width="150" height="150" alt="Image" />
+                        </center>
+                        <table class="table">
+                            <tr>
+                                <td>Name</td>
+                                <td id="BasicName"></td>
+                            </tr>
+                            <tr>
+                                <td>BP No</td>
+                                <td id="BasicBp"></td>
+                            </tr>
+                            <tr>
+                                <td>Rank</td>
+                                <td id="BasicRank"></td>
+                            </tr>
+                            <tr>
+                                <td>Home District</td>
+                                <td id="BasicHD"></td>
+                            </tr>
+                            <tr>
+                                <td>Spouse Home District</td>
+                                <td id="BasicSHD"></td>
+                            </tr>
+                            <tr>
+                                <td>Curent Posting Unit</td>
+                                <td id="BasicRPU"></td>
+                            </tr>
+                            <tr>
+                                <td>Privious Posting Unit</td>
+                                <td id="BasicPPU"></td>
+                            </tr>
+                            <tr>
+                                <td>Educational Qualification</td>
+                                <td id="BasicEQ"></td>
+                            </tr>
+                            <tr>
+                                <td>Last Promotion Date</td>
+                                <td id="BasicLPD"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Assign List Slidebar start -->
+<br />
+<div class="sb-slidebar sb-left sb-style-overlay" style="margin-top: 60px;width:30%;">
+
+    <div class="right-bar slimscroll">
+
+        <div class="col-12 text-center btn-outline-light fixed-top" style="background-color:#2d3540;color:white">
+            <span class="r-close-btn sb-close pr-0 mr-0" style="float:right;"><i class="fa fa-times"></i></span>
+            <h4 style="font-weight: 700;padding: 5px;">Assigned Officers' List</h4>
+        </div>
+
+        <div class="col-12 pt-5" style="margin-top:30px;">
+
+            <div class="online-chat">
+                <div class="online-chat-container" id="assignedEmpDiv">
+
+                    @*<div class="dd nestable_list_2 nestable-color-2">
+                            <div class="col-12" style="padding:0">
+                                <ul class="dd-list" id="assignedEmpList1" style="margin-bottom:100px;"></ul>
+                            </div>
+                        </div>*@
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        function fnAssignedEmployee(id, name, empCode, rank, rankId, color, postingPlace) {
+            $('#assignedEmpDiv').show()
+            var data = '';
+            var check = $(`#slEmpList-${id}`).val();
+            if (check == id) {
+                $(`#emp-${id}`).hide();
+                return false;
+            }
+            else {
+                $(`#emp-${id}`).hide();
+                data = `<li class="dd-item" id="slEmp-${id}">
+                                            <input type="hidden" name="empId" id="slEmpList-${id}" value="${id}"/>
+                                            <input type="hidden" name="empCode" value="${empCode}"/>
+                                            <input type="hidden" name="empRank" value="${rankId}"/>
+                                            <div class="dd-handle row fontStyle" style="background-color:${color};height: 70px;border-radius: 10px;padding: 0;margin: 0;padding-top: 4px;color: black;font-weight: bold;"><span class="col-11">${name},${empCode},${rank},${postingPlace} </span><span class="col-1 badge float-right" style="background-color: white;color:red; height: 23px;width: 20px;" onclick="removeFromSelectedDiv(${id})"><i class="fa fa-times fa-1x"></i></span></div>
+                                        </li>`;
+                //var selectedEmpArr = JSON.parse(localStorage.getItem('EmpData') || '[]');
+                //selectedEmpArr.push(id);
+                //localStorage.setItem('EmpData', JSON.stringify(selectedEmpArr));
+            }
+            $('#assignedEmpList').append(data)
+            var counter = $('#assignedEmpDiv li').length;
+            $('#assignCounter').html(counter);
+        }
+
+        function ShowHideEmployee() {
+            $('.ListOfEmpActive').hide();
+            $('#VacantBtn').hide();
+            $('#allBtn').show();
+        }
+
+        function ShowAllEmployee() {
+            $('.ListOfEmpActive').show();
+            $('#VacantBtn').show();
+            $('#allBtn').hide();
+        }
+
+        $('.mmm').click(function () {
+            $('#aaa').hide();
+            $('#bbb').show();
+        });
+
+        $('.ccc').click(function () {
+            $('#aaa').show();
+            $('#bbb').hide();
+        });
+
+        function ajaxFunctionCheck(res) {
+            var employeeId = $('#EmployeeIdHdn').val();
+            if (res.length > 0) {
+                var arr = [];
+                var arrId = [];
+                $.each(res, function (i, item) {
+                    arr.push(item.reason);
+                    arrId.push(item.SBUId);
+                });
+                if (arr.indexOf('Present Address') >= 0) {
+                    swal('warning', 'Cannot Assign. Matched With Present Address', 'warning').then((result) => {
+                        $('#DragableList-' + employeeId).empty();
+                        $('#DragableEle-' + employeeId).closest('li.dd-item').find('select').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').next().find('input.clsSectionId').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input').removeAttr('id');
+                        $('#DragableEle-' + employeeId).remove();
+                        $('#DragableList-' + employeeId).append($('#DraggedHdn').val());
+                        $('#DragableEle-' + employeeId).show();
+                        $('#DragableList-' + employeeId + ' .ui-sortable-placeholder').remove();
+                        var empId = $('#previewEmpId').val();
+                        var check = $(`#slEmpList-${empId}`).val();
+                        if (check == empId) {
+                            $('#assLi' + empId).remove();
+                        }
+                    })
+                }
+                else if (arr.indexOf('Permanent Address') >= 0) {
+                    swal('warning', 'Cannot Assign. Matched With Permanent Address', 'warning').then((result) => {
+                        $('#DragableList-' + employeeId).empty();
+                        $('#DragableEle-' + employeeId).closest('li.dd-item').find('select').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input.clsSectionId').val();
+                        $('#DragableEle-' + employeeId).closest('div').find('input').removeAttr('id');
+                        $('#DragableEle-' + employeeId).remove();
+                        $('#DragableList-' + employeeId).append($('#DraggedHdn').val());
+                        $('#DragableEle-' + employeeId).show();
+                        $('#DragableList-' + employeeId + ' .ui-sortable-placeholder').remove();
+                        var empId = $('#previewEmpId').val();
+                        var check = $(`#slEmpList-${empId}`).val();
+                        if (check == empId) {
+                            $('#assLi' + empId).remove();
+                        }
+                    })
+                }
+                else if (arr.indexOf('Spouse Address') >= 0) {
+                    swal('warning', 'Cannot Assign. Matched With Spouse Address', 'warning').then((result) => {
+                        $('#DragableList-' + employeeId).empty();
+                        $('#DragableEle-' + employeeId).closest('li.dd-item').find('select').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input.clsSectionId').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input').removeAttr('id');
+                        $('#DragableEle-' + employeeId).remove();
+                        $('#DragableList-' + employeeId).append($('#DraggedHdn').val());
+                        $('#DragableEle-' + employeeId).show();
+                        $('#DragableList-' + employeeId + ' .ui-sortable-placeholder').remove();
+                        var empId = $('#previewEmpId').val();
+                        var check = $(`#slEmpList-${empId}`).val();
+                        if (check == empId) {
+                            $('#assLi' + empId).remove();
+                        }
+                    })
+                }
+                else if (arr.indexOf('Maternal Family Address') >= 0) {
+                    swal('warning', 'Cannot Assign. Matched With Maternal Family Address', 'warning').then((result) => {
+                        $('#DragableList-' + employeeId).empty();
+                        $('#DragableEle-' + employeeId).closest('li.dd-item').find('select').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input.clsSectionId').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input').removeAttr('id');
+                        $('#DragableEle-' + employeeId).remove();
+                        $('#DragableList-' + employeeId).append($('#DraggedHdn').val());
+                        $('#DragableEle-' + employeeId).show();
+                        $('#DragableList-' + employeeId + ' .ui-sortable-placeholder').remove();
+                        var empId = $('#previewEmpId').val();
+                        var check = $(`#slEmpList-${empId}`).val();
+                        if (check == empId) {
+                            $('#assLi' + empId).remove();
+                        }
+                    })
+                }
+                else if (arr.indexOf('Previous Work Place') >= 0) {
+                    swal('warning', 'Cannot Assign. Matched With Previous Work Place', 'warning').then((result) => {
+                        $('#DragableList-' + employeeId).empty();
+                        $('#DragableEle-' + employeeId).closest('li.dd-item').find('select').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input.clsSectionId').removeAttr('name');
+                        $('#DragableEle-' + employeeId).closest('div').find('input').removeAttr('id');
+                        $('#DragableEle-' + employeeId).remove();
+                        $('#DragableList-' + employeeId).append($('#DraggedHdn').val());
+                        $('#DragableEle-' + employeeId).show();
+                        $('#DragableList-' + employeeId + ' .ui-sortable-placeholder').remove();
+                        var empId = $('#previewEmpId').val();
+                        var check = $(`#slEmpList-${empId}`).val();
+                        if (check == empId) {
+                            $('#assLi' + empId).remove();
+                        }
+                    })
+                }
+                else {
+                    //$('#DragableList-' + employeeId).remove();
+                    //$('.wosue.DragableEle-' + employeeId).addClass('resizingCls');
+                }
+            }
+            else {
+                $('#DragableList-' + employeeId).remove();
+                $('#DragableEle-' + employeeId).find('span').remove();
+                var unit = $('#DragableEle-' + employeeId).closest('.dd-item').find('.unit').val();
+                var check = $('#unitId-' + unit).find('div.wosue')
+                //console.log(check)
+                if (check != '') {
+                    $('#unitId-' + unit).removeAttr('id');
+                    $('#postPlaceId-' + unit).removeAttr('id');
+                }
+            }
+        }
+
+        function drop(event, branchId) {
+            var employeeId = $('#EmployeeIdHdn').val();
+            var check1 = $(this).find("div").length;
+            var check = event.target.innerText;
+            if (check != "") {
+                //$('#DragableList-' + employeeId + ' .ui-sortable-placeholder').remove();
+            }
+            else {
+                Common.Ajax('GET', '/Employee/Assignment/CheckDistrict?branchId=' + branchId + '&employeeid=' + employeeId, [], 'json', ajaxFunctionCheck, true);
+            }
+        }
+
+        $(document).ready(function () {
+            
+            $("#txtSearchEmployee").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olEmpList ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#txtSearchEmployeeFreeze").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olEmpListFreeze ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#btnSearchEmployee").on("click", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olEmpList ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#txtSearchPP").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olPPListSuggested ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#txtSearchPPPlace").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olPPListPlace ol li").not(".notsearch").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#moveModalSearchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#moveModalSearch ol li").not(".notsearch").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#txtSearchPPPlaceByName").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olPPListPlace ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+        
+
+        $('#postingForm').submit(function (e) {
+            e.preventDefault();
+            var form = $('#postingForm')
+            $.ajax({
+                url: '/Employee/Assignment/SaveAddedPostingData',
+                data: form.serialize(),
+                type: 'POST',
+                success: function (records) {
+                    //alert(records.status);
+                    $('#AssignmentId').val(records.assignMasterId);
+                    if (records.refNumber == 'FrezzListEmpty') {
+                        if (records.status == 4) {
+                            window.location.href = '/Employee/Assignment/AssignmentReturnDetails?id=' + records.assignMasterId;
+                        } else if (records.status == 1) {
+                            window.location.href = '/Employee/Assignment/AssignmentMasterDetailsForNext?id=' + records.assignMasterId;
+                        }
+                        else {
+                            window.location.href = '/Employee/Assignment/AssignmentPost?id=' + records.assignMasterId;
+                        }
+
+                    }
+                    else {
+                        swal('', 'Unable to Save!', 'warning');
+                    }
+
+                }.bind(this),
+                error: function (erro) {
+                    console.log(erro);
+                    swal('', 'Unable to Save!', 'warning');
+                }
+            });
+        })
+
+        $('#postingBtnClick').click(function () {
+            var checkEnrollList = $('#olEmpList ol li div').length;            
+            if (checkEnrollList > 0) {
+                swal({
+                    title: 'Warning', text: 'Employee List For Posting Not Completed', type: 'warning', showCancelButton: true, confirmButtonColor: '#007ACC', cancelButtonColor: '#d33', confirmButtonText: `Ok`
+                }).then(function () {
+                    return false;
+                })
+                return false;
+            }
+            else {
+                $('#submitPosting').click();
+            }
+
+        })
+
+       
+
+        function ajaxUnits(response) {
+
+            var options = '<option value="">Select </option>';
+            $.each(response, function (i, item) {
+                options += '<option value="' + item.Id + '">' + item.subunitName + '</option>';
+            });
+            $('#policeSubUnitId').empty();
+            $('#policeSubUnitId').append(options);
+        }
+        function LoadSuggested(empId, rankId, refNo) {
+            $('#movToEmpId').val(empId);
+            $('#divLoader1').show();
+            $('#olPPListForSuggestedUnitList').hide();
+            $("#olPPListForSuggestedUnitList").load("/Employee/Assignment/GetSuggetionNewList?id=" + empId + "&rankId=" + rankId + "&refNum=" + refNo);
+            $('#exampleModal').modal('show');
+        }
+
+        var pageNumber = 1;
+        function LoadSuggestedNew(empId, rankId, refNo, name) {
+            //$('#spnEmpInfo').html(name + ', ' + rank);
+            $('#movToEmpId').val(empId);
+            $('#NameOfPostedEmp').text(name);
+            $('#rankIdForPrvNxt').val(rankId);
+            $('#refNoForPrvNxt').val(refNo);
+            $('#addAllSuggBtn').empty();
+            $('#pageNumber').val(1);
+
+            $.ajax({
+                url: '/Employee/Assignment/GetEmployeeBasicInfoForPostingByempId?Id=' + empId,
+                type: 'GET',
+                success: function (res) {
+                    console.log(res)
+                    $('#BasicName').text(res.name);
+                    $('#BasicBp').text(res.bp);
+                    $('#BasicRank').text(res.rank);
+                    $('#BasicHD').text(res.HomeDistrict);
+                    $('#BasicSHD').text(res.SpouseHomeDistrict);
+                    $('#BasicRPU').text(res.priviousPosting);
+                    $('#BasicPPU').text(res.currentPosting);
+                    $('#BasicEQ').text(res.Education);
+                    $('#BasicLPD').text(res.lastPromotionDate);
+                    $('#EmpImage').attr("src", "http://portfolio.police.gov.bd/" + res.picture);
+                }
+            });
+
+            //var pageNumber = 1;
+            $('#addAllSuggBtn').append(`<input type="button" class="btn btn-info btn-sm ml-1" onclick="LoadSuggestedNew(${empId},${rankId},'${refNo}')" value="Suggested Place"><input type="button" class="btn btn-danger btn-sm  ml-1" onclick="LoadForMoveTo(${empId},${rankId},'${refNo}')" value="Ignore Suggetion"><button type="button" class="btn btn-sm btn-info" id="VacantBtn" onclick="ShowHideEmployee()">Vacant Post</button>
+                                    <button type="button" id="allBtn" class="btn btn-sm btn-success" style="display:none;" onclick="ShowAllEmployee()">All</button>`)
+            $('#divLoader').show();
+            $('#moveToDiv').hide();
+            $("#moveToDiv").load("/Employee/Assignment/GetNewSuggetionList2?id=" + empId + "&rankId=" + rankId + "&pageNumber=" + pageNumber + "&pageSize=10&refNum=" + refNo);
+            pageNumber = pageNumber + 1;
+            $('#VacantBtn').hide();
+            $('#allBtn').hide();
+            $('#moveToModal').modal('show');
+        }
+
+        function LoadSuggestedPrvNxt() {
+            var empId = $('#movToEmpId').val();
+            var rankId = $('#rankIdForPrvNxt').val();
+            var refNo = $('#refNoForPrvNxt').val();
+            $('#movToEmpId').val(empId);
+            $('#addAllSuggBtn').empty();
+            var pageNumber = $('#pageNumber').val();
+            $('#addAllSuggBtn').append(`<input type="button" class="btn btn-info btn-sm ml-1" onclick="LoadSuggestedNew(${empId},${rankId},'${refNo}')" value="Suggested Place"><input type="button" class="btn btn-danger btn-sm ml-1" onclick="LoadForMoveTo(${empId},${rankId},'${refNo}')" value="Ignore Suggetion">&nbsp;&nbsp;<button type="button" class="btn btn-sm btn-info" id="VacantBtn" onclick="ShowHideEmployee()">Vacant Post</button>
+                                    <button type="button" id="allBtn" class="btn btn-sm btn-success" style="display:none;" onclick="ShowAllEmployee()">All</button>`)
+            $('#divLoader').show();
+            $('#moveToDiv').hide();
+            $("#moveToDiv").load("/Employee/Assignment/GetNewSuggetionList2?id=" + empId + "&rankId=" + rankId + "&pageNumber=" + pageNumber + "&pageSize=10&refNum=" + refNo);
+
+        }
+
+        function prevPage() {
+            var num = $('#pageNumber').val();
+            if (num > 1) {
+                $('#pageNumber').val(num--);
+            }
+            var empId = $('#movToEmpId').val();
+            var rankId = $('#rankIdForPrvNxt').val();
+            var refNo = $('#refNoForPrvNxt').val();
+            LoadSuggestedPrvNxt(empId, rankId, refNo);
+        }
+
+        function nextPage() {
+            var num = $('#pageNumber').val();
+            if (num > 0) {
+                console.log(num++);
+                $('#pageNumber').val(num++);
+            }
+            var empId = $('#movToEmpId').val();
+            var rankId = $('#rankIdForPrvNxt').val();
+            var refNo = $('#refNoForPrvNxt').val();
+            LoadSuggestedPrvNxt(empId, rankId, refNo);
+        }
+
+        function LoadForMoveTo(empId, rankId, refNo) {
+            $("#moveToDiv").load("/Employee/Assignment/GetMoveToNewList?refNum=" + refNo + "&empId=" + empId);
+            $('#addAllSuggBtn').empty();
+            $('#addAllSuggBtn').append(`<input type="button" class="btn btn-info btn-sm ml-1" onclick="LoadSuggestedNew(${empId},${rankId},'${refNo}')" value="Suggested Place"><input type="button" class="btn btn-danger btn-sm ml-1" onclick="LoadForMoveTo(${empId},${rankId},'${refNo}')" value="Ignore Suggetion">&nbsp;&nbsp;<input type="button" class="btn btn-sm btn-info" value="Vacant Post" id="VacantBtn" onclick="ShowHideEmployee()" />
+                                    <input type="button" id="allBtn" class="btn btn-sm btn-success" value="All" style="display:none;" onclick="ShowAllEmployee()">`)
+            $('#divLoader').show();
+            $('#moveToDiv').hide();
+            $('#moveToModal').modal('show');
+            $('#movToEmpId').val(empId);
+        }
+
+        function moveToPostingPlace(id) {
+            var moveLi = $('#moveLi-' + id);
+            var empId = $('#movToEmpId').val();
+            var empName = $('#DragableEle-' + empId).find('input[name="employeeName"]').val();
+            var empRank = $('#DragableEle-' + empId).find('input[name="employeeRank"]').val();
+            var empUnit = $('#DragableEle-' + empId).find('input[name="employeeUnit"]').val();
+            var empCode = $('#DragableEle-' + empId).find('input[name="employeeCode"]').val();
+            var empSection = $('#DragableEle-' + empId).find('input[name="employeeSection"]').val();
+            var empColor = $('#DragableEle-' + empId).find('input[name="employeeColor"]').val();
+            var newSection = moveLi.find('option:selected').text();
+            var newPlace = $('#emp-' + id).find('option:selected').text();
+            var sectionId = moveLi.find('option:selected').val();
+            var unitName = $('#emp-' + id).find('input[name="newUnitName"]').val();
+            var newUnitName = moveLi.find('input[name="newUnitName"]').val();
+            var newSectionId = $('#emp-' + id).find('option:selected').val();
+            if (newSection == '') {
+                newSection = newPlace;
+            }
+            if (sectionId == undefined) {
+                sectionId = newSectionId;
+            }
+            if (unitName == undefined) {
+                unitName = newUnitName;
+            }
+            $('#DragableList-' + empId).remove();
+            $('#previewEmpId').val(empId);
+            var assign = `<li id=assLi${empId} class="col-12 row previewCls" style="background-color:${empColor};padding-left:4%;margin-left: 0;">
+                            <div class="col-9" style="padding:0">${empName} </br> <i class="fa fa-mail-reply"></i> ${empRank},  ${empSection} - ${empUnit} </br> <i class="fa fa-mail-forward"></i> ${empRank}, <span id="empNewSec-${empId}">${newSection},${unitName}</span></div>
+                            <input type="hidden" name="employeeId" value="${empId}"/>
+                            <input type="hidden" name="sectionId" value="${sectionId}"/>
+                            <div class="col-3">
+                            <span style="color:red;float:right;background-color: white;" class="badge sugg" id="AlreadyGiven-${empId}" onclick="removePreview(${empId},'${empColor}','${empName}','${empRank}','${empSection}','${empUnit}','','')"><i class="fa fa-times"></i></span>
+                            </div>
+                            </li>`
+            $('#assignedEmpList1').append(assign);
+            $('#moveToModal').modal('hide');
+        }
+
+        function removePreview(empId, empColor, empName, empRank, empSection, empUnit, empBCS, empCode, empRankId) {
+            var li = `<li class="dd-item enrollst" id="DragableList-${empId}">
+                                    <div class="dd-handle ui-state-default" id="DragableEle-${empId}" style="background-color: ${empColor};color:black;font-weight:bolder;border-radius:7px">
+                                    <input type="hidden" name="employeeId" value="${empId}" />
+                                    <input type="hidden" name="employeeCode" value="${empCode}" />
+                                    <input type="hidden" name="employeeName" value="${empName}" />
+                                    <input type="hidden" name="employeeRank" value="${empRank}" />
+                                    <input type="hidden" name="employeeRankId" value="${empRankId}" />
+                                    <input type="hidden" name="employeeUnit" value="${empUnit}" />
+                                    <input type="hidden" name="employeeSection" value="${empSection}" />
+                                    <input type="hidden" name="employeeColor" value="${empColor}" />
+                                    ${empName} - BCS, ${empRank} (${empSection})
+                                        <span onclick="LoadSuggestedNew(${empId},${empRankId},'@Model?.enlistedAssignments?.FirstOrDefault()?.enlistedAssignmentMaster?.refNo')" class="badge move pull-right  ml-2" style="height:100%!important;background-color:#040825;cursor:pointer">
+                                            <i class="ti-more" title="Move"></i>
+                                        </span>
+                                    </div>
+                                </li>`;
+            $('#assLi' + empId).remove();
+            $('#DragableList-' + empId).remove();
+            $('#enlistLiApp').append(li);
+        }
+
+        function AddNewPostingPlace(Id, rankName, rankId, branchUnitName) {
+            var data = "";
+            $.ajax({
+                url: '/global/api/GetPostingPlaceBySpecialBarnchId/' + Id,
+                type: 'GET',
+                success: function (rec) {
+                    $.each(rec, function (i, v) {
+                        //alert(v.Name);
+                        data += `<option value="${v.Id}">${v.Name}</option>`
+                    })
+
+                    $("#DivListAdd-" + Id).append(`<li class="dd-item form-inline notsearch clswosue" id="unitId-${Id}">
+                                                    <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">${rankName}<input type="hidden" name="rankId" value="${rankId}" /></div>
+                                                    <div class="wosue" ondrop="drop(event,${Id})" id="divwosue3" style="width:55%;height:45px;"></div>
+                                                    <div class="dd-nodrag col">
+                                                        <input type="hidden" class="unitId" value="${branchUnitName}" />
+                                                        <input type="hidden" class="unit" value="${Id}" />
+                                                    <select class="form-control" style="width:107%;float:right;" id="postPlaceId-${Id}" onchange="changeNewPostingPlace(${Id})">
+                                                        ${data}
+                                                    </select>
+                                                    </div>
+                                                </li>`)
+
+                }
+            });
+
+
+
+            //console.log(data);
+            //return false;
+
+        }
+
+        var replacedEmpList = [];
+        function replaceEmployee(id, newPlace, sectionId, repEmpId) {
+            var moveLi = $('#moveLi-' + id);
+            var empId = $('#movToEmpId').val();
+            var empName = $('#DragableEle-' + empId).find('input[name="employeeName"]').val();
+            var empCode = $('#DragableEle-' + empId).find('input[name="employeeCode"]').val();
+            var empRank = $('#DragableEle-' + empId).find('input[name="employeeRank"]').val();
+            var empRankId = $('#DragableEle-' + empId).find('input[name="employeeRankId"]').val();
+            var empUnit = $('#DragableEle-' + empId).find('input[name="employeeUnit"]').val();
+            var empSection = $('#DragableEle-' + empId).find('input[name="employeeSection"]').val();
+            var empColor = $('#DragableEle-' + empId).find('input[name="employeeColor"]').val();
+            var newSection = moveLi.find('option:selected').text();
+            if (newSection == '') {
+                newSection = newPlace;
+            }
+            var replace = $('#repEmp-' + repEmpId);
+            var replaceEmpName = replace.find('input[name="repEmpName"]').val();
+            var replaceEmpRank = replace.find('input[name="repEmpRank"]').val();
+            var replaceEmpUnit = replace.find('input[name="repEmpUnit"]').val();
+            var replaceEmpSection = replace.find('input[name="repEmpSection"]').val();
+            var replaceEmpCode = replace.find('input[name="repEmpCode"]').val();
+            var replaceEmpRankId = replace.find('input[name="repEmpRankId"]').val();
+            var replacedEmp = `<li class="dd-item enrollst" id="DragableList-${repEmpId}">
+                                    <div class="dd-handle ui-state-default" id="DragableEle-${repEmpId}" style="background-color: darkgreen;color:black;font-weight:bolder;border-radius:7px">
+                                    <input type="hidden" name="employeeId" value="${repEmpId}" />
+                                    <input type="hidden" name="employeeCode" value="${replaceEmpCode}" />
+                                    <input type="hidden" name="employeeColor" value="darkgreen" />
+                                    <input type="hidden" name="employeeName" value="${replaceEmpName}" />
+                                    <input type="hidden" name="employeeRank" value="${replaceEmpRank}" />
+                                    <input type="hidden" name="employeeUnit" value="${replaceEmpUnit}" />
+                                    <input type="hidden" name="employeeSection" value="${replaceEmpSection}" />
+                                    ${replaceEmpName} - BCS, ${replaceEmpRank} (${replaceEmpSection})
+                                        <span onclick="LoadSuggestedNew(${repEmpId},${replaceEmpRankId},'@Model?.enlistedAssignments?.FirstOrDefault()?.enlistedAssignmentMaster?.refNo')" class="badge move pull-right  ml-2" style="height:100%!important;background-color:#040825;cursor:pointer">
+                                            <i class="ti-more" title="Move"></i>
+                                        </span>
+                                    </div>
+                                </li>`;
+            $('#DragableList-' + empId).remove();
+            $('#previewEmpId').val(empId);
+            var assign = `<li id=assLi${empId} class="col-12 row previewCls" style="background-color:${empColor};padding-left:4%;margin-left: 0;">
+                            <div class="col-9" style="padding:0">
+                                ${empName} </br> <i class="fa fa-mail-reply"></i> ${empRank},  ${empSection} - ${empUnit} </br> <i class="fa fa-mail-forward"></i> ${empRank}, <span id="empNewSec-${empId}">${newSection}</span></div>
+                                <input type="hidden" name="employeeId" value="${empId}"/>
+                                <input type="hidden" name="sectionId" value="${sectionId}"/>
+                            <div class="col-3">
+                                <span style="color:red;float:right;background-color: white;" class="badge sugg" id="AlreadyGiven-${empId}" onclick="removePreview(${empId},'${empColor}','${empName}','${empRank}','${empSection}','${empUnit}','','',${empRankId})"><i class="fa fa-times"></i></span>
+                            </div></li>`
+            $('#assignedEmpList1').append(assign);
+            replacedEmpList.push(repEmpId);
+            $('#enlistLiApp').append(replacedEmp);
+            $('#moveToModal').modal('hide');
+        }
+    </script>
+}
+

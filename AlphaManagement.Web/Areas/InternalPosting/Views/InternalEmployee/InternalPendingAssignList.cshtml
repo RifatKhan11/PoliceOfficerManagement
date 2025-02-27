@@ -1,0 +1,125 @@
+﻿@model InternalPostingReportViewModel
+@{
+    ViewData["Title"] = "AssignmentMaster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var baseImageUrl = "http://portfolio.police.gov.bd";
+}
+<div style="height:10px;"></div>
+<div class="card">
+    <div class="card-header" style="background-color:#2A1067;color:white;">
+        <div class="row">
+            <div class="col-11">
+                <span style="font-size:22px;">Pending Assigned List</span>
+            </div>
+
+            <div class="col-1 form-inline">
+                <a class="p-0 mr-2" id="home-tab" onclick="fnViewChange('cardView','tabularView')" href="#"> <i class="fa fa-th" style="font-size:30px;color:white" aria-hidden="true"></i></a>
+                <a class="p-0" id="profile-tab" onclick="fnViewChange('tabularView','cardView')" href="#"><i class="fa fa-align-justify " style="font-size:30px;color:white" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row" id="cardView">
+            @foreach (var item in Model.postingReportViews)
+            {
+
+                <div class="col-md-3 col-12 p-0" style="border-radius:5px;color:#fff;border:1px solid #aaa;">
+                    <div class="card-header border-0">
+                        <div class="text-center">
+
+                            @if (item.url == null)
+                            {
+                                <img src="~/logo/pp.jpg" style="width:100px;height:100px" class="img-fluid rounded-circle" />
+                            }
+                            else
+                            {
+                                <img src="@baseImageUrl/@item.url" style="width:100px;height:100px" class="img-fluid rounded-circle" />
+                            }
+                        </div>
+                    </div>
+                    <div class="card text-center border-0">
+                        <div class="card-body">
+                            <h6 class="text-dark font-weight-bold">Ref No : @item.refNo</h6>
+                            <h6 class="text-dark font-weight-bold">Ref Date : @item.refDate.ToString("dd-MMM-yyyy")</h6>
+                            <h6 class="text-dark font-weight-bold">Posting Order Created By :</h6>
+                            <h6 class="text-dark font-weight-bold">@item.nameEnglish</h6>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer border-0 text-dark">
+                        <div class="text-center">
+                            @if (item.statusId == 1)
+                            {
+                                <a class="btn btn-sm btn-info" href="/InternalPosting/InternalEmployee/InternalPostingDetails?enlistMasterId=@item.assignMasterId">Details</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-info" href="/InternalPosting/InternalEmployee/InternalPostingDetailsPreview/@item.assignMasterId">Details</a>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+        <div class="row" style="display:none;" id="tabularView">
+            <div class="col-md-12 col-12">
+                <table class="table table-bordered table-striped" style="width:100%" id="">
+                    <thead>
+                        <tr class="text-light table-sm" style="background-color:#2A1067">
+                            <td>Sl No</td>
+                            @*<td>Name</td>*@
+                            <td>RefNo</td>
+                            <td>Ref Date</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var i = 1;}
+                        @foreach (var item in Model.postingReportViews)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                @*<td>@item.employee?.nameEnglish</td>*@
+                                <td>@item.refNo</td>
+                                <td>@item.refDate.ToString("dd-mmm-yyyy")</td>
+                                <td>
+                                    @if (item.statusId == 1)
+                                    {
+                                    <a class="btn btn-sm btn-info" href="/InternalPosting/InternalEmployee/InternalPostingDetails?enlistMasterId=@item.assignMasterId">Details</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="btn btn-sm btn-info" href="/InternalPosting/InternalEmployee/InternalPostingDetailsPreview/@item.assignMasterId">Details</a>
+                                    }
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+        function fnViewChange(show,hide) {
+            $('#' + hide).hide();
+            $('#' + show).show();
+        }
+
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+        });
+    </script>
+}

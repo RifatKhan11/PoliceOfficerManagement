@@ -1,0 +1,203 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Email Verification";
+    Layout = "~/Views/Shared/_Init_Layout.cshtml";
+
+    string smsTypeText = "";
+    string smsType = "";
+    string smsNo = "";
+    if (Model.smsTypeId == 1)
+    {
+        smsTypeText = "Your email ";
+        smsType = "email";
+        smsNo = Model.userInformation.email;
+    }
+    else
+    {
+        smsTypeText = "Your phone number ";
+        smsType = "mobile";
+        smsNo = Model.userInformation.phoneNumber;
+    }
+}
+
+
+<div class="row">
+    <div class="col-md-12 col-12 ">
+        <div class="row">
+            <div class="col-md-4 offset-4 m-b-30 col-12" style="margin:4% auto 0 auto!important;">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 col-12">
+                            <div class="text-center">
+                                <img src="~/batch/otp.png" class="img-fluid rounded-circle" style="width:50%; height:150px" />
+                                @*<img src="~/logo/Ploice.png" class="img-fluid rounded-circle" style="width:80px; height:80px" />*@
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12 mt-4 mb-4">
+                            <h4 class="text-center">OTP Verification</h4>
+                        </div>
+                        <div class="row">
+                            <form asp-area="Auth" asp-controller="Account" asp-action="ACRDisiplinaryVerify" method="post">
+                                @*<div class="col-xl-11 col-md-11 col-sm-11 pull-right">
+                                        <div class="row">
+                                            <span style="color:red;padding-left:100px;">&nbsp;&nbsp; @smsTypeText &nbsp;<b id="otpMobile"></b>&nbsp; A 4-digit One Time Password has been sent to your @smsType</span>
+                                        </div>
+                                        <br />
+                                        <label for="otpNumber" style="font-size:13px;padding-left:270px;" class="row col-form-label col-sm-9">OTP Code</label>
+                                        <div class="form-group">
+                                            <div class="col-sm-9 ml-2" style="font-size:17px;padding-left:200px;">
+                                                <input type="text" onkeyup="fnNextOTP(1)" id="opt1" maxlength="1" min="1" class="numeric" style="border:solid 1px;border-color:black;width:50px;height:50px;text-align:center;" />
+                                                <input type="text" onkeyup="fnNextOTP(2)" id="opt2" maxlength="1" min="1" class="numeric" style="border:solid 1px;border-color:black;width:50px;height:50px;text-align:center;" />
+                                                <input type="text" onkeyup="fnNextOTP(3)" id="opt3" maxlength="1" min="1" class="numeric" style="border:solid 1px;border-color:black;width:50px;height:50px;text-align:center;" />
+                                                <input type="text" onkeyup="fnNextOTP(4)" id="opt4" maxlength="1" min="1" class="numeric" style="border:solid 1px;border-color:black;width:50px;height:50px;text-align:center;" />
+                                                <input type="hidden" name="otpNumber" maxlength="4" id="otpNumber" required class="form-control" />
+                                            </div>
+                                        </div>
+                                        <label id="timer" style="font-size:12px;padding-left:300px;color:#26c4a2;" class="row col-form-label col-sm-9"></label>
+                                        <label style="font-size:10px;padding-left:270px;" class="row col-form-label col-sm-9">Didn't Get OTP &nbsp;&nbsp;<a href="javascript:void(0)" onclick="fnResendCode(@Model.userInformation.Id)">Resend</a></label>
+
+                                    </div>*@
+
+
+
+                                <div class="col-md-12 col-12">
+
+                                    <div class="col-md-12 col-12">
+                                        <span class="m-0" style="color:black;">@smsTypeText<b id="otpMobile">@smsNo</b>.A 4-digit One Time Password has been sent to your @smsType .</span>
+                                        <div class="form-group col-md-5">
+                                            <input type="hidden" class="form-control text-center" name="UserOTPCode" id="UserOTPCode" maxlength="4" required />
+                                        </div>
+                                        <label for="otpNumber" style="font-size:19px;margin-left:25%;color:red;font-weight:bolder" class="text-center">Enter Your OTP Code</label>
+
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-12" style="font-size:17px;margin-left:18%">
+                                                <input type="text" onkeyup="fnNextOTP(1)" id="opt1" maxlength="1" min="1" class="numeric text-center" style="border:solid 1px;border-color:black;width:50px;height:50px;" />
+                                                <input type="text" onkeyup="fnNextOTP(2)" id="opt2" maxlength="1" min="1" class="numeric text-center" style="border:solid 1px;border-color:black;width:50px;height:50px;" />
+                                                <input type="text" onkeyup="fnNextOTP(3)" id="opt3" maxlength="1" min="1" class="numeric text-center" style="border:solid 1px;border-color:black;width:50px;height:50px;" />
+                                                <input type="text" onkeyup="fnNextOTP(4)" id="opt4" maxlength="1" min="1" class="numeric text-center" style="border:solid 1px;border-color:black;width:50px;height:50px;" />
+                                                <input type="hidden" name="otpNumber" maxlength="4" id="otpNumber" required class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span style="color:red;">@Model.verifyMessage</span>
+                                        </div>
+
+                                        <label id="timer" style="font-size:12px;padding-left:45%;color:#26c4a2;" class="row col-form-label col-sm-9"></label>
+                                        <div class="text-center mb-4">
+                                            @*<label style="font-size:10px;padding-left:270px;" class="row col-form-label col-sm-9">Didn't Get OTP &nbsp;&nbsp;<a href="javascript:void(0)" onclick="fnResendCode(@Model.userInformation.Id)">Resend</a></label>*@
+                                            <span>Don't receive verification code? <a class="text-primary" onclick="fnResendCode(@Model.userInformation.Id)" href="javascript:void(0)">RESEND CODE</a></span><br /><br /><br />
+
+                                        </div>
+
+                                        <div class="text-center mb-5" style="margin-top:-46px">
+                                            <div class="">
+                                                <input class="btn btn-info  btn-sm btn-block" type="submit" value="Verify OTP" style="background-color:#25C38C!important;color:#fff; border-radius: 50px;" id="varifyOtp" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 col-12">
+                                        <input type="hidden" name="Name" value="@Model.userInformation?.userName" />
+                                        <input type="hidden" name="Email" value="@Model.userInformation?.email" />
+                                        <input type="hidden" name="PhoneNumber" value="@Model.userInformation?.phoneNumber" />
+                                        <input type="hidden" name="Password" value="@Model.userInformation?.password" />
+                                        <input type="hidden" name="ConfirmPassword" value="@Model.userInformation?.password" />
+                                        <input type="hidden" name="UserId" value="@Model.userInformation?.Id" />
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div><!--end row-->
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!--end row-->
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function fnResendCode(id) {
+            $.ajax({
+                type: "get",
+                url: "/Auth/Account/ResendOTPCode",
+                data: { id: id ,smsTypeId:@Model.smsTypeId},
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+            let timerOn = true;
+
+            function timer(remaining) {
+                var m = Math.floor(remaining / 60);
+                var s = remaining % 60;
+
+                m = m < 10 ? '0' + m : m;
+                s = s < 10 ? '0' + s : s;
+                document.getElementById('timer').innerHTML = m + ':' + s;
+                remaining -= 1;
+
+                if (remaining >= 0 && timerOn) {
+                    setTimeout(function () {
+                        timer(remaining);
+                    }, 1000);
+                    return;
+                }
+
+                if (!timerOn) {
+                    // Do validate stuff here
+                    return;
+                }
+
+                // Do timeout stuff here
+                otp = 0;
+                //alert('Timeout for otp');
+                //$("#otpErrorMsg").text('Timeout for otp');
+            }
+
+            timer(120);
+
+            if (@Model.smsTypeId == 1) {
+                var email = '@Model.userInformation?.email';
+                var n = email.indexOf("@@");
+                var firstPart = email.substring(0, n);
+                var firstPartEmail = firstPart.substring(n - 3, n);
+                var lastPart = email.substring(n);
+                var maskEmail = firstPart.substring(0, firstPart.length - 3).replace(/[a-z]/g, '*');
+                $('#otpMobile').empty();
+                $('#otpMobile').append(maskEmail + firstPartEmail + lastPart);
+            }
+            else {
+                var mobNum = '@Model.userInformation?.phoneNumber';
+                var first3 = mobNum.substring(0, 5);
+                var last3 = mobNum.substring(mobNum.length - 3);
+                var mask = mobNum.substring(3, mobNum.length - 3).replace(/\d/g, "*");
+                $('#otpMobile').empty();
+                $('#otpMobile').append('('+first3 + mask + last3+')');
+            }
+        });
+
+        function fnNextOTP(id) {
+            if (id == 1) {
+                $('#opt2').focus();
+            } else if (id == 2) {
+                $('#opt3').focus();
+            } else if (id == 3) {
+                $('#opt4').focus();
+            }
+            var otpCode = $('#opt1').val() + '' + $('#opt2').val() + '' + $('#opt3').val() + $('#opt4').val();
+            $('#UserOTPCode').val(otpCode);
+        }
+
+    </script>
+}

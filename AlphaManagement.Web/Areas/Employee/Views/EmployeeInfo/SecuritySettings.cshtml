@@ -1,0 +1,258 @@
+﻿@model EmployeeInfoViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+}
+<link href="~/plugins/responsive-table/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+<link href="~/css/dropify.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet" />
+<style>
+
+    .zoom {
+        transition: transform .2s; /* Animation */
+    }
+
+        .zoom:hover {
+            transform: scale(1.6); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+    @@media screen and (max-width: 599px) {
+        #jobHisListView, #proHisListView, #eduListView, #localTrListView, #forignTrListView, #awardListView, #medicalListView, #frnTrvlListView, #frnTrvlListViewUN, #familyListView, #displinaryListView, #preAddList, #parAddList, #inLawAddList, #spouseAddList {
+            display: none;
+        }
+
+        #jobHisCardView, #proHisCardView, #eduCardView, #localTrCardView, #forignTrCardView, #awardCardView, #medicalCardView, #frnTrvlCardView, #frnTrvlCardViewUN, #familyCardView, #displinaryCardView, #preAddCard, #parAddCard, #inLowAddCard, #spouseAddCard {
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+
+        #jobhistoryCard, #inLowAddCard, #spouseAddCard, #parAddCard, #preAddCard, #promotionCardView, #eduCard, #domesticCard, #forCard, #awardCard, #medicalCardAdd, #foriegnTrvlCard, #familyCard {
+            padding: 0;
+            margin: 0;
+        }
+
+        #personlDiv {
+            margin-top: 140px;
+        }
+
+        #fnt {
+            font-size: 27px;
+        }
+
+        #local-Training-Main-Div, #foreign-Training-Main-Div {
+            padding: 0
+        }
+
+        #finalBtnDiv {
+            margin-bottom: 40px;
+        }
+    }
+
+    @@media screen and (min-width: 600px) {
+        #jobHisListView, #proHisListView, #eduListView, #localTrListView, #forignTrListView, #awardListView, #medicalListView, #frnTrvlListView, #frnTrvlListViewUN, #familyListView, #displinaryListView, #preAddList, #parAddList, #inLawAddList, #spouseAddList {
+            display: block;
+        }
+
+        #jobHisCardView, #proHisCardView, #eduCardView, #localTrCardView, #forignTrCardView, #awardCardView, #medicalCardView, #frnTrvlCardView, #frnTrvlCardViewUN, #familyCardView, #displinaryCardView, #preAddCard, #parAddCard, #inLowAddCard, #spouseAddCard {
+            display: none;
+        }
+    }
+
+    .mobCardHeader {
+        padding: 0;
+        padding-top: 5px;
+        text-align: center;
+        background-color: oldlace;
+    }
+
+    .mobCard {
+        border-radius: 50%;
+        background-color: #2A1067;
+        font-size: 23px;
+        height: 30px;
+        width: 30px;
+        color: white;
+    }
+
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+
+    label.cabinet {
+        display: block;
+        cursor: pointer;
+    }
+
+        label.cabinet input.file {
+            position: relative;
+            height: 100%;
+            width: auto;
+            opacity: 0;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            margin-top: -30px;
+        }
+
+    #upload-demo {
+        width: 500px;
+        height: 500px;
+        padding-bottom: 25px;
+    }
+
+    label.cabinetsign {
+        display: block;
+        cursor: pointer;
+    }
+
+        label.cabinetsign input.file {
+            position: relative;
+            height: 100%;
+            width: auto;
+            opacity: 0;
+            -moz-opacity: 0;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            margin-top: -30px;
+        }
+
+    #upload-demosign {
+        width: 300px;
+        height: 200px;
+        padding-bottom: 25px;
+    }
+
+    #postingPlaceId {
+        padding-left: 1px;
+    }
+    @@media screen and (max-width: 599px) {
+        .dskView {
+            display:none!important;
+        }
+        .mblView1 {
+            display: block !important;
+            margin-top: 50px;
+        }
+    }
+</style>
+
+<div class="col-md-12 col-12 ">
+    <div class="card-header fixed-top dskView" id="heading-0" style="cursor:pointer;background-color:#040158;top: 31px;margin:30px ;padding: 5px;z-index: 991 !important;">
+        <h2 class="mb-0 text-center " id="fnt" style="font-family:'Times New Roman';color:white">
+            Officer's Portfolio, Bangladesh Police
+            <a href="/Portfolio/Dashboard/Index" class="pull-right" style="font-size:25px;"><i class="fa fa-home fa-2x"></i></a>
+        </h2>
+    </div>
+    <a href="/Portfolio/Dashboard/Index" class="pull-right mblView1" style="font-size:25px;display:none"><i class="fa fa-home fa-2x"></i></a>
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="col-xl-12 col-lg-12 col-md-12 col-12">
+    <div id="accordion" role="tablist" class="m-b-30">
+        <div class="card">
+            <div class="card-header" id="heading-MorePersonal" data-toggle="collapse" data-target="#collapse-MorePersonal" style="cursor:pointer">
+                <h5 class="mb-0">
+                    <a class="collapsed text-muted" data-toggle="collapse" href="#collapse-MorePersonal" aria-expanded="false" aria-controls="collapse-MorePersonal">
+                        <i class="fa fa-file-text-o mr-2" style="color:#4B0080"></i>Security Settings
+                    </a>
+                    <span class="float-right text-dark"> <i class="fa fa-chevron-right"></i></span>
+                </h5>
+            </div>
+
+            <div id="collapse-MorePersonal" class="active">
+                <div class="card-body">
+                    <div class="col-12">
+                        <form id="frmMorePersonal">
+                            <input type="hidden" id="moreEmpId" name="empId" value="@Model.employeeInfo?.employeeCode" />
+                            <div class="row">
+                                <div class="card col-12">
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label for="example-search-input" class="col-md-4 col-12 col-form-label">2 Step Security Set Up : </label>
+                                            <div class="col-md-8 col-12 mt-2">
+                                                @if (Model.employeeInfo.designationCheck == 1)
+                                                {
+                                                    <input class="form-control" type="checkbox" id="tribal" checked name="tribal" value="1">
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-control" type="checkbox" id="tribal" name="tribal" value="1">
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="float-right">
+                                <input type="reset" class="btn btn-danger btn-sm mt-4 mb-4" name="name" onclick="refresh()" value="Refresh" />
+                                <input id="submitBtn" type="button" class="btn btn-primary btn-sm mt-4 mb-4" name="name" value="Save" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var tribal = 0;
+            $('input[type="checkbox"]').click(function () {
+                if ($(this).prop("checked") == true) {
+                    tribal = 1;
+                }
+                else if ($(this).prop("checked") == false) {
+                    tribal = 0;
+                }
+            });
+
+            $('#submitBtn').click(function (e) {
+                e.preventDefault();
+                var employeeCode = $('#moreEmpId').val();
+                //alert(tribal);
+                //return false;
+                if ($(this).parsley().isValid()) {
+                    swal({
+                        title: 'Are you sure?', text: `Do you want to save this record!`, type: 'warning', showCancelButton: true, confirmButtonColor: '#007ACC', cancelButtonColor: '#d33', confirmButtonText: `Save!`
+                    }).then((result) => {
+                        if (result.value) {
+                            $.ajax({
+                                url: '/Portfolio/PortfolioDashboard/UpdateSecuritySetting?empCode=' + employeeCode + '&status=' + tribal,
+                                type: 'GET',
+                                success: function (records) {
+                                        swal('', 'Saved Successfully!', 'success').
+                                            then(function () {
+                                                location.reload();
+                                            })
+                                    },
+                                error: function (erro) {
+                                    console.log(erro);
+                                    swal('', 'Unable to Save!', 'warning');
+                                }
+                            });
+                        } else if (result.dismiss === 'cancel') {
+                            return false;
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>
+   
+}

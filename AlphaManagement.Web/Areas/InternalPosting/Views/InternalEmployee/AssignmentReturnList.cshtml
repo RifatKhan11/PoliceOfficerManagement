@@ -1,0 +1,180 @@
+﻿@model AssignmentViewModel
+@{
+    ViewData["Title"] = "Return List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var baseImageUrl = "http://portfolio.police.gov.bd";
+}
+<div class="card">
+    <div class="card-header" style="background-color:#2A1067;color:white;">
+        <div class="row">
+            <div class="col-11">
+                <span style="font-size:22px;">Return Internal Proposed Posting Information</span>
+            </div>
+
+            <div class="col-1 form-inline">
+                <a class="nav-link active p-0 mr-2" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" onclick="gridViewShowInternal()"> <i class="fa fa-th" style="font-size:30px;color:white" aria-hidden="true"></i></a>
+                <a class="nav-link p-0" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" onclick="listViewShowInternal()"><i class="fa fa-align-justify" style="font-size:30px;color:white" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tab-content mt-4" id="myTabContent">
+    <div class="tab-pane fade show active" id="homeInternal" role="tabpanel" aria-labelledby="home-tab">
+        <div class="card bg-light">
+            <div class="card-body">
+
+                <div class="row">
+                    @foreach (var item in Model.Internalassignment2)
+                    {
+
+                        <div class="col-md-3 col-12 p-0" style="border-radius:5px;color:#fff;border:1px solid #aaa;">
+                            <div class="card-header border-0">
+                                <div class="text-center">
+                                    @*<img src="~/logo/pp.jpg" style="width:100px;height:100px" class="img-fluid rounded-circle" />*@
+
+                                    @if (item.url == null)
+                                    {
+                                        <img src="~/logo/pp.jpg" style="width:100px;height:100px" class="img-fluid rounded-circle" />
+                                    }
+                                    else
+                                    {
+                                        <img src="@baseImageUrl/@item.url" style="width:100px;height:100px" class="img-fluid rounded-circle" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="card text-center border-0">
+                                <div class="card-body">
+                                    <h6 class="text-dark font-weight-bold">Ref No : @item.refNo</h6>
+                                    <h6 class="text-dark font-weight-bold">Ref Date : @item.refDate.ToString("dd-MMM-yyyy")</h6>
+                                    <h6 class="text-dark font-weight-bold">Posting Order Created By :</h6>
+                                    <h6 class="text-dark font-weight-bold">@item.nameEnglish</h6>
+
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer border-0 text-dark">
+                                <div class="text-center">
+                                    <a class="btn btn-sm btn-info" href="/InternalPosting/InternalEmployee/InternalPostingDetails?enlistMasterId=@item.assignMasterId">Details</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="profileInternal" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="card bg-light">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <table class="table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr class="text-light  table-sm" style="background-color:#2A1067">
+                                    <td>Sl No</td>
+                                    <td>Name</td>
+                                    <td>RefNo</td>
+                                    <td>Ref Date</td>
+                                    <td>Action</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var k = 1;}
+                                @foreach (var item in Model.Internalassignment2)
+                                {
+                                    <tr>
+                                        <td>@k</td>
+                                        <td>@item.nameEnglish</td>
+                                        <td>@item.refNo</td>
+                                        <td>@item.refDate.ToString("dd-MMM-yyyy")</td>
+                                        <td>
+                                            <a class="btn btn-info btn-sm" href="/InternalPosting/InternalEmployee/InternalPostingDetails?enlistMasterId=@item.assignMasterId">Details</a>
+                                        </td>
+                                    </tr>
+                                    k++;
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+        });
+
+        function Edit(Id, trainingCategoryName, trainingCategoryNameBn, trainingCategoryShortName, shortOrder) {
+            $("#TrainingCategoryId").val(Id);
+            $("#trainingCategoryName").val(trainingCategoryName);
+            $("#trainingCategoryNameBn").val(trainingCategoryNameBn);
+            $("#trainingCategoryShortName").val(trainingCategoryShortName);
+            $("#shortOrder").val(shortOrder);
+        }
+
+
+        function Delete(Id) {
+            swal({
+                title: 'Are you sure?', text: 'Do you want to delete this record!', type: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+
+                $.ajax({
+                    url: "/MasterData/TrainingCategory/DeleteTrainingCategory/" + Id,
+                    data: { Id: Id },
+                    type: 'POST',
+                })
+                    .done(function () {
+                        swal('', 'Deleted Successfully!', 'success');
+                        window.location.reload();
+                    })
+                    .fail(function () {
+                        swal('Cancelled', 'It will not be deleted. Please try again later !!!', 'error');
+                    });
+            });
+        }
+
+        function gridViewShow() {
+            $('#home').addClass('show')
+            $('#home').addClass('active')
+            $('#profile').removeClass('show')
+            $('#profile').removeClass('active')
+        }
+
+        function listViewShow() {
+            $('#profile').addClass('show')
+            $('#profile').addClass('active')
+            $('#home').removeClass('show')
+            $('#home').removeClass('active')
+        }
+
+        function gridViewShowInternal() {
+            $('#homeInternal').addClass('show')
+            $('#homeInternal').addClass('active')
+            $('#profileInternal').removeClass('show')
+            $('#profileInternal').removeClass('active')
+        }
+
+        function listViewShowInternal() {
+            $('#profileInternal').addClass('show')
+            $('#profileInternal').addClass('active')
+            $('#homeInternal').removeClass('show')
+            $('#homeInternal').removeClass('active')
+        }
+    </script>
+}
+
+

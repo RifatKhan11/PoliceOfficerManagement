@@ -1,0 +1,13 @@
+{
+  "title": "Departmental Information",
+  "deptCode": "Department Code",
+  "deptName": "Department Code",
+  "departmentName": "Department Name(EN)",
+  "deptNameBn": "Department Name(BN)",
+  "shortName": "Short Name",
+  "startDate": "Start Date",
+  "action": "Action",
+  "name": "Name",
+  "description": "Description",
+  "shortOrder": "Short Order"
+}

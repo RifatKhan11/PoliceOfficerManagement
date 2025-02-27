@@ -1,0 +1,101 @@
+﻿@model EmpViewModel
+@{
+    ViewData["Title"] = "GetEmployeeGradationView";
+    Layout = "~/Views/Shared/_PrintView.cshtml";
+    string isRetired = "";
+    if (ViewBag.typeId == 1)
+    {
+        isRetired = "অবসরপ্রাপ্ত";
+    }
+}
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+<div class="border bg-gray-200" style="text-align:center;">
+    <h4 class="col-md-8" style="margin-top:10px;">
+       @isRetired বিসিএস (পুলিশ) ক্যাডারভুক্ত কর্মকর্তাদের খসড়া গ্রেডেশন লিস্ট
+    </h4>
+</div>
+
+<table class="table table-bordered" style="font-family:Roboto" id="allEmployeeListTable">
+
+    <thead>
+        <tr style="text-align:center;">
+
+            <th style="width:3%;vertical-align:top;">
+                ক্রমিক নং
+            </th>
+            <th style="width:20%;vertical-align:top;">
+                কর্মকর্তার নাম,জন্ম তারিখ, জন্ম জেলা ও <br /> শিক্ষাগত যোগ্যতা
+            </th>
+            <th style="width:8%;vertical-align:top;">অভিজ্ঞতা (পদের <br /> নাম) নিয়োগের <br /> তারিখসহ</th>
+            <th style="width:10%;vertical-align:top;">পুলিশ ক্যাডারের <br /> প্রারম্ভিক পদে কমিশনের <br /> সুপারিশ অনুযায়ী <br /> নিয়মিত নিয়োগ <br /> (সরাসরি/পদোন্নতি)</th>
+            <th style="width:8%;vertical-align:top;">সিনিয়র স্কেলে <br /> নিয়মিত পদোন্নতির <br /> তারিখ</th>
+            <th style="width:10%;vertical-align:top;">
+                সামরিক কর্মকর্তাদের <br /> প্রাসঙ্গিক তথ্যঃ- <br />
+                ক) কমিশন প্রাপ্তির তারিখ<br />
+                খ) অবসর গ্রহণের তারিখ<br />
+                @*গ) সিভিল পদে নিয়োগ <br /> (পদের নাম ও তারিখসহ)*@
+            </th>
+            <th style="width:8%;vertical-align:top;">বর্তমান পদে <br /> নিয়মিত নিয়োগের <br /> তারিখ</th>
+            <th style="width:8%;vertical-align:top;">মন্তব্য </th>
+            <th style="width:8%;vertical-align:top;">বিসিএস ব্যাচ</th>
+            <th style="width:8%;vertical-align:top;">পুরুষ/মহিলা</th>
+            <th style="width:8%;vertical-align:top;">বর্তমান পদ</th>
+
+        </tr>
+        <tr style="text-align:center;height:2px;padding-top:0px;padding-bottom:0px;line-height:0px;">
+            <th>১</th>
+            <th>২</th>
+            <th>৩</th>
+            <th>৪</th>
+            <th>৫</th>
+            <th>৬</th>
+            <th>৭</th>
+            <th>৮</th>
+            <th>৯</th>
+            <th>১০</th>
+            <th>১১</th>
+        </tr>
+    </thead>
+    <tbody id="tBodyEmpAlpha">
+        @{
+            string bgColor = "";
+            foreach (var item in Model.employeeGradationSPs)
+            {
+                if (item.IsPRL == 1)
+                {
+                    bgColor = "#FC8F84";
+                }
+                else
+                {
+                    bgColor = "";
+                }
+                <tr style="background-color:@bgColor;">
+                    <td ‍style="padding-left:25px;">@item.gradationSerial।</td>
+                    <td style="padding:0px 0px 0px 5px;">
+                        <span style="font-weight:bold;font-size:1em;">জনাব @item.nameBangla</span><br />
+                        <span>বিপি-</span><span>@item.bpNo</span><br />
+                        <span>জন্ম তারিখ : </span><span>@item.dateOfBirth</span><br />
+                        <span>জন্ম জেলা : </span><span>@item.homeDistrict</span><br />
+                        <span>শিক্ষাগত যোগ্যতা : </span><span>@item.educationQualification</span><br />
+                        <span></span><span>@item.batchName, মেধাক্রম- @item.bcsPosition</span>
+                    </td>
+                    <td></td>
+                    <td style="text-align:center;">@item.joiningDateGovtService<br />@item.joiningRank</td>
+                    <td style="text-align:center;">@item.firstPromotionDate</td>
+                    <td><span>@item.commissionReceiptDate @item.commissionLPRDate</span><br /><span>@item.civilRank @item.civilReqDate</span></td>
+                    <td style="text-align:center;">@item.rankName<br />@item.lastPromotionDate</td>
+                    <td>@item.comments</td>
+                    <td>@item.batchNameBN</td>
+                    <td>@item.gender</td>
+                    <td>@item.rankName</td>
+                    @*<td>@item.forthAdhoc</td>
+                    <td style="text-align:center;"></td>*@
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+

@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Portfolio</title>
+
+    <!-- Theme icon -->
+    <link rel="shortcut icon" href="~/images/faviconp.ico">
+    <!-- Datatable -->
+    <link href="~/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Css -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/slidebars.min.css" rel="stylesheet">
+    <link href="~/css/icons.css" rel="stylesheet">
+    <link href="~/css/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+
+<body style="background-color:#2A1067">
+
+    <div class="container-fluid">
+        <div class="">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery-migrate.js"></script>
+    <script src="~/js/modernizr.min.js"></script>
+    <script src="~/js/jquery.slimscroll.min.js"></script>
+    <script src="~/js/slidebars.min.js"></script>
+    <script src="~/js/common.js"></script>
+    <!-- Responsive and datatable js -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="~/plugins/parsleyjs/dist/parsley.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

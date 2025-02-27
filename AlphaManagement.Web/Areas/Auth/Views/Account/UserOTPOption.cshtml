@@ -1,0 +1,186 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Email Verification";
+    Layout = "~/Views/Shared/_Init_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4 offset-4 m-b-30" style="margin:4% auto 0 auto!important;">
+        <div class="card">
+            <div class="card-body mb-0">
+                <div class="col-md-12 col-12">
+                    @*<div class="text-center">
+                        <img src="~/logo/Ploice.png" class="img-fluid rounded-circle" style="width:80px; height:80px" />
+                    </div>*@
+                </div>
+
+                <p class="text-center">
+                    <img src="~/batch/message.png" style="width:50%; height:150px" class="img-fluid rounded-circle" />
+                </p>
+                @*<div class="col-md-12">
+            <div class="page-head">
+                <h6 class="my-2">Verify Your Email Address Or Mobile Number <br />
+                (@Model.userInformation?.bpNo)
+                </h6>
+
+                <p id="txtText">Send a verification code to @Model.userInformation?.email</p>
+            </div>
+        </div>*@
+                <div class="col-md-12 text-center">
+                    <div class="page-head mb-0">
+                        <h6 id="txtText" class="my-2" style="font-weight:900">
+                            <b style="font-weight:bolder;font-size:17px">Your Email : <span id="headerEmail"></span></b> <br />
+                        </h6>
+                        <p>To complete your verification. Please press the button bellow.</p>
+                        @*<p class="mb-0 pb-0">BP : @Model.userInformation?.bpNo</p>*@
+                        @*<p class="mt-0 pt-0" id="txtText">Email : @Model.userInformation?.email</p>*@
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+               
+                <form asp-area="Auth" asp-controller="Account" asp-action="UserEmailVerification" method="get" style="width:100%;">
+                    <div class="col-md-12">
+                        
+                        <div class="col-xl-10 col-md-10 col-sm-10 pull-right">
+                            <div class="form-group row">
+
+                                <div class="col-md-9">
+                                    @if (Model.userInformation?.email != null)
+                                    {
+                                        <div class="radio my-2 form-inline" style="width:200%;">
+                                            <label class="cr-styled" for="example-radio3">
+                                                <input type="radio" id="example-radio3" name="smsTypeId" value="1">
+                                                <i class="fa"></i>&nbsp;&nbsp;
+                                                Email <span id="formEmail"></span>
+                                            </label>
+                                        </div>
+                                    }
+                                    <div class="radio my-2 form-inline" style="width:200%;">
+                                        <label class="cr-styled" for="example-radio1">
+                                            <input type="radio" id="example-radio1" name="smsTypeId" value="2" checked="checked" />
+                                            <i class="fa"></i>&nbsp;&nbsp;
+                                            Mobile <span id="formMobile"></span>
+                                        </label>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-10 offset-1 ml-0 pl-0">
+                                <input class="btn btn-info btn-sm btn-block" style="background-color:#25C38C!important;color:#fff; border-radius: 50px;" type="submit" value="Next" />
+                            </div>
+                        </div>
+
+                        <div class="col-xl-1 col-md-1 col-sm-1">
+
+                            <input type="hidden" name="UserId" value="@Model.userInformation?.Id" />
+                        </div>
+                    </div>
+                </form>
+
+            </div><!--end row-->
+                <br /><br /><br />
+            </div>
+            <div class="card-footer" style="height:100px;">
+
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function fnResendCode(id) {
+            $.ajax({
+                type: "get",
+                url: "/Auth/Account/ResendOTPCode",
+                data: { id: id },
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+        function validateEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+        
+
+        $(document).ready(function () {
+            
+            @*$('input[type=radio][name=smsTypeId]').change(function () {
+                if (this.value == '1') {
+                    $('#txtText').html('Send a verification code to @Model.userInformation?.email');
+                }
+                else if (this.value == '2') {
+                    $('#txtText').html('Send a verification code to @Model.userInformation?.phoneNumber');
+                }
+            });*@
+            NewFun();
+            $('input[type=radio][name=smsTypeId]').change(function () {
+                if (this.value == '1') {
+                    //$('#txtText').html('Your Email : @Model.userInformation?.email').css('font-weight', '900');
+                    var email = '@Model.userInformation?.email';
+                    var n = email.indexOf("@@");
+                    var firstPart = email.substring(0, n);
+                    var firstPartEmail = firstPart.substring(n - 3, n);
+                    var lastPart = email.substring(n);
+                    var maskEmail = firstPart.substring(0, firstPart.length - 3).replace(/[a-z]/g, '*');
+                    $('#txtText').empty();
+                    $('#txtText').append('Your Email : '+maskEmail + firstPartEmail + lastPart);
+                }
+                else if (this.value == '2') {
+                    //$('#txtText').html('Your Phone No :  @Model.userInformation?.phoneNumber').css('font-weight', '900');
+                    var mobNum = '@Model.userInformation?.phoneNumber';
+                    var first3 = mobNum.substring(0, 3);
+                    var last3 = mobNum.substring(mobNum.length - 3);
+                    var mask = mobNum.substring(3, mobNum.length - 3).replace(/\d/g, "*");
+                    $('#txtText').empty();
+                    $('#txtText').append('Your Phone No :  '+first3 + mask + last3);
+                }
+            });
+
+            if ('@Model.userInformation?.email' != '' || '@Model.userInformation?.email' != null) {
+                var emailValid = validateEmail('@Model.userInformation?.email');
+                var email = '@Model.userInformation?.email';
+                var n = email.indexOf("@@");
+                var firstPart = email.substring(0, n);
+                var firstPartEmail = firstPart.substring(n - 3, n);
+                var lastPart = email.substring(n);
+                var maskEmail = firstPart.substring(0, firstPart.length - 3).replace(/[a-z]/g, '*');
+                $('#headerEmail').append(maskEmail + firstPartEmail + lastPart);
+                //$('#formEmail').append('(' + maskEmail + firstPartEmail + lastPart + ')');
+                if (emailValid) {
+                    $('#formEmail').append('(' + maskEmail + firstPartEmail + lastPart + ')');
+                } else {
+                    $('#example-radio3').attr('disabled', true);
+                    $('#formEmail').append('(' + maskEmail + firstPartEmail + lastPart + ').(Invalid Email)').css('color','red');
+                }
+            }
+
+            if ('@Model.userInformation?.phoneNumber' != '' || '@Model.userInformation?.phoneNumber' != null) {
+                var mobNum = '@Model.userInformation?.phoneNumber';
+                var first3 = mobNum.substring(0, 3);
+                var last3 = mobNum.substring(mobNum.length - 3);
+                var mask = mobNum.substring(3, mobNum.length - 3).replace(/\d/g, "*");
+                $('#formMobile').append('('+first3 + mask + last3+')');
+            }
+        });
+
+        function NewFun() {
+               var mobNum = '@Model.userInformation?.phoneNumber';
+               var first3 = mobNum.substring(0, 3);
+               var last3 = mobNum.substring(mobNum.length - 3);
+               var mask = mobNum.substring(3, mobNum.length - 3).replace(/\d/g, "*");
+               $('#txtText').empty();
+               $('#txtText').append('Your Phone No :  '+first3 + mask + last3);
+        }
+    </script>
+}
+

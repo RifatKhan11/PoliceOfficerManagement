@@ -1,0 +1,12 @@
+{
+  "Title": "Promotion Informations",
+  "employee": "Employee",
+  "designationNew": "New Designation",
+  "designationOld": "Old Designation",
+  "date": "Date of Promotion ",
+  "payScale": "Grade",
+  "goNumber": "Ref. Number",
+  "goDate": "Ref. Date",
+  "remark": "Remarks",
+  "action": "Action"
+}

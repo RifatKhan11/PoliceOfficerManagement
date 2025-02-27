@@ -1,0 +1,363 @@
+﻿@model DashBoardViewModel;
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+    var baseImageUrl = "http://portfolio.police.gov.bd";
+}
+<style>
+    @@media screen and (max-width: 599px) {
+        #desktopDiv, #listView {
+            display: none;
+        }
+
+        #mobileDiv, #cardView {
+            display: block !important;
+        }
+
+        .centerDiv {
+            text-align: center !important;
+        }
+        #heading-award{
+            margin-top:60px;
+        }
+    }
+</style>
+<div class="row">
+    <!--Div Start-->
+    <div class="col-12 card p-0">
+        <div class="card-header" id="heading-award"  style="cursor:pointer">
+            <h5 class="mb-0">
+                <a class="text-muted">
+                    <i class="fa fa-thermometer-1 mr-2" style="color:#4B0080"></i>   Travel Clearence
+                </a>
+                <a href="/Portfolio/Dashboard/Index" class="float-right text-dark" title="Dashboard"> <i class="fa fa-home fa-2x"></i></a>
+            </h5>
+
+        </div>
+        <div class="card-body">
+            <div class="col-12 row p-0" id="desktopDiv">
+                <div class="col-2 text-center p-0">
+                    <img src="@baseImageUrl/@Model?.employeeInfo?.updatedBy" alt="Photo Not Found" height="120" width="120" style="border-radius:50%" />
+                </div>
+                <div class="col-9 row p-0">
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.nameEnglish
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.rank?.rankName
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.dateOfBirth?.ToString("dd-MMM-yyyy")
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.emailAddressPersonal
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.mobileNumberPersonal
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 row text-center" id="mobileDiv" style="display:none">
+                <div class="col-12">
+                    <img src="@baseImageUrl/@Model?.employeeInfo?.updatedBy" alt="Photo Not Found" height="100" width="100" style="border-radius:50%" />
+                </div>
+                <div class="col-12">
+                    @Model?.employeeInfo?.nameEnglish<br />
+                    @Model?.employeeInfo?.rank?.rankName<br />
+                    @Model?.employeeInfo?.branch?.branchUnitName<br />
+                    @Model?.employeeInfo?.emailAddressPersonal<br />
+                    @Model?.employeeInfo?.mobileNumberPersonal
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="collapse-div" class="collapse show">
+            <div class="card-body">
+                <div class="edit-table">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="card m-b-30">
+                                <div class="card-body">
+                                    <div class="">
+                                        <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4B0080!important" data-toggle="modal" data-target="#clearence-modal" href="#" data-backdrop="static" data-keyboard="false">Add Info</a>
+                                        <div class="bs-example" id="listView">
+                                            <div class="table-responsive">
+                                                <table class="table " id="my-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sl No.</th>
+                                                            <th>Country</th>
+                                                            <th>Reference Number</th>
+                                                            <th>Purpose</th>
+                                                            <th>Start Date</th>
+                                                            <th>End Date</th>
+                                                            <th>Duration</th>
+                                                            <th>Status</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="listTbody">
+                                                        @*@{ int i = 1;
+                                                            @foreach (var item in Model.foreignTravels)
+                                                            {
+                                                                <tr>
+                                                                    <td>@i</td>
+                                                                    <td>@item.country?.countryName</td>
+                                                                    <td>@item?.referenceNumber</td>
+                                                                    <td>@item?.travelPurpose</td>
+                                                                    <td>@item?.travelDate?.ToString("dd-MMM-yyyy")</td>
+                                                                    <td>@item?.travelEndDate?.ToString("dd-MMM-yyyy")</td>
+                                                                    <td>@item?.travelDuration</td>
+                                                                    <td>
+                                                                        @if (item?.status == 2)
+                                                                        {
+                                                                            <label>Pending</label>
+                                                                        }
+                                                                        else if (item?.status == 1)
+                                                                        {
+                                                                            <label>Approved</label>
+                                                                        }
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" target="_blank" title="Print"><i class="fa fa-print"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                                i++;
+                                                            }
+                                                        }*@
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="bs-example">
+                                            <div class="col-12 row" id="cardView">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Div End-->
+    <!--Model Start-->
+    <div class="modal fade bd-example-modal-lg" id="clearence-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Clearence Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ClearenceClear()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="clearenceInfoForm">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="col-12">
+                            <input type="hidden" name="employeeId" value="@Model.employeeInfo?.Id" />
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            <div class="form-group row">
+                                <label for="countryId" class="col-sm-4 col-form-label">Country<span style="color: red">*</span></label>
+                                <div class="col-sm-8">
+                                    <select class="select2 form-control" style="width:100%" name="countryId" id="countryId" data-parsley-required="true">
+                                        <option value="">Select</option>
+                                        @foreach (var data in Model.countries)
+                                        {
+                                            <option value="@data.Id">@data.countryName</option>
+                                        };
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4">Travel Purpose<span style="color: red">*</span></label>
+                                <div class="col-md-8">
+                                    <select class="select2 form-control" style="width:100%" name="travelPurpose" id="travelPurpose" data-parsley-required="true">
+                                        <option value="">Select</option>
+                                        <option value="Conference">Conference</option>
+                                        <option value="Deputation">Deputation</option>
+                                        <option value="FAT">FAT</option>
+                                        <option value="Higher Education">Higher Education</option>
+                                        <option value="Investigation">Investigation</option>
+                                        <option value="Leave">Leave</option>
+                                        <option value="Lien">Lien</option>
+                                        <option value="Medical">Medical</option>
+                                        <option value="Meeting">Meeting</option>
+                                        <option value="Official Tour">Official Tour</option>
+                                        <option value="PSI">PSI</option>
+                                        <option value="Religious Work">Religious Work</option>
+                                        <option value="Seminar">Seminar</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Study">Study</option>
+                                        <option value="Symposium">Symposium</option>
+                                        <option value="Training">Training</option>
+                                        <option value="Treatment">Treatment</option>
+                                        @*<option value="UN Mission">UN Mission</option>*@
+                                        <option value="Workship">Workship</option>
+                                    </select>
+                                    @*<input type="text" id="travelPurpose" name="travelPurpose" class="form-control" value="" />*@
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="referenceNumber" class="col-sm-4 col-form-label">Reference Number</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="referenceNumber" id="referenceNumber" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4">Travel Date<span style="color: red">*</span></label>
+                                <div class="col-md-8">
+                                    <input type="text" id="travelDate" name="travelDate" class="form-control" value="" data-parsley-required="true" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-4">Travel End Date<span style="color: red">*</span></label>
+                                <div class="col-md-8">
+                                    <input type="text" id="travelEndDate" name="travelEndDate" class="form-control" value="" data-parsley-required="true" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="travelDuration" class="col-sm-4 col-form-label">Duration</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="travelDuration" id="travelDuration" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row">
+                            <div class="col-9"></div>
+                            <div class="col-3 float-right">
+                                <button type="submit" class="btn btn-primary btn-sm float-right" id="saveClearence">Save</button>
+                            </div>                            
+                        </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Award Model End-->
+</div>
+@section Scripts{ 
+    <script>
+        $(document).ready(function () {
+            $('#travelDate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+            $('#travelEndDate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+        })
+
+        $("#travelDate, #travelEndDate").change(function () {
+
+            var str = $('#travelDate').val();
+            var assdate = $('#travelEndDate').val();
+
+            if (str == '' || assdate == '') {
+                return false;
+            }
+            if (str == '' || assdate == '') {
+                return false;
+            }
+            var newStrDate = new Date(formatDate2(str)).toISOString();
+            var newEndDate = new Date(formatDate2(assdate)).toISOString();
+            if (newStrDate > newEndDate) {
+                swal('', 'Start Date Must Be Older Than End Date', 'warning').then(function () {
+                    $('#travelDate').val('');
+                    $('#travelEndDate').val('');
+                    $('#travelDuration').val('');
+                })
+            }
+            if (/^\d{2}\-\D{0,3}\-\d{4}$/i.test(str)) {
+                var parts = str.split("-");
+                var m = 0;
+                if (parts[1] == "Jan") { m = 1; } else if (parts[1] == "Feb") { m = 2; } else if (parts[1] == "Mar") { m = 3; } else if (parts[1] == "Apr") { m = 4; } else if (parts[1] == "May") { m = 5; } else if (parts[1] == "Jun") { m = 6; } else if (parts[1] == "Jul") { m = 7; } else if (parts[1] == "Aug") { m = 8; } else if (parts[1] == "Sep") { m = 9; } else if (parts[1] == "Oct") { m = 10; } else if (parts[1] == "Nov") { m = 11; } else if (parts[1] == "Dec") { m = 12; }
+                var day = parts[0] && parseInt(parts[0], 10);
+                var month = m;
+                var year = parts[2] && parseInt(parts[2], 10);
+                var duration = 59;
+
+                if (day <= 31 && day >= 1 && month <= 12 && month >= 1) {
+
+
+                    if (assdate == '' || assdate == null || assdate == 'undefined') {
+                        assdate = moment();
+                    } else {
+                        assdate = moment(assdate, 'DD-MMM-YYYY');
+                    }
+
+                    if (str == '' || str == null || str == 'undefined') {
+                        str = moment();
+                    } else {
+                        str = moment(str, 'DD-MMM-YYYY');
+                    }
+                    //var expiryDate = new Date();
+
+
+                    var a = moment(assdate, 'DD-MMM-YYYY');
+                    var b = moment(str, 'DD-MMM-YYYY');
+
+                    var years = a.diff(b, 'year');
+                    b.add(years, 'years');
+
+                    var months = a.diff(b, 'months');
+                    b.add(months, 'months');
+
+                    var days = a.diff(b, 'days') + 1;
+                    $("#travelDuration").val(years + ' years ' + months + ' months ' + days + ' days');
+
+                } else {
+                    // display error message
+                }
+            }
+        });
+
+        function formatDate2(date) {
+            date = new Date(date);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate()
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month == 1) { month = "Jan" } else if (month == 2) { month = "Feb" } else if (month == 3) { month = "Mar" } else if (month == 4) { month = "Apr" } else if (month == 5) { month = "May" } else if (month == 6) { month = "Jun" } else if (month == 7) { month = "Jul" } else if (month == 8) { month = "Aug" } else if (month == 9) { month = "Sep" } else if (month == 10) { month = "Oct" } else if (month == 11) { month = "Nov" } else if (month == 12) { month = "Dec" }
+            return day + "-" + month + "-" + year
+        }
+
+        $('#clearenceInfoForm').submit(function (e) {
+            e.preventDefault();
+            var form = $('#clearenceInfoForm');
+            swal({
+                title: 'Are you sure?', text: `Do you want to save this record!`, type: 'warning', showCancelButton: true, confirmButtonColor: '#007ACC', cancelButtonColor: '#d33', confirmButtonText: `Save!`
+            }).then((result) => {
+                if (result.value) {
+                    //$.ajax({
+                    //    url: '/Portfolio/DashBoard/SaveForeignTravelData',
+                    //    data: form.serialize(),
+                    //    type: 'POST',
+                    //    success: function (records) {
+                    //        if (records == 'Save') {
+                    //            swal('', 'Saved Successfully!', 'success').
+                    //                then(function () {
+                    //                    window.location.reload();
+                    //                })
+                    //        }
+                    //        else {
+                    //            swal('', 'Unable to Save!', 'warning');
+                    //        }
+                    //    },
+                    //    error: function (erro) {
+                    //        console.log(erro);
+                    //        swal('', 'Unable to Save!', 'warning');
+                    //    }
+                    //});
+                } else if (result.dismiss === 'cancel') {
+                    return false;
+                }
+            });
+        });
+    </script>
+}

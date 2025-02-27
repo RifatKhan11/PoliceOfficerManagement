@@ -1,0 +1,141 @@
+﻿@model EmployeeInfoViewModel
+@{
+    ViewData["Title"] = "Signature Crop";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+
+}
+
+<style>
+    label.cabinet {
+        display: block;
+        cursor: pointer;
+    }
+
+        label.cabinet input.file {
+            position: relative;
+            height: 100%;
+            width: auto;
+            opacity: 0;
+            -moz-opacity: 0;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            margin-top: -30px;
+        }
+
+    #upload-demo {
+        width: 300px;
+        height: 300px;
+        padding-bottom: 25px;
+    }
+</style>
+<br />
+<br />
+
+
+
+<div class="container" style="min-width:500px;">
+    <div class="d-flex justify-content-center">
+        <div class="col-md-6">
+            <input type="hidden" id="empId" name="empId" value="@Model.employeeInfo?.Id" />
+            <input type="hidden" name="signatureID" id="signatureID" value="@Model.signature?.Id" />
+            <div class="card" style="margin-top:10px;">
+                <div class="text-center card-header">Signature Crop</div>
+                <div class="card-body">
+                    <div id="main-cropper">
+
+                    </div>
+                    <input type="file" id="select" class="form-control" value="Choose Image" accept="image/*">
+                    <button id="btnupload" style="margin-top: 10px;" name="btnupload" class="btn btn-success">Crop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+    <script src="~/js/custom.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        // Upload button to Post Cropped Image to Store.
+    $('#btnupload').on('click', function ()
+    {
+        basic.croppie('result', 'blob').then(function (blob)
+        {
+
+            var empid = $('#empId').val();
+            var signatureID = $('#signatureID').val();
+            var formData = new FormData();
+            formData.append('filename', 'FileName.png');
+            formData.append('blob', blob);
+            formData.append('employeeId', empid);
+            formData.append('signatureID', signatureID);
+            var myAppUrlSettings =
+            {
+                MyUsefulUrl: '@Url.Action("CustomCropSignature", "EmployeeInfo")'
+            }
+            var request = new XMLHttpRequest();
+            request.open('POST', myAppUrlSettings.MyUsefulUrl);
+            request.send(formData);
+            request.onreadystatechange = function () {
+               // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+                {
+                    var response = JSON.parse(request.responseText);
+                    console.log(response);
+
+                    if (response != "Failed")
+                    {
+                        swal('', 'Signature Cropped Successfully!', 'success').
+                            then(function () {
+                                window.location.href="/Employee/employeeinfo/Index"
+                            })
+
+                    }
+                    if (response.message == "ERROR")
+                    {
+                        window.location.reload();
+                    }
+                }
+            }
+        });
+    });
+        //initialize Croppie
+        var basic = $('#main-cropper').croppie
+            ({
+                viewport: { width: 300, height: 80 },
+                boundary: { width: 400, height: 300 },
+                showZoomer: true,
+
+                url: '/logo/signuture.png',
+                format: 'png'|'jpeg'|'png'|'webp'
+            });
+        //Reading the contents of the specified Blob or File
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#main-cropper').croppie('bind', {
+                        url: e.target.result
+                    });
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        // Change Event to Read file content from File input
+        $('#select').on('change', function () { readFile(this); });
+
+
+    </script>
+}
+
+

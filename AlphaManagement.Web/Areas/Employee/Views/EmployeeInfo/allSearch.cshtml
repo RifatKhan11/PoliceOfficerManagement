@@ -1,0 +1,264 @@
+﻿@model IEnumerable<AlphaManagement.DAL.Models.EmployeeInfoeModel.GlobalSearchModel>
+@{
+    ViewData["Title"] = "allSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    .module {
+        width: 100px;
+        margin: 0 0 1em 0;
+        overflow: hidden;
+    }
+
+    .line-clamp {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    div.card {
+        width: 250px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        text-align: center;
+    }
+
+    div.header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        font-size: 40px;
+    }
+
+    div.container {
+        padding: 10px;
+    }
+
+    .aaa {
+        width: 19.5%;
+        margin-right: 5px;
+    }
+
+        .aaa button {
+            height: 120px !important;
+        }
+
+    .btn {
+        border-radius: 0 !important
+    }
+
+    .a_color {
+        background-color: #ddd;
+        color: #134684 !important;
+    }
+
+    .bbb {
+        width: 32%;
+    }
+
+
+    #raiserDashboard ul {
+        overflow: hidden !important;
+    }
+
+        #raiserDashboard ul li {
+            list-style: none;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+
+    .list-group-item {
+        border-radius: 0 !important;
+    }
+
+    .hover01 figure {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
+    }
+
+        .hover01 figure:hover {
+            -webkit-transform: scale(1.3);
+            transform: scale(1.3);
+        }
+
+    a {
+        text-decoration: none !important;
+    }
+
+    #AllItemLists {
+        width: 100%;
+        height: 722px;
+        overflow: scroll;
+    }
+
+    #outerHeader {
+        width: 98%;
+        border: 1px solid #DADADA !important;
+        margin-left: -5px;
+    }
+
+    #headPart1 {
+        font-size: 27px;
+    }
+
+    #headPart2 {
+    }
+
+        #headPart2 input {
+            height: 38px;
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+            border: 1px solid #DADADA !important;
+        }
+
+    button {
+        border: 1px solid #DADADA !important;
+        box-shadow: none !important;
+    }
+
+    #headPart3 i {
+        font-size: 30px !important;
+    }
+
+    #headPart3 span {
+        font-size: 16px;
+    }
+
+    #headPart3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    #part3Sec1, #part3Sec2 {
+        display: inline-flex;
+        margin: 0 5px;
+        background: #3CACF4;
+        padding: 5px 10px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+        #part3Sec1 span, #part3Sec2 span {
+            padding-left: 5px;
+        }
+
+    #grid {
+        width: 98%;
+        border: 1px solid #DADADA !important;
+        margin-left: -5px;
+        border-top: 0;
+        padding-right: 16px;
+    }
+
+        #grid a {
+            color: black;
+        }
+
+        #grid .card {
+            box-shadow: none;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        #grid .card-img-top {
+            border: 1px solid #DADADA !important;
+            width: 116px;
+            height: 116px;
+            border-radius: 50%;
+            padding: 10px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+    #list table {
+        font-size: 18px;
+        width: 98%;
+        margin-left: -5px;
+    }
+
+    table, tr, td {
+        border: 1px solid #DADADA !important;
+    }
+
+    .active1 {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .active a {
+        color: white !important;
+    }
+
+    .active3 {
+        background-color: darkgreen !important;
+    }
+</style>
+
+<div class="container-fluid mt-4" id="raiserDashboard">
+
+
+    <div class="row pr-0" id="grid">
+        <div class="col-md-12">
+
+            <div class="tab-content">
+                <div class="row" style="padding-right: 20px; color: black;" id="going">
+                    @if (Model.Count() == 0)
+                    {
+                        <h3 style="text-align:center;color:gray;padding-left:100px;">No Data Found...</h3>
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <a class="col-lg-3 col-sm-12 searchdiv" target="_blank" href="/Employee/EmployeeInfo/SearchEmployeeDetails?BpNo=@item?.empCode">
+                            <div class="card bg-white">
+                                <div class="card-body text-center">
+                                    @if (item.imageUrl == null)
+                                    {
+                                        <img src="http://portfolio.police.gov.bd/logo/defaultprofile.jpg" class="img-fluid rounded-circle" style="width:100px;height:100px;" alt="No Image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="http://portfolio.police.gov.bd/@item.imageUrl" class="img-fluid rounded-circle" style="width:100px;height:100px;" alt="No Image" />
+                                    }
+                                </div>
+                                <div class="card-body p-0 pl-3" style="height:145px;">
+                                    <div class="card-title ml-2 text-left">
+                                        BP : @item?.empCode<br />
+                                        Rank : @item?.rankName<br />
+                                        Unit : @item?.unitName<br />
+                                        Mobile No : @item?.mobileNo<br />
+                                        Batch : @item?.bcsBatch<br />
+                                        Progress : @item?.marks %<br />
+                                        Status : @item?.statusName<br />
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" style="font-weight:bold">@item.empName</li>
+                                    <li class="list-group-item" style="font-weight:bold">Home District : @item.homeDistrict</li>
+                                </ul>
+                            </div>
+                        </a>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{ 
+    <script>
+        $(document).ready(function () {
+            $('#txtFilter').val('@ViewBag.FilterData');
+        });
+    </script>
+}
+
+
+
+
+
+

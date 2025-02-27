@@ -1,0 +1,278 @@
+﻿@model DisciplinaryActionViewModel
+@{
+    ViewData["Title"] = "BPA Report Employee List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tab-content mt-4" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="card-header mt-3 p-1 text-light" style="background-color:#2A1067">
+            <h4 class="ml-2">BPA Report Employee List</h4>
+        </div>
+        <div class="card bg-light">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-sm-2">
+
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group row">
+                            <div class="col-md-12 col-12 col-12">
+                                <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="ParentId" id="ParentId" data-parsley-required="true" onchange="loadEmployeeList()">
+                                    <option value="0">All Unit</option>
+                                    @foreach (var item in Model.specialBranchUnits)
+                                    {
+                                        <option value="@item.Id">@item.branchUnitName</option>
+
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group row">
+                            <div class="col-md-12 col-12 col-12">
+                                <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="rankId" id="rankId" data-parsley-required="true" onchange="loadEmployeeList()">
+                                    <option value="0">All Rank</option>
+                                    @foreach (var item in Model.ranks.Where(x => x.shortOrder <= 14).OrderBy(x => x.shortOrder))
+                                    {
+                                        <option value="@item.Id">@item.rankName</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group row">
+                            <div class="col-md-12 col-12 col-12">
+                                <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="batcheId" id="batcheId" data-parsley-required="true" onchange="loadEmployeeList()">
+                                    <option value="0">All Batch</option>
+                                    @foreach (var item in Model.bCSBatches)
+                                    {
+                                        <option value="@item.Id">@item.batchName</option>
+
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-1">
+                            <a href="#" class="btn btn-success" id="PrintBtn">Print</a>
+                        </div>*@
+                    <div class="col-md-12 col-12">
+                        <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                            <thead>
+                                <tr>
+                                    <td>Sl No</td>
+                                    <td>Name</td>
+                                    <td>BP Number</td>
+                                    <td>Rank</td>
+                                    <td>Batch</td>
+                                    <td>Unit</td>
+                                    <td>Place of Posting</td>
+                                    <td>Joining date of current Unit</td>
+                                    <td>Action</td>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @{var i = 1;}
+                                @foreach (var item in Model.employeeInfos)
+                                {
+
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.nameEnglish</td>
+                                        <td>@item.employeeCode</td>
+                                        <td>@item.rank?.rankName </td>
+                                        <td>@item.bCSBatch?.batchName </td>
+                                        <td>@item.branch?.branchUnitName</td>
+                                        <td>@item.section?.Name</td>
+                                        <td>@item.joiningDatePresentWorkstation?.ToString("dd-MMM-yyyy")</td>
+                                        <td><a class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="ajaxMedicalHistory('@item.Id','BPA')" title="Details"><i class="mdi mdi-account-card-details"></i></a></td>
+                                    </tr>
+                                    i++;
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="DeciplinMedical" role="dialog" aria-labelledby="empDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:1300px;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span id="bpasbreport"></span>  Report Informations List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <table id="tblmedicalHistory" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sl#</th>
+                            <th>Employee</th>
+                            <th>Year</th>
+                            <th>Date</th>
+                            <th>Details Report</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+
+        function ajaxMedicalHistory(id, type) {
+            $("#bpasbreport").text(type);
+            $.ajax({
+                url: '/Employee/DisciplinaryAction/GetEmployeeReportInfoByEmpIdandType?id=' + id + '&type=' + type,
+                type: 'GET',
+                success: function (res) {
+                    $('#tblmedicalHistory').DataTable().destroy();
+                    //console.log(res);
+                    var option = "";
+                    var count = 0;
+                    $.each(res, function (i, item) {
+                        option += `<tr>
+                                    <td>${++count}</td>
+                                    <td>${item.employeeInfo?.nameEnglish}</td>
+                                    <td>${item.year}</td>
+                                    <td>${formatDate2(item.date)}</td>
+                                    <td>${item.description}</td>
+                              </tr>`
+                    });
+                    $('#tblmedicalHistory tbody').empty();
+                    $('#tblmedicalHistory tbody').append(option);
+                    $('#tblmedicalHistory').DataTable();
+                    $("#DeciplinMedical").modal('show');
+                },
+                error: function (erro) {
+                    console.log(erro);
+                    swal('', 'Unable to Save!', 'warning');
+                }
+            });
+        }
+
+
+        function detailInfoModalOpen(id) {
+            $("#empDetails").load("/Employee/EmployeeInfo/GetEmployeeInfoPartialViewById?id=" + id);
+            $('#empDetailsModal').modal('show')
+        }
+
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+
+            jQuery(".select2").select2({
+                width: '100%'
+            });
+
+            $('#ParentId').select2();
+            $('#rankId').select2();
+
+
+            $('#PrintBtn').click(function () {
+                var id = $('#rankId').val();
+                var parent = $('#ParentId').val();
+                var batch = $('#batcheId').val();
+                window.open("/Employee/Posting/GetOverDuePositionReportPdf?Id=" + id + "&&branch=" + parent + "&&batch=" + batch);
+            });
+        });
+
+        function loadEmployeeList() {
+            var id = $('#rankId').val();
+            var parent = $('#ParentId').val();
+            var batch = $('#batcheId').val();
+            Common.Ajax('GET', '/Employee/DisciplinaryAction/GetEmployeeReportInfoByType?type=BPA&&rankId=' + id + '&&branchId=' + parent + '&&bcs=' + batch, [], 'json', ajaxGetPositionVacency, false);
+        }
+
+        function ajaxGetPositionVacency(response) {
+            $('#tblData').DataTable().destroy();
+            var option = "";
+            var count = 0;
+            $.each(response, function (i, item) {
+                option += `<tr>
+                                <td>${++count}</td>
+                                <td>${item.nameEnglish}</td>
+                                <td>${item.employeeCode}</td>
+                                <td>${item.rank?.rankName}</td>
+                                <td>${item.bCSBatch?.batchName}</td>
+                                <td>${item.branch?.branchUnitName}</td>
+                                <td>${item.section?.Name}</td>
+                                <td>${formatDate2(item.joiningDatePresentWorkstation)}</td>
+                                <td><a class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="ajaxMedicalHistory('${item.Id}','BPA')" title="Details"><i class="mdi mdi-account-card-details"></i></a></td>
+                          </tr>`
+            });
+            $('#tblData tbody').empty();
+            $('#tblData tbody').append(option);
+            $('#tblData').DataTable();
+        }
+
+        function EmpDetails(unit,rank) {
+            Common.Ajax('GET', '/Employee/Posting/GetEmpDetails?Id=' + unit + '&&branch=' + rank, [], 'json', ajaxEmpDetails, false);
+        }
+
+        function ajaxEmpDetails(res) {
+            $('#tblDataEmp').DataTable().destroy();
+            //console.log(res);
+            var option = "";
+            var count = 0;
+            $.each(res, function (i, item) {
+                option += `<tr>
+                                <td>${++count}</td>
+                                <td>${item.nameEnglish}</td>
+                                <td>${item.employeeCode}</td>
+                                <td>${item.rank?.rankName}</td>
+                                <td>${item.branch?.branchUnitName}</td>
+                                <td>${item.section?.Name}</td>
+                                <td>${formatDate(item.joiningDatePresentWorkstation)}</td>
+                                <td><a class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="ajaxMedicalHistory('${item.Id}','SB')" title="Details"><i class="mdi mdi-account-card-details"></i></a></td>
+                          </tr>`
+            });
+            $('#tblDataEmp tbody').empty();
+            $('#tblDataEmp tbody').append(option);
+            $('#tblDataEmp').DataTable();
+            $("#exampleModal").modal('show');
+        }
+
+        function formatDate2(date) {
+            date = new Date(date);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate()
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month == 1) { month = "Jan" } else if (month == 2) { month = "Feb" } else if (month == 3) { month = "Mar" } else if (month == 4) { month = "Apr" } else if (month == 5) { month = "May" } else if (month == 6) { month = "Jun" } else if (month == 7) { month = "Jul" } else if (month == 8) { month = "Aug" } else if (month == 9) { month = "Sep" } else if (month == 10) { month = "Oct" } else if (month == 11) { month = "Nov" } else if (month == 12) { month = "Dec" }
+            return day + "-" + month + "-" + year
+        }
+
+
+    </script>
+}

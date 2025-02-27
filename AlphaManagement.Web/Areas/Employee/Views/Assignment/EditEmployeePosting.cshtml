@@ -1,0 +1,688 @@
+﻿@model AssignmentViewModel
+@{
+    ViewData["Title"] = "Employee Posting";
+    //Layout = "~/Views/Shared/_LayoutPosting.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .nestable-color-2 .dd-handle {
+        background-color: #0069D1;
+        color: #fff;
+    }
+
+    .nestable-color-2 .dd-handle1 {
+        background-color: red !important;
+    }
+
+    .ui-state-default {
+        z-index: 9999;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="card bg-white m-b-30">
+
+                    <div class="card-body new-user">
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <h5 class="header-title mb-4">Employee List for posting</h5>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="search-content">
+                                    <input type="text" id="txtSearchEmployee" class="form-control" style="width:85%;" autocomplete="off" name="keyword" placeholder="Search...">
+                                    <span class="search-button" style="cursor:pointer;" id="btnSearchEmployee"><i class="ti ti-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dd nestable_list_2 nestable-color-2" id="olEmpList">
+                            <ol class="dd-list">
+                                @{
+                                    int i = 0;
+                                    @foreach (var data in Model?.enlistedAssignments.Where(x=>x.statusId != 2))
+                                    {
+                                        string colorCode = "";
+                                        if (Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-2))
+                                        {
+                                            colorCode = "#f17878";
+                                        }
+                                        else if (Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-1) && Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date > DateTime.Now.AddYears(-2))
+                                        {
+                                            colorCode = "yellow";
+                                        }
+                                        else
+                                        {
+                                            colorCode = "#00BCD2";
+                                        }
+                                        <li class="dd-item enrollst" data-id="@data.Id">
+                                            <div class="dd-handle ui-state-default" style="background-color: @colorCode;color:black;font-weight:bolder;border-radius:7px">
+                                                <input type="hidden" name="employeeId" id="txtEmpId-@data.Id" value="@data.employeeId" /> @data.employee?.nameEnglish - @data.employee?.bCSBatch?.batchName, @data.employee?.rank?.rankName (@data.employee?.section?.Name)
+                                                @{
+                                                    int?[] doctor = { 69 };
+                                                    int?[] eng = { 59 };
+                                                    int?[] llb = { 79 };
+
+                                                    int? doctorInfo = Model.branchUnitWiseEmployees?.FirstOrDefault()?.EducationalQualifications.Where(x => doctor.Contains(x.degreeId) && x.employeeId == data.employeeId).Count();
+                                                    int? engInfo = Model.branchUnitWiseEmployees?.FirstOrDefault()?.EducationalQualifications.Where(x => eng.Contains(x.degreeId) && x.employeeId == data.employeeId).Count();
+                                                    int? llbInfo = Model.branchUnitWiseEmployees?.FirstOrDefault()?.EducationalQualifications.Where(x => llb.Contains(x.degreeId) && x.employeeId == data.employeeId).Count();
+
+                                                    @if (doctorInfo > 0)
+                                                    {
+                                                        <img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                    }
+                                                    else if (engInfo > 0)
+                                                    {
+                                                        <img src="~/batch/engineer.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                    }
+
+                                                    else if (llbInfo > 0)
+                                                    {
+                                                        <img src="~/batch/advocate.jpg" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @*<img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:50px; height:50px" />*@
+                                                    }
+                                                }
+                                            </div>
+                                        </li>
+
+                                    }
+                                }
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-12">
+                <form id="frezzEmployee">
+                    <div class="card bg-white m-b-30">
+
+                        <div class="card-body new-user">
+                            <div class="row">
+                                <div class="col-lg-6 col-12">
+                                    <h5 class="header-title mb-4">Freeze Employee List</h5>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="search-content">
+                                        <input type="text" id="txtSearchEmployeeFreeze" class="form-control" style="width:85%;" autocomplete="off" name="keyword" placeholder="Search...">
+                                        <span class="search-button" style="cursor:pointer;" id="btnSearchEmployee"><i class="ti ti-search"></i></span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div>
+                                <input type="hidden" name="referenceNum" value="@Model.enlistedAssignments?.FirstOrDefault()?.enlistedAssignmentMaster?.refNo" />
+                            </div>
+                            <div class="dd nestable_list_1 nestable-color-1 clsFreez" id="olEmpListFreeze" style="max-height:400px;min-height:400px;width:100%;">
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 row">
+                        <div style="display:none">
+                            <input type="submit" class="col-12 btn btn-danger" style="font-weight: bolder;" id="frezzPosting" />
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-12">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card bg-white m-b-30">
+                    <div class="card-body new-user">
+                        <div class="row">
+                            <div class="col-lg-4  col-12">
+                                <h6 class="header-title mb-4">Suggested Posting Place</h6>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="search-content">
+                                    <input type="text" id="txtSearchPP" class="form-control" style="width:85%;" autocomplete="off" name="keyword" placeholder="Search...">
+                                    <span class="search-button" style="cursor:pointer;" id="btnSearchPP"><i class="ti ti-search"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-12">
+                                <a style="text-decoration:none; border-bottom:0!important;color:#fff!important" data-toggle="collapse" href="#olPPListSuggested" aria-expanded="true" aria-controls="olPPListSuggested" id="aaa" class="text-muted btn btn-sm btn-secondary text-light mmm">
+                                    Ignore
+                                </a>
+                                <a style="text-decoration:none; border-bottom:0!important;color:#fff!important; display:none" data-toggle="collapse" href="#olPPListSuggested" aria-expanded="true" aria-controls="olPPListSuggested" id="bbb" class="text-muted btn btn-sm btn-secondary text-light ccc">
+                                    Show
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="dd mt-2 nestable_list_2 nestable-color-2 collapse show" id="olPPListSuggested" style="max-height:400px; overflow-y:scroll">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-sm-12">
+                <form id="postingForm">
+                    <div class="card bg-white m-b-30">
+                        <div class="card-body new-user">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-4">
+                                    <h5 class="header-title mb-4">Posting Place</h5>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-4">
+                                    <div class="search-content">
+                                        <input type="text" id="txtSearchPPPlace" class="form-control" style="width:85%;" autocomplete="off" name="keyword" placeholder="Search...">
+                                        <span class="search-button" style="cursor:pointer;" id="btnSearchPP"><i class="ti ti-search"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-4"></div>
+                            </div>
+
+                            <div class="dd nestable_list_2 nestable-color-2" id="olPPListPlace" style="height:400px;overflow-y:scroll;">
+                                <ol class="dd-list">
+
+                                    @{
+
+                                        foreach (var data in Model.branchUnitWiseEmployees.Where(x => x.isParent == 1))
+                                        {
+                                            var totalemployees = data.unitEmployees.Count() + Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Sum(x => x.subUnitEmployees.Count());
+                                            var totalPost = data.unitTotalPost + Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Sum(x => x.subUnitTotalPost);
+                                            var totalBlankPost = data.unitTotalPost + Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Sum(x => x.subUnitTotalBlankPost);
+                                            var blankPost = totalPost - totalemployees;
+                                            var assign = Model.assignments;
+
+                                            <li class="dd-item" data-id="@data.Id">
+
+                                                <div style="font-size:16px!important;padding:10px 25px 30px 20px!important;background-color: #2a1067;border-radius:7px" class="dd-handle">@data?.parentSpecialBranchUnit.branchUnitName<input type="hidden" class="subUnit" value="@data?.parentSpecialBranchUnit?.Id" />  <span class="m-2" title="Total Post"><i class="fa fa-users text-danger"></i> - @totalPost</span><span class="m-2" title="Total Officers"><i class="fa fa-user text-info"></i> - @totalemployees</span> <span class="m-2"><i class="fa fa-user-o" title="Blank Post"></i> -@blankPost </span></div>
+                                                @if (Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Count() > 0)
+                                                {
+                                                    <ol class="dd-list">
+                                                        @foreach (var subu in Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id))
+                                                        {
+                                                            var subBlankCount = subu?.subUnitTotalPost - subu?.subUnitEmployees.Count();
+                                                            var subEmpCount = subu?.subUnitEmployees.Count() - subu?.subUnitTotalPost;
+                                                            @if (subu?.subUnitEmployees.Count() == 0)
+                                                            {
+                                                                <li class="dd-item" data-id="@subu?.Id">
+                                                                    <div class="dd-handle" style="background-color: #040825;">@subu?.specialBranchUnit.branchUnitName <input type="hidden" class="subUnit" value="@subu?.specialBranchUnit?.specialBranchUnitId" /><span class="m-1" title="Total Post"><i class="fa fa-users"></i> - @subu?.subUnitTotalPost</span><span class="m-1" title="Total Officers"><i class="fa fa-user"></i> - @subu?.subUnitEmployees.Count()</span> <span class="m-1"><i class="fa fa-user-o" title="Blank Post"></i> - @subBlankCount </span></div>
+                                                                    <ol class="dd-list">
+                                                                        @for (int j = 0; j < subBlankCount; j++)
+                                                                        {
+                                                                            <li class="dd-item form-inline">
+                                                                                <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault().employee?.rank?.rankName <input type="hidden" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                                                                <div class="wosue" id="divwosue3" style="width:55%;height:45px;"></div>
+                                                                                <div class="dd-nodrag col">
+                                                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                                        <option value="">Select</option>
+                                                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                                        {
+                                                                                            <option value="@item.Id">@item.Name</option>
+                                                                                        }
+                                                                                    </select>
+                                                                                </div>
+                                                                            </li>
+                                                                        }
+                                                                    </ol>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                List<int> sectionId = new List<int>();
+                                                                <li class="dd-item" data-id="@subu?.Id">
+                                                                    <div class="dd-handle" style="background-color: #040825;">@subu?.specialBranchUnit.branchUnitName <input type="hidden" class="subUnit" value="@subu?.specialBranchUnit?.specialBranchUnitId" /> <span class="m-2" title="Total Post"><i class="fa fa-users"></i> - @subu?.subUnitTotalPost</span><span class="m-1" title="Total Officers"><i class="fa fa-user"></i> - @subu?.subUnitEmployees.Count()</span> <span class="m-1"><i class="fa fa-user-o" title="Blank Post"></i> - @subBlankCount </span></div>
+                                                                    <ol class="dd-list">
+                                                                        @foreach (var sitem in subu?.subUnitEmployees)
+                                                                        {
+                                                                            string colorCode = "";
+                                                                            if (Convert.ToDateTime(sitem.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-2))
+                                                                            {
+                                                                                colorCode = "#f17878";
+                                                                            }
+                                                                            else if (Convert.ToDateTime(sitem.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-1) && Convert.ToDateTime(sitem.joiningDatePresentWorkstation).Date > DateTime.Now.AddYears(-2))
+                                                                            {
+                                                                                colorCode = "yellow";
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                colorCode = "#00BCD2";
+                                                                            }
+                                                                            sectionId.Add((int)(sitem.sectionId == null ? 0 : sitem.sectionId));
+
+                                                                            <li class="dd-item form-inline" data-id="@sitem.Id">
+                                                                                <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@sitem.rank?.rankName<input type="hidden" name="rankId" value="@sitem.rankId" /></div>
+                                                                                <div class="wosue" style="width:55%;height:45px;">
+                                                                                    <div class="dd-handle ui-state-default" id="evnt-@sitem.Id" style="background-color: @colorCode;color:black;font-weight:bolder;border-radius:7px;">
+                                                                                        <input type="hidden" class="clsEmpId" name="frezzEmployeeId" id="txtEmpId-@sitem.Id" value="@sitem.Id" />@sitem.nameEnglish - @sitem.bCSBatch?.batchName, @sitem.rank?.rankName (@sitem?.section?.Name)
+                                                                                        @{
+                                                                                            int?[] doctor = { 69 };
+                                                                                            int?[] eng = { 59 };
+                                                                                            int?[] llb = { 79 };
+
+                                                                                            int? doctorInfo = Model.branchUnitWiseEmployees?.FirstOrDefault().EducationalQualifications.Where(x => doctor.Contains(x.degreeId) && x.employeeId == @sitem.Id).Count();
+                                                                                            int? engInfo = Model.branchUnitWiseEmployees?.FirstOrDefault().EducationalQualifications.Where(x => eng.Contains(x.degreeId) && x.employeeId == @sitem.Id).Count();
+                                                                                            int? llbInfo = Model.branchUnitWiseEmployees?.FirstOrDefault().EducationalQualifications.Where(x => llb.Contains(x.degreeId) && x.employeeId == @sitem.Id).Count();
+
+                                                                                            @if (doctorInfo > 0)
+                                                                                            {
+                                                                                                <img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                                                            }
+                                                                                            else if (engInfo > 0)
+                                                                                            {
+                                                                                                <img src="~/batch/engineer.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                                                            }
+
+                                                                                            else if (llbInfo > 0)
+                                                                                            {
+                                                                                                <img src="~/batch/advocate.jpg" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @*<img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:50px; height:50px" />*@
+                                                                                            }
+                                                                                        }
+                                                                                    </div>
+                                                                                    <input type="hidden" class="clsSectionId" value="@sitem?.sectionId" />
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    @if (assign.Where(x => x.employeeId == sitem.Id).FirstOrDefault() != null)
+                                                                                    {
+                                                                                        <div class="dd-nodrag form-control" style="float:right;width:107%;">@assign.Where(x => x.employeeId == sitem.Id).FirstOrDefault()?.section?.Name </div>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <div class="dd-nodrag form-control" style="float:right;width:107%;">@sitem?.section?.Name</div>
+                                                                                    }
+                                                                                </div>
+
+                                                                            </li>
+
+                                                                        }
+                                                                        @for (int j = 0; j < subBlankCount; j++)
+                                                                        {
+                                                                            <li class="dd-item form-inline">
+                                                                                <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rank?.rankName <input type="hidden" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rankId" /></div>
+                                                                                <div class="wosue" id="divwosue3" style="width:55%;height:45px;"></div>
+                                                                                <div class="dd-nodrag col">
+                                                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                                        <option value="">Select</option>
+                                                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id).Where(x => !sectionId.Contains(x.Id)))
+                                                                                        {
+                                                                                            <option value="@item.Id">@item.Name</option>
+                                                                                        }
+                                                                                    </select>
+                                                                                </div>
+                                                                            </li>
+                                                                        }
+                                                                    </ol>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ol>
+                                                }
+                                                else
+                                                {
+                                                    if (data?.unitEmployees.Count() > 0)
+                                                    {
+                                                        <ol class="dd-list" id="olEmpList">
+                                                            @foreach (var sitem in data?.unitEmployees)
+                                                            {
+                                                                string colorCode = "";
+                                                                if (Convert.ToDateTime(sitem.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-2))
+                                                                {
+                                                                    colorCode = "#f17878";
+                                                                }
+                                                                else if (Convert.ToDateTime(sitem.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-1) && Convert.ToDateTime(sitem.joiningDatePresentWorkstation).Date > DateTime.Now.AddYears(-2))
+                                                                {
+                                                                    colorCode = "yellow";
+                                                                }
+                                                                else
+                                                                {
+                                                                    colorCode = "#00BCD2";
+                                                                }
+                                                                <li class="dd-item form-inline clswosue" data-id="@sitem.Id">
+                                                                    <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@sitem.rank?.rankName <input type="hidden" name="rankId" value="@sitem.rankId" /></div>
+                                                                    <div class="wosue" id="divwosue2" style="width:55%;height:45px">
+                                                                        <div class="dd-handle ui-state-default" id="evnt-@sitem.Id" style="color:black;font-weight:bolder;border-radius:7px;z-index:1033;background-color:@colorCode;">
+                                                                            <input type="hidden" class="clsEmpId" name="frezzEmployeeId" id="txtEmpId-@sitem.Id" value="@sitem.Id" />@sitem.nameEnglish - @sitem.bCSBatch?.batchName, @sitem.rank?.rankName (@sitem?.section?.Name)
+                                                                            @{
+                                                                                int?[] doctor = { 69 };
+                                                                                int?[] eng = { 59 };
+                                                                                int?[] llb = { 79 };
+
+                                                                                int? doctorInfo = Model.branchUnitWiseEmployees?.FirstOrDefault().EducationalQualifications.Where(x => doctor.Contains(x.degreeId) && x.employeeId == @sitem.Id).Count();
+                                                                                int? engInfo = Model.branchUnitWiseEmployees?.FirstOrDefault().EducationalQualifications.Where(x => eng.Contains(x.degreeId) && x.employeeId == @sitem.Id).Count();
+                                                                                int? llbInfo = Model.branchUnitWiseEmployees?.FirstOrDefault().EducationalQualifications.Where(x => llb.Contains(x.degreeId) && x.employeeId == @sitem.Id).Count();
+
+                                                                                @if (doctorInfo > 0)
+                                                                                {
+                                                                                    <img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                                                }
+                                                                                else if (engInfo > 0)
+                                                                                {
+                                                                                    <img src="~/batch/engineer.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                                                }
+
+                                                                                else if (llbInfo > 0)
+                                                                                {
+                                                                                    <img src="~/batch/advocate.jpg" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @*<img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:50px; height:50px" />*@
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                        <input type="hidden" class="clsSectionId" value="@sitem?.sectionId" />
+                                                                    </div>
+                                                                    <div class="dd-nodrag col">
+                                                                        @if (assign.Where(x => x.employeeId == sitem.Id).FirstOrDefault() != null)
+                                                                        {
+                                                                            <div class="dd-nodrag form-control" style="float:right;width:107%;">@assign.Where(x => x.employeeId == sitem.Id).FirstOrDefault()?.section?.Name </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="dd-nodrag form-control" style="float:right;width:107%;">@sitem?.section?.Name</div>
+                                                                        }
+                                                                    </div>
+
+                                                                </li>
+                                                            }
+                                                            @for (int mm = 0; mm < blankPost; mm++)
+                                                            {
+                                                                <li class="dd-item form-inline">
+                                                                    <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rank?.rankName <input type="hidden" class="rank" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rankId" /></div>
+                                                                    <div class="wosue" id="divwosue1" style="width:55%;height:45px"></div>
+                                                                    <div class="dd-nodrag col">
+                                                                        <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                            <option value="">Select</option>
+                                                                            @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                                            {
+                                                                                <option value="@item.Id">@item.Name</option>
+                                                                            }
+                                                                        </select>
+                                                                    </div>
+
+                                                                </li>
+                                                            }
+                                                        </ol>
+                                                    }
+                                                    else
+                                                    {
+                                                        <ol class="dd-list" id="olEmpList">
+                                                            @for (int mm = 0; mm < blankPost; mm++)
+                                                            {
+                                                                <li class="dd-item form-inline">
+                                                                    <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rank?.rankName <input type="hidden" class="rank" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rankId" /></div>
+                                                                    <div class="wosue" id="divwosue1" style="width:55%;height:45px"></div>
+                                                                    <div class="dd-nodrag col">
+                                                                        <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                            <option value="">Select</option>
+                                                                            @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                                            {
+                                                                                <option value="@item.Id">@item.Name</option>
+                                                                            }
+                                                                        </select>
+                                                                    </div>
+
+                                                                </li>
+                                                            }
+                                                        </ol>
+                                                    }
+                                                }
+                                            </li>
+
+                                        }
+                                    }
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 row">
+                        <div style="display:none">
+                            <input type="hidden" name="referenceNum" id="refNumId" value="@Model?.refNumber" />
+                            <input type="hidden" name="AssignmentId" id="AssignmentId" value="@Model?.assignMasterId" />
+                            <input type="hidden" name="enlistedId" id="enlistedId" value="@Model?.enlistedId" />
+                            <input type="submit" class="col-12 btn btn-danger" style="font-weight: bolder;" id="submitPosting" />
+                        </div>
+                        <input type="button" class="col-12 btn btn-danger" style="font-weight: bolder;" id="postingBtnClick" value="Save" />
+                    </div>
+
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+
+        $('.mmm').click(function () {
+            $('#aaa').hide();
+            $('#bbb').show();
+        });
+
+        $('.ccc').click(function () {
+            $('#aaa').show();
+            $('#bbb').hide();
+        });
+
+        function GetProfileInfo(id) {
+            console.log('profile' + id);
+        }
+
+        function setSectionId(arg) {
+            //var txtId = arg.getAttribute('id');
+            console.log(arg.innerHTML());
+        }
+        var y;
+        var og;
+        var n, nB, half;
+        $(document).ready(function () {
+
+
+
+            $(".enrollst").sortable({
+                connectWith: [".wosue", ".clsFreez"]
+
+            }).disableSelection();
+
+            $(".wosue").sortable({
+                connectWith: [".clsFreez"]
+            }).sortable("option", "scroll", false);
+
+
+            $(".wosue").droppable({
+                //accept: "#field_source li span",
+                drop: function (event, ui) {
+                    $(this).find("input").attr("name", "sectionId")
+                }
+            });
+
+            $(".wosue").on("sortreceive", function (event, ui) {
+                var $list = $(this);
+                if ($list.children().length > 2) {
+                    $(ui.sender).sortable('cancel');
+                }
+            });
+
+            $("#olEmpListFreeze").sortable({
+                connectWith: [".clswosue", ".wosue"]
+            }).disableSelection();
+
+            $("#txtSearchEmployee").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olEmpList ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#txtSearchEmployeeFreeze").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olEmpListFreeze ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#btnSearchEmployee").on("click", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olEmpList ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#txtSearchPP").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olPPListSuggested ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#txtSearchPPPlace").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#olPPListPlace ol li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#policeUnitId").change(function () {
+                var id = $(this).val();
+                Common.Ajax('GET', '/Employee/Assignment/GetUnitWiseEmployeInfo/', [], 'json', ajaxUnits);
+            })
+        });
+
+        $('#frezzBtnClick').click(function () {
+            //$('#frezzPosting').click();
+        })
+
+        $('#frezzEmployee').submit(function (e) {
+            e.preventDefault();
+
+            var form = $('#frezzEmployee')
+            $.ajax({
+                url: '/Employee/Assignment/SaveFrezzPostingData',
+                data: form.serialize(),
+                type: 'POST',
+                success: function (records) {
+                    if (records != "Fail") {
+                        $('#refNumId').val(records);
+                        $('#submitPosting').click();
+                    }
+                    else {
+                        swal('', 'Unable to Save!', 'warning');
+                    }
+                },
+                error: function (erro) {
+                    console.log(erro);
+                    swal('', 'Unable to Save!', 'warning');
+                }
+            });
+        })
+
+        $('#postingBtnClick').click(function () {
+            var checkEnrollList = $('#olEmpList ol li div').length;
+            if (checkEnrollList > 0) {
+                swal({
+                    title: 'Warning', text: 'Employee List For Posting Not Completed', type: 'warning', showCancelButton: true, confirmButtonColor: '#007ACC', cancelButtonColor: '#d33', confirmButtonText: `Ok`
+                }).then(function () {
+                    return false;
+                })
+                return false;
+            }
+            else {
+                //$('#submitPosting').click();
+                $('#frezzPosting').click();
+            }
+
+        })
+
+        $('#postingForm').submit(function (e) {
+            //alert()
+            e.preventDefault();
+            var form = $('#postingForm')
+            $.ajax({
+                url: '/Employee/Assignment/SavePostingData',
+                data: form.serialize(),
+                type: 'POST',
+                success: function (records) {
+                    $('#AssignmentId').val(records.assignMasterId);
+                    if (records.refNumber != 'FrezzListEmpty') {
+                        window.location.href = '/Employee/Assignment/EmployeePostingConfirm?refNum=' + records.refNumber + '&assignMasterId=' + records.assignMasterId;
+                    }
+                    else if (records.refNumber == 'FrezzListEmpty') {
+                        window.location.href = '/Employee/Assignment/AssignmentMasterDetails?id=' + records.assignMasterId;
+                    }
+                    else {
+                        swal('', 'Unable to Save!', 'warning');
+                    }
+
+                },
+                error: function (erro) {
+                    console.log(erro);
+                    swal('', 'Unable to Save!', 'warning');
+                }
+            });
+        })
+
+        function ajaxUnits(response) {
+
+            var options = '<option value="">Select </option>';
+            $.each(response, function (i, item) {
+                options += '<option value="' + item.Id + '">' + item.subunitName + '</option>';
+            });
+            $('#policeSubUnitId').empty();
+            $('#policeSubUnitId').append(options);
+        }
+
+
+        function EditAssignment(Id, employeeId, assignmentTypeId, StartDate, EndDate, designationId, departmentId, EntryNo, Remarks) {
+            $("#AssignmentId").val(Id);
+            $("#employeeId").val(employeeId);
+            $("#assignmentTypeId").val(assignmentTypeId);
+            $("#StartDate").val(StartDate);
+            $("#EndDate").val(EndDate);
+            $("#designationId").val(designationId);
+            $("#departmentId").val(departmentId);
+            $("#EntryNo").val(EntryNo);
+            $("#Remarks").val(Remarks);
+        }
+
+
+
+        function Delete(Id) {
+            swal({
+                title: 'Are you sure?', text: 'Do you want to delete this record!', type: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+
+                $.ajax({
+                    url: "/Employee/AwardEntry/DeleteAssignment/" + Id,
+                    data: { Id: Id },
+                    type: 'POST',
+                })
+                    .done(function () {
+                        swal('', 'Deleted Successfully!', 'success');
+                        window.location.reload();
+                    })
+                    .fail(function () {
+                        swal('Cancelled', 'It will not be deleted. Please try again later !!!', 'error');
+                    });
+            });
+        }
+    </script>
+}
+

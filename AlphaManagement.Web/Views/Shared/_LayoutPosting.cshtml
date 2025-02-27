@@ -1,0 +1,369 @@
+﻿@using AlphaManagement.Domain.AuthService.Interfaces;
+@using AlphaManagement.Domain.EmployeeService.interfaces;
+@inject IUserInfoes userInfo;
+@inject IEmployeeService emplyeeService;
+@{
+    var emp = await userInfo.GetEmployeeInfoByUserName(User.Identity.Name);
+    var userPhoto = await emplyeeService.GetEmployeePhotographByEmpId(emp.Id);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mannat Themes">
+    <meta name="keyword" content="">
+
+    <title>ALPHA | Management</title>
+
+    <!-- Theme icon -->
+    <link rel="shortcut icon" href="~/images/favicon.ico">
+    <!-- Datatable -->
+    <link href="~/plugins/nestable/jquery.nestable.css" rel="stylesheet" />
+    <link href="~/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/morris-chart/morris.css" rel="stylesheet">
+    <!-- Theme Css -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/slidebars.min.css" rel="stylesheet">
+    <link href="~/css/icons.css" rel="stylesheet">
+    <link href="~/css/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/css/style.css" rel="stylesheet">
+
+    //Swall
+
+    <link href="~/plugins/sweet-alert/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    @RenderSection("Style", required: false)
+</head>
+<body class="sticky-header">
+    <section>
+        <!-- sidebar left start-->
+        <div class="sidebar-left">
+            <div class="sidebar-left-info">
+
+                <div class="user-box">
+                    <div class="d-flex justify-content-center">
+                        @if (userPhoto != null)
+                        {
+                            <img src="~/@userPhoto.url" alt="" class="img-fluid rounded-circle">
+                        }
+                        else
+                        {
+                            <img src="~/images/users/userImage.jpg" alt="" class="img-fluid rounded-circle">
+                        }
+                    </div>
+                    <div class="text-center text-white mt-2">
+                        <h6>@emp?.nameEnglish</h6>
+                        <p class="text-muted m-0">@emp?.rank?.rankName</p>
+                    </div>
+                </div>
+
+                <!--sidebar nav start-->
+                <ul class="side-navigation mt-5">
+
+                    <li class="active">
+                        <a href="/Home/DashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
+                    </li>
+                    @{
+                        var user = User.Identity.Name;
+                        if (user == "rakib.uddin")
+                        {
+                            <li class="">
+                                <a href="/Employee/EmployeeInfo/Index">
+                                    <i class="mdi mdi-account-settings-variant"></i>
+                                    <span>
+                                        Profile
+                                    </span>
+                                </a>
+
+                            </li>
+                            <li class="menu-list">
+                                <a href="">
+                                    <i class="mdi mdi-google-circles-extended"></i> <span>
+                                        Settings <span class="badge badge-primary noti-arrow pull-right">6</span>
+                                    </span>
+                                </a>
+                                <ul class="child-list">
+                                    <li><a href="~/Employee/UserInfo/UserList">User</a></li>
+                                    <li><a href="~/Auth/Account/UserRoleCreate">User Role</a></li>
+                                    <li><a href="~/Auth/Account/AssaignRoleToUser">User Role Assign</a></li>
+                                    <li><a href="~/Auth/Account/UserRegister">User Registration</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-list">
+                                <a href=""><i class="mdi mdi-buffer"></i> <span>Master Data</span></a>
+                                <ul class="child-list">
+                                    <li><a href="/Home/GridMenuPage">Create Master</a></li>
+                                    <li><a href="/Home/GridMenuAddressPage">Create Address Info</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-list">
+                                <a href=""><i class="mdi mdi-book-multiple" aria-hidden="true"></i><span>Posting</span></a>
+                                <ul class="child-list">
+                                    <li><a href="~/Employee/Assignment/EmployeePosting">New Posting</a></li>
+                                    <li><a href="pages-timeline.html">View Place Of Posting</a></li>
+                                </ul>
+                            </li>
+
+
+                        }
+
+                    }
+
+
+                    <li class="menu-list">
+                        <a href="/Home/DashBoard"><i class="fa fa-database"></i> <span>Over Due Posting</span></a>
+                    </li>
+                    <li class="">
+
+                        <a href="/Employee/Assignment/EmployeePosting"><i class="fa fa-telegram"></i> <span>New Posting</span></a>
+
+                    </li>
+                    <li class="menu-list">
+                        <a href="/Home/DashBoard"><i class="fa fa-sitemap"></i> <span>Organogram</span></a>
+                    </li>
+                    <li class="menu-list">
+                        <a href="/Home/DashBoard"><i class="fa fa-cubes"></i> <span>Postition Vacancy</span></a>
+                    </li>
+                    <li class="menu-list">
+                        <a href="/Home/DashBoard"><i class="fa fa-users"></i> <span>User Mangement</span></a>
+                    </li>
+
+
+
+
+
+                </ul><!--sidebar nav end-->
+            </div>
+        </div><!-- sidebar left end-->
+        <!-- body content start-->
+        <div class="body-content">
+            <!-- header section start-->
+            <div class="header-section">
+                <!--logo and logo icon start-->
+                <div class="logo">
+                    <a href="/">
+                        <span class="logo-img">
+                            <img src="~/logo/goldPolice.PNG" style="width:50px;height:50px;" />
+
+                        </span>
+                        <!--<i class="fa fa-maxcdn"></i>-->
+                        @*<span class="brand-name">ALPHA Management</span>*@
+                    </a>
+                </div>
+
+                <!--toggle button start-->
+                <a class="toggle-btn"><i class="ti ti-menu"></i></a>
+                <!--toggle button end-->
+                <!--mega menu start-->
+                <div id="navbar-collapse-1" class="navbar-collapse collapse mega-menu">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <form class="search-content" action="index.html" method="post">
+                                <input type="text" class="form-control mt-3" name="keyword" placeholder="Search...">
+                                <span class="search-button"><i class="ti ti-search"></i></span>
+                            </form>
+                        </li>
+
+                        <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>
+                        <li class="search-content">
+                            <img src="~/logo/PHQ_logo.PNG" style="width:50px;height:50px;" />
+                        </li>
+
+                        <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+
+                        <li class="search-content">
+                            <h1 class="text-center" style="color:#101636;font-family: 'Orbitron', cursive;">Alpha Management</h1>
+                        </li>
+                        <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>
+
+
+                    </ul>
+                </div>
+                <!--mega menu end-->
+
+                <div class="notification-wrap">
+                    <!--right notification start-->
+                    <div class="right-notification">
+                        <ul class="notification-menu">
+
+                            <li>
+                                <a href="javascript:;" data-toggle="dropdown">
+                                    @if (userPhoto != null)
+                                    {
+                                        <img src="~/@userPhoto.url" alt="" class="img-fluid rounded-circle" style="height:40px;width:40px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/users/userImage.jpg" alt="" class="img-fluid rounded-circle" style="height:40px;width:40px;">
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-menu">
+                                    <a class="dropdown-item" href="/Auth/Account/Logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
+                                </div>
+
+                            </li>
+
+                            @*<li>
+                            <div class="sb-toggle-right">
+                                <i class="mdi mdi-apps"></i>
+                            </div>
+                        </li>*@
+                        </ul>
+                    </div><!--right notification end-->
+                </div>
+            </div>
+            <!-- header section end-->
+
+            <div class="container-fluid">
+                @*<partial name="_CookieConsentPartial" />*@
+                @RenderBody()
+            </div><!--end container-->
+            <!--footer section start-->
+            <footer class="footer">
+                @DateTime.Now.Year &copy; OPUS TECHNOLOGY LTD.
+            </footer>
+            <!--footer section end-->
+            <!-- Right Slidebar start -->
+            <div class="sb-slidebar sb-right sb-style-overlay">
+                <div class="right-bar slimscroll">
+                    <div class="col-12 text-center fixed-top" style="background-color:#079c9e;color:white">
+                        <span class="r-close-btn sb-close" id="btnSlideClose"><i class="fa fa-times"></i></span>
+                        <h2>Officers' List</h2>
+                    </div>
+
+                    <div class="col-12 pt-5" style="margin-top:30px;">
+                        <div class="online-chat">
+                            <div class="online-chat-container" style="display:none" id="selEmpDiv">
+
+                                <div class="dd nestable_list_2 nestable-color-2">
+                                    <form id="selectedEmpForm">
+                                        <div class="col-12">
+                                            <ul class="dd-list" id="selectedEmpList"></ul>
+                                        </div>
+                                        <input type="submit" class="col-12 btn row fixed-bottom" style="background-color: #079c9e;height: 40px;color: white;font-size: 25px;margin: 0px;" value="Assign Posting" />
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!--end Right Slidebar-->
+        </div>
+        <!--end body content-->
+    </section>
+
+    @*<div class="container">
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>*@
+
+    <!-- jQuery -->
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery-migrate.js"></script>
+    <script src="~/js/modernizr.min.js"></script>
+    <script src="~/js/jquery.slimscroll.min.js"></script>
+    <script src="~/js/slidebars.min.js"></script>
+    <script src="~/js/common.js"></script>
+    <!-- Responsive and datatable js -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/timepicker/bootstrap-material-datetimepicker.js"></script>
+    <script src="~/plugins/select2/select2.min.js" type="text/javascript"></script>
+    <script src="~/plugins/nestable/jquery.nestablePrevious.js"></script>
+    <script src="~/plugins/nestable/nestable.js"></script>
+    <script src="~/js/dropify.min.js"></script>
+    <!--app js-->
+    <script src="~/js/jquery.app.js"></script>
+    <!--Swall-->
+    <script src="~/plugins/sweet-alert/sweetalert2.min.js"></script>
+    <script src="~/pages/jquery.sweet-alert.init.js"></script>
+    <script type="text/javascript" src="~/plugins/parsleyjs/dist/parsley.min.js"></script>
+    <script type="text/javascript">
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            //location.reload(true);
+        }
+
+        function getCookie(name) {
+            var re = new RegExp(name + "=([^;]+)");
+            var value = re.exec(document.cookie);
+            return (value != null) ? unescape(value[1]) : null;
+        }
+        setCookie('lang', 'en', 30);
+        jQuery(document).ready(function ($) {
+
+            var lang = getCookie('lang');
+            //if (lang == 'en') {
+            //    $('#lanBAN').html('বাংলা');
+            //} else {
+            //    $('#lanBAN').html('ENG');
+            //}
+
+            //$('#lanBAN').click(function () { setCookie('lang', 'bn', 30); });
+            $('#lanBAN').change(function () {
+                if (lang == 'en') {
+                    setCookie('lang', 'bn', 30);
+                    $('#lnEnglish').html('বাংলা');
+                    $('#lnBangla').html('English');
+                } else {
+                    setCookie('lang', 'en', 30);
+                    $('#lnBangla').html('বাংলা');
+                    $('#lnEnglish').html('English');
+                }
+
+            });
+            var sld = 1;
+            $('.sb-custom-toggle-right').click(function () {
+                let id = $(this).find('.clsEmpId').val();
+                if (sld == 1) {
+                    sld = 0;
+                    Common.Ajax('GET', '/Employee/EmployeeInfo/EmployeeInfoProfileView/' + id, [], 'json', ajaxEmployeeProfile, false);
+                } else {
+                    sld = 1;
+                }
+                
+            });
+
+        });
+
+        function ajaxEmployeeProfile(res) {
+            
+            $('#sEmpName').html(res.employeeInfo?.nameEnglish);
+            $('#sEmpBP').html(res.employeeInfo?.employeeCode);
+            $('#sEmpRank').html(res.employeeInfo?.rank?.rankName);
+            if (res.employeeInfo.photograph?.url == '' || res.employeeInfo.photograph ?.url == null || res.employeeInfo.photograph ?.url == 'undifined') {
+                $('#sEmpImage').attr('src', '~/' + res.employeeInfo.photograph?.url);
+            } else {
+                $('#sEmpImage').attr('src', '~/images/users/userImage.jpg');
+            }
+                
+            console.log(res);
+        }
+
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

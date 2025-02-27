@@ -1,0 +1,122 @@
+﻿@model PostingReportViewModel
+@using AlphaManagement.Web.Helpers;
+@{
+    ViewData["Title"] = "pdf";
+    Layout = "~/Views/Shared/_PrintViewPolice.cshtml";
+}
+
+
+<h4 style="text-align:center">Posting List</h4>
+
+<div class="row">
+    <div class="col-6">
+        <label for="example-search-input" class="col-md-4 col-12 col-form-label">স্মারক নং- @Model.enlistedAssignments?.FirstOrDefault()?.enlistedAssignmentMaster?.refNo<span style="color:red"></span></label>
+    </div>
+    <div class="col-2">
+
+    </div>
+    <div class="col-4">
+        <div class="form-group row">
+            <label for="example-search-input" class="col-md-3 col-12 col-form-label">তারিখঃ @Model.enlistedAssignments?.FirstOrDefault()?.enlistedAssignmentMaster?.refDate?.ToString("dd-MMM-yyyy")<span style="color:red"></span></label>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Rank</th>
+                    <th>Designation</th>
+                    <th>Unit</th>
+                    <th>Section</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    int i = 0;
+                    @foreach (var data in Model.enlistedAssignments)
+                    {
+                        string colorCode = "";
+                        if (Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-2))
+                        {
+                            colorCode = "#f17878";
+                        }
+                        else if (Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date < DateTime.Now.AddYears(-1) && Convert.ToDateTime(data.employee?.joiningDatePresentWorkstation).Date > DateTime.Now.AddYears(-2))
+                        {
+                            colorCode = "yellow";
+                        }
+                        else
+                        {
+                            colorCode = "#00BCD2";
+                        }
+
+                        <tr style="background-color: @colorCode">
+                            <td>
+                                @data.employee?.nameEnglish
+                                @{
+                                    int?[] doctor = { 69 };
+                                    int?[] eng = { 59 };
+                                    int?[] llb = { 79 };
+
+                                    int? doctorInfo = Model.educations.Where(x => doctor.Contains(x.degreeId) && x.employeeId == data.Id).Count();
+                                    int? engInfo = Model.educations.Where(x => eng.Contains(x.degreeId) && x.employeeId == data.Id).Count();
+                                    int? llbInfo = Model.educations.Where(x => llb.Contains(x.degreeId) && x.employeeId == data.Id).Count();
+
+                                    @if (doctorInfo > 0)
+                                    {
+                                        <img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+                                    }
+                                    else if (engInfo > 0)
+                                    {
+                                        <img src="~/batch/engineer.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                    }
+
+                                    else if (llbInfo > 0)
+                                    {
+                                        <img src="~/batch/advocate.png" class="img-fluid rounded-circle" style="width:20px; height:20px" />
+
+                                    }
+                                    else
+                                    {
+                                        @*<img src="~/batch/doctor.png" class="img-fluid rounded-circle" style="width:50px; height:50px" />*@
+                                    }
+                                }
+                            </td>
+                            <td>@data.employee?.rank?.rankName</td>
+                            <td>@data.employee?.designations?.designationName</td>
+                            <td>@data.employee?.section?.Name, @data.employee?.section?.specialBranchUnit?.districts?.districtName</td>
+                            <td>@data.employee?.section?.Name</td>
+                        </tr>
+
+
+                    }
+                }
+            </tbody>
+
+
+            @*@{ var i = 1;}
+                @foreach (var item in Model.enlistedAssignments)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>
+                            <h6>@item.employee?.nameEnglish (BP-@item.employee?.employeeCode</h6>
+                            <h6>@item.employee?.rank?.rankName, @item.specialBranchUnit?.branchUnitName</h6>
+                            <h6>@item.employee?.section?.Name, @item.specialBranchUnit?.branchUnitName</h6>
+                        </td>
+                        <td>
+                            <h6>@item.employee?.rank?.rankName</h6>
+                            <h6>@item.employee?.section?.Name</h6>
+                        </td>
+                    </tr>
+                    i++;
+                }*@
+
+        </table>
+    </div>
+</div>  <br />

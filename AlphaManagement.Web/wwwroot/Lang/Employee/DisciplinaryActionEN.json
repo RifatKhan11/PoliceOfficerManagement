@@ -1,0 +1,18 @@
+{
+  "Title": "Disciplinary Action Informations",
+  "slNo": "Sl No.",
+  "employee": "employee Name",
+  "Offense": "Offense",
+  "naturalPunishment": "Natural Punishment",
+  "punishmentDate": "Punishment Date",
+  "startingDate": "Starting Date",
+  "endDate": "End Date",
+  "goNumberWithDate": "GoNumber With Date",
+  "goFileURL": "Go File URL",
+  "remarks": "Remarks",
+  "status": "Status",
+  "action": "Action",
+  "save": "Save",
+  "close": "Close",
+  "select": "Select"
+}

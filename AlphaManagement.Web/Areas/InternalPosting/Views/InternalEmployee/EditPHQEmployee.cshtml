@@ -1,0 +1,925 @@
+﻿@model EmployeeInfoViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+}
+<link href="~/plugins/responsive-table/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+<link href="~/css/dropify.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet" />
+<style>
+
+    .zoom {
+        transition: transform .2s; /* Animation */
+    }
+
+        .zoom:hover {
+            transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+    @@media screen and (max-width: 599px) {
+        #jobHisListView, #proHisListView, #eduListView, #localTrListView, #forignTrListView, #awardListView, #medicalListView, #frnTrvlListView, #frnTrvlListViewUN, #familyListView, #displinaryListView, #preAddList, #parAddList, #inLawAddList, #spouseAddList {
+            display: none;
+        }
+
+        #jobHisCardView, #proHisCardView, #eduCardView, #localTrCardView, #forignTrCardView, #awardCardView, #medicalCardView, #frnTrvlCardView, #frnTrvlCardViewUN, #familyCardView, #displinaryCardView, #preAddCard, #parAddCard, #inLowAddCard, #spouseAddCard {
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+
+        #jobhistoryCard, #inLowAddCard, #spouseAddCard, #parAddCard, #preAddCard, #promotionCardView, #eduCard, #domesticCard, #forCard, #awardCard, #medicalCardAdd, #foriegnTrvlCard, #familyCard {
+            padding: 0;
+            margin: 0;
+        }
+
+        #personlDiv {
+            margin-top: 140px;
+        }
+
+        #fnt {
+            font-size: 27px;
+        }
+
+        #local-Training-Main-Div, #foreign-Training-Main-Div {
+            padding: 0
+        }
+
+        #finalBtnDiv {
+            margin-bottom: 40px;
+        }
+    }
+
+    @@media screen and (min-width: 600px) {
+        #jobHisListView, #proHisListView, #eduListView, #localTrListView, #forignTrListView, #awardListView, #medicalListView, #frnTrvlListView, #frnTrvlListViewUN, #familyListView, #displinaryListView, #preAddList, #parAddList, #inLawAddList, #spouseAddList {
+            display: block;
+        }
+
+        #jobHisCardView, #proHisCardView, #eduCardView, #localTrCardView, #forignTrCardView, #awardCardView, #medicalCardView, #frnTrvlCardView, #frnTrvlCardViewUN, #familyCardView, #displinaryCardView, #preAddCard, #parAddCard, #inLowAddCard, #spouseAddCard {
+            display: none;
+        }
+    }
+
+    .mobCardHeader {
+        padding: 0;
+        padding-top: 5px;
+        text-align: center;
+        background-color: oldlace;
+    }
+
+    .mobCard {
+        border-radius: 50%;
+        background-color: #2A1067;
+        font-size: 23px;
+        height: 30px;
+        width: 30px;
+        color: white;
+    }
+
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+
+
+    label.cabinet {
+        display: block;
+        cursor: pointer;
+    }
+
+        label.cabinet input.file {
+            position: relative;
+            height: 100%;
+            width: auto;
+            opacity: 0;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            margin-top: -30px;
+        }
+
+    #upload-demo {
+        width: 500px;
+        height: 500px;
+        padding-bottom: 25px;
+    }
+
+    label.cabinetsign {
+        display: block;
+        cursor: pointer;
+    }
+
+        label.cabinetsign input.file {
+            position: relative;
+            height: 100%;
+            width: auto;
+            opacity: 0;
+            -moz-opacity: 0;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            margin-top: -30px;
+        }
+
+    #upload-demosign {
+        width: 300px;
+        height: 200px;
+        padding-bottom: 25px;
+    }
+
+    #postingPlaceId {
+        padding-left: 1px;
+    }
+</style>
+
+<div class="col-md-12 col-12 ">
+    <div class="card-header fixed-top" id="heading-0" style="cursor:pointer;background-color:#040158;top: 31px;margin:30px ;padding: 5px;z-index: 991 !important;">
+        <h2 class="mb-0 text-center " id="fnt" style="font-family:'Times New Roman';color:white">
+            <span>Employee Portfolio, Bangladesh Police</span>
+            <a href="/Portfolio/Dashboard/Index" class="pull-right" style="font-size:25px;"><i class="fa fa-home fa-2x"></i></a>
+        </h2>
+       
+    </div>
+</div>
+
+
+<div class="row">
+    @{
+        var inactive = "";
+    }
+
+    @if (Model.employeeInfo?.isApproved == 3 || Model.employeeInfo?.isApproved == 4 || Model.employeeInfo?.isApproved == 8)
+    {
+        inactive = "disabled";
+    }
+
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+        <div id="accordion" role="tablist" class="m-b-30">
+            <div class="card" id="personlDiv">
+                <div class="card-header" id="heading-1" style="cursor:pointer;padding-top:5%">
+                    <h5 class="mb-0 d-flex justify-content-between">
+                        <a href="#" class="text-muted">
+                            <i class="fa fa-user-circle-o mr-2" style="color:#4B0080"></i>  @Model.fLang.title
+                        </a>
+                        <a href="javascript:void(0)" id="btnEmpSearch" data-toggle="modal" data-target="#basicModal" class="btn btn-success btn-sm zoom" style="border-radius:20px;height:30px;"><i class="fa fa-envelope"></i>&nbsp;Load Data from PIMS </a>
+                    </h5>
+                </div>
+                <div id="collapse-1" class="collapse show">
+                    <div class="card-body">
+                        <div class="general-label">
+                            <form id="FormId" enctype="multipart/form-data">
+                                <input type="hidden" id="empId" name="empId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" id="empType" name="empTypeId" value="@Model.employeeInfo?.employeeTypeId" />
+                                <div class="row">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.nameBangla <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.nameBangla" data-parsley-required="true" required id="nameBangla" name="nameBangla" >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.nameEnglish <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.nameEnglish" data-parsley-required="true" required id="nameEnglish" name="nameEnglish">                                                      
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.bpNo <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" id="bpNo" data-parsley-required="true" name="bpNo" value="@Model.employeeInfo?.employeeCode" readonly required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.rankId <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="rankId" id="rankId" data-parsley-required="true" required>
+                                                            <option value="">@Model.fLang.select</option>
+                                                            @foreach (var item in Model.rank)
+                                                            {
+                                                                if (item.Id == Model.employeeInfo?.rankId)
+                                                                {
+                                                                    <option value="@item.Id" selected>@item.rankName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.Id">@item.rankName</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">Unit <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="select2 form-control mb-3 custom-select" style="width: 100%;" id="branchId" name="specialBranchUnitId" data-parsley-required="true" required>
+                                                            <option value="">Select</option>
+                                                            @foreach (var item in Model.specialBranchUnits.OrderBy(x => x.branchUnitName).Where(e => e.branchUnitNameBN == "পুলিশ হেডকোয়ার্টার্স, ঢাকা"))
+                                                            {
+                                                                if (item.Id == Model.employeeInfo?.branchId)
+                                                                {
+                                                                    <option value="@item.Id" selected>@item.branchUnitName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.Id">@item.branchUnitName</option>
+                                                                }
+                                                            }
+                                                        </select>                                                     
+                                                    </div>
+
+                                                </div>                                             
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">Section <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="select2 form-control mb-3 custom-select" style="width: 100%;" id="RankId" name="sectionId" data-parsley-required="true">
+                                                            <option value="">Select</option>
+                                                            @foreach (var item in Model.department.OrderBy(x => x.deptNameBn))
+                                                            {
+                                                                if (item.Id == Model.employeeInfo?.departmentId)
+                                                                {
+                                                                    <option value="@item.Id" selected>@item.deptNameBn</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.Id">@item.deptNameBn</option>
+                                                                }
+                                                            }
+                                                        </select>  
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.designation</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" id="designation" data-parsley-required="true" name="designation" required value="@Model.employeeInfo?.designation">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade clsexclude" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel"></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                                                                    <div class="col-lg-7 col-md-7 col-sm-7 p-0 m-0">
+                                                                        <div id="upload-demo" class="center-block" style="max-width: 430px;">
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5 col-md-5 col-sm-12 pl-5">
+                                                                        <button type="button" id="btnRoute" data-deg="90" class="btn btn-outline-primary btn-sm"><i class="fa fa-rotate-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" id="cropImageBtn" class="btn btn-primary">Crop</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade clsexclude" id="cropImagePopsign" tabindex="-1" role="dialog" aria-labelledby="myModalLabelsign" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabelsign"></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @*<div id="upload-demosign" class="center-block"></div>*@
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                                                                    <div class="col-lg-7 col-md-7 col-sm-7 p-0 m-0">
+                                                                        <div id="upload-demosign" class="center-block">
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5 col-md-5 col-sm-12 pl-5">
+                                                                        <button type="button" id="btnRouteSign" data-deg="90" class="btn btn-outline-primary btn-sm"><i class="fa fa-rotate-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" id="cropImageBtnsign" class="btn btn-primary">Crop</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-12 clsexclude">
+                                                <div class="form-group row">
+                                                    <div class="col-md-5 col-12"></div>
+                                                    <input type="hidden" id="ImageTypeId" value="0" />
+                                                    <div class="col-md-4 col-12">
+                                                        @if (Model.photograph?.url == null || Model.photograph == null || Model.photograph?.url == "")
+                                                        {
+                                                            <img src="~/logo/PhotoLogo.JPG" style="height:250px;width:260px;border:1px solid #ddd;background-color:#eee;cursor:pointer!important" id="photoPicture" />
+                                                            <label class="cabinet center-block">
+                                                                <figure>
+                                                                    <figcaption style="position: absolute;margin-top: -38px;margin-left: 10px;background: aliceblue;border: 1px solid blanchedalmond;    border-radius: 10px;width: 18px;height: 20px;"><i class="fa fa-camera"></i></figcaption>
+                                                                </figure>
+                                                                <input type="file" class="item-img file center-block" />
+                                                                photographID
+                                                                <input type="hidden" id="employeeCode" name="employeeCode" value="@Model.employeeInfo?.employeeCode" />
+                                                            </label>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="/@Model.photograph?.url" style="height:250px;width:260px;border:1px solid #ddd;background-color:#eee;cursor:pointer!important" alt="" id="photoPicture" />
+                                                            <input type="hidden" id="photoPictures" name="photoPictures" />
+                                                            <label class="cabinet center-block">
+                                                                <figure>
+                                                                    <figcaption class="zoom" style="position: absolute!important;margin-top: -38px!important;margin-left: 10px!important;background: aliceblue;border: 1px solid blanchedalmond;border-radius: 10px;width: 18px;height: 20px;">
+                                                                        <i class="fa fa-camera"></i>
+                                                                    </figcaption>
+                                                                </figure>
+                                                                <input type="file" class="item-img file center-block" />
+                                                            </label>
+
+                                                        }
+                                                        <input type="file" id="fileinput" class="d-none" />
+
+                                                        @*<input type="file" id="Photoinput" class="center-block d-none" name="file_photo" />*@
+                                                    </div>
+                                                    @*<div class="col-md-1 col-12">
+                                                            <a href="javascript:void(0)" id="btnEmpSearch" onclick="GetImage()" class="btn btn-success btn-sm" style="border-radius:20px;height:30px;"><i class="fa fa-search"></i> PIMS </a>
+                                                        </div>*@
+                                                    <div class="col-md-2 col-12">
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.dateOfBirth <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" id="mdate" data-parsley-required="true" name="dateOfBirth" value="@Model.employeeInfo?.dateOfBirth?.ToString("dd-MMM-yyyy")" readonly required>                                                   
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">Father's Name <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.fatherNameEnglish" data-parsley-required="true" id="fatherNameEnglish" name="fatherNameEnglish" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">Mother's Name<span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.motherNameEnglish" data-parsley-required="true" id="motherNameEnglish" name="motherNameEnglish" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.gender</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="form-control" name="gender" id="gender">
+                                                            @if (Model.employeeInfo.gender != null)
+                                                            {
+                                                                <option value="@Model.employeeInfo.gender">@Model.employeeInfo.gender</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>@Model.fLang.select</option>
+                                                            }
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.nationalID <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.nationalID" maxlength="17" data-parsley-required="true" id="nationalID" name="nationalID">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.retiredDate</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.LPRDate?.ToString("dd-MMM-yyyy")" id="retirementdate" readonly name="retirementdate">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.joiningDateGovtService</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.joiningDateGovtService?.ToString("dd-MMM-yyyy")" readonly id="policejoiningrank" name="policejoiningrank">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.joiningDatePresentWorkstation</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.joiningDatePresentWorkstation?.ToString("dd-MMM-yyyy")" readonly id="dateofjoining" name="dateofjoining">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.religionId</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="form-control" name="religionId" id="religionId">
+                                                            <option value="">@Model.fLang.select</option>
+                                                            @foreach (var item in Model.religions)
+                                                            {
+                                                                if (item.Id == Model.employeeInfo.religionId)
+                                                                {
+                                                                    <option value="@item.Id" selected>@item.name</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.Id">@item.name</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.maritalStatus</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="form-control" name="maritalStatus" id="maritalStatus">
+
+                                                            @*@if (Model.employeeInfo.maritalStatus != null)
+                    {
+                        <option value="@Model.employeeInfo?.maritalStatus" selected>@Model.employeeInfo?.maritalStatus</option>
+                    }
+                    else
+                    {
+                        <option value="">@Model.fLang.select</option>
+                    }*@
+                                                            <option value="">@Model.fLang.select</option>
+                                                            <option value="Divorced">Divorced</option>
+                                                            <option value="Married">Married</option>
+                                                            <option value="Separated">Separated</option>
+                                                            <option value="Single">Single</option>
+                                                            <option value="Widow">Widow</option>
+                                                            <option value="Widower">Widower</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.bloodGroup</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="bloodGroup" id="bloodGroup">
+                                                            @if (Model.employeeInfo.bloodGroup != null)
+                                                            {
+                                                                <option value="@Model.employeeInfo?.bloodGroup" selected>@Model.employeeInfo?.bloodGroup</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option>@Model.fLang.select</option>
+                                                            }
+                                                            <option value="A (A+)"> A (A+)</option>
+                                                            <option value="A (A-)">A (A-)</option>
+                                                            <option value="B (B+)">B (B+)</option>
+                                                            <option value="B (B-)">B (B-)</option>
+                                                            <option value="O (O+)">O (O+)</option>
+                                                            <option value="O (O-)">O (O-)</option>
+                                                            <option value="AB (AB+)">AB (AB+)</option>
+                                                            <option value="AB (AB-)">AB (AB-)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.height (cm)</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select id="height" name="height" class="select2 form-control mb-3 custom-select" style="width: 100%;" required>
+                                                            <option>Select</option>
+                                                            @for (int i = 131; i < 215; i++)
+                                                            {
+                                                                @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model.employeeInfo.height))
+                                                                {
+                                                                    <option value="@i" selected>@i</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@i">@i</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                        @*<input class="form-control" data-parsley-type="number" min="137" max="243" value="@Model.employeeInfo?.height" id="height" name="height">*@
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.weight (kg)</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <select class="select2 form-control mb-3 custom-select" id="weight" style="width: 100%;" name="weight" required>
+                                                            <option>Select</option>
+                                                            @for (int i = 30; i < 200; i++)
+                                                            {
+                                                                @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model.employeeInfo.weight))
+                                                                {
+                                                                    <option value="@i" selected>@i</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@i">@i</option>
+                                                                }
+                                                            }
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">Ration Id</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" id="rationId" value="@Model.employeeInfo?.rationId" name="rationId">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.mobileNumberPersonal</label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" id="phone" value="@Model.employeeInfo?.mobileNumberPersonal" name="mobileNumberPersonal">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row float-right">
+                                                    <div class="pr-2 mr-4">
+                                                        <input type="reset" class="btn btn-danger btn-sm mt-4 mb-4" name="name" onclick="refresh()" value="Refresh" />
+                                                        <input type="submit" class="btn btn-primary btn-sm mt-4 mb-4" id="submitaaa" name="name" value="Update" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+<!--end row-->
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>*@
+@*<script src="~/plugins/responsive-table/js/rwd-table.min.js" type="text/javascript"></script>*@
+
+@section Scripts{
+    @*<script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js" type="text/javascript" crossorigin="anonymous"></script>*@
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+  
+    @*<script src="~/js/signcrop.js"></script>*@
+    <script type="text/javascript">
+        function changeFormate(date) {
+
+            var month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var incomingDateChnge = new Date(date);
+            var incomingDay = incomingDateChnge.getDate();
+            var incomingMonth = incomingDateChnge.getMonth();
+
+            let incomingYear = incomingDateChnge.getFullYear();
+            if (incomingDay < 10) {
+                incomingDay = '0' + incomingDay;
+            }
+
+            incomingDateChnge = incomingDay + ' ' + month_names[incomingMonth] + ' ' + incomingYear;
+            return incomingDateChnge;
+        };
+
+        function replaceNumbers(input) {
+            var numbers = {
+                '০': 0,
+                '১': 1,
+                '২': 2,
+                '৩': 3,
+                '৪': 4,
+                '৫': 5,
+                '৬': 6,
+                '৭': 7,
+                '৮': 8,
+                '৯': 9
+            };
+            var output = [];
+            for (var i = 0; i < input.length; ++i) {
+                if (numbers.hasOwnProperty(input[i])) {
+                    output.push(numbers[input[i]]);
+                } else {
+                    output.push(input[i]);
+                }
+            }
+            return output.join('');
+        }
+
+        $('#btnEmpSearch').click(function () {         
+            var bpnumber = $('#bpNo').val();
+            if (bpnumber == null || bpnumber == '') {
+                swal('Sorry', 'No BP Number Found!', 'warning')          
+                return false;
+            }    
+            Common.Ajax('GET', '/InternalPosting/InternalEmployee/GetPIMSDataByBPNo?bpNo=' + bpnumber, [], 'json', ajaxGetImage, false);
+        })
+
+        function ajaxGetImage(res) {
+            console.log(res);
+            if (res.employee_status == 'alreayExist') {
+                swal('', 'Data Already Exist In Database', 'warning');
+                $('#gifimage').hide();
+                $('#bpnumber').val('');
+                return false;
+            }
+            $('#nameBangla').val(`${res.bangla_name}`);
+            $('#nameEnglish').val(`${res.english_name}`);
+          //  $('#bpNo').val(`${res.bp}`);
+            $(`#rankId option:contains(${res.present_rank})`).attr('selected', 'selected');
+            $(`#rankId`).trigger('change');
+
+            $(`#designation`).val(`${res.present_rank}`);
+            $('#postingPlaceId').val(`${res.current_place_of_posting}`);
+            $('#mdate').val(`${res.date_of_birth}`);
+            $('#dateofjoining').val(`${changeFormate(res.date_of_joining)}`);
+            $('#emailAddress').val(`${res.email}`);
+            $('#employeestatus').val(`${res.employee_status}`);
+            $('#fatherNameEnglish').val(`${res.father_name}`);
+            var maritalStatus = '';
+            if (res.marital_status == 'বিবাহিত') {
+                maritalStatus = 'Married'
+                $(`#maritalStatus option:contains(${maritalStatus})`).attr('selected', 'selected');
+                $('#spousenamed').show();
+                $('#gifimage').hide();
+
+            }
+            else if (res.marital_status == 'অবিবাহিত') {
+                maritalStatus = 'Single'
+                $(`#maritalStatus option:contains(${maritalStatus})`).attr('selected', 'selected');
+                $('#spousename').val('');
+                $('#spousenamed').hide();
+            } else {
+                $(`#maritalStatus option:contains(${res.sex})`).attr('selected', 'selected');
+            }
+            $('#motherNameEnglish').val(`${res.mother_name}`);
+            $('#phone').val(`${replaceNumbers(res.phone)}`);
+            if (res.religion_name == 'ইসলাম') {
+                var religon = 'Islam';
+                $(`#religionId option:contains(${religon})`).attr('selected', 'selected');
+            } else if (res.religion_name == 'হিন্দু') {
+                var religon = 'Hindu';
+                $(`#religionId option:contains(${religon})`).attr('selected', 'selected');
+            } else if (res.religion_name == 'বৌদ্ধ') {
+                var religon = 'Buddhist';
+                $(`#religionId option:contains(${religon})`).attr('selected', 'selected');
+            } else {
+                $(`#religionId option:contains(${res.religion_name})`).attr('selected', 'selected');
+            }
+
+       
+            $(`#religionId`).trigger('change');
+            $('#nationalID').val(`${res.national_id}`);
+            $('#retirementdate').val(`${changeFormate(res.retirement_date)}`);
+            $(`#gender option:contains(${res.sex})`).attr('selected', 'selected');
+            $(`#gender`).trigger('change');
+            $('#spousename').val(`${res.spouse_name}`);
+            $('#branchId').val(`${res.unit}`);
+            $('#photoPicture').attr('src', `data:image/png;base64,${res.picture}`);
+            $('#photoPictures').val(`${res.picture}`);
+            $('#basicModal').modal('hide');
+        };
+       
+
+        $(document).ready(function () {
+            $('#mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+            $('#retirementdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+            $('#policejoiningrank').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+            $('#dateofjoining').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+
+        })
+
+        $('.card-header').click(function () {
+            $(this).find('i').toggleClass(' fa-chevron-down')
+        });
+
+
+        function formatDate(date) {
+            date = new Date(date);
+            var year = date.getFullYear();
+             var month = date.getMonth() + 1;
+            var day = date.getDate()
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month < 10) {
+                month = '0' + month
+            }
+            return day + "-" + month + "-" + year
+        }
+
+        function formatDate2(date) {
+            date = new Date(date);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate()
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month == 1) { month = "Jan" } else if (month == 2) { month = "Feb" }else if (month == 3) { month = "Mar" }else if (month == 4) { month = "Apr" }else if (month == 5) { month = "May" }else if (month == 6) { month = "Jun" }else if (month == 7) { month = "Jul" }else if (month == 8) { month = "Aug" }else if (month == 9) { month = "Sep" }else if (month == 10) { month = "Oct" }else if (month == 11) { month = "Nov" }else if (month == 12) { month = "Dec" }
+            return day + "-" + month + "-" + year
+        }
+        function show(input) {
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#imagePath').text(input.value);
+                    $('#user_img').attr('src', e.target.result);
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+        }
+
+   
+
+        function b64toBlob(b64Data, contentType, sliceSize) {
+            contentType = contentType || '';
+            sliceSize = sliceSize || 512;
+
+            var byteCharacters = atob(b64Data);
+            var byteArrays = [];
+
+            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                var byteNumbers = new Array(slice.length);
+                for (var i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                var byteArray = new Uint8Array(byteNumbers);
+
+                byteArrays.push(byteArray);
+            }
+
+            var blob = new Blob(byteArrays, { type: contentType });
+            return blob;
+        }
+
+
+       
+
+        $('#FormId').parsley({ excluded: "input[type=button], input[type=file], input[type=hidden], [disabled],img, :hidden" });
+        $('#FormId').submit(function (e) {
+           e.preventDefault();
+            var imageSrc = $('#photoPicture').attr('src');
+            var name = $('#nameBangla').val();
+          
+            console.log(name);
+            if (imageSrc == "/logo/PhotoLogo.JPG") {
+                swal('Warning', 'Please Add Photo', 'warning')
+                return false;
+            } else {
+
+            }
+            var form = $('#FormId');
+
+            if ($(this).parsley({ excluded: "input[type=button], input[type=file], input[type=hidden], [disabled],img, :hidden" }).isValid()) {
+                swal({
+                    title: 'Are you sure?', text: `Do you want to save this record!`, type: 'warning', showCancelButton: true, confirmButtonColor: '#007ACC', cancelButtonColor: '#d33', confirmButtonText: `Save!`
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '/InternalPosting/InternalEmployee/SavePHQEmployee',
+                            data: form.serialize(),
+                            type: 'POST',
+                            success: function (records) {
+                                    swal('', 'Saved Successfully!', 'success').
+                                        then(function () {
+                                            window.location.href = '/InternalPosting/InternalEmployee/EmployeeListHeadQuater'
+                                        })
+                             
+                            },
+                            error: function (erro) {
+                                console.log(erro);
+                                swal('', 'Unable to Save!', 'warning');
+                            }
+                        });
+                    } else if (result.dismiss === 'cancel') {
+                        return false;
+                    }
+                });
+            }
+        });
+
+       //Photo Crop Code
+
+        var $uploadCrop,
+            tempFilename,
+            rawImg,
+            imageId;
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.upload-demo').addClass('ready');
+                    $('#cropImagePop').modal('show');
+                    rawImg = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                //swal("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
+
+
+        $uploadCrop = $('#upload-demo').croppie({
+            viewport: {
+                width: 300,
+                height: 350
+            },
+            boundary: {
+                width: 400,
+                height: 400
+            },
+            showZoomer: true,
+            enableOrientation: true,
+            enforceBoundary: true,
+            enableExif: true
+        });
+
+        $('#cropImagePop').on('shown.bs.modal', function () {
+            $uploadCrop.croppie('bind', {
+                url: rawImg
+            }).then(function () {
+                //console.log('Photo Bind Complete');
+            });
+        });
+
+        $('.item-img').on('change', function () {
+            imageId = $(this).data('id'); tempFilename = $(this).val();
+            $('#cancelCropBtn').data('id', imageId); readFile(this);
+        });
+
+        $('#cropImageBtn').on('click', function (ev) {
+          
+            var typeId = $('#ImageTypeId').val();
+            $uploadCrop.croppie('result', {
+                type: 'base64',
+                format: 'png',
+                size: { width: 300, height: 300 }
+            }).then(function (resp) {
+              
+                $('#photoPicture').attr('src', resp);
+                $('#photoPictures').val(resp);
+            
+                $('#cropImagePop').modal('hide');
+                $('#ImageTypeId').val(1);
+            });
+            $('.item-img').val('');
+        });
+
+        $('#btnRoute').on('click', function () {
+            $uploadCrop.croppie('rotate', parseInt($(this).data('deg')));
+        });
+
+
+   
+        
+
+        
+    </script>
+
+
+
+}
+
+

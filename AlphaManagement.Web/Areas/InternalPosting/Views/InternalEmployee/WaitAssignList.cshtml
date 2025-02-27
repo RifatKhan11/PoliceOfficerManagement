@@ -1,0 +1,99 @@
+﻿@model PostingReportViewModel
+@using AlphaManagement.Web.Helpers;
+@{
+    ViewData["Title"] = "DashBoard";
+    Layout = "~/Views/Shared/_PrintViewPolice.cshtml";
+}
+
+
+
+<h4 style="text-align:center">Posted Offices' List</h4>
+<h4 style="text-align:center">Reference Number- @Model.internalEnlistAssignments?.FirstOrDefault()?.reqNo</h4>
+<h4 style="text-align:center">Date @Model.internalEnlistAssignments?.FirstOrDefault()?.date?.ToString("dd-MMM-yyyy")</h4>
+
+<div class="row">
+    <table class="" style="width:100%;font-size:160%">
+        @{ var i = 1;}
+        @foreach (var item in Model.internalEnlistAssignments)
+        {
+            <tr>
+                <td>@i</td>
+                <td>
+                    <h6>@item.Name (BP-@item.Bp) <br /> @item?.deptName <br />@item?.rankName </h6>                 
+                </td>
+                <td>
+                    <h6> @item?.NewPostringPlace <br /> @item?.rankName  </h6>             
+                </td>
+            </tr>
+            i++;
+        }
+
+    </table>
+</div>
+
+@*<div class="row">
+
+        <div class="col-12">
+            <h6>
+                পুলিশ হেটকোয়ার্টার্সের বিজ্ঞপ্তি নং- @Model.assignments?.FirstOrDefault()?.assignmentMaster?.refNo, তারিখ-@LanguageProcessing.EnglishToBangla(DateTime.Now.Date.ToString("dd-MMM-yyyy")) খ্রিঃ, মোতাবেক জারীকৃত ক্রমিক নং-১ এ বর্ণিত কর্মকর্তা জনাব আসিফ মহিউদ্দিন (বিপি-৮৩৯৪৮৯৩৪৮), অতিনিক্ত পুলিশ কমিশনার, সিএমপি, চ্ট্টগ্রাম এ  অতিরিক্ত পুলিশ সুপার, সদর সার্কেল, পটুয়াখালি হিসেবে বদলির আদেশ এত দ্বারা বাতিল করা হলো।
+            </h6>
+
+
+        </div>
+    </div> <br />
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h6 class="text-center"><u>প্রাজ্ঞাপন</u></h6>
+            <h6>
+              নিন্মবর্ণিত কর্মকর্তাগণকে পরবর্তী নির্দেশ না দেওয়া পর্যন্ত জনস্বার্থে তাদের নামের পাশে উল্লেখিত পদে/স্থানে বদলি/পদায়ন করা হলোঃ-
+            </h6>
+
+        </div>
+    </div>
+
+
+
+    @section Scripts{
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $("#refNo").keyup(function () {
+                    var data = $('#refNo').val();
+                    $("#sNo").empty();
+                    $("#sNo").append(data);
+                });
+
+                $("#refNo").keyup(function () {
+                    var data = $('#refNo').val();
+                    $("#sNo").empty();
+                    $("#sNo").append(data);
+                });
+             // $('#mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+                function redirect() {
+                    var url = "/Employee/Report/PostingReportPdf";
+                    window.location(url);
+                }
+            });
+
+            $('#refDate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+
+            $("#sub").click(function (e) {
+                e.preventDefault();
+                var form = $("#fromId");
+                $.ajax({
+                    url: '/Employee/Report/PostingReportEntryUpdate',
+                    data: form.serialize(),
+                    type: 'POST',
+                    success: function (records) {
+                        var id = $('#assignMasterId').val(records.assignMasterId);
+                        window.location.href = "/Employee/Report/PostingReportPdf/" + @ViewBag.Id;
+                        SaveFileupload(records.assignMasterId);
+                    }
+                });
+            });
+
+
+        </script>
+    }*@
+

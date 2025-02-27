@@ -1,0 +1,360 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "UserRegister";
+    Layout = "~/Views/Shared/_Init_Layout.cshtml";
+}
+
+<style>
+    .short {
+        color: red;
+    }
+
+    .weak {
+        color: orangered;
+    }
+
+    .good {
+        color: forestgreen;
+    }
+
+    .strong {
+        color: darkgreen;
+    }
+</style>
+
+<section class="bg-login">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="wrapper-page">
+                    <div class="account-pages">
+                        <div class="account-box">
+                            <div class="card m-b-30">
+                                <div class="card-body">
+                                    <div class="card-title text-center">
+                                        <img src="~/logo/Ploice 01.png" alt="" style="width:80px;height:80px" class="img-fluid">
+                                        <h5 class="mt-3"><b>Officer's Portfolio, Bangladesh Police, Registration</b></h5>
+                                    </div>
+                                    <form class="form mt-5 contact-form" asp-area="Auth" asp-controller="Account" asp-action="UserRegister" method="post">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" type="text" id="bpNo" autocomplete="off" onkeyup="getPIMSDataFromDB()" onchange="getPIMSDataFromDB()" data-parsley-length="[10,10]" name="Name" placeholder="BP No (User Name)" required>
+                                                <span style="color:red">@Model.errorMsg</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" id="fullName" type="text" placeholder="Full Name" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" type="text" id="Email1" placeholder="Email" readonly>
+                                                <input type="hidden" id="Email" name="Email" parsley-type="email" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" type="text" id="PhoneNumber1" placeholder="Mobile" readonly required data-parsley-length="[11,11]">
+                                                <input type="hidden" name="PhoneNumber" id="PhoneNumber" required data-parsley-length="[11,11]">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" autocomplete="off" id="password" name="Password"
+                                                       data-parsley-pattern="/[0-9]/" type="password" placeholder="Password">
+                                                <span id="strength_message" style="font-weight:bolder"></span><br />
+                                                <span id="pass" style="font-weight:bolder" class="short">Password must contain 6 characters and 1 numeric character.</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" type="password" minlength="6" name="ConfirmPassword" placeholder="Confirm Password" required data-parsley-equalto="#password">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12 mt-4">
+                                                <button class="btn btn-primary btn-block" id="signUp" type="submit">Sign Up</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12 mt-4 text-center">
+                                                <span>Already have an account ? <a href="/Auth/Account/UserLogin">Login</a></span>
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>
+
+@section Scripts{
+    <script src="~/plugins/sweet-alert/sweetalert2.min.js"></script>
+    <script src="~/pages/jquery.sweet-alert.init.js"></script>
+    <link href="~/plugins/sweet-alert/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+
+        $('#password').keyup(function () {
+            var data = this.value;
+            if (data.length >= 6) {
+                $('#pass').hide();
+            } else {
+                $('#pass').show();
+            }
+        })
+
+
+        function getPIMSData() {
+            var bpNo = $('#bpNo').val().trim();
+
+            if (bpNo.length == 10) {
+                Common.Ajax('GET', 'https://pims.police.gov.bd:8443/pimslive/webpims/opus/bpdetails/BP' + bpNo, [], 'json', pimsdata, false);
+                //Common.Ajax('GET', '/Auth/Account/GetPIMSDataByBPNo?bpNo=' + bpNo, [], 'json', pimsdata, false);
+            } else {
+                $('#fullName').val('');
+                $('#Email').val('');
+                $('#PhoneNumber').val('');
+                $('#Email1').val('');
+                $('#PhoneNumber1').val('');
+            }
+        }
+        var rank = ['আইজিপি', 'এডিশনাল আইজি', 'অ্যাডিশনাল আইজি', 'ডিআইজি', 'এডিশনাল ডিআইজি', 'অ্যাডিশনাল ডিআইজি', 'এসপি', 'এডিশনাল এসপি', 'এএসপি', 'অ্যাডিশনাল এসপি', 'সিনিয়র এএসপি']
+        var joiningRank = ['এএসপি']
+        function pimsdata(res) {
+            if (res.items[0] == null) {
+                return false;
+            }
+            var mobNum = "";
+            var first3 = "";
+            var last3 = "";
+            var mask = "";
+            var email = "";
+            var n = "";
+            var firstPart = "";
+            var firstPartEmail = "";
+            var lastPart = "";
+            var maskEmail = "";
+            if (res.items[0].phone != null) {
+                if (res.items[0].phone != null) {
+                    mobNum = res.items[0].phone.trim();
+                }
+                
+                if (mobNum.startsWith('88')) {
+                    mobNum = mobNum.substring(0, 2);
+                } else if (mobNum.startsWith('+88')) {
+                    mobNum = mobNum.substring(0, 3);
+                }
+
+                mobNum = mobNum.replace('-', '').replace('+', '');
+
+                first3 = mobNum.substring(0, 3);
+                last3 = mobNum.substring(mobNum.length - 3);
+                mask = mobNum.substring(3, mobNum.length - 3).replace(/\d/g, "*");
+            }
+            if (res.items[0].email != null) {
+                email = res.items[0].email;
+                n = email.indexOf("@@");
+                firstPart = email.substring(0, n);
+                firstPartEmail = firstPart.substring(n - 3, n);
+                lastPart = email.substring(n);
+                maskEmail = firstPart.substring(0, firstPart.length - 3).replace(/[a-z]/g, '*');
+            }
+
+            $('#fullName').val(res.items[0].english_name);
+            $('#PhoneNumber1').val(first3 + mask + last3);
+            $('#Email1').val(maskEmail + firstPartEmail + lastPart);
+            if (res.items[0].email != null) {
+                $('#Email').val(res.items[0].email.trim());
+            } else {
+                $('#Email').val(res.items[0].email);
+            }
+            
+            var phoneNo = res.items[0].phone;
+            if (res.items[0].phone != null) {
+                phoneNo = res.items[0].phone.trim();
+            }
+            if (phoneNo.startsWith('88')) {
+                phoneNo = phoneNo.substring(0, 2);
+            } else if (phoneNo.startsWith('+88')) {
+                phoneNo = phoneNo.substring(0, 3);
+            }
+
+            phoneNo = phoneNo.replace('-', '').replace('+', '');
+            $('#PhoneNumber').val(phoneNo);
+
+            if (jQuery.inArray(res.items[0].present_rank, rank) !== -1 || jQuery.inArray(res.items[0].police_joining_rank, joiningRank) !== -1) {
+                document.getElementById("signUp").disabled = false;
+            }
+            else {
+                swal({
+                    title: 'Not Selected', text: `You are not selected for registration!`, type: 'warning', showCancelButton: true, confirmButtonColor: '#007ACC', cancelButtonColor: '#d33', confirmButtonText: `OK!`
+                }).then(function () {
+                    document.getElementById("signUp").disabled = true;
+                    $('#bpNo').val('');
+                    $('#fullName').val('');
+                    $('#Email').val('');
+                    $('#PhoneNumber').val('');
+                    $('#Email1').val('');
+                    $('#PhoneNumber1').val('');
+                });
+            }
+        }
+
+
+        function getPIMSDataFromDB() {
+            var bpNo = $('#bpNo').val().trim();
+
+            if (bpNo.length == 10) {
+                Common.Ajax('GET', '/global/api/PIMSData/' + bpNo, [], 'json', pimsdataFromDB, false);
+                //Common.Ajax('GET', '/Auth/Account/GetPIMSDataByBPNo?bpNo=' + bpNo, [], 'json', pimsdata, false);
+            } else {
+                $('#fullName').val('');
+                $('#Email').val('');
+                $('#PhoneNumber').val('');
+                $('#Email1').val('');
+                $('#PhoneNumber1').val('');
+            }
+        }
+        //var rank = ['আইজিপি', 'এডিশনাল আইজি', 'অ্যাডিশনাল আইজি', 'ডিআইজি', 'এডিশনাল ডিআইজি', 'অ্যাডিশনাল ডিআইজি', 'এসপি', 'এডিশনাল এসপি', 'এএসপি', 'অ্যাডিশনাল এসপি', 'সিনিয়র এএসপি']
+        //var joiningRank = ['এএসপি']
+        function pimsdataFromDB(res) {
+            if (res == null) {
+                return false;
+            }
+            var mobNum = "";
+            var first3 = "";
+            var last3 = "";
+            var mask = "";
+            var email = "";
+            var n = "";
+            var firstPart = "";
+            var firstPartEmail = "";
+            var lastPart = "";
+            var maskEmail = "";
+            if (res.Mobile != null) {
+                if (res.Mobile != null) {
+                    mobNum = res.Mobile.trim();
+                }
+
+                if (mobNum.startsWith('88')) {
+                    mobNum = mobNum.substring(0, 2);
+                } else if (mobNum.startsWith('+88')) {
+                    mobNum = mobNum.substring(0, 3);
+                }
+
+                mobNum = mobNum.replace('-', '').replace('+', '');
+
+                first3 = mobNum.substring(0, 3);
+                last3 = mobNum.substring(mobNum.length - 3);
+                mask = mobNum.substring(3, mobNum.length - 3).replace(/\d/g, "*");
+            }
+            if (res.Email != null) {
+                email = res.Email;
+                n = email.indexOf("@@");
+                firstPart = email.substring(0, n);
+                firstPartEmail = firstPart.substring(n - 3, n);
+                lastPart = email.substring(n);
+                maskEmail = firstPart.substring(0, firstPart.length - 3).replace(/[a-z]/g, '*');
+            }
+
+            $('#fullName').val(res.Name);
+            $('#PhoneNumber1').val(first3 + mask + last3);
+            $('#Email1').val(maskEmail + firstPartEmail + lastPart);
+            if (res.Email != null) {
+                $('#Email').val(res.Email.trim());
+            } else {
+                $('#Email').val(res.Email);
+            }
+
+            var phoneNo = res.Mobile;
+            if (res.Mobile != null) {
+                phoneNo = res.Mobile.trim();
+            }
+            if (phoneNo.startsWith('88')) {
+                phoneNo = phoneNo.substring(0, 2);
+            } else if (phoneNo.startsWith('+88')) {
+                phoneNo = phoneNo.substring(0, 3);
+            }
+
+            phoneNo = phoneNo.replace('-', '').replace('+', '');
+            $('#PhoneNumber').val(phoneNo);
+
+            //if (jQuery.inArray(res.items[0].present_rank, rank) !== -1 || jQuery.inArray(res.items[0].police_joining_rank, joiningRank) !== -1) {
+            //    document.getElementById("signUp").disabled = false;
+            //}
+            //else {
+            //    swal({
+            //        title: 'Not Selected', text: `You are not selected for registration!`, type: 'warning', showCancelButton: true, confirmButtonColor: '#007ACC', cancelButtonColor: '#d33', confirmButtonText: `OK!`
+            //    }).then(function () {
+            //        document.getElementById("signUp").disabled = true;
+            //        $('#bpNo').val('');
+            //        $('#fullName').val('');
+            //        $('#Email').val('');
+            //        $('#PhoneNumber').val('');
+            //        $('#Email1').val('');
+            //        $('#PhoneNumber1').val('');
+            //    });
+            //}
+        }
+
+
+
+        $(document).ready(function () {
+            $('#pass').hide();
+            $('form').parsley();
+
+            $('#password').keyup(function () {
+                $('#strength_message').html(checkStrength($('#password').val()))
+            });
+
+        });
+
+        function checkStrength(password) {
+            var strength = 0
+            if (password.length < 6) {
+                $('#strength_message').removeClass()
+                $('#strength_message').addClass('short')
+                return 'Your Password is Too Short.'
+            }
+
+            if (password.length > 7) strength += 1
+            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+            if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+            if (password.match(/([!,%,&,@@,#,$,^,*,?,_,~])/)) strength += 1
+            if (password.match(/(.*[!,%,&,@@,#,$,^,*,?,_,~].*[!,%,&,@@,#,$,^,*,?,_,~])/)) strength += 1
+            if (strength <= 1) {
+                $('#strength_message').removeClass()
+                $('#strength_message').addClass('weak')
+                return 'Your Password is Weak.'
+            }
+            else if (strength == 2) {
+                $('#strength_message').removeClass()
+                $('#strength_message').addClass('good')
+                return 'Your Password is Good.'
+            }
+            else {
+                $('#strength_message').removeClass()
+                $('#strength_message').addClass('strong')
+                return 'Your Password is Strong.'
+            }
+        }
+
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿using AlphaManagement.DAL.Entity.MasterData;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace AlphaManagement.DAL.Entity.InternalPosting
+{
+   public class InternalAssignmentTransectionLog:Base
+    {
+        public String UpdateUserId { get; set; }
+        public ApplicationUser UpdateUser { get; set; }
+
+        public int? assignmentId { get; set; }
+        public InternalEnlistedAssignment assignment { get; set; }
+
+        public int? oldSectionId { get; set; }
+        public Department oldSection { get; set; }
+
+        public int? newSectionId { get; set; }
+        public Department newSection { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? StartDate { get; set; }
+    }
+}

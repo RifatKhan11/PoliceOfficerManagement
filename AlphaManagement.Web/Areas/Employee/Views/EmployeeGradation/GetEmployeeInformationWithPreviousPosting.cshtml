@@ -1,0 +1,59 @@
+﻿@model EmpViewModel
+@{
+    ViewData["Title"] = "Officer's Portfolio";
+    Layout = "~/Views/Shared/_PrintView.cshtml";
+}
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+<div class="border bg-gray-200" style="text-align:center;">
+    <h4 class="col-md-8" style="margin-top:10px;">
+        বিসিএস (পুলিশ) ক্যাডারভুক্ত কর্মকর্তাদের লিস্ট
+    </h4>
+</div>
+
+<table class="table table-bordered" style="font-family:Roboto" id="allEmployeeListTable">
+
+    <thead>
+        <tr style="text-align:center;font-size:1.4em;">
+
+            <th style="vertical-align:top;">
+                ক্রমিক নং
+            </th>
+            <th style="vertical-align:top;">
+                কর্মকর্তার নাম,জন্ম তারিখ, জন্ম জেলা ও <br /> শিক্ষাগত যোগ্যতা
+            </th>
+
+        </tr>
+
+    </thead>
+    <tbody id="tBodyEmpAlpha">
+        @{
+            int sl = 1;
+            foreach (var item in Model.employeePreviousPostingPlaceSPs)
+            {
+
+                <tr style="font-size:1.2em;">
+                    <td > @item.gradationSerial<span>.</span></td>
+                    <td style="padding:0px 0px 0px 5px;">
+                        <span style="font-size:1em;">জনাব @item.nameBangla, বিপি-@item.bpNo</span><br />
+                        <span>@item.rankName, @item.currentPostiongPlace</span><br />
+                        <span>জন্ম তারিখ : </span><span>@item.dateOfBirth</span><br />
+                        <span>জন্ম জেলা : </span><span>@item.homeDistrict</span><br />
+                        <span>শিক্ষাগত যোগ্যতা : </span><span>@item.educationQualification</span><br />
+                        <span>ক্যাডারে যোগদানের তারিখ : </span><span>@item.joiningDateGovtService</span><br />
+                        <span>বিসিএস মেধাক্রম : @item.bcsPosition</span><br />
+                        <span>@item.rankName পদে পদোন্নতি : </span><span>@item.lastPromotionDate</span><br />
+                        <span>বর্তমান কর্মস্থলে যোগদানের তারিখ : </span><span>@item.joiningDatePresentWorkstation</span><br />
+
+                        <span>পূর্ববর্তী কর্মস্থল সমূহ : @item.previousPostingplaces</span>
+                    </td>
+
+                </tr>
+                sl += sl;
+            }
+        }
+
+
+    </tbody>
+</table>
+

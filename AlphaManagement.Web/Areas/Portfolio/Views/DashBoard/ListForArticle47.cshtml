@@ -1,0 +1,556 @@
+﻿@model DashBoardViewModel;
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+    var baseImageUrl = "http://portfolio.police.gov.bd";
+}
+<style>
+    @@media screen and (max-width: 599px) {
+        #desktopDiv, #listView {
+            display: none;
+        }
+
+        #mobileDiv, #cardView {
+            display: block !important;
+        }
+
+        .centerDiv {
+            text-align: center !important;
+        }
+
+        #heading-award {
+            margin-top: 60px;
+        }
+    }
+</style>
+<div class="row">
+    <!--Div Start-->
+    <div class="col-12 card p-0">
+        <div class="card-header" id="heading-award" style="cursor:pointer">
+            <h5 class="mb-0">
+                <a class="collapsed text-muted" >
+                    <i class="fa fa-thermometer-1 mr-2" style="color:#4B0080"></i>   Article 47
+                </a>
+                <a href="/Portfolio/Dashboard/Index" class="float-right text-dark" title="Dashboard"> <i class="fa fa-home fa-2x"></i></a>
+            </h5>
+
+        </div>
+        <div class="card-body">
+            <div class="col-12 row p-0" id="desktopDiv">
+                <div class="col-2 text-center p-0">
+                    <img src="@baseImageUrl/@Model?.employeeInfo?.updatedBy" alt="Photo Not Found" height="120" width="120" style="border-radius:50%" />
+                </div>
+                <div class="col-9 row p-0">
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.nameEnglish
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.rank?.rankName
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.branch?.branchUnitName
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.emailAddressPersonal
+                    </div>
+                    <div class="col-12 row">
+                        @Model?.employeeInfo?.mobileNumberPersonal
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 row text-center" id="mobileDiv" style="display:none">
+                <div class="col-12">
+                    <img src="@baseImageUrl/@Model?.employeeInfo?.updatedBy" alt="Photo Not Found" height="100" width="100" style="border-radius:50%" />
+                </div>
+                <div class="col-12">
+                    @Model?.employeeInfo?.nameEnglish<br />
+                    @Model?.employeeInfo?.rank?.rankName<br />
+                    @Model?.employeeInfo?.branch?.branchUnitName<br />
+                    @Model?.employeeInfo?.emailAddressPersonal<br />
+                    @Model?.employeeInfo?.mobileNumberPersonal
+                </div>
+            </div>
+        </div>
+        <hr class="p-0 m-0" />
+        <div id="collapse-div" class="collapse show">
+            <div class="card-body">
+                <div class="edit-table">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 row p-0 m-0">
+                            <div class="card col-md-12 col-sm-12">
+                                <div class="card-body">
+                                    <form id="formId">
+                                        <input type="hidden" name="jobSpecialBranchUnitId" id="jobSpecialBranchUnitIdFinal" value="" />
+                                        <input type="hidden" name="assignmentId" id="assignmentId" value="" />
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <div class="row">
+                                            <div class="col-12 row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="refName" class="col-sm-4 col-form-label">Type<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select class="select2 form-control  custom-select" id="typeSelect" name="type" style="width: 100%;" data-parsley-required="true">
+                                                                <option value="">Select</option>
+                                                                <option value="1">Joining</option>
+                                                                <option value="2">Departure</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="example-search-input" class="col-md-4 col-12 col-form-label"> Schedule <span style="color:red">*</span></label>
+                                                        <div class="col-md-8 col-12">
+                                                            <select class="select2 form-control custom-select" id="scheduleId" name="Schedule" style="width: 100%;" data-parsley-required="true">
+                                                                <option value="">Select</option>
+                                                                <option value="1">In The Morning</option>
+                                                                <option value="2">In The Afternoon</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row" id="joinDateDiv">
+                                                        <label class="col-sm-4 col-form-label">Joining Date<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" readonly class="form-control" id="joiningDate" name="joiningDate" value="@DateTime.Now.Date.ToString("dd-MMM-yyyy")" data-parsley-required="true">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row" id="releseDateDiv" style="display:none">
+                                                        <label class="col-sm-4 col-form-label" id="AssignresignDatelvl">Release Date<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" readonly class="form-control" name="releaseDate" id="releaseDate" value="@DateTime.Now.Date.ToString("dd-MMM-yyyy")">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">Ref. No<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" id="memorandomNo" name="memorandomNo" class="form-control" readonly value="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="refName" class="col-sm-4 col-form-label">Unit<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control" name="specialBranchUnitId" id="specialBranchUnitId" value="" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row" id="jobDivSubbranch" style="display:none">
+                                                        <label for="example-search-input" class="col-md-4 col-12 col-form-label"> Sub Unit <span style="color:red">*</span></label>
+                                                        <div class="col-md-8 col-12">
+                                                            <input type="text" class="form-control" name="subBranchId" id="jobSubbranchId" value="" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">Rank<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select class="select2 form-control  custom-select" data-parsley-required="true" style="width: 100%;" id="ranksId" name="ranksId">
+                                                                <option value="">Select</option>
+                                                                @foreach (var item in Model.rank.Where(x => x.Id < 15).OrderBy(x => x.shortOrder))
+                                                                {
+                                                                    <option value="@item.Id">@item.rankName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="example-search-input" class="col-md-4 col-12 col-form-label">Place of Posting<span style="color:red">*</span></label>
+                                                        <div class="col-md-8 col-12">
+                                                            <input type="text" class="form-control" name="secId" id="secId" value="" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="refDesignation" class="col-sm-4 col-form-label">Reason Of Transfer<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select class="select2 form-control custom-select" style="width: 100%;" id="reasonofTransfer" name="reasonofTransfer">
+                                                                <option value="">Select</option>
+                                                                <option value="Administrative">Administrative</option>
+                                                                <option value="Disciplinary">Disciplinary</option>
+                                                                <option value="On Application">On Application</option>
+                                                                <option value="On Deputation">On Deputation</option>
+                                                                <option value="On Lien">On Lien</option>
+                                                                <option value="On Promotion">On Promotion</option>
+                                                                <option value="Regular">Regular</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="example-search-input" class="col-md-4 col-12 col-form-label">Supervisor Bp No<span style="color:red">*</span></label>
+                                                        <div class="col-md-8 col-12 input-group-append">
+                                                            <input type="number" name="supervisor" id="supervisor" class="col-10 input-group-text form-control" placeholder="Supervisor BP Number" value="" />
+                                                            <a href="#" class="col-2 form-control ml-2" onclick="searchSupervisor()"><i class="fa fa-search ml-2"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row" id="supervisorDiv1" style="display:none">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">Supervisor<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="supervisorNameRank" id="supervisorNameRank" class="form-control" value="" readonly />
+                                                            <input type="hidden" name="supervisorId" id="supervisorId" class="form-control" value="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="example-search-input" class="col-md-4 col-12 col-form-label">Official Phone<span style="color:red">*</span></label>
+                                                        <div class="col-md-8 col-12">
+                                                            <input type="text" name="supervisorPhone" id="supervisorPhone" class="form-control" value="" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row" id="supervisorDiv2" style="display:none">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">Official Fax<span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="supervisorFax" id="supervisorFax" class="form-control" value="" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group row">
+                                                        <label for="example-search-input" class="col-md-4 col-12 col-form-label">Official E-Mail<span style="color:red">*</span></label>
+                                                        <div class="col-md-8 col-12">
+                                                            <input type="text" name="supervisorEMail" id="supervisorEMail" class="form-control" value="" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer centerDiv">
+                                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                                            <a href="#" onclick="openPreview()" class="btn btn-info btn-sm" id="preview">Preview</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="col-sm-12 col-md-12 col-12 card m-b-30">
+                                <div class="card-body p-0">
+                                    <h3 class="text-center">Posting List</h3>
+                                    <div class="">
+                                        <div class="bs-example" id="listView">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped" id="my-table">
+                                                    <thead style="background-color:teal;color:white">
+                                                        <tr>
+                                                            <th>Sl No.</th>
+                                                            <th>Reference Number</th>
+                                                            <th>Posting Place</th>
+                                                            <th>Joining Date</th>
+                                                            <th>Release Date</th>
+                                                            <th>Status</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="listTbody">
+                                                        @{ int i = 1;
+                                                            @foreach (var item in Model.assignments.Where(x=>x.assignmentMaster?.statusId==18))
+                                                            {
+                                                                <tr style="color:black">
+                                                                    <td>@i</td>
+                                                                    <td>@item.assignmentMaster?.memorandumNo</td>
+                                                                    <td>@item?.section?.Name, @item.specialBranchUnit?.branchUnitName</td>
+                                                                    <td>@item.StartDate?.ToString("dd-MMM-yyyy")</td>
+                                                                    <td>@item.EndDate?.ToString("dd-MMM-yyyy")</td>
+                                                                    <td>@item.articleStatus</td>
+                                                                    <td>
+                                                                        <a href="#" onclick="createArticle47(@item.Id,'@item.assignmentMaster?.memorandumNo','@item?.StartDate?.ToString("dd-MMM-yyyy")','@item?.EndDate?.ToString("dd-MMM-yyyy")','@item?.employee?.rank?.Id','@item?.specialBranchUnit?.branchUnitName','@item?.specialBranchUnit?.specialBranchUnit?.branchUnitName','@item.section?.Name','@item?.statusId')"><i class="fa fa-edit" title="Select"></i></a>
+                                                                        @if (Convert.ToString(item.articleStatus) == "Approved" || Convert.ToString(item.articleStatus) == "Ongoing" || Convert.ToString(item.articleStatus) == "Rejected" || Convert.ToString(item.articleStatus) == "Suberviser")
+                                                                        {
+                                                                        <label> || </label> <a href="/Portfolio/DashBoard/Article47Index?assignmentId=@item.Id" target="_blank"><i class="fa fa-print" style="color:blue"></i></a>
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                                i++;
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="bs-example col-sm-12 col-md-12 col-12" id="cardView" style="display:none">
+                                            @foreach (var item in Model.assignments.Where(x => x.assignmentMaster?.statusId == 18))
+                                            {
+                                                <div class="col-sm-3 col-nd-3 row p-0 m-0 mt-2">
+                                                    <div class="card p-0 m-0 text-left">
+                                                        <div class="card-header col-sm-12 col-md-12 p-0 m-0 text-center">
+                                                            <h4>@item.articleStatus</h4>
+                                                        </div>
+                                                        <div class="card-body col-sm-12 col-md-12 p-0 m-0 row">                                                            
+                                                            <label class="col-12 p-0 m-0 text-center">@item.assignmentMaster?.memorandumNo</label><br />
+                                                            <label class="col-12 p-0 m-0 text-center"><span>Posting Place: </span>@item?.section?.Name, @item.specialBranchUnit?.branchUnitName</label><br />
+                                                            <label class="col-12 p-0 m-0 text-center"><span>Start Date: </span>@item.StartDate?.ToString("dd-MMM-yyyy")</label><br />
+                                                            <label class="col-12 p-0 m-0 text-center"><span>End Date: </span>@item.EndDate?.ToString("dd-MMM-yyyy")</label><br />
+                                                        </div>
+                                                        <div class="card-footer col-sm-12 col-md-12 p-0 m-0 row text-center">
+                                                            <div class="col-4"></div>
+                                                            <div class="col-4 text-center">
+                                                                <a href="#" onclick="createArticle47(@item.Id,'@item.assignmentMaster?.memorandumNo','@item?.StartDate?.ToString("dd-MMM-yyyy")','@item?.EndDate?.ToString("dd-MMM-yyyy")','@item?.employee?.rank?.Id','@item?.specialBranchUnit?.branchUnitName','@item?.specialBranchUnit?.specialBranchUnit?.branchUnitName','@item.section?.Name','@item?.statusId')"><i class="fa fa-edit"></i></a>
+                                                                @if (Convert.ToString(item.articleStatus) == "Approved" || Convert.ToString(item.articleStatus) == "Ongoing" || Convert.ToString(item.articleStatus) == "Rejected")
+                                                                {
+                                                                    <label> || </label> <a href="/Portfolio/DashBoard/Article47Index?assignmentId=@item.Id" target="_blank"><i class="fa fa-print" style="color:blue"></i></a>
+                                                                }
+                                                            </div>
+                                                            <div class="col-4"></div>                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Div End-->
+    <!--Model Start-->
+    <div class="modal fade bd-example-modal-lg" id="clearence-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Clearence Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ClearenceClear()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="articleInfoForm">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="col-12">
+                            <input type="hidden" name="employeeId" value="@Model.employeeInfo?.Id" />
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+                            <div class="form-group row">
+                                <label for="travelDuration" class="col-sm-4 col-form-label">Duration</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="travelDuration" id="travelDuration" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row">
+                            <div class="col-9"></div>
+                            <div class="col-3 float-right">
+                                <button type="submit" class="btn btn-primary btn-sm float-right" id="saveClearence">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Model End-->
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#joiningDate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+            $('#releaseDate').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MMM-YYYY' });
+        })
+
+        $("#specialBranchUnitId").change(function () {
+            $('#jobSpecialBranchUnitIdFinal').val("");
+            var id = $(this).val();
+            if (id != "") {
+                $('#jobSpecialBranchUnitIdFinal').val(id);
+                Common.Ajax('GET', '/global/api/GetSpecialBranchUnitChild/' + id, [], 'json', ajaxjobSubBranch);
+
+                Common.Ajax('GET', '/global/api/GetPostingPlaceBySpecialBarnchId/' + id, [], 'json', ajaxPostingPlaceJob);
+
+            } else {
+                $('#jobSpecialBranchUnitIdFinal').val("");
+                $('#jobDivSubbranch').hide();
+            }
+        });
+
+        function ajaxPostingPlaceJob(responce) {
+            var data = '<option selected value="">Select</option>';
+            $.each(responce, function (i, v) {
+                data += `<option value="${v.Id}">${v.Name},${v.specialBranchUnit.districts.districtName}</option>`
+
+            })
+            $('#secId').empty();
+            $('#secId').append(data);
+        }
+
+        $("#jobSubbranchId").change(function () {
+            $('#jobSpecialBranchUnitIdFinal').val("");
+            var id = $('#jobSubbranchId').val();
+            if (id != "") {
+                $('#jobSpecialBranchUnitIdFinal').val(id);
+                Common.Ajax('GET', '/global/api/GetPostingPlaceBySpecialBarnchId/' + id, [], 'json', ajaxPostingPlaceJob);
+
+            } else {
+                $('#jobSpecialBranchUnitIdFinal').val("");
+                $('#jobDivSubbranch').hide();
+            }
+        });
+
+        function ajaxjobSubBranch(response) {
+            //console.log(response);
+            var options = '<option value="">Select</option>';
+
+            if (response.length > 0) {
+                $('#jobDivSubbranch').show();
+                // $('#jobSpecialBranchUnitIdFinal').val();
+            } else {
+                $('#jobDivSubbranch').hide();
+            }
+
+            $.each(response, function (i, item) {
+                options += '<option value="' + item.Id + '">' + item.branchUnitName + '</option>';
+            });
+
+            $('#jobSubbranchId').empty();
+            $('#jobSubbranchId').append(options);
+        }
+
+        $('#typeSelect').change(function () {
+            var type = $('#typeSelect').val();
+            if (type == 1) {
+                $('#joinDateDiv').show();
+                $('#releseDateDiv').hide();
+            }
+            else {
+                $('#releseDateDiv').show();
+                $('#joinDateDiv').hide();
+            }
+        })
+
+        function createArticle47(id, memorandumNo, joindate, releseDate, rankId, branch, subBranch, section, stillServig) {
+            $('#assignmentId').val(id);
+            $('#memorandomNo').val(memorandumNo);
+            if (joindate = '') {
+                $('#joiningDate').val(joindate);
+            }
+            if (releseDate = '') {
+                $('#releaseDate').val(releseDate);
+            }
+            $('#scheduleId').val();
+            $('#typeSelect').val();
+            $('#ranksId').val(rankId);
+            if (subBranch != '') {
+                $('#specialBranchUnitId').val(subBranch);
+                $('#jobSubbranchId').val(branch);
+                $('#jobDivSubbranch').show();
+            }
+            else {
+                $('#specialBranchUnitId').val(branch);
+                $('#jobDivSubbranch').hide();
+            }
+            $('#secId').val(section);
+            if (stillServig == 2) {
+                $('#typeSelect').val(1);
+                $('#typeSelect').trigger('change');
+            }
+        }
+
+        $('#formId').submit(function (e) {
+            e.preventDefault();
+            var form = $('#formId')
+            if ($('#typeSelect').val() == '') {
+                swal('', 'Please Select Type', 'warning')
+                return false;
+            }
+            else if ($('#scheduleId').val() == '') {
+                swal('', 'Please Select Schedule', 'warning')
+                return false;
+            }
+            else if ($('#assignmentId').val() == '') {
+                swal('', 'Please Select A Job From List', 'warning')
+                return false;
+            }
+            else if ($('#ranksId').val() == '') {
+                swal('', 'Please Select Rank', 'warning')
+                return false;
+            }
+            else if ($('#supervisorId').val() == '') {
+                swal('', 'Please Input Super BP Number', 'warning')
+                return false;
+            }
+            $.ajax({
+                url: '/Portfolio/DashBoard/UpdateAssignmentForArticle47',
+                data: form.serialize(),
+                type: 'POST',
+                success: function (res) {
+                    id = $('#assignmentId').val();
+                    if (res == 'Done') {
+                        window.location.reload();
+                    }
+                    else {
+                        swal('', 'Unable to Create Article 47', 'warning')
+                        return false;
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        })
+
+        function openPreview() {
+            var id = $('#assignmentId').val();
+            window.open('/Portfolio/DashBoard/PreviewArticle47ForAdmin/' + id, '_blank');
+        }
+
+        function searchSupervisor() {
+            var bpNo = $('#supervisor').val();
+            if (bpNo != 0) {
+                Common.Ajax('GET', '/Portfolio/DashBoard/SupervisorList?id=' + bpNo, [], 'json', ajaxSupervisor);
+            }            
+        }
+
+        function ajaxSupervisor(response) {
+            if (response != null || response != '' || response !='null') {
+                $('#supervisorNameRank').val(response.rank.rankName + ' ' + response.nameEnglish);
+                $('#supervisorId').val(response.Id);
+                $('#supervisorEMail').val(response.emailAddress);
+                $('#supervisorPhone').val(response.mobileNumberOffice);
+                $('#supervisorFax').val(response.telephoneResidence);
+                $('#supervisorDiv1').show();
+                $('#supervisorDiv2').show();
+            }
+            else {
+                $('#supervisorNameRank').val('');
+                $('#supervisorId').val('');
+                $('#supervisorPhone').val('');
+                $('#supervisorEMail').val('');
+                $('#supervisorFax').val('');
+                $('#supervisorDiv1').hide();
+                $('#supervisorDiv2').hide();
+            }
+        }
+
+
+    </script>
+}

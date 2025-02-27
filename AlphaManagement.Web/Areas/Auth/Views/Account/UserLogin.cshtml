@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewData["Title"] = "UserLogin";
+    Layout = "~/Views/Shared/_Init_Layout.cshtml";
+}
+
+<section class="bg-login">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="wrapper-page">
+                    <div class="account-pages">
+                        <div class="account-box">
+                            <div class="card m-b-30" style="border-radius:20px!important">
+                                <div class="card-body">
+                                    <div class="card-title text-center">
+                                        <img src="~/logo/Ploice 01.png" alt="" style="width:80px;height:80px" class="img-fluid">
+                                        <h5 class="mt-3"><b>Officer's Portfolio, Bangladesh Police</b></h5>
+                                    </div>
+                                    <form class="form mt-5 contact-form" asp-area="Auth" asp-controller="Account" asp-action="UserLogin">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" name="Name" type="text" placeholder="BP No (UserID)" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ">
+                                            <div class="col-sm-12">
+                                                <input class="form-control form-control-line" name="Password" type="password" placeholder="Password" required>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="form-group">
+                                                <div class="col-12">
+                                                    <label class="cr-styled">
+                                                        <input type="checkbox" checked name="RememberMes">
+                                                        <i class="fa"></i>
+                                                        Remember me
+                                                    </label>
+                                                </div>
+                                            </div>*@
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12 mt-4">
+                                                <button class="btn btn-primary btn-block" type="submit">Log In</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12 mt-4 text-center">
+                                                <span><i class="fa fa-lock m-r-5"></i> Not registered yet? <a href="/Auth/Account/UserRegister" style="color:#0026ff;font-weight:bold">Create an account</a></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12 text-center">
+                                                <a href="/Auth/Account/ForgetPassword"><i class="fa fa-lock m-r-5"></i> Forgot password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-center">
+                                            <a href="javascript:void(0)" onclick="showGuidline()" style="color:#0026ff;font-weight:bold">How to fill the Form?</a>
+                                        </div>
+
+                                        @*<p style="padding-top:0!important; margin-top:0!important; color:#0026ff !important;text-align:center;font-weight:900" href="#"><i class="fa fa-phone"></i> Helpline: 01320000451, 01320000502</p>*@
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <iframe id="fred" style="border:1px solid #666CCC" title="PDF in an i-Frame" src="~/files/OfficerPortfolioUserManual.pdf" frameborder="1" scrolling="auto" height="750" width="750"></iframe>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    
+    <script>
+        function showGuidline() {
+            $('#myModal1').modal('show');
+        }
+
+
+    </script>
+}

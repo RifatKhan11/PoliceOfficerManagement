@@ -1,0 +1,13 @@
+{
+  "title": "Special Branch Unit Informations",
+  "branchUnitName": "Branch Unit Name(EN)",
+  "branchUnitNameBN": "Branch Unit Name(BN)",
+  "branchCode": "Branch Code",
+  "shortOrder": "Short Order",
+  "PostInUnittitle": "Post In Unit",
+  "noOfPost": "Number of Post",
+  "rank": "Rank",
+  "action": "Action",
+  "PostName": "Post Name (EN)",
+  "PostNameBN": "Post Name (BN)"
+}

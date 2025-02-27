@@ -1,0 +1,141 @@
+﻿@model BCSBatchViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>BCS Batch Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="general-label">
+
+                    <form role="form" asp-area="MasterData" asp-controller="BCSBatch" asp-action="Index" method="post">
+                        <input class="form-control" type="hidden" id="BCSBatchId" name="BCSBatchId">
+
+                        <div class="form-group row">
+                            <label for="batchName" class="col-md-2 col-sm-12 col-form-label">Batch Name(EN)</label>
+                            <div class="col-md-10 col-sm-12">
+                                <input class="form-control" type="text" id="batchName" name="batchName" placeholder="Batch Name English">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="batchNameBn" class="col-md-2 col-sm-12 col-form-label">Batch Name(BN)</label>
+                            <div class="col-md-10 col-sm-12">
+                                <input class="form-control" type="text" id="batchNameBn" name="batchNameBn" placeholder="Batch Name Bangla">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="shortOrder" class="col-md-2 col-sm-12 col-form-label">Short Order</label>
+                            <div class="col-md-10 col-sm-12">
+                                <input class="form-control" type="text" id="shortOrder" name="shortOrder" placeholder="Short Order">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="shortName" class="col-md-2 col-sm-12 col-form-label"></label>
+                            <div class="col-md-10 col-sm-12">
+                                <div class="float-right">
+                                    <button type="reset" class="btn btn-danger">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header text-primary">
+                <h5>BCS Batch Information</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive-sm table-striped table-bordered" id="tblData">
+                    <thead>
+                        <tr>
+                            <th>Sl NO</th>
+                            <th>Batch Name(EN)</th>
+                            <th>Batch Name(BN)</th>
+                            <th>Short Order</th>
+                            <th class="text-nowrap"></th>
+                    </thead>
+                    <tbody>
+                        @{
+                            int sl = 0;
+                            @foreach (var data in Model.bCSBatches.OrderByDescending(x => x.Id))
+                            {
+                                sl = sl + 1;
+                                <tr>
+                                    <td>@sl</td>
+                                    <td>@data.batchName</td>
+                                    <td>@data.batchNameBn</td>
+                                    <td>@data.shortOrder</td>
+                                    <td class="text-nowrap">
+                                        <button type="button" class="tabledit-edit-button btn btn-sm btn-info" onclick="Edit(@data.Id,'@data.batchName','@data.batchNameBn',@data.shortOrder)" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                        <button type="button" class="tabledit-delete-button btn btn-sm btn-danger" onclick="Delete(@data.Id)" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+        });
+
+
+        function Edit(Id,batchName,batchNameBn,shortOrder) {
+            $("#BCSBatchId").val(Id);
+            $("#batchName").val(batchName);
+            $("#batchNameBn").val(batchNameBn);
+            $("#shortOrder").val(shortOrder);
+        }
+
+
+        function Delete(Id) {
+            swal({
+                title: 'Are you sure?', text: 'Do you want to delete this record!', type: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+
+                $.ajax({
+                    url: "/MasterData/BCSBatch/DeleteBCSBatch/" + Id,
+                    data: { Id: Id },
+                    type: 'POST',
+                })
+                    .done(function () {
+                        swal('', 'Deleted Successfully!', 'success');
+                        window.location.reload();
+                    })
+                    .fail(function () {
+                        swal('Cancelled', 'It will not be deleted. Please try again later !!!', 'error');
+                    });
+            });
+        }
+
+    </script>
+}
+
+
+
+
+

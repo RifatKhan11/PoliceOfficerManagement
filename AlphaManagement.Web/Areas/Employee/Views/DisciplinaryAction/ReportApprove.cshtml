@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Report Approve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .card {
+        background-color: gainsboro;
+    }
+</style>
+<div class="container">
+    <div class="row float-right mt-4">
+        <a class="btn btn-sm btn-success" onClick="javascript:history.go(-1)" href="javascript:void(0)"><i class="fa fa-backward"></i></a>
+    </div>
+    <div style="height:100px"></div>
+    <div class="row">
+        <div class="col-1"></div>
+        <a class="col-3 mr-1 btn card text-center" href="/Employee/DisciplinaryAction/PendingBPAList">
+            <div class="col-12">
+                <i class="fa fa-google-wallet fa-5x"></i>
+                <h6>BPA</h6>
+            </div>
+        </a>
+        <a class="col-3 mr-1 btn card text-center" href="/Employee/DisciplinaryAction/PendingDiciplinaryList">
+            <div class="col-12">
+                <i class="fa fa-gavel fa-5x"></i>
+                <h6>Disciplinary Action</h6>
+            </div>
+        </a>
+        <a class="col-3 btn card text-center" href="/Employee/DisciplinaryAction/PendingTrainingList">
+            <div class="col-12">
+                <i class="fa fa-motorcycle fa-5x"></i>
+                <h6>Training</h6>
+            </div>
+        </a>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <a class="col-3 mr-1 mt-2 btn card text-center" href="/Employee/DisciplinaryAction/PendingMedicalList">
+            <div class="col-12">
+                <i class="fa fa-stethoscope fa-5x"></i>
+                <h6>Medical Info</h6>
+            </div>
+        </a>
+        <a class="col-3 mr-1 mt-2 btn card text-center" href="/Employee/DisciplinaryAction/PendingSBList">
+            <div class="col-12">
+                <i class="fa fa-scribd fa-5x"></i>
+                <h6>SB</h6>
+            </div>
+        </a>
+        <div class="col-3"></div>
+    </div>
+</div>
+

@@ -1,0 +1,301 @@
+﻿@model DashBoardViewModel;
+@using AlphaManagement.Domain.AuthService.Interfaces;
+@using AlphaManagement.Domain.EmployeeService.interfaces;
+@inject IUserInfoes userInfo;
+@inject IEmployeeService emplyeeService;
+@{
+    var emp = await userInfo.GetUserInfoByUserName(User.Identity.Name);
+}
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    var baseImageUrl = "http://portfolio.police.gov.bd";
+}
+<link rel="shortcut icon" href="~/images/favicon.ico">
+<link href="~/plugins/morris-chart/morris.css" rel="stylesheet">
+<!-- Theme Css -->
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/css/slidebars.min.css" rel="stylesheet">
+<link href="~/css/icons.css" rel="stylesheet">
+<link href="~/css/menu.css" rel="stylesheet" type="text/css">
+<link href="~/css/style.css" rel="stylesheet">
+<style>
+    #barChart {
+        height: 300px;
+    }
+
+    .textStyle {
+        color: black;
+        text-align: center;
+    }
+
+    @@media screen and (min-width: 2000px) {
+        #dashHeight {
+            height: 200px !important;
+        }
+    }
+</style>
+
+
+<section id="bodySection">
+
+    <!-- body content start-->
+    <div class="body-content" style="margin-top: -57px;margin-left: -28px;">
+        <div class="container-fluid">
+            <div class="row mt-5">
+
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <h5 class="header-title pb-3"></h5>
+                            <div class="row">
+                                <div class="col-sm-12 row pull-right">
+
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <select class="select2 form-control form-control-sm mb-3 custom-select" id="rankId" style="width: 100%;">
+                                                <option value="0">All Rank</option>
+                                                @foreach (var item in Model.rank)
+                                                {
+                                                    <option value="@item.Id">@item.rankName</option>
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <select class="select2 form-control form-control-sm mb-3 custom-select" id="unitId" style="width: 100%;">
+                                                >
+                                                <option value="0">All Unit</option>
+                                                @foreach (var item in Model.specialBranchUnits)
+                                                {
+                                                    <option value="@item.Id">@item.branchUnitName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <select class="select2 form-control form-control-sm mb-3 custom-select" id="batchId" style="width: 100%;">
+                                                <option value="0">All Batch</option>
+                                                @foreach (var item in Model.batches)
+                                                {
+                                                    <option value="@item.Id">@item.batchName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group" style="margin-top:10px">
+                                            <button class="btn btn-sm" style="background-color:#708ea0;color:white" onclick="loadOfficers()">Load</button>
+                                            <a class="btn btn-success btn-sm pull-right mb-4" href="/Portfolio/TrainingSkill/EmployeeIndex">Add New</a>
+                                        </div>
+                                    </div>
+
+                                    <div id="checkedList">
+
+                                    </div>
+                                    <div class="table-responsive" id="tblDiv">
+                                        <table class="table table-hover m-b-0" id="tblMain" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <td width="7%">SL.NO</td>
+                                                    <td width="8%">Photo</td>
+                                                    <td width="20%">Name</td>
+                                                    <td width="20%">BP No</td>
+                                                    <td width="5%">Rank</td>
+                                                    <td width="20%">Unit</td>
+                                                    <td width="5%">BCS Batch</td>
+
+                                                    <td width="15%">Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbEmplist"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-12 row" id="divLoader" style="display:none">
+                                        <div class="col-4"></div>
+                                        <div class="col-4">
+                                            <img height="400" width="400" src="~/images/Circles-loader.gif" />
+                                        </div>
+                                        <div class="col-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <!--end container-->
+
+    </div>
+    <!--end body content-->
+</section>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <h3 class="col-12 text-center">Diciplinary Information</h3>
+                    <table class="table table-bordered" id="dicplinaryTbl" style="width:100%">
+                        <thead>
+                            <tr>
+                                <td width="5%">Sl</td>
+                                <td width="20%">Offence</td>
+                                <td width="20%">Punishment</td>
+                                <td width="10%">Ref. No</td>
+                                <td width="20%">Details</td>
+                                <td width="15%">Date</td>
+                                <td width="10%">Status</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Responsive and datatable js -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <script src="~/js/jquery.table2excel.js" type="text/javascript"></script>
+    <link href="~/plugins/morris-chart/morris.css" rel="stylesheet">
+    <script src="~/plugins/chart-js/Chart.bundle.js"></script>
+    <script src="~/plugins/morris-chart/raphael-min.js"></script>
+    <script src="~/plugins/morris-chart/morris.js"></script>
+    <script>
+
+        $(document).ready(function ($) {
+            $('#tblMain').DataTable();
+            $('#unitId').select2();
+            $('#rankId').select2();
+            $('#batchId').select2();
+            //loadOfficers();
+        });
+
+        function loadOfficers() {
+
+            var unitId = $('#unitId').val();
+            var rankId = $('#rankId').val();
+            var batchId = $('#batchId').val();
+            Common.Ajax('GET', '/Portfolio/TrainingSkill/GetDiciplinaryEmployeeList?unitId=' + unitId + '&rankId=' + rankId + '&batchId=' + batchId, [], 'json', ajaxData, false);
+            $('#tblTable').DataTable().destroy();
+            $('#tblTable').DataTable();
+        }
+
+        function ajaxData(responce) {
+            var tbody = $('#tbEmplist');
+            var data = '';
+            var data1 = '';
+            $('#tblMain').DataTable().destroy();
+            $.each(responce.employeeInfos_SPs, function (i, v) {
+                var name = '';
+                var rank = '';
+                var bcs = '';
+                var url = '';
+                var bp = '';
+                var unit = '';
+                if (v.nameEnglish == null) {
+                    name = ' '
+                }
+                else {
+                    name = v.nameEnglish;
+                }
+                if (v.employeeCode == null) {
+                    bp = ' '
+                }
+                else {
+                    bp = v.employeeCode;
+                }
+                if (v.rankName == null) {
+                    rank = ' '
+                }
+                else {
+                    rank = v.rankName;
+                }
+                if (v.branchUnitName == null) {
+                    unit = ' '
+                }
+                else {
+                    unit = v.branchUnitName;
+                }
+                if (v.batchName == null) {
+                    bcs = ' '
+                }
+                else {
+                    bcs = v.batchName;
+                }
+                if (v.url == null) {
+                    url = 'logo/defaultprofile.jpg'
+                }
+                else {
+                    url = v.url;
+                }
+                data += `<tr><td>${i + 1}</td><td><img height="50px" weight="50px" src="@baseImageUrl/${url}"/></td><td>${name}</td><td>${bp}</td><td>${rank}</td><td>${unit}</td><td>${bcs}</td><td>
+                            <a class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="openModalForDetails(${v.Id})" title="Details"><i class="mdi mdi-account-card-details"></i></a>
+                            </td></tr>`;
+            })
+            tbody.empty();
+            tbody.append(data);
+            $('#tblMain').DataTable();
+        }
+
+        function openModalForDetails(id) {
+            $.ajax({
+                url: '/Portfolio/TrainingSkill/GetEmployeeDiciplinaryInfo?empId=' + id,
+                type: 'GET',
+                success: function (res) {
+                    console.log(res)
+                    $.each(res, function (i, v) {
+                        $('#detailsModalLabel').empty();
+                        $('#detailsModalLabel').append(v.employee?.nameEnglish+'s Info');
+                        $('#dicplinaryTbl tbody').empty();
+                        $('#dicplinaryTbl tbody').append(`<tr><td>${i + 1}</td><td>${v.OffenseName}</td><td>${v.PunishmentName}</td><td>${v.referenceNumber}</td><td>${v.remarks}</td><td>${formatDate(v.startingDate)} to ${formatDate(v.endDate)}</td><td>${v.status}</td></tr>`);
+                    })
+                }
+            });
+            $('#detailModal').modal('show');
+        }
+
+        function formatDate(date) {
+            date = new Date(date);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate()
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month == 1) { month = "Jan" } else if (month == 2) { month = "Feb" } else if (month == 3) { month = "Mar" } else if (month == 4) { month = "Apr" } else if (month == 5) { month = "May" } else if (month == 6) { month = "Jun" } else if (month == 7) { month = "Jul" } else if (month == 8) { month = "Aug" } else if (month == 9) { month = "Sep" } else if (month == 10) { month = "Oct" } else if (month == 11) { month = "Nov" } else if (month == 12) { month = "Dec" }
+            return day + "-" + month + "-" + year
+        }
+    </script>
+}
+
+
+

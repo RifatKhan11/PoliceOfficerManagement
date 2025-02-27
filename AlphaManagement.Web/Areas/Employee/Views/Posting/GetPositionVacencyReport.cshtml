@@ -1,0 +1,45 @@
+﻿@model PostingVacancy
+@{
+    ViewData["Title"] = "DashBoard";
+    Layout = "~/Views/Shared/_PrintViewPolice.cshtml";
+}
+
+<h4 style="text-align:center"> POSITION VACANCY </h4>
+
+<div class="tab-content mt-4" id="myTabContent">
+
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                <thead>
+                    <tr class="text-light  table-sm">
+                        <td>Sl No</td>
+                        <td>Unit Name</td>
+                        <td>Rank</td>
+                        <td>Position</td>
+                        <td>No of Employee</td>
+                        <td>Position Vacancy</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{var i = 1;}
+                    @foreach (var item in Model.specialBranchUnits)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.branchUnitName</td>
+                            <td>@item.branchCode</td>
+                            <td>@item.totalPost </td>
+                            <td>@item.isdefault</td>
+                            <td>@item.totalBlankPost</td>
+                        </tr>
+                        i++;
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

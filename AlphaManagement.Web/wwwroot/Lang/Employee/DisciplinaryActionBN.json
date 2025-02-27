@@ -1,0 +1,18 @@
+﻿{
+  "slNo": "ক্রমিক নং",
+  "employee": "কর্মচারীর নাম",
+  "Offense": "অপরাধ",
+  "naturalPunishment": "শাস্তির ধরণ",
+  "punishmentDate": "শাস্তি  আদেশ এর তারিখ",
+  "startingDate": "শুরুর তারিখ",
+  "endDate": "শেষের তারিখ",
+  "goNumberWithDate": "",
+  "goFileURL": "",
+  "remarks": "মন্তব্য",
+  "status": "অবস্থা",
+  "action": "প্রক্রিয়া",
+  "save": "সংরক্ষণ",
+  "close": "বন্ধ",
+  "select": "নির্বাচন করুন"
+}
+

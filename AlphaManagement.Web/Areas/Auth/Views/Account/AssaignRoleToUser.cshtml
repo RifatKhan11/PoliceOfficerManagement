@@ -1,0 +1,169 @@
+﻿
+@model ApplicationRoleViewModel
+@{
+    ViewData["Title"] = "Assaign Role To User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header row">
+        <div class="col-md-10">
+            <h6 class="m-0 font-weight-bold text-primary">Assaign Role To User</h6>
+        </div>
+        <div class="col-md-2">
+            @*<a class="btn btn-sm btn-info" style="float:right;" href="/VEMSInformation/GeneralInformation/Index/@Model?.companyId">Back To List</a>*@
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-area="Auth" asp-controller="Account" asp-action="AssaignRoleToUser" method="post" enctype="multipart/form-data" data-parsley-validate="parsley">
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-2"><span class="col-form-label">User Name <span style="color:red;">*</span></span></div>
+                        <div class="col-10 form-group">
+                            <select class="form-control" id="userId" name="userId">
+                                <option>-----Select User-----</option>
+                                @foreach (var item in Model.userInfos)
+                                {
+                                <option value="@item.ApplicationUserId">@item.nameEnglish, BP-@item.employeeCode (@item?.rank?.rankName)</option>
+                                }
+                            </select>
+                            @*<input type="text" class="form-control" id="empName" name="empName" data-parsley-required="true" />
+                            <input type="hidden" id="userId" name="userId" value="" />
+                            <input type="hidden" id="userName" name="userName" value="" />*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-sm btn-success" id="btnSubmit" style="float:left;margin-left:5px;"><i class="fa fa-save"></i> Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-bordered" id="listRoleTable">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;width:10%;">Sl.</th>
+                                <th style="text-align:center;width:25%;">Role Name</th>
+                                <th style="text-align:center;width:50%;">Description</th>
+                                <th style="text-align:center;width:10%;">Select</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var sl = 1;
+
+                                @foreach (var item in Model.roleViewModels)
+                                {
+                                    <tr>
+                                        <td style="text-align:center;width:10%;">@sl</td>
+                                        <td style="text-align:left;width:25%;">@item.RoleName</td>
+                                        <td style="text-align:left;width:50%;">@item.RoleName</td>
+                                        <td style="text-align:center;width:10%;">
+                                            <input type="checkbox" class="UserRoleCheckBox" name="roleIdList" value="@item.RoleName" id="@item.RoleId" style="height:24px;width:24px;padding-top:0px;padding-bottom:0px;" />
+                                        </td>
+                                    </tr>
+                                    sl = sl + 1;
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#listRoleTable').dataTable({
+                paging: false
+            });
+            $('#userId').select2();
+            //Common.Ajax('GET', '/global/api/getUserInfoList', [], 'json', ajaxGetUserInfoList);
+        });
+
+        $('#userId').change(function () {
+            var userId = $('#userId').val();
+            $.ajax({
+                type: "Get",
+                url: '/Employee/UserInfo/AllRoleWithUserRoleByUserId/',
+                data: { id: userId },
+                success: function (data) {
+                    $('#listRoleTable tbody').empty();
+                    var option = '';
+                    var sl = 1;
+                    $.each(data.roleViewModels, function (i, item) {
+                        if (item.userStatus == 1) {
+                            option += `<tr>    
+                                          <td style="text-align:center;">${sl}</td>    
+                                          <td style="text-align:left;">${item.RoleName}</td>    
+                                          <td style="text-align:left;">${item.RoleName}</td>    
+                                          <td style="text-align:center;">    
+                                             <input type="checkbox" checked class="UserRoleCheckBox" name="roleIdList" value="${item.RoleName}" id="${item.RoleId}" style="height:24px;width:24px;padding-top:0px;padding-bottom:0px;" />
+                                      </td>
+                                   </tr>`
+                        }
+                        else {
+                            option += `<tr>    
+                                          <td style="text-align:center;">${sl}</td>    
+                                          <td style="text-align:left;">${item.RoleName}</td>    
+                                          <td style="text-align:left;">${item.RoleName}</td>    
+                                          <td style="text-align:center;">    
+                                             <input type="checkbox" class="UserRoleCheckBox" name="roleIdList" value="${item.RoleName}" id="${item.RoleId}" style="height:24px;width:24px;padding-top:0px;padding-bottom:0px;" />
+                                      </td>
+                                   </tr>`
+                        }
+                        sl++;
+                    })
+                    $('#listRoleTable tbody').append(option);
+                    $('#listRoleTable').destroy();
+                    $('#listRoleTable').dataTable({
+                        paging: false
+                    });
+                },
+                error: function (erro) {
+
+                }
+            });
+        })
+
+        function ajaxGetUserInfoList(response) {
+            var GetUserInfoList = [];
+            $.each(response, function (id, option) {
+                var obj = new Object();
+                obj.key = option.aspnetId;
+                obj.value = option.EmpName;
+                obj.UserName = option.UserName;
+                GetUserInfoList[GetUserInfoList.length] = obj;
+            });
+            $('#empName').autocomplete({
+                source: GetUserInfoList,
+                select: function (event, ui) {
+                    $("#userId").val(ui.item.key);
+                    $("#userName").val(ui.item.UserName);
+                    $("#empName").val(ui.item.value);
+                    Common.Ajax('GET', '/global/api/GetUserRoleInfoByUserId/' + ui.item.key, [], 'json', ajaxUserRoles, false);
+                }
+            });
+        }
+
+        function ajaxUserRoles(response) {
+            $(".UserRoleCheckBox").prop('checked', false);
+            //console.log(response);
+            $.each(response, function (i, item) {
+                //alert(item);
+                $("#" + item).prop('checked', true);
+            });
+        }
+    </script>
+}
+
+

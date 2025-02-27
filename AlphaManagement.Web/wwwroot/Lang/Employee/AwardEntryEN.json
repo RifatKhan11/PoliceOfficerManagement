@@ -1,0 +1,13 @@
+﻿{
+  "Title": "Award Informations",
+  "slNo": "Sl No.",
+  "employee": "Employee Name",
+  "awardName": "Award Name",
+  "purpose": "Purpose",
+  "awardDate": "Award Date",
+  "status": "Status",
+  "action": "Action",
+  "save": "Save",
+  "close": "Close"
+}
+

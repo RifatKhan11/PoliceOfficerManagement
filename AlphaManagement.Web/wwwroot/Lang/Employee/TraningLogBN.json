@@ -1,0 +1,20 @@
+﻿{
+  "Title": "প্রশিক্ষকের তথ্য",
+  "slNo": "ক্রমিক নং",
+  "employee": "কর্মচারীর নাম",
+  "fromDate": "শুরুর তারিখ",
+  "toDate": "শেষের তারিখ",
+  "country": "দেশ",
+  "trainingCategory": "প্রশিক্ষণ বিভাগ",
+  "trainingInstitute": "প্রশিক্ষণ প্রতিষ্ঠান",
+  "remarks": "মন্তব্য",
+  "trainingTitle": "প্রশিক্ষণ শিরোনাম",
+  "sponsoringAgency": "",
+  "status": "অবস্থা",
+  "action": "প্রক্রিয়া",
+  "save": "সংরক্ষণ",
+  "close": "বন্ধ",
+  "select": "নির্বাচন করুন"
+}
+
+

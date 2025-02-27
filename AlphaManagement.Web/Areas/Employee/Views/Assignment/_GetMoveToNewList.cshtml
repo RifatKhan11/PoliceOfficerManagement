@@ -1,0 +1,568 @@
+﻿@model AssignmentViewModel
+<div class="col-12 row">
+    <div class="col-1"></div>
+    <div class="col-10 dd nestable_list_2 nestable-color-2" id="moveModalSearch">
+        <ol class="dd-list">
+            @{
+                foreach (var data in Model.branchUnitWiseEmployees.Where(x => x.isParent == 1))
+                {
+                    var totalemployees = data.unitEmployees.Count() + Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Sum(x => x.subUnitEmployees.Count());
+                    var totalPost = data.unitTotalPost + Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Sum(x => x.subUnitTotalPost);
+                    var totalBlankPost = data.unitTotalPost + Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Sum(x => x.subUnitTotalBlankPost);
+                    var blankPost = totalPost - totalemployees;
+                    var assign = Model.assignments;
+                    <li class="dd-item" data-id="@data.Id">
+
+                        <div style="font-size:16px!important;padding:10px 25px 30px 20px!important;background-color: #2a1067;border-radius:7px" class="dd-handle">@data?.parentSpecialBranchUnit.branchUnitName<input type="hidden" class="subUnit" value="@data?.parentSpecialBranchUnit?.Id" />  <span class="m-2" title="Total Post"><i class="fa fa-users text-danger"></i>  @totalPost</span><span class="m-2" title="Total Officers"><i class="fa fa-user text-info"></i>  @totalemployees</span> <span class="m-2"><i class="fa fa-user-o" title="Blank Post"></i> @blankPost </span></div>
+                        @if (Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id).Count() > 0)
+                        {
+                            <ol class="dd-list">
+                                @foreach (var subu in Model.branchUnitWiseEmployees.Where(x => x.specialBranchUnit?.specialBranchUnitId == data.Id))
+                                {
+                                    var subBlankCount = subu?.subUnitTotalPost - subu?.subUnitEmployees.Count();
+                                    var subEmpCount = subu?.subUnitEmployees.Count() - subu?.subUnitTotalPost;
+                                    @if (subu?.subUnitEmployees.Count() == 0)
+                                    {
+                                        <li class="dd-item" data-id="@subu?.Id">
+                                            <div class="dd-handle" style="background-color: #040825;">@subu?.specialBranchUnit.branchUnitName<input type="hidden" class="subUnit" value="@subu?.specialBranchUnit?.specialBranchUnitId" /><input type="hidden" class="subbranchId" value="@subu?.specialBranchUnit.Id" /><span class="m-1" title="Total Post"><i class="fa fa-users"></i>  @subu?.subUnitTotalPost</span><span class="m-1" title="Total Officers"><i class="fa fa-user"></i>  @subu?.subUnitEmployees.Count()</span> <span class="m-1"><i class="fa fa-user-o" title="Blank Post"></i>  @subBlankCount </span></div>
+                                            <ol class="dd-list">
+                                                @if (subBlankCount > 0)
+                                                {
+                                                    <li class="dd-item form-inline ListOfEmpActive notsearch" id="moveLi-@subu?.specialBranchUnit?.Id">
+                                                        @if (Model.presentUnits?.Id == subu?.Id)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Already In This Unit</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else if (Model.homeDistUnits.Where(x => x.Id == subu?.specialBranchUnit?.Id).Count() > 0)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Permanent Address</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else if (Model.previousUnits.Where(x => x.Id == subu?.specialBranchUnit?.Id).Count() > 0)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Previous Unit</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else if (Model.spouseUnits.Where(x => x.Id == subu?.specialBranchUnit?.Id).Count() > 0)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Spouse Home District</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rank?.rankName <input type="hidden" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                                            <div class="wosue" id="divwosue3" style="width:55%;height:45px;">
+                                                                <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)" href="javascript:void(0)">Move Here</a>
+                                                            </div>
+                                                            <div class="dd-nodrag col">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                    </li>
+                                                }
+                                                @if (Model.presentUnits?.Id != subu?.Id)
+                                                {
+                                                    @foreach (var subEmp1 in Model.assignmentPostingModels.Where(x => x.unitId == subu.specialBranchUnit.Id))
+                                                    {
+                                                        <li class="dd-item form-inline ListOfEmpActive notsearch" id="repEmp-@subEmp1.employeeId">
+                                                            <input type="hidden" name="repEmpId" value="@subEmp1.employeeId" />
+                                                            <input type="hidden" name="repEmpCode" value="@subEmp1.employeeCode" />
+                                                            <input type="hidden" name="repColorCode" value="@subEmp1.colorCode" />
+                                                            <input type="hidden" name="repEmpName" value="@subEmp1.name" />
+                                                            <input type="hidden" name="repEmpRank" value="@subEmp1.rankName" />
+                                                            <input type="hidden" name="repEmpRankId" value="@subEmp1.rankId" />
+                                                            <input type="hidden" name="repEmpUnit" value="@subEmp1.mainUnit" />
+                                                            <input type="hidden" name="repEmpSection" value="@subEmp1.sectionName" />
+                                                            <input type="hidden" name="repEmpDist" value="" />
+                                                            <input type="hidden" name="repEmpBatch" value="" />
+                                                            <a class="col-8 m-1 mr-1 btn" style="background-color: @subEmp1.colorCode;color: black;">@subEmp1.name, @subEmp1.sectionName</a>
+                                                            <a class="col-3 m-1 ml-1 btn btn-danger" style="color: white;" onclick="replaceEmployee(@subu.specialBranchUnit.Id,'@subEmp1.sectionName',@subEmp1.sectionId,@subEmp1.employeeId)">Replace</a>
+                                                        </li>
+                                                    }
+                                                }
+
+                                                <li id="AddNewPostingForId-@subu.specialBranchUnit.Id" class="notsearch">
+                                                    <a class="col-12 m-1 ml-1 btn" style="background-color: lavender; color: black;font-weight:bolder;" onclick="AddNewPostingFor(@subu.specialBranchUnit.Id)">Add New</a>
+                                                </li>
+
+                                                <li class="dd-item form-inline ListOfEmpActive notsearch" id="AddNewmoveLi-@subu?.specialBranchUnit?.Id" style="display:none">
+                                                    <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rank?.rankName <input type="hidden" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                                    <div class="wosue" id="divwosue3" style="width:55%;height:45px;">
+                                                        <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)" href="javascript:void(0)">Move Here</a>
+                                                    </div>
+                                                    <div class="dd-nodrag col">
+                                                        <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                        <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                            @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                            {
+                                                                <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </li>
+
+
+                                            </ol>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        List<int> sectionId = new List<int>();
+                                        <li class="dd-item" data-id="@subu?.Id">
+                                            <div class="dd-handle" style="background-color: #040825;">@subu?.specialBranchUnit.branchUnitName <input type="hidden" class="subUnit" value="@subu?.specialBranchUnit?.specialBranchUnitId" /> <span class="m-2" title="Total Post"><i class="fa fa-users"></i>  @subu?.subUnitTotalPost</span><span class="m-1" title="Total Officers"><i class="fa fa-user"></i>  @subu?.subUnitEmployees.Count()</span> <span class="m-1"><i class="fa fa-user-o" title="Blank Post"></i>  @subBlankCount </span></div>
+                                            <ol class="dd-list">
+                                                @if (subBlankCount > 0)
+                                                {
+                                                    <li class="dd-item form-inline ListOfEmpActive notsearch" id="moveLi-@subu?.specialBranchUnit?.Id">
+                                                        @if (Model.presentUnits?.Id == subu?.specialBranchUnit?.Id)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Already In This Unit</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else if (Model.homeDistUnits.Where(x => x.Id == subu?.specialBranchUnit?.Id).Count() > 0)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Permanent Address</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else if (Model.previousUnits.Where(x => x.Id == subu?.specialBranchUnit?.Id).Count() > 0)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Previous Unit</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else if (Model.spouseUnits.Where(x => x.Id == subu?.specialBranchUnit?.Id).Count() > 0)
+                                                        {
+                                                            <a class="col-6 btn" style="background-color:#f17878;color:white;">Spouse Home District</a>
+                                                            <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)">Force For Posting</a>
+                                                            <div class="col-3">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rank?.rankName <input type="hidden" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                                            <div class="wosue" id="divwosue3" style="width:55%;height:45px;">
+                                                                <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)" href="javascript:void(0)">Move Here</a>
+                                                            </div>
+                                                            <div class="dd-nodrag col">
+                                                                <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                                <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                                    @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id).Where(x => !sectionId.Contains(x.Id)))
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        }
+                                                    </li>
+                                                }
+                                                @if (Model.presentUnits?.Id != subu?.specialBranchUnit?.Id)
+                                                {
+                                                    @foreach (var subEmp2 in Model.assignmentPostingModels.Where(x => x.unitId == subu.specialBranchUnit.Id))
+                                                    {
+                                                        <li class="dd-item form-inline ListOfEmpActive notsearch" id="repEmp-@subEmp2.employeeId">
+                                                            <input type="hidden" name="repEmpId" value="@subEmp2.employeeId" />
+                                                            <input type="hidden" name="repEmpCode" value="@subEmp2.employeeCode" />
+                                                            <input type="hidden" name="repColorCode" value="@subEmp2.colorCode" />
+                                                            <input type="hidden" name="repEmpName" value="@subEmp2.name" />
+                                                            <input type="hidden" name="repEmpRank" value="@subEmp2.rankName" />
+                                                            <input type="hidden" name="repEmpRankId" value="@subEmp2.rankId" />
+                                                            <input type="hidden" name="repEmpUnit" value="@subEmp2.mainUnit" />
+                                                            <input type="hidden" name="repEmpSection" value="@subEmp2.sectionName" />
+                                                            <input type="hidden" name="repEmpDist" value="" />
+                                                            <input type="hidden" name="repEmpBatch" value="" />
+                                                            <a class="col-8 m-1 mr-1 btn" style="background-color:  @subEmp2.colorCode;color: black;">@subEmp2.name, @subEmp2.sectionName</a>
+                                                            <a class="col-3 m-1 ml-1 btn btn-danger" style="color: white;" onclick="replaceEmployee(@subu.specialBranchUnit.Id,'@subEmp2.sectionName',@subEmp2.sectionId,@subEmp2.employeeId)">Replace</a>
+                                                        </li>
+                                                    }
+                                                }
+
+                                                <li id="AddNewPostingForId-@subu.specialBranchUnit.Id" class="notsearch">
+                                                    <a class="col-12 m-1 ml-1 btn" style="background-color: lavender; color: black;font-weight:bolder;" onclick="AddNewPostingFor(@subu.specialBranchUnit.Id)">Add New</a>
+                                                </li>
+
+                                                <li class="dd-item form-inline ListOfEmpActive notsearch" id="AddNewmoveLi-@subu?.specialBranchUnit?.Id" style="display:none">
+                                                    <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault()?.employee?.rank?.rankName <input type="hidden" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                                    <div class="wosue" id="divwosue3" style="width:55%;height:45px;">
+                                                        <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@subu?.specialBranchUnit?.Id)" href="javascript:void(0)">Move Here</a>
+                                                    </div>
+                                                    <div class="dd-nodrag col">
+                                                        <input type="hidden" name="newUnitName" value="@subu?.specialBranchUnit?.branchUnitName" />
+                                                        <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                            @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == subu?.specialBranchUnit?.Id))
+                                                            {
+                                                                <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </li>
+
+
+                                            </ol>
+                                        </li>
+                                    }
+                                }
+                            </ol>
+                        }
+                        else
+                        {
+                            if (data?.unitEmployees.Count() > 0)
+                            {
+                                <ol class="dd-list" id="olEmpList">
+                                    @if (blankPost > 0)
+                                    {
+                                        <li class="dd-item form-inline notsearch" id="moveLi-@data?.Id">
+                                            @if (Model.presentUnits?.Id == data.Id)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Already In This Unit</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if (Model.homeDistUnits.Where(x => x.Id == data.Id).Count() > 0)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Permanent Address</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if (Model.previousUnits.Where(x => x.Id == data?.Id).Count() > 0)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Previous Unit</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if (Model.spouseUnits.Where(x => x.Id == data?.Id).Count() > 0)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Spouse Home District</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault().employee?.rank?.rankName <input type="hidden" class="rank" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                                <div class="wosue" id="divwosue1" style="width:55%;height:45px">
+                                                    <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)" href="javascript:void(0)">Move Here</a>
+                                                </div>
+                                                <div class="dd-nodrag col">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+
+                                        </li>
+                                    }
+                                    @if (Model.presentUnits?.Id != data?.Id)
+                                    {
+                                        @foreach (var subEmp3 in Model.assignmentPostingModels.Where(x => x.unitId == data.Id))
+                                        {
+                                            <li class="dd-item form-inline ListOfEmpActive notsearch" id="repEmp-@subEmp3.employeeId">
+                                                <input type="hidden" name="repEmpId" value="@subEmp3.employeeId" />
+                                                <input type="hidden" name="repEmpCode" value="@subEmp3.employeeCode" />
+                                                <input type="hidden" name="repColorCode" value="@subEmp3.colorCode" />
+                                                <input type="hidden" name="repEmpName" value="@subEmp3.name" />
+                                                <input type="hidden" name="repEmpRank" value="@subEmp3.rankName" />
+                                                <input type="hidden" name="repEmpRankId" value="@subEmp3.rankId" />
+                                                <input type="hidden" name="repEmpUnit" value="@subEmp3.subUnit" />
+                                                <input type="hidden" name="repEmpSection" value="@subEmp3.sectionName" />
+                                                <input type="hidden" name="repEmpDist" value="" />
+                                                <input type="hidden" name="repEmpBatch" value="" />
+                                                <a class="col-8 btn m-1 mr-1" style="background-color: @subEmp3.colorCode;color: black;">@subEmp3.name, @subEmp3.sectionName</a>
+                                                <a class="col-3 btn m-1 ml-1 btn-danger" style="color: white;" onclick="replaceEmployee(@data.Id,'@subEmp3.sectionName',@subEmp3.sectionId,@subEmp3.employeeId)">Replace</a>
+                                            </li>
+                                        }
+                                    }
+
+                                    <li id="AddNewPostingForId-@data.Id" class="notsearch">
+                                        <a class="col-12 m-1 ml-1 btn" style="background-color: lavender; color: black;font-weight:bolder;" onclick="AddNewPostingFor(@data.Id)">Add New</a>
+                                    </li>
+
+                                    <li class="dd-item form-inline ListOfEmpActive notsearch" id="AddNewmoveLi-@data.Id" style="display:none">
+                                        <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault().employee?.rank?.rankName <input type="hidden" class="rank" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                        <div class="wosue" id="divwosue1" style="width:55%;height:45px">
+                                            <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)" href="javascript:void(0)">Move Here</a>
+                                        </div>
+                                        <div class="dd-nodrag col">
+                                            <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                            <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                {
+                                                    <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </li>
+
+                                </ol>
+                            }
+                            else
+                            {
+                                <ol class="dd-list" id="olEmpList">
+
+                                    @if (blankPost > 0)
+                                    {
+                                        <li class="dd-item form-inline" id="moveLi-@data?.Id">
+                                            @if (Model.presentUnits?.Id == data.Id)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Already In This Unit</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if (Model.homeDistUnits.Where(x => x.Id == data.Id).Count() > 0)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Permanent Address</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if (Model.previousUnits.Where(x => x.Id == data?.Id).Count() > 0)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Previous Unit</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if (Model.spouseUnits.Where(x => x.Id == data?.Id).Count() > 0)
+                                            {
+                                                <a class="col-6 btn" style="background-color:#f17878;color:white;">Spouse Home District</a>
+                                                <a class="col-2 btn" style="background-color:green;color:white;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)">Force For Posting</a>
+                                                <div class="col-3">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault().employee?.rank?.rankName <input type="hidden" class="rank" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                                <div class="wosue" id="divwosue1" style="width:55%;height:45px">
+                                                    <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)" href="javascript:void(0)">Move Here</a>
+                                                </div>
+                                                <div class="dd-nodrag col">
+                                                    <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                                    <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                        @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                        </li>
+                                    }
+                                    @if (Model.presentUnits?.Id != data?.Id)
+                                    {
+                                        @foreach (var subEmp3 in Model.assignmentPostingModels.Where(x => x.unitId == data.Id))
+                                        {
+                                            <li class="dd-item form-inline ListOfEmpActive notsearch" id="repEmp-@subEmp3.employeeId">
+                                                <input type="hidden" name="repEmpId" value="@subEmp3.employeeId" />
+                                                <input type="hidden" name="repEmpCode" value="@subEmp3.employeeCode" />
+                                                <input type="hidden" name="repColorCode" value="@subEmp3.colorCode" />
+                                                <input type="hidden" name="repEmpName" value="@subEmp3.name" />
+                                                <input type="hidden" name="repEmpRank" value="@subEmp3.rankName" />
+                                                <input type="hidden" name="repEmpRankId" value="@subEmp3.rankId" />
+                                                <input type="hidden" name="repEmpUnit" value="@subEmp3.subUnit" />
+                                                <input type="hidden" name="repEmpSection" value="@subEmp3.sectionName" />
+                                                <input type="hidden" name="repEmpDist" value="" />
+                                                <input type="hidden" name="repEmpBatch" value="" />
+                                                <a class="col-8 btn m-1 mr-1" style="background-color: @subEmp3.colorCode;color: black;">@subEmp3.name, @subEmp3.sectionName</a>
+                                                <a class="col-3 btn m-1 ml-1 btn-danger" style="background-color: #f17878;color: white;" onclick="replaceEmployee(@data.Id,'@subEmp3.sectionName',@subEmp3.sectionId,@subEmp3.employeeId)">Replace</a>
+                                            </li>
+                                        }
+                                    }
+
+                                    <li id="AddNewPostingForId-@data.Id" class="notsearch">
+                                        <a class="col-12 m-1 ml-1 btn" style="background-color: lavender; color: black;font-weight:bolder;" onclick="AddNewPostingFor(@data.Id)">Add New</a>
+                                    </li>
+
+                                    <li class="dd-item form-inline ListOfEmpActive notsearch" id="AddNewmoveLi-@data.Id" style="display:none">
+                                        <div class="form-control" style="background-color: lavender; color: black; font-weight: bolder;">@Model?.enlistedAssignments?.FirstOrDefault().employee?.rank?.rankName <input type="hidden" class="rank" name="rankId" value="@Model?.enlistedAssignments?.FirstOrDefault().employee?.rankId" /></div>
+                                        <div class="wosue" id="divwosue1" style="width:55%;height:45px">
+                                            <a class="btn col-11" style="height:35px;background-color: yellowgreen;color: white;font-size: 20px;font-weight: bolder;margin-top: 5px;margin-left: 10px;" onclick="moveToPostingPlace(@data.Id)" href="javascript:void(0)">Move Here</a>
+                                        </div>
+                                        <div class="dd-nodrag col">
+                                            <input type="hidden" name="newUnitName" value="@data?.parentSpecialBranchUnit?.branchUnitName" />
+                                            <select class="form-control" name="sectionId" style="width:107%;float:right;">
+                                                @foreach (var item in Model.sections.Where(x => x.specialBranchUnitId == data.Id))
+                                                {
+                                                    <option value="@item.Id">@item.Name, @item?.specialBranchUnit?.districts?.districtName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </li>
+
+                                </ol>
+                            }
+                        }
+                    </li>
+
+                }
+            }
+        </ol>
+    </div>
+    <div class="col-1"></div>
+</div>
+<script src="~/plugins/nestable/jquery.nestable.js"></script>
+<script src="~/plugins/nestable/nestable.js"></script>
+<script>
+
+    function AddNewPostingFor(Id) {
+        $('#AddNewmoveLi-' + Id).show();
+        $('#AddNewPostingForId-' + Id).hide();
+    }
+
+    function ShowHideEmployee() {
+        $('.ListOfEmpActive').hide();
+        $('#VacantBtn').hide();
+        $('#allBtn').show();
+    }
+
+    function ShowAllEmployee() {
+        $('.ListOfEmpActive').show();
+        $('#VacantBtn').show();
+        $('#allBtn').hide();
+    }
+    $(document).ready(function () {
+        $('#divLoader').hide();
+        $('#moveToDiv').show();
+        $.each(replacedEmpList, function (i, v) {
+            $('#repEmp-' + v).remove();
+        })
+    })
+</script>

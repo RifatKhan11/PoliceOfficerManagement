@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-sm-12" style="min-height:500px">
+    <div class="row form-group">
+        <input type="hidden" id="ID" />
+        <div class="col-sm-3"><label>Role Access Information</label></div>
+        <div class="col-sm-1"><label>Role Type</label></div>
+        <div class="col-sm-3">
+            <select class="form-control" id="UserTypeID" placeholder="User Type" name="userTypeId" style="border-radius: 25px;" required></select>
+        </div>
+        <div class="col-md-5">
+            <button id="btnSave" class="btn btn-info btn-sm pull-left">Save</button>
+        </div>
+    </div>
+
+    <div style="height:10px;"></div>
+
+    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="data-table-row-grouping" class="table table-striped jambo_table bulk_action">
+                    <thead style="background-color:#8a8585;color:white">
+                        <tr>
+                            <th>SL</th>
+                            <th>Module Name</th>
+                            <th>Page Name</th>
+                            <th>Url</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+<script>
+    $(document).ready(function () {
+
+        Getusertype();
+        $("#UserTypeID").change(function () {
+            GetUserMenuAccess();
+        });
+        //$("#btnSave").on("click", SaveUserMenuAccess);
+
+    });
+
+    function Getusertype() {
+        $('#UserTypeID').empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Auth/MasterRole/GetAllRole',
+                dataType: 'json',
+                data: {},
+                success: function (responce) {
+
+                    $('#UserTypeID').append('<option value="">Select Role Type</option>');
+                    $.each(responce, function (i, item) {
+                        $('#UserTypeID').append('<option value="' + item.Id + '">' + item.Name + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to Job Data.' + ex);
+                }
+            });
+    }
+
+    function GetUserMenuAccess() {
+        var UserTypeId = $("#UserTypeID").val();
+        if (UserTypeId != null && UserTypeId !="")
+        {
+            $.ajax({
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                url: '/Auth/MasterRole/GetAllPageList',
+                dataType: 'json',
+                async: true,
+                success: function (UserMenu) {
+                    var Index = 1;
+                    var data = '';
+                    var dtTable = $("#data-table-row-grouping");
+                    var tableBody = dtTable.find('tbody');
+                    tableBody.empty();
+                    $.each(UserMenu, function (index, E) {
+                        data += `<tr>
+                                    <td>${index+1}</td>
+                                    <td>${E.module.moduleName}</td>
+                                    <td>${E.nameOption}</td>
+                                    <td>/${E.area}/${E.controller}/${E.action}</td>
+                                    <td><input type="checkbox" style="width:20px;height:20px" id="chk${E.navbarId}" class="js-switch" /></td>
+                                </tr>`;
+                        index++;
+                    });
+                    tableBody.append(data)
+                },
+                error: function (request, status, error) {
+                    alert(request.statusText + "/" + request.statusText + "/" + error);
+                }
+            });
+        }
+        else
+        {
+            $("#data-table-row-grouping tbody tr").empty();
+        }
+    }
+</script>
+}
+

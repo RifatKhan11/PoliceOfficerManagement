@@ -1,0 +1,788 @@
+﻿@model EmployeePortfolioDashBoardViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var baseImageUrl = "http://portfolio.police.gov.bd";
+}
+<link rel="shortcut icon" href="~/images/favicon.ico">
+<link href="~/plugins/morris-chart/morris.css" rel="stylesheet">
+<!-- Theme Css -->
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/css/slidebars.min.css" rel="stylesheet">
+<link href="~/css/icons.css" rel="stylesheet">
+<link href="~/css/menu.css" rel="stylesheet" type="text/css">
+<link href="~/css/style.css" rel="stylesheet">
+<style>
+    #barChart {
+        height: 300px;
+    }
+
+    .textStyle {
+        color: black;
+        text-align: center;
+    }
+
+    @@media screen and (min-width: 2000px) {
+        #dashHeight {
+            height: 200px !important;
+        }
+    }
+
+    .flexMainBox {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .flexDiv {
+        width:20%;
+        padding:10px;
+        /*background-color: #f1f1f1;
+        margin: 10px;
+        padding: 20px;
+        font-size: 30px;*/
+    }
+
+</style>
+
+
+<section id="bodySection">
+    <!-- body content start-->
+    <div class="body-content" style="margin-top: -57px;margin-left: -28px;">
+        <div class="container-fluid">
+
+            <div class="page-head">
+                <h4 class="mt-2 mb-2">Dashboard</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="flexMainBox">
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=0&periodType=All">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4 col-12">
+                                            <div class="text-center"><i class="mdi mdi-account-multiple" style="background:#d8851e"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.totalRegistration?.ToString("0,0")</h2>
+                                            <p class="textStyle">Total Registration</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=2&periodType=All">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center text-center">
+                                        <div class="col-md-4 col-12">
+
+                                            <div class="text-center"><i class="mdi mdi-account-settings" style="background:#ef7e82"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.onGoing?.ToString("0,0")</h2>
+                                            <p class="textStyle">On Going</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=3&periodType=All">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4 col-12">
+                                            <div class="text-center"><i class="ti ti-user" style="background:#24cebe"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.finalSubmit?.ToString("0,0")</h2>
+                                            <p class="textStyle">Final Submit</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Employee/EmployeeInfoHistory/AdminCheckedUpdatedEmployeeListForAdmin?id=0">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4 col-12">
+                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#82d9f1"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.checkedItem?.ToString("0,0")</h2>
+                                            <p class="textStyle">Checked Officer's List</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=4&periodType=All">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4 col-12">
+                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#51b36f"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.varified?.ToString("0,0")</h2>
+                                            <p class="textStyle">Verified</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-12">
+                    <div class="flexMainBox">
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=0&periodType=todays">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4 col-12">
+                                            @*<div class="text-center"><i class="ti ti-user" style=""></i></div>*@
+                                            <div class="text-center"><i class="mdi mdi-account-multiple-plus" style="background:#926327"></i></div>
+                                        </div>
+
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.todaysTotalRegistration?.ToString("0,0")</h2>
+                                            <p class="textStyle">Today's Registration</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=2&periodType=todays">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center text-center">
+                                        <div class="col-md-4 col-12">
+                                            <div class="text-center"><i class="mdi mdi-account-convert" style="background:#af7174"></i></div>
+                                        </div>
+                                        @*<div class="col-4">
+                            <div class="inlinesparkline">Loading..</div>
+                        </div>*@
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.todaysOnGoing?.ToString("0,0")</h2>
+                                            <p class="textStyle">Today's On Going</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=3&periodType=todays">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4 col-12">
+                                            <div class="text-center"><i class="mdi mdi-account-location" style="background:#165f58"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.todaysFinalSubmit?.ToString("0,0")</h2>
+                                            <p class="textStyle">Today's Final Submit</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Employee/EmployeeInfoHistory/AdminCheckedUpdatedEmployeeListForAdmin?id=1">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4 col-12">
+                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#82d9f1"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.todaycheckedItem?.ToString("0,0")</h2>
+                                            <p class="textStyle">Today's Checked List</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="flexDiv">
+                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=4&periodType=todays">
+                                <div class="widget-box bg-white m-b-30">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#5fca80"></i></div>
+                                        </div>
+                                        <div class="col-md-8 col-12">
+                                            <h2 class="m-0 counter textStyle">@Model.todaysVarified?.ToString("0,0")</h2>
+                                            <p class="textStyle">Today's Verified</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-8 col-sm-12 col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <div class="panel-body cbarChart">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12 col-12" style="height: 453px;overflow-y:scroll" id="dashHeight">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+
+                            <div class="table-rep-plugin">
+                                <div class="table-responsive" data-pattern="priority-columns">
+                                    <table id="tech-companies-1" class="table table-striped specialBranchUnits">
+                                        <thead>
+                                            <tr>
+                                                <form class="search-content class=" fixed-top"">
+                                                    <input type="text" class="form-control" name="keyword" id="myInput" placeholder="Search...">
+                                                    <span class="searchbuttonDashboard"><i class="ti ti-search"></i></span>
+                                                </form>
+                                            </tr>
+                                            @foreach (var unit in Model.unitList)
+                                            {
+
+                                                <tr>
+
+                                                    <th style="width:80%"><a href="#" onclick="unitEmployees(@unit.unitId,0,0,0,'@unit.unitName',@unit.count)">@unit.unitName</a></th>
+                                                    <th style="width:20%;text-align:right"><a href="#" onclick="unitEmployees(@unit.unitId,0,0,0,'@unit.unitName',@unit.count)">@unit.count</a></th>
+
+                                                </tr>
+
+
+                                            }
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mt-5">
+
+                <div class="col-lg-4 col-sm-12">
+                    <div class="form-horizontal">
+
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                                <h5 class="header-title pb-3">Division Wise Officer's</h5>
+                                <div class="morrisDonut">
+                                    <div id="morris-donut-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                                <h5 class="header-title pb-3">Progress Wise Officer's</h5>
+                                <div class="prograssChart">
+                                    <div id="prograssOfficers"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-8 col-sm-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            @*<h5 class="header-title pb-3"></h5>
+                                <div id="morris-bar-chart"></div>*@
+
+                            <h5 class="header-title pb-3">Batch Total Completed</h5>
+                            <div class="sales-chartbat teamCompleted">
+                                @*<canvas id="team-chart"></canvas>*@
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-lg-4 col-sm-12">
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                                <h5 class="header-title pb-3"></h5>
+                                <div id="extra-area-chart"></div>
+                            </div>
+                        </div>
+                    </div>*@
+
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <h5 class="header-title pb-3"></h5>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover m-b-0" id="tblTablee">
+                                            <thead>
+                                                <tr>
+                                                    <td>SL.NO</td>
+                                                    <td>Gradation</td>
+                                                    <td>Photo</td>
+                                                    <td>Name</td>
+                                                    <td>BP No</td>
+                                                    <td>Rank</td>
+                                                    <td>Unit</td>
+                                                    <td>BCS Batch</td>
+                                                    <td>Status</td>
+                                                    <td>Mark</td>
+                                                    <td>Action</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbEmplistt">
+                                                @{
+                                                    var i = 1;
+
+                                                    var statusMessageColor = "gray";
+                                                    var fontcolor = "black";
+                                                    string currentStaus = "Ongoing";
+                                                    string currentStausColor = "gray";
+                                                    @foreach (var item in Model.employeeInfosViewModelFor_SPs)
+                                                    {
+                                                <tr>
+                                                    <td>@i</td>
+                                                    <td>@item.gradationSerial</td>
+                                                    @if (item.imageUrl == null)
+                                                    {
+                                                        <td> <img src="~/logo/defaultprofile.jpg" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td> <img src="@baseImageUrl/@item.imageUrl" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
+                                                    }
+                                                    <td>@item.nameEnglish</td>
+                                                    <td>@item.employeeCode</td>
+                                                    <td>@item.rankName</td>
+                                                    <td>@item.sectionName</td>
+                                                    <td>@item.batchName</td>
+
+                                                    <td>
+                                                        @if (item.isApproved == 1)
+                                                        {
+                                                            currentStaus = "Registered";
+                                                            currentStausColor = "gray";
+                                                        }
+                                                        else if (item.isApproved == 2)
+                                                        {
+                                                            currentStaus = "On Going";
+                                                            currentStausColor = "#0094ff";
+                                                        }
+                                                        else if (item.isApproved == 3)
+                                                        {
+                                                            currentStaus = "Final Submited";
+                                                            currentStausColor = "#1d9414";
+                                                        }
+                                                        else if (item.isApproved == 4)
+                                                        {
+                                                            currentStaus = "Verified";
+                                                            currentStausColor = "#ff00dc";
+                                                        }
+                                                        else if (item.isApproved == 5)
+                                                        {
+                                                            currentStaus = "Returned";
+                                                            currentStausColor = "#ffd800";
+                                                        }
+                                                        else if (item.isApproved == 6)
+                                                        {
+                                                            currentStaus = "Checked By Checker";
+                                                            currentStausColor = "#ff006e";
+                                                        }
+                                                        else if (item.isApproved == 7)
+                                                        {
+                                                            currentStaus = "Checked By Editor";
+                                                            currentStausColor = "#b6ff00";
+                                                        }
+                                                        else if (item.isApproved == 8)
+                                                        {
+                                                            currentStaus = "Verify By Checker";
+                                                            currentStausColor = "#934a03";
+                                                        }
+                                                        else
+                                                        {
+                                                            currentStaus = "On Going";
+                                                            currentStausColor = "#0094ff";
+                                                        }
+                                                        <div class="" style="width:100%; background-color:@currentStausColor;border-radius:5px;">
+                                                            <div style="text-align:center; color:ghostwhite" role="progressbar">@currentStaus</div>
+                                                        </div>
+
+                                                    </td>
+
+                                                    @if (item.statusMark >= 70)
+                                                    {
+                                                        statusMessageColor = "green";
+                                                        fontcolor = "white";
+                                                    }
+                                                    else if (item.statusMark >= 50 && item.statusMark < 70)
+                                                    {
+                                                        statusMessageColor = "yellow";
+                                                        fontcolor = "black";
+                                                    }
+                                                    else if (item.statusMark < 50)
+                                                    {
+                                                        statusMessageColor = "red";
+                                                        fontcolor = "white";
+                                                    }
+                                                    <td>
+                                                        <div class="" style="width:100%; background-color:@statusMessageColor;border-radius:5px">
+                                                            <div style="text-align:center; color:@fontcolor" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">@item.statusMark%</div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td width="10%">
+                                                        @*<a class="btn btn-sm btn-primary" href="/Portfolio/PortfolioDashboard/EmployeeDetails?id=@item.employeeCode" target="_blank"><i class="mdi mdi-account-card-details"></i></a>*@
+
+                                                        <a class="btn btn-sm btn-primary d-inline" href="javascript:void(0)" onclick="window.open('/Portfolio/PortfolioDashboard/EmployeeDetails?empIdentityUserSessionToken=@item.Id')" target="_blank" title="Details"><i class="mdi mdi-account-card-details"></i></a>
+                                                        @*<a class="btn btn-sm btn-info d-inline" style="margin-left:5px" href="javascript:void(0)" onclick="window.open('/Portfolio/PortfolioDashboard/EmployeeInfoReportViewPDF?empIdentityUserSessionToken=@item.Id')" target="_blank" title="Print Preview"><i class="fa fa-print"></i></a>*@
+
+                                                    </td>
+                                                </tr>
+                                                        i++;
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <!--end container-->
+
+    </div>
+    <!--end body content-->
+</section>
+
+
+<div class="modal fade bd-example-modal-lg" id="employeeInformation" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="unitName" style="color:#008000"> </h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: red;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-info btn-sm" onclick="exportToExcel()">Export To Excel</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="float-right">
+                            <input type="text" class="form-control" name="keyword" id="search_employees" placeholder="Search...">
+                            <span class="search-button"><i class="ti ti-search"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab-content" id="myTabContent" style="height:400px;overflow-y:scroll;width:100%">
+                    <div></div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/jquery-3.2.1.min.js"></script>
+<script src="~/js/popper.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/jquery-migrate.js"></script>
+<script src="~/js/modernizr.min.js"></script>
+<script src="~/js/jquery.slimscroll.min.js"></script>
+<script src="~/js/slidebars.min.js"></script>
+
+<script src="~/plugins/counter/jquery.counterup.min.js"></script>
+<script src="~/plugins/waypoints/jquery.waypoints.min.js"></script>
+<script src="~/plugins/sparkline-chart/jquery.sparkline.min.js"></script>
+<script src="~/pages/jquery.sparkline.init.js"></script>
+
+<script src="~/plugins/chart-js/Chart.bundle.js"></script>
+<script src="~/plugins/morris-chart/raphael-min.js"></script>
+<script src="~/plugins/morris-chart/morris.js"></script>
+<script src="~/pages/dashboard-init.js"></script>
+
+
+
+@section Scripts{
+    <script src="~/js/jquery.table2excel.js" type="text/javascript"></script>
+    <script>
+        var barchart;
+        var teamChart;
+        var divisionChart;
+        var prograssChart;
+
+        $(document).ready(function ($) {
+            $('#tblTablee').DataTable();
+            generateRankWiseOfficersChart();
+            divisionWiseOfficers();
+            BatchWiseOfficers();
+            prograssWiseOfficers();
+
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".specialBranchUnits tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+
+            $("#search_employees").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#tbEmplist tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $('html, body').animate({
+                scrollTop: $("#bodySection").offset().top
+            });  // }, 2000);
+
+            $("#barChart").click(
+                function (evt) {
+                    var activePoints = barchart.getSegmentsAtEvent(evt);
+                    alert(activePoints);
+                }
+            );
+
+        });
+
+        function unitEmployees(unitId, rankId, batchId, divisionId, name, count) {
+            let titel = name + " (Total- " + count + ")";
+
+            $('#tbEmplist').empty();
+            $('#myTabContent').load("/Portfolio/PortfolioDashboard/GetUnitWiseEmployeePortfolioList?unitId=" + unitId + "&rankId=" + rankId + "&batchId=" + batchId + "&divisionId=" + divisionId);
+            $('#employeeInformation').modal({ show: true, backdrop: 'static', keyboard: false });
+            $('#unitName').text(titel);
+        }
+
+        function percentEmployees(id, label) {
+            let titel = label;
+
+            $('#tbEmplist').empty();
+            $('#myTabContent').load("/Portfolio/PortfolioDashboard/GetPercentPrograssEmployeePortfolioList?status=" + id);
+            $('#employeeInformation').modal({ show: true, backdrop: 'static', keyboard: false });
+            $('#unitName').text(titel);
+        }
+
+        function exportToExcel() {
+            var storeId = $('#unitName').html();
+
+            var titleex = storeId;
+            var table = $('#tblTable');
+            if (table && table.length) {
+                var preserveColors = (table.hasClass('table2excel_with_colors') ? true : false);
+                $(table).table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name",
+                    filename: titleex + '_' + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+                    fileext: ".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: true,
+                    preserveColors: preserveColors
+                });
+            }
+        }
+
+        function generateRankWiseOfficersChart() {
+            $('#barChart').remove();
+            $('.cbarChart').append('<canvas id="barChart" style="display: block;width: 841px;height: 360px;"></canvas>');
+            $.get("/global/api/GetRankWiseEmployeeCount", function (data) {
+                barchart = new Chart(document.getElementById("barChart"), {
+                    type: 'bar',
+                    data: {
+                        labels: data.allRanks,
+                        datasets: [
+                            {
+                                label: "Total Officer: ",
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#c45760"],
+                                data: data.noOfEmployees,
+                                rankIds: data.rankIds
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: "Rank Wise Officers'"
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        onClick: function (c, i) {
+                            e = i[0];
+                            var label = this.data.labels[e._index];
+                            var y_value = this.data.datasets[0].data[e._index];
+                            var rankId = this.data.datasets[0].rankIds[e._index];
+                            console.log(y_value);
+                            console.log(label);
+                            unitEmployees(0, rankId, 0, 0, label, y_value);
+                        }
+
+
+
+
+                    }
+                });
+            })
+        }
+
+        function divisionWiseOfficers() {
+            $('#morris-donut-chart').remove();
+            $('.morrisDonut').append('<div id="morris-donut-chart"></div>');
+            $.get("/global/api/GetDivisionWiseEmployeeCount", function (data) {
+                divisionChart = Morris.Donut({
+                    element: 'morris-donut-chart',
+                    data: data,
+
+                    resize: true, colors: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#245850", "#445760", "#845760", "#9e5ea2"],
+                }).on('click', function (i, row) {
+                    unitEmployees(0, 0, 0, row.divId, row.label, row.value);
+                });
+            })
+
+        }
+
+        function prograssWiseOfficers() {
+            $('#prograssOfficers').remove();
+            $('.prograssChart').append('<div id="prograssOfficers"></div>');
+            $.get("/api/PortfolioDashboard/GetPercentWisePrograss", function (data) {
+                prograssChart = Morris.Donut({
+                    element: 'prograssOfficers',
+                    data: data,
+
+                    resize: true, colors: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#245850", "#445760", "#845760", "#9e5ea2"],
+                }).on('click', function (i, row) {
+                    percentEmployees(row.percents, row.label);
+                });
+            })
+
+        }
+
+        function BatchWiseOfficers() {
+            $('#team-chart').remove();
+            $('.teamCompleted').append('<canvas id="team-chart"></canvas>');
+            $.get("/global/api/GetBatchWiseEmployeeCount", function (data) {
+                teamChart = new Chart(document.getElementById("team-chart"), {
+                    type: 'line',
+                    data: {
+                        labels: data.allBatches,
+                        type: 'line', defaultFontFamily: 'Montserrat',
+                        datasets: [{
+                            data: data.noOfEmployees,
+                            batchIds: data.batchIds,
+                            label: "",
+                            backgroundColor: '#b9dcec',
+                            borderColor: '#f572a1',
+                            borderWidth: 3.5,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: '#f572a1',
+                        }
+                            ,]
+                    },
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            mode: 'index',
+                            titleFontSize: 12,
+                            titleFontColor: '#000',
+                            bodyFontColor: '#000',
+                            backgroundColor: '#fff',
+                            titleFontFamily: 'Montserrat',
+                            bodyFontFamily: 'Montserrat',
+                            cornerRadius: 3,
+                            intersect: false,
+                        },
+                        legend: {
+                            display: false,
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true, fontFamily: 'Montserrat',
+                            }
+                            ,
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                gridLines: {
+                                    display: false, drawBorder: false
+                                }
+                                , scaleLabel: {
+                                    display: false, labelString: 'Month'
+                                }
+                            }
+                            ],
+                            yAxes: [{
+                                display: true,
+                                gridLines: {
+                                    display: false,
+                                    drawBorder: false
+                                }
+                                , scaleLabel: {
+                                    display: true,
+                                    labelString: "officers'"
+                                },
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                            ]
+                        },
+                        onClick: function (c, i) {
+                            e = i[0];
+                            var label = this.data.labels[e._index];
+                            var y_value = this.data.datasets[0].data[e._index];
+                            var batchId = this.data.datasets[0].batchIds[e._index];
+                            //  console.log(y_value);
+                            //   console.log(label);
+                            unitEmployees(0, 0, batchId, 0, label, y_value);
+                        }
+                        , title: {
+                            display: false,
+                        }
+                    }
+                }
+                );
+            })
+        }
+    </script>
+}

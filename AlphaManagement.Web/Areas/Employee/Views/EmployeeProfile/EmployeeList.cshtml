@@ -1,0 +1,867 @@
+﻿@model EmployeeInfoViewModel
+@{
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+<style>
+    .fas {
+        margin-top: 10px;
+        font-size: 25px;
+    }
+
+    body {
+        /*font-family: 'Josefin Sans', sans-serif;*/
+    }
+
+    .active {
+        color: darkcyan;
+    }
+
+    .c {
+        min-height: 450px;
+        background-color: #FDF2E9;
+    }
+
+        .c .card-footer {
+            height: 52px;
+            background-color: #E9F7EF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    .cb {
+        height: 400px;
+    }
+
+    .c .cb {
+        transition: .3s all;
+        cursor: pointer;
+    }
+
+    .c:hover .cb {
+        background-color: #D6DBE9;
+    }
+
+    #myInput1 {
+        width: 50%;
+        position: absolute;
+        right: 18px;
+        box-shadow: none;
+    }
+
+    .pagination > li > a,
+    .pagination > li > span {
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        color: #337ab7;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    .pagination > .active > a,
+    .pagination > .active > a:focus,
+    .pagination > .active > a:hover,
+    .pagination > .active > span,
+    .pagination > .active > span:focus,
+    .pagination > .active > span:hover {
+        z-index: 3;
+        color: #fff;
+        cursor: default;
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+
+    .pagination-container {
+        margin: 20px 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .card-title {
+        min-height: 75px;
+    }
+
+    .form-control {
+        border-radius: 5px !important;
+    }
+
+    .zoom {
+        transition: transform .2s; /* Animation */
+    }
+
+        .zoom:hover {
+            transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+    .zoom1 {
+        transition: transform .2s; /* Animation */
+    }
+
+        .zoom1:hover {
+            transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+            background: darkcyan;
+            border-radius: 50%;
+            border: 1px solid darkcyan;
+        }
+</style>
+
+<div class="card-body" style="display:block;">
+
+    <form>
+        <div class="row">
+            <div class="col-5 card" style="padding: 15px 15px 10px 25px;">
+                <div class="form-group row">
+                    <h6 class="m-0 font-weight-bold text-primary">Select Value For Query</h6>
+                </div>
+
+                <div class="form-group row">
+                    <label for="key" class="col-sm-3 col-form-label">Key</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="key" value="" name="key">
+                            <option value="">Select</option>
+                            <option value="unit">Unit</option>
+                            <option value="rank">Rank</option>
+                            <option value="batch">Batch</option>
+                            <option value="Gender">Gender</option>
+                            <option value="MaritalStatus">Marital Status</option>
+                            <option value="Religion">Religion</option>
+                            <option value="BloodGroup">Blood Group</option>
+                            <option value="Degree">Degree</option>
+                            <option value="University">Board/University/Institution</option>
+                            <option value="HomeDistrict">Home District</option>
+                            <option value="SpouseHomeDistrict">Spouse Home District</option>
+                            <option value="Status">Status</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="value" class="col-sm-3 col-form-label">Value</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="value" name="value"></select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button type="button" onclick="AddFilter()" class="btn btn-success btn-sm" style="float:right;"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 card" style="padding: 15px 15px 10px 25px;">
+                <div class="form-group row">
+                    <h6 class="m-0 font-weight-bold text-primary">Date Range For Query</h6>
+                </div>
+
+                <div class="form-group row">
+                    <label for="dateKey" class="col-sm-3 col-form-label">Key</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="dateKey" value="" name="dateKey">
+                            <option value="">Select</option>
+                            <option value="dateOfBirth">Date of Birth</option>
+                            <option value="joiningDatePresentWorkstation">Date of Joining</option>
+                            <option value="LPRDate">Date of Retirement</option>
+                            <option value="dateofregularity">Date of Regularity</option>
+                            <option value="dateOfPermanent">Date of Confirmation</option>
+                            <option value="ServiceFromDate">Service From Date</option>
+                            <option value="ServiceToDate">Service To Date</option>
+                            <option value="TrainingFromDate">Training From Date</option>
+                            <option value="TrainingToDate">Training To Date</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fromDate" class="col-sm-3 col-form-label">Date From</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="fromDate" readonly placeholder="From Date" value="" name="fromDate" />
+                    </div>
+                    <label for="fromDate" class="col-sm-1 col-form-label text-center">To</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="toDate" readonly value="" placeholder="To Date" name="toDate" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button type="button" onclick="AddRangeFilter()" class="btn btn-success btn-sm" style="float:right;"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-1 card" style="padding: 43px 12px 7px 20px;">
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button type="button" onclick="LoadByFilterOnThisPage()" class="btn btn-success mt-lg-5"><i class="fa fa-search"></i> Load</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 card">
+                <div class="form-group row" id="allFilterString"></div>
+            </div>
+
+        </div>
+    </form>
+    <div class="row">
+
+
+        <div class="card-body">
+            <table class="table table-striped table-bordered" style="width:100%;" id="allEmployeeListTable">
+                <thead>
+                    <tr>
+                        <td width="5%">Sl.</td>
+                        <td width="17%">Photo</td>
+                        <td width="17%">Name</td>
+                        <td width="16%">Unit</td>
+                        <td width="10%">Rank</td>
+                        <td width="10%">BCS Batch</td>
+                        <td width="10%">Gender</td>
+                        <td width="10%">Religion</td>
+                        <td width="5%">Info</td>
+                    </tr>
+                </thead>
+                <tbody id="tbEmplist"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <script src="script/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="~/Paginathing/paginathing.js"></script>
+
+    <script>
+
+        var index = 1;
+        function AddFilter() {
+            var key = $('#key').val();
+            var value = $('#value').val();
+            var text = $('#value :selected').text();
+
+            if (key != '' && value != '') {
+                var hrml = '<span id="filter' + index + '" style="margin-right:15px;margin-bottom:5px;margin-left: 20px;"><div class="form-group row">'
+                    + "" +
+                    '<input type="text" readonly style="border-radius:5px 0px 0px 5px;height:30.5px;" class="form-control col-10 clsStringss" id="stringss' + index + '" value="' + key + '=' + text + '" name="stringss' + index + '">' + "" +
+
+                    '<input type="text" hidden style="border-radius:5px 0px 0px 5px;height:30.5px;" class="form-control col-10 clsStrings" id="strings' + index + '" value="' + key + '=' + value + '" name="strings' + index + '">'
+
+                    +"" + '<button type="button" style="border-radius: 0px 5px 5px 0px;margin-left: -5px;" id="button' + index + '" onclick="ClearbyID(' + index + ')" class="btn btn-danger btn-sm col-2"><i class="fa fa-times-circle"></i></button></div></span>';
+
+                $('#allFilterString').append(hrml);
+                index = index + 1;
+            }
+            $('#key').val('');
+            $('#value').val('');
+        }
+
+        function AddRangeFilter() {
+            var key = $('#dateKey').val();
+            var valueFrom = $('#fromDate').val();
+            var valueTo = $('#toDate').val();
+            if (key != '' && valueFrom != '' && valueTo != '') {
+                var html = '<span id="filter' + index + '" style="margin-right:15px;margin-bottom:5px;margin-left: 20px;"><div class="form-group row">'
+                    + "" +
+                    '<input type="text" readonly style="border-radius:5px 0px 0px 5px;height:30.5px;width:300px;" class="form-control col-10 clsStringsss" id="stringsss' + index + '" value="' + key + '=' + valueFrom + '=' + valueTo + '" name="strings' + index + '">'
+                    + "" +
+                    '<button type="button" style="border-radius: 0px 5px 5px 0px;margin-left: -5px;" id="button' + index + '" onclick="ClearbyID(' + index + ')" class="btn btn-danger btn-sm col-2"><i class="fa fa-times-circle"></i></button></div></span>';
+                $('#allFilterString').append(html);
+                index = index + 1;
+            }
+            $('#dateKey').val('');
+            $('#fromDate').val('');
+            $('#toDate').val('');
+        }
+
+        function ClearbyID(indx) {
+           $('#allFilterString #filter' + indx).remove();
+        }
+
+        function LoadByFilter() {
+            var queryString = "";
+            var $allStrings = $("#allFilterString").find(".clsStrings");
+            $allStrings.each(function () {
+                queryString += '|' + $(this).val();
+            });
+        }
+
+
+        $(document).ready(function () {
+
+            $('#fromDate').datepicker({ dateFormat: "dd-M-yy", showAnim: "scale", changeMonth: true, changeYear: true, yearRange: "1960:2100" });
+            $('#toDate').datepicker({ dateFormat: "dd-M-yy", showAnim: "scale", changeMonth: true, changeYear: true, yearRange: "1960:2100" });
+            // $('#allEmployeeListTable').DataTable();
+            $("#value").select2();
+            $("#key").change(function () {
+                $("#value option").remove();
+                $("#value").append('<option value="">Select</option>');
+                if ($('#key').val() == "HomeDistrict") {
+                    $("#value").append('@foreach(var data in Model.districts)
+                    { <option value="@data.districtName">@data.districtName</option>}')
+                }
+                else if ($('#key').val() == "Disability") {
+                    $("#value").append('<option value="Yes">Yes</option><option value="No">No</option>')
+                }
+                else if ($('#key').val() == "Gender") {
+                    $("#value").append('<option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>')
+                }
+                else if ($('#key').val() == "MaritalStatus") {
+                    $("#value").append('<option value="Married">Married</option><option value="Unmarried">Unmarried</option><option value="Widow">Widow</option><option value="Separated">Separated</option>')
+                }
+                else if ($('#key').val() == "Religion") {
+                    $("#value").append('@foreach(var data in Model.religions)
+                    { <option value="@data?.Id">@data?.name</option>}')
+                }
+                else if ($('#key').val() == "BloodGroup") {
+                    $("#value").append('<option value="O">O+</option><option value="O-">O-</option><option value="A">A+</option><option value="A-">A-</option><option value="B">B+</option><option value="B-">B-</option><option value="AB">AB+</option><option value="AB-">AB-</option>')
+                }
+                else if ($('#key').val() == "Division") {
+                    $("#value").append('@foreach(var data in Model.Divisions)
+                    { <option value="@data.Id">@data.divisionName</option>}')
+                }
+                else if ($('#key').val() == "District") {
+                    $("#value").append('@foreach(var data in Model.districts)
+                    { <option value="@data.Id">@data.districtName</option>}')
+                }
+                else if ($('#key').val() == "Thana") {
+                    $("#value").append('@foreach(var data in Model.thanas)
+                    { <option value="@data.Id">@data.thanaName</option>}')
+                }
+                else if ($('#key').val() == "Degree") {
+                    @*$("#value").append('@foreach(var data in Model.deg)
+                    { <option value="@data.Id">@data.degreeName</option>}')*@
+                }
+                else if ($('#key').val() == "Group") {
+                    @*$("#value").append('@foreach(var data in Model.subjects)
+                    { <option value="@data.Id">@data.subjectName</option>}')*@
+                }
+                else if ($('#key').val() == "University") {
+                    @*$("#value").append('@foreach(var data in Model.organizations)
+                    { <option value="@data.Id">@data.organizationName</option>}')*@
+                }
+                else if ($('#key').val() == "SpouseHomeDistrict") {
+                    $("#value").append('@foreach(var data in Model.districts)
+                    { <option value="@data.Id">@data.districtName</option>}')
+                }
+                else if ($('#key').val() == "Language") {
+                    @*$("#value").append('@foreach(var data in Model.languages)
+                    { <option value="@data.Id">@data.languageName</option>}')*@
+                }
+                else if ($('#key').val() == "unit") {
+                    $("#value").append('@foreach(var data in Model.specialBranchUnits)
+                    { <option value="@data.Id">@data.branchUnitName</option>}')
+                }
+                else if ($('#key').val() == "rank") {
+                    $("#value").append('@foreach(var data in Model.rank)
+                    { <option value="@data.Id">@data.rankName</option>}')
+                }
+                else if ($('#key').val() == "batch") {
+                    $("#value").append('@foreach(var data in Model.bCSBatch)
+                    { <option value="@data.Id">@data.batchName</option>}')
+                }
+
+            });
+            $('#gridView').show();
+            $('#listView').hide();
+
+            $('.fa').removeClass('active');
+            $('.fa-th').addClass('active');
+
+        });
+
+        $('.fa-list').click(function () {
+            $('#listView').show();
+            $('#gridView').hide();
+            //$('.fas').removeClass('active');
+            $('.fa-list').addClass('active');
+        })
+        $('.fa-th').click(function () {
+            $('#listView').hide();
+            $('#gridView').show();
+            //$('.fas').removeClass('active');
+            $('.fa-th').addClass('active');
+        })
+
+        function LoadByFilterOnThisPage() {
+            var queryString = "";
+            var $allStrings = $("#allFilterString").find(".clsStrings");
+            $allStrings.each(function () {
+                queryString += '|' + $(this).val();
+            });
+            $('#tbEmplist').empty();
+            $('#allEmployeeListTable').DataTable().destroy();
+            $.get("/Employee/EmployeeInfo/GetEmployeeInfos?queryString=" + queryString, function (data) {
+                var employeeList = "";
+
+                var baseImageUrl = "http://portfolio.police.gov.bd/";
+                $.each(data, function (key, v) {
+                    var imageUrl = "";
+                    var img = '<img src="~/logo/defaultprofile.jpg" style="width:150px;height:150px;" class="img - fluid" alt="" />';
+                    if (v.imageUrl !== null) {
+                        imageUrl = baseImageUrl + v.imageUrl;
+                        img =`<img src="${imageUrl}" class="img-fluid rounded-circle" style="width:150px;height:150px;" alt="No Image"/>`
+                    }
+                        employeeList += `<tr id="fiId${v.employeeId}">
+                        <td>${key + 1}</td>
+                        <td>${img} </td>
+                        <td>${v.nameEnglish}</td>
+                        <td>${v.unit}</td>
+                        <td>${v.rank}</td>
+                        <td>${v.bcsBatch}</td>
+                        <td>${v.gender}</td>
+                        <td>${v.religion}</td>
+                        <td>
+                                <a class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="window.open('/Employee/EmployeeProfile/Index?id=${v.employeeId}')"  target="_blank"  title="Info"><i class="mdi mdi-account-card-details"></i></a>
+
+                            </td>
+                       </tr>`;
+                });
+
+
+                //<a class="btn btn-sm btn-primary" target="_blank" href="/Portfolio/PortfolioDashboard/EmployeeDetails?id=${v.employeeCode}" title="Details"><i class="mdi mdi-account-card-details"></i></a>
+
+
+                $('#tbEmplist').empty();
+                $('#tbEmplist').append(employeeList);
+                $('#allEmployeeListTable').DataTable().destroy();
+                $('#allEmployeeListTable').DataTable();
+            });
+
+
+            //if (queryString == "" || queryString == null) {
+            //    //alert("Nothing To Query Please Add Query Element");
+            //    $('#allEmployeeListTable').DataTable().destroy();
+
+            //    table = $('#allEmployeeListTable').DataTable({
+            //        ajax: {
+            //            url: "/global/api/allEmpList/all",
+            //            dataSrc: ""
+            //        },
+            //        scrollX: true,
+            //        scrollY: 500,
+            //        scrollCollapse: true,
+            //        columns: [
+            //            { data: "employeeCode" },
+            //            { data: "nameEnglish" },
+            //            { data: "designation" },
+            //            { data: "fatherName" },
+            //            { data: "motherName" },
+            //            { data: "nid" },
+            //            { data: "workstation" },
+            //            { data: "duration" },
+            //            { data: "dateOfbirth" },
+            //            { data: "officeMobile" },
+            //            { data: "personalMobile" },
+            //            { data: "emailOffice" },
+            //            { data: "emailPersona" },
+            //            { data: "presentDivision" },
+            //            { data: "presentDistrict" },
+            //            { data: "presentThana" },
+            //            { data: "permDivision" },
+            //            { data: "permDistrict" },
+            //            { data: "permThana" },
+            //            { data: "prlStartDate" },
+            //            { data: "hasdisciplinaryLog" },
+            //            { data: "hasLoan" },
+            //            { data: "hasGPF" }
+            //        ],
+            //        stateSave: false,
+            //        dom: "<'row'<'col-sm-12 col-md-2'l><'col-sm-12 col-md-3'B><'col-sm-12 col-md-7'f>>" +
+            //            "<'row'<'col-sm-12't>>" + "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'pr>>",
+            //        buttons: [
+            //            {
+            //                extend: 'excelHtml5',
+            //                text: '<i class="fa fa-file-excel"></i> Excel',
+            //                titleAttr: 'Excel',
+            //                exportOptions: {
+            //                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+            //                },
+            //                title: orgFullTitle,
+            //                messageTop: 'List Of Employee'
+            //            },
+            //            {
+            //                extend: 'csvHtml5',
+            //                text: '<i class="fa fa-file-excel"></i> CSV',
+            //                titleAttr: 'CSV',
+            //                exportOptions: {
+            //                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+            //                },
+            //                title: orgFullTitle,
+            //                messageTop: 'List Of Employee'
+            //            },
+            //            {
+            //                extend: 'print',
+            //                text: '<i class="fa fa-print"></i> Print',
+            //                titleAttr: 'Print',
+            //                title: orgFullTitle,
+            //                messageTop: 'List Of Employee',
+            //                exportOptions: {
+            //                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+            //                },
+            //                customize: function (doc) {
+            //                    $(doc.document.body).find('h1').css('font-size', '20pt');
+            //                    $(doc.document.body).find('h1').css('font-family', "'Times New Roman', Times, serif");
+            //                    $(doc.document.body).find('h1').css('text-align', 'center');
+            //                }
+            //            }
+            //        ]
+            //    });
+            //}
+            //else {
+            //    $('#allEmployeeListTable').DataTable().destroy();
+
+            //    table = $('#allEmployeeListTable').DataTable({
+            //        ajax: {
+            //            url: "/global/api/getEmployeeInfoAsQueryAble/" + queryString,
+            //            dataSrc: ""
+            //        },
+            //        scrollX: true,
+            //        scrollY: 500,
+            //        scrollCollapse: true,
+            //        columns: [
+            //            { data: "employeeCode" },
+            //            { data: "nameEnglish" },
+            //            { data: "designation" },
+            //            { data: "fatherName" },
+            //            { data: "motherName" },
+            //            { data: "nid" },
+            //            { data: "workstation" },
+            //            { data: "duration" },
+            //            { data: "dateOfbirth" },
+            //            { data: "officeMobile" },
+            //            { data: "personalMobile" },
+            //            { data: "emailOffice" },
+            //            { data: "emailPersona" },
+            //            { data: "presentDivision" },
+            //            { data: "presentDistrict" },
+            //            { data: "presentThana" },
+            //            { data: "permDivision" },
+            //            { data: "permDistrict" },
+            //            { data: "permThana" },
+            //            { data: "prlStartDate" },
+            //            { data: "hasdisciplinaryLog" },
+            //            { data: "hasLoan" },
+            //            { data: "hasGPF" }
+
+            //        ],
+            //        stateSave: false,
+            //        dom: "<'row'<'col-sm-12 col-md-2'l><'col-sm-12 col-md-3'B><'col-sm-12 col-md-7'f>>" +
+            //            "<'row'<'col-sm-12't>>" + "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'pr>>",
+            //        buttons: [
+            //            {
+            //                extend: 'excelHtml5',
+            //                text: '<i class="fa fa-file-excel"></i> Excel',
+            //                titleAttr: 'Excel',
+            //                exportOptions: {
+            //                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+            //                },
+            //                title: orgFullTitle,
+            //                messageTop: 'List Of Employee',
+            //                class: 'btn btn-info'
+            //            },
+            //            {
+            //                extend: 'csvHtml5',
+            //                text: '<i class="fa fa-file-excel"></i> CSV',
+            //                titleAttr: 'CSV',
+            //                exportOptions: {
+            //                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+            //                },
+            //                title: orgFullTitle,
+            //                messageTop: 'List Of Employee'
+            //            },
+            //            {
+            //                extend: 'print',
+            //                text: '<i class="fa fa-print"></i> Print',
+            //                titleAttr: 'Print',
+            //                title: orgFullTitle,
+            //                messageTop: 'List Of Employee',
+            //                exportOptions: {
+            //                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+            //                },
+            //                customize: function (doc) {
+            //                    $(doc.document.body).find('h1').css('font-size', '20pt');
+            //                    $(doc.document.body).find('h1').css('font-family', "'Times New Roman', Times, serif");
+            //                    $(doc.document.body).find('h1').css('text-align', 'center');
+            //                }
+            //            }
+            //        ]
+            //    });
+
+            //}
+        }
+
+
+        //$('#cards').paginathing({
+
+        //    limitPagination: 6,
+        //    perPage: 8,
+        //    prevNext: true,
+        //    firstLast: true,
+        //    prevText: '&laquo;',
+        //    nextText: '&raquo;',
+        //    firstText: 'First',
+        //    lastText: 'Last',
+        //    containerClass: 'pagination-container',
+        //    ulClass: 'pagination',
+        //    liClass: 'page',
+        //    activeClass: 'active',
+        //    disabledClass: 'disabled',
+        //    pageNumbers: true,
+        //    insertAfter: '#cards'
+        //})
+
+
+        //$('#cards2').paginathing({
+
+        //    limitPagination: 6,
+        //    perPage: 8,
+        //    prevNext: true,
+        //    firstLast: true,
+        //    prevText: '&laquo;',
+        //    nextText: '&raquo;',
+        //    firstText: 'First',
+        //    lastText: 'Last',
+        //    containerClass: 'pagination-container',
+        //    ulClass: 'pagination',
+        //    liClass: 'page',
+        //    activeClass: 'active',
+        //    disabledClass: 'disabled',
+        //    pageNumbers: true,
+        //    insertAfter: '#cards2'
+        //})
+
+
+       // Common.Ajax('GET', '/global/api/GetEmployeeApi', [], 'json', GetEmployeeInfo);
+
+        //function GetEmployeeInfo(response) {
+
+        //    var lstPOP = [];
+        //    $.each(response.employeeInfos, function (i, option) {
+        //        var obj = new Object();
+        //        obj.key = option.Id;
+        //        obj.value = option.employeeCode;
+        //        lstPOP[lstPOP.length] = obj;
+        //    });
+
+        //    $('#bpNo').autocomplete({
+        //        source: lstPOP,
+        //        select: function (event, ui) {
+        //            $("#bpNo").val(ui.item.value);
+        //            $("#bpNoId").val(ui.item.key);
+        //        }
+        //    });
+
+        //}
+
+
+        //  $('#unitId').on('change', function () {
+        //    var id = this.value;
+        //    Common.Ajax('GET', '/global/api/GetEmployeeSearchByUnitId/' + id, [], 'json', ajaxUnit, false);
+        //});
+
+        //$('#rankId').on('change', function () {
+        //    var id = this.value;
+        //    Common.Ajax('GET', '/global/api/GetEmployeeSearchByRankId/' + id, [], 'json', ajaxRank, false);
+        //});
+
+        //$('#districtId').on('change', function () {
+        //    var id = this.value;
+        //    Common.Ajax('GET', '/global/api/GetEmployeeSearchByDistrictId/' + id, [], 'json', ajaxdistrict, false);
+        //});
+
+        //function ajaxUnit(res) {
+        //    console.log(res);
+        //    var unit = "";
+        //    var dimage = ""
+        //    $.each(res, function (key, v) {
+        //        if (v.url == null || v.url == "") {
+        //            dimage = `<img src="../../logo/defaultprofile.jpg" class="img-fluid " style="width: 100px; height: 100px; border-radius:50% " alt="No Image" />`
+        //        } else {
+        //            dimage = `<img src="../../${v.url}" class="img-fluid " style="width: 100px; height: 100px; border-radius: 50% " alt="No Image" />`
+        //        }
+
+        //        unit += `
+        //                                        <div class="col-lg-3 col-sm-12 searchdiv" style="border-radius:20px 20px 0px 0px;">
+        //                                            <div class="card bg-white m-b-30 zoom">
+        //                                                <div class="card-body text-center" id="displayImg">
+        //                                                     ${dimage}
+        //                                                </div>
+        //                                                <div class="card-body">
+        //                                                    <div class="card-title mb-0 text-center">
+        //                                                        <b>${v.name}</b><br />
+        //                                                        ${v ?.designation}
+        //                                                    </div>
+        //                                                </div>
+        //                                                <ul class="list-group list-group-flush">
+        //                                                    <li class="list-group-item">Unit : ${v ?.unit}</li>
+        //                                                    <li class="list-group-item">Contact : ${v ?.phone}</li>
+        //                                                </ul>
+        //                                                <div class="card-body">
+        //                                                    <ul class="social-links list-inline mb-0">
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.facebook}" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+        //                                                        </li>
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.twitter}" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
+        //                                                        </li>
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.linktin}" data-original-title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        //                                                        </li>
+
+        //                                                        <li class="pull-right btn-group-sm">
+        //                                                            <a href="/Employee/EmployeeInfo/Index/${v.Id}" class="btn btn-success tooltips text-white" data-placement="top" data-toggle="tooltip" data-original-title="Edit">
+        //                                                                <i class="fa fa-pencil"></i>
+        //                                                            </a>
+        //                                                            <a href="/Employee/EmployeeInfo/EmployeeInfoReportViewPDF/${v.employeeCode}" class="btn btn-primary tooltips text-white" data-placement="top" data-toggle="tooltip" data-original-title="Print">
+        //                                                                <i class="fa fa-print"></i>
+        //                                                            </a>
+        //                                                        </li>
+        //                                                    </ul>
+        //                                                </div>
+        //                                            </div>
+        //                                        </div>
+        //                                            ` });
+        //    $('#cards').empty();
+        //    $('#cards').append(unit);
+        //}
+
+        //function ajaxRank(res) {
+        //    var rank = "";
+        //    var dimage = ""
+        //    $.each(res, function (key, v) {
+        //        if (v.url == null || v.url == "") {
+        //            dimage = `<img src="../../logo/defaultprofile.jpg" class="img-fluid " style="width: 100px; height: 100px; border-radius:50% " alt="No Image" />`
+        //        } else {
+        //            dimage = `<img src="../../${v.url}" class="img-fluid " style="width: 100px; height: 100px; border-radius: 50% " alt="No Image" />`
+        //        }
+        //        rank += `
+        //                                        <div class="col-lg-3 col-sm-12 searchdiv">
+        //                                            <div class="card bg-white m-b-30 zoom">
+        //                                                <div class="card-body text-center" id="displayImg">
+        //                                                     ${dimage}
+        //                                                </div>
+        //                                                <div class="card-body">
+        //                                                    <div class="card-title mb-0 text-center">
+        //                                                        <b>${v.name}</b><br />
+        //                                                        ${v ?.designation}
+        //                                                    </div>
+        //                                                </div>
+        //                                                <ul class="list-group list-group-flush">
+        //                                                    <li class="list-group-item">Unit : ${v ?.unit}</li>
+        //                                                    <li class="list-group-item">Contact : ${v ?.phone}</li>
+        //                                                </ul>
+        //                                                <div class="card-body">
+        //                                                    <ul class="social-links list-inline mb-0">
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.facebook}" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+        //                                                        </li>
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.twitter}" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
+        //                                                        </li>
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.linktin}" data-original-title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        //                                                        </li>
+
+        //                                                        <li class="pull-right btn-group-sm">
+        //                                                            <a href="/Employee/EmployeeInfo/Index/${v.Id}" class="btn btn-success tooltips text-white" data-placement="top" data-toggle="tooltip" data-original-title="Edit">
+        //                                                                <i class="fa fa-pencil"></i>
+        //                                                            </a>
+        //                                                            <a href="/Employee/EmployeeInfo/EmployeeInfoReportViewPDF/${v.employeeCode}" class="btn btn-primary tooltips text-white" data-placement="top" data-toggle="tooltip" data-original-title="Print">
+        //                                                                <i class="fa fa-print"></i>
+        //                                                            </a>
+        //                                                        </li>
+        //                                                    </ul>
+        //                                                </div>
+        //                                            </div>
+        //                                        </div>
+        //                                            ` });
+        //    $('#cards').empty();
+        //    $('#cards').append(rank);
+        //}
+
+
+        //function ajaxdistrict(res) {
+        //    var district = "";
+        //    var dimage = ""
+        //    $.each(res, function (key, v) {
+        //        if (v.url == null || v.url == "") {
+        //            dimage = `<img src="../../logo/defaultprofile.jpg" class="img-fluid " style="width: 100px; height: 100px; border-radius:50% " alt="No Image" />`
+        //        } else {
+        //            dimage = `<img src="../../${v.url}" class="img-fluid " style="width: 100px; height: 100px; border-radius: 50% " alt="No Image" />`
+        //        }
+        //        if (v.designation == null) {
+        //            v.designation = '';
+        //        }
+
+        //        district += `
+        //                                        <div class="col-lg-3 col-sm-12 searchdiv">
+        //                                            <div class="card bg-white m-b-30 zoom">
+        //                                                <div class="card-body text-center" id="displayImg">
+        //                                                     ${dimage}
+        //                                                </div>
+        //                                                <div class="card-body">
+        //                                                    <div class="card-title mb-0 text-center">
+        //                                                        <b>${v.name}</b><br />
+        //                                                        ${v ?.designation}
+        //                                                    </div>
+        //                                                </div>
+        //                                                <ul class="list-group list-group-flush">
+        //                                                    <li class="list-group-item">Unit : ${v ?.unit}</li>
+        //                                                    <li class="list-group-item">Contact : ${v ?.phone}</li>
+        //                                                </ul>
+        //                                                <div class="card-body">
+        //                                                    <ul class="social-links list-inline mb-0">
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.facebook}" data-original-                  title="Facebook"><i class="fa fa-facebook"></i></a>
+        //                                                        </li>
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.twitter}" data-original-                   title="Twitter"><i class="fa fa-twitter"></i></a>
+        //                                                        </li>
+        //                                                        <li class="list-inline-item zoom">
+        //                                                            <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="${v ?.linktin}" data-original-                    title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        //                                                        </li>
+
+        //                                                        <li class="pull-right btn-group-sm">
+        //                                                            <a href="/Employee/EmployeeInfo/Index/${v.Id}" class="btn btn-success tooltips text-white" data-placement="top" data-           toggle="tooltip" data-original-title="Edit">
+        //                                                                <i class="fa fa-pencil"></i>
+        //                                                            </a>
+        //                                                            <a href="/Employee/EmployeeInfo/EmployeeInfoReportViewPDF/${v.employeeCode}" class="btn btn-primary tooltips text-white"         data-placement="top" data-toggle="tooltip" data-original-title="Print">
+        //                                                                <i class="fa fa-print"></i>
+        //                                                            </a>
+        //                                                        </li>
+        //                                                    </ul>
+        //                                                </div>
+        //                                            </div>
+        //                                        </div>
+        //                                            ` });
+        //    $('#cards').empty();
+        //    $('#cards').append(district);
+        //}
+
+
+
+    </script>
+}
+
+

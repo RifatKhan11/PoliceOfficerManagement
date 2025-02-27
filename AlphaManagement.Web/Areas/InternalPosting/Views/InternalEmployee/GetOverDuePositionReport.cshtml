@@ -1,0 +1,56 @@
+﻿@model PostingVacancy
+@{
+    ViewData["Title"] = "Over Due List";
+    Layout = "~/Views/Shared/_PrintViewPolice.cshtml";
+}
+
+<h4 style="text-align:center;">OVER DUE POSITION </h4>
+
+<div class="tab-content mt-4" id="myTabContent">
+
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                <thead>
+                    <tr>
+                        <td>Sl No</td>
+                        <td>Name</td>
+                        <td>BP Number</td>
+                        <td>Rank</td>
+                        <td>Batch</td>
+                        <td>Section</td>
+                        <td>Place of Posting</td>
+                        <td>Joining date of current Unit</td>
+                        <td>Duration</td>
+                        <td>Joining date of Police</td>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{var i = 1;}
+                    @foreach (var item in Model.employeeInfos)
+                    {
+                        var duration = AlphaManagement.Web.Helpers.CalDateDifference.DateDifference(DateTime.Now, Convert.ToDateTime(item.joiningDatePresentWorkstation));
+
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.nameEnglish</td>
+                            <td>@item.employeeCode</td>
+                            <td>@item.rank?.rankName </td>
+                            <td>@item.bCSBatch?.batchName </td>
+                            <td>@item.department?.deptName</td>
+                            <td>@item.section?.Name</td>
+                            <td>@item.joiningDatePresentWorkstation?.ToString("dd-MMM-yyyy")</td>
+                            <td>@duration</td>
+                            <td>@item.joiningDateGovtService?.ToString("dd-MMM-yyyy")</td>
+                        </tr>
+                        i++;
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

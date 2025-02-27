@@ -1,0 +1,14 @@
+{
+  "Title": "",
+  "District": "District",
+  "division": "Division",
+  "districtCode": "District Code",
+  "districtName": "District Name(EN)",
+  "districtNameBn": "District Name(BN)",
+  "shortName": "Short Name",
+  "isActive": "IsActive",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "action": ""
+
+}

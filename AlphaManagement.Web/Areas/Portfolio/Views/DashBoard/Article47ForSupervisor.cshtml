@@ -1,0 +1,106 @@
+﻿@model DashBoardViewModel;
+@using AlphaManagement.Web.Helpers;
+@{
+    ViewData["Title"] = "Article 47";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+}
+<style>
+    @@media screen and (max-width: 599px) {
+        #divTop {
+            margin-top: 60px !important;
+        }
+    }
+</style>
+<div class="row">
+    <div class="col-12 card">
+        <div class="card-header">
+            <div class="col-sm-12 col-md-12 col-12 row p-0 m-0" id="divTop">
+                <div class="col-11">
+                    <h3>Requested Article-47 List</h3>
+                </div>
+                <div class="col-1 p-0 backDiv">
+                    <a href="/Portfolio/Dashboard/Index" class="float-right text-dark" title="Dashboard"> <i class="fa fa-home fa-3x"></i></a>
+                    @*<a href="javascript:void(0)" class="btn btn-outline-info btn-sm float-right pull-right" onClick="javascript:history.go(-1)"><i class="fa fa-backward"></i></a>*@
+                </div>
+            </div>
+        </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sl</th>
+                            <th>Name</th>
+                            <th>Unit</th>
+                            <th>Sub-Unit</th>
+                            <th>Join/Release Date</th>
+                            <th>Status</th>
+                            <th>Receiver</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var i = 1;}
+                        @foreach (var item in Model.assignments)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.employee?.nameEnglish</td>
+                            <td>
+                                @if (item.specialBranchUnit?.specialBranchUnit == null)
+                                {
+                                @item.specialBranchUnit?.branchUnitName;
+                                }
+                                else
+                                {
+                                @item.specialBranchUnit?.specialBranchUnit?.branchUnitName;
+                                }
+                            </td>
+                            <td>
+                                @if (item.specialBranchUnit?.specialBranchUnit == null)
+                                {
+                                @item.specialBranchUnit?.specialBranchUnit?.branchUnitName;
+                                }
+                                else
+                                {
+                                @item.specialBranchUnit?.branchUnitName;
+                                }
+                            </td>
+                            <td>
+                                @if (Convert.ToString(item.articleType) == "TakingCharge")
+                                {
+                                @item.StartDate?.ToString("dd-MMM-yyyy");
+                                }
+                                else if (Convert.ToString(item.articleType) == "ToDepurture")
+                                {
+                                @item.EndDate?.ToString("dd-MMM-yyyy");
+                                }
+                            </td>
+                            <td>
+                                @if (Convert.ToString(item.articleStatus) == "Ongoing")
+                                {
+                                <label>Ongoing</label>
+                                }
+                                else if (Convert.ToString(item.articleStatus) == "Rejected")
+                                {
+                                <label>Rejected</label>
+                                }
+                                else if (Convert.ToString(item.articleStatus) == "Approved")
+                                {
+                                <label>Approved</label>
+                                }
+                            </td>
+                            <td>@item.supervisor?.rank?.rankName, @item.supervisor?.nameEnglish</td>
+                            <td>
+                                @if (Convert.ToString(item.articleStatus) == "Ongoing" || Convert.ToString(item.articleStatus) == "Approved" || Convert.ToString(item.articleStatus) == "Suberviser" || Convert.ToString(item.articleStatus) == "Rejected")
+                                {
+                                <a href="/Portfolio/DashBoard/PreviewArticle41ForSuperviser?assignmentId=@item.Id" class="btn btn-sm btn-info" style="color:white">Details</a>
+                                }
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>

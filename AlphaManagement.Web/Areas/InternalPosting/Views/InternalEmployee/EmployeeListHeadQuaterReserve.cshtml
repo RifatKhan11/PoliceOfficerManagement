@@ -1,0 +1,352 @@
+﻿@model AssignmentViewModel
+@{
+    ViewData["Title"] = "Over Due Posting";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+}
+<style>
+    .zoom {
+        transition: transform .2s; /* Animation */
+    }
+
+        .zoom:hover {
+            transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+</style>
+<div class="tab-content mt-4" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="card-header mt-3 p-1 text-light" style="background-color:#2A1067">
+            <h4 class="ml-2">Employee List In Police Headquarters</h4>
+        </div>
+
+        <div class="card bg-white m-b-30">
+
+            <div class="card-body new-user">
+                <div class="row">
+                    <div class="col-12 row">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <div class="form-group row">
+                                <div class="col-md-12 col-12 col-12">
+                                    <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="rankId" id="rankId" data-parsley-required="true">
+                                        <option value="0">All Rank</option>
+                                        @foreach (var item in Model.ranks)
+                                        {
+                                            <option value="@item.Id">@item.rankName</option>
+
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <div class="form-group row">
+                                <div class="col-md-12 col-12 col-12">
+                                    <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="unitId" id="unitId" data-parsley-required="true">
+                                        <option value="0">All Section</option>
+                                        @foreach (var item in Model.phqSections)
+                                        {
+                                            <option value="@item.Id">@item.deptName</option>
+
+                                        }
+
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <div class="form-group row">
+                                <div class="col-md-12 col-12 col-12">
+                                    <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="batchId" id="batchId" data-parsley-required="true">
+                                        <option value="0">All Batch</option>
+                                        @foreach (var item in Model.bCSBatches)
+                                        {
+                                            <option value="@item.Id">@item.batchName</option>
+
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12  mb-0 pb-0">
+                            <div class="form-group row  mb-0 pb-0">
+                                <div class="col-md-12 col-12 col-12  mb-0 pb-0">
+                                    <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="bandId" id="bandId" data-parsley-required="true">
+                                        <option value="0">Expertise</option>
+                                        <option value="69" style="background-image:url(~/batch/doctor.jpg);">Doctor</option>
+                                        <option value="59" style="background-image:url(~/batch/engineer.png);">Engineer</option>
+                                        <option value="79" style="background-image:url(~/batch/engineer.png);">Lawyer</option>
+                                        <option value="1528">Pharmacist</option>
+                                        <option value="2702">Literature</option>
+                                    </select>
+                                    @*<input type="hidden" id="bandId" />*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12  mb-0 pb-0">
+                            <div class="form-group row  mb-0 pb-0">
+                                <div class="col-md-12 col-12 col-12  mb-0 pb-0">
+                                    <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="servicePeriodId" id="servicePeriodId" data-parsley-required="true">
+                                        <option value="0">Duration Of Posting</option>
+                                        <option value="1">0 to 1 Year</option>
+                                        <option value="2">1 to 2 Years</option>
+                                        <option value="3">2 to 3 Years</option>
+                                        <option value="4">3+ Years</option>
+                                    </select>
+                                    @*<input type="hidden" id="servicePeriodId" />*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-2 col-sm-2 col-12 row  mb-0 pb-0">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-0 pb-0">
+                                <button class="btn btn-info btn-sm" onclick="loadEmployeeList()" id="btnLoadData">Load</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-2 col-sm-2 col-12 row  mb-0 pb-0 zoom">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-0 pb-0">
+                                <button class="btn btn-info btn-sm" onclick="AddNew()" id="btnLoadData">Add New</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="col-12 row pb-0 mb-0">
+
+
+                        <div class="col-md-12 col-12">
+                            <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                                <thead>
+                                    <tr>
+                                        <td>Sl No</td>
+                                        <td>Name</td>
+                                        <td>BP Number</td>
+                                        <td>Expertise</td>
+                                        <td>Section</td>
+                                        <td>Action</td>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @{
+                                        int i = 1;
+                                        foreach (var data in Model.unitRankWiseEmployeeViewModels.OrderBy(x => x.rankId))
+                                        {
+                                            <tr>
+
+                                                <td>@i</td>
+                                                <td>@data.name</td>
+                                                <td>@data.employeeCode</td>
+                                                @if (data.expertise == null || data.expertise == "")
+                                                {
+                                                    <td></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><img src="@data.expertise" height="50" width="50" alt="Expertise" /></td>
+                                                }
+
+                                                <td>@data.mainUnit</td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-success" target="_blank" href="/InternalPosting/InternalEmployee/EditPHQEmployee?empIdentityUserSessionToken=@data.employeeId"><i class="fa fa-edit"></i></a>
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:1250px;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Officers' List </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-bordered table-striped" style="width:100%" id="tblDataEmp">
+                    <thead>
+                        <tr>
+                            <td>Sl No</td>
+                            <td>Name</td>
+                            <td>BP Number</td>
+                            <td>Rank</td>
+                            <td>Unit</td>
+                            <td>Place of Posting</td>
+                            <td>Joining date of current Unit</td>
+                            <td>Joining date of Police</td>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+
+            jQuery(".select2").select2({
+                width: '100%'
+            });
+
+            $('#ParentId').select2();
+            $('#rankId').select2();
+
+
+            $('#PrintBtn').click(function () {
+                var id = $('#rankId').val();
+                var parent = $('#ParentId').val();
+                window.open("/Employee/Posting/GetOverDuePositionReportPdf?Id=" + id + "&&branch=" + parent);
+            });
+        });
+
+        function AddNew() {
+            var url = '/InternalPosting/InternalEmployee/SavePHQEmployee'
+            window.location.href = url;
+        }
+
+        function loadEmployeeList() {
+            var id = $('#rankId').val();
+            var unitId = $('#unitId').val();
+            var batchId = $('#batchId').val();
+            var bandId = $('#bandId').val();
+            var servicePeriodId = $('#servicePeriodId').val();
+            Common.Ajax('GET', '/InternalPosting/InternalEmployee/GetPHQEmployeeList?rankId=' + id + '&&unitId=' + unitId + '&&batch=' + batchId + '&&servicePeriod=' + servicePeriodId + '&&bandId=' + bandId + '&&isLocked=0&&isAttached=0&&isUnMission=0', [], 'json', ajaxGetPositionVacency, false);
+        }
+
+        function ajaxGetPositionVacency(response) {
+            $('#tblData').DataTable().destroy();
+            var option = "";
+            var count = 0;
+            $.each(response, function (i, item) {
+                var exp = "";
+                if (item.expertise != "") {
+                    exp = `<img src="${item.expertise}" height="50" width="50" alt="Expertise" />`
+                }
+                option += `<tr>
+                                            <td>${++count}</td>
+                                            <td>${item.name}</td>
+                                            <td>${item.employeeCode}</td>
+                                            <td>${exp}</td>
+                                            <td>${item.mainUnit}</td>
+                                            <td><a class="btn btn-sm btn-success"><i class="fa fa-edit"></i></a></td>
+                                      </tr>`
+            });
+            $('#tblData tbody').empty();
+            $('#tblData tbody').append(option);
+            $('#tblData').DataTable();
+        }
+
+        function EmpDetails(unit, rank) {
+            Common.Ajax('GET', '/Employee/Posting/GetEmpDetails?Id=' + unit + '&&branch=' + rank, [], 'json', ajaxEmpDetails, false);
+        }
+
+        function ajaxEmpDetails(res) {
+            $('#tblDataEmp').DataTable().destroy();
+            //console.log(res);
+            var option = "";
+            var count = 0;
+            $.each(res, function (i, item) {
+                option += `<tr>
+                                            <td>${++count}</td>
+                                            <td>${item.nameEnglish}</td>
+                                            <td>${item.employeeCode}</td>
+                                            <td>${item.rank ?.rankName}</td>
+                                            <td>${item.branch ?.branchUnitName}</td>
+                                            <td>${item.section ?.Name}</td>
+                                            <td>${formatDate(item.joiningDatePresentWorkstation)}</td>
+                                            <td>${formatDate(item.joiningDateGovtService)}</td>
+                                      </tr>`
+            });
+            $('#tblDataEmp tbody').empty();
+            $('#tblDataEmp tbody').append(option);
+            $('#tblDataEmp').DataTable();
+            $("#exampleModal").modal('show');
+        }
+
+        function formatDate2(date) {
+            date = new Date(date);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate()
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month == 1) { month = "Jan" } else if (month == 2) { month = "Feb" } else if (month == 3) { month = "Mar" } else if (month == 4) { month = "Apr" } else if (month == 5) { month = "May" } else if (month == 6) { month = "Jun" } else if (month == 7) { month = "Jul" } else if (month == 8) { month = "Aug" } else if (month == 9) { month = "Sep" } else if (month == 10) { month = "Oct" } else if (month == 11) { month = "Nov" } else if (month == 12) { month = "Dec" }
+            return day + "-" + month + "-" + year
+        }
+
+        function CalDate(bal) {
+            var str = formatDate2(bal);
+            if (/^\d{2}\-\D{0,3}\-\d{4}$/i.test(str)) {
+                var parts = str.split("-");
+                var m = 0;
+                if (parts[1] == "Jan") { m = 1; } else if (parts[1] == "Feb") { m = 2; } else if (parts[1] == "Mar") { m = 3; } else if (parts[1] == "Apr") { m = 4; } else if (parts[1] == "May") { m = 5; } else if (parts[1] == "Jun") { m = 6; } else if (parts[1] == "Jul") { m = 7; } else if (parts[1] == "Aug") { m = 8; } else if (parts[1] == "Sep") { m = 9; } else if (parts[1] == "Oct") { m = 10; } else if (parts[1] == "Nov") { m = 11; } else if (parts[1] == "Dec") { m = 12; }
+                var day = parts[0] && parseInt(parts[0], 10);
+                var month = m;
+                var year = parts[2] && parseInt(parts[2], 10);
+                var duration = 59;
+
+                if (day <= 31 && day >= 1 && month <= 12 && month >= 1) {
+
+                    var expiryDate = new Date();
+
+
+                    var a = moment();
+                    var b = moment(str, 'DD-MMM-YYYY');
+
+                    var years = a.diff(b, 'year');
+                    b.add(years, 'years');
+
+                    var months = a.diff(b, 'months');
+                    b.add(months, 'months');
+
+                    var days = a.diff(b, 'days') + 1;
+
+                    return (years + ' years ' + months + ' months ' + days + ' days');
+
+                } else {
+                    // display error message
+                }
+            }
+        }
+
+    </script>
+}

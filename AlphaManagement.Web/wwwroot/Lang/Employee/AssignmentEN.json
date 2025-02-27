@@ -1,0 +1,14 @@
+{
+  "Title": "Assignment Informations",
+  "employee": "Employee",
+  "assignmentType": "Assignment Type",
+  "EntryNo": "Assignment SL",
+  "StartDate": "Start Date",
+  "EndDate": "End Date",
+  "designation": "Designation",
+  "department": "Place Of Posting",
+  "policeUnit": "Police Unit",
+  "policeSubUnit": "Police SubUnit",
+  "Remarks": "Remarks",
+  "action": "Action"
+}

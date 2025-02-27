@@ -1,0 +1,18 @@
+{
+  "Title": "TrainingLog Informations",
+  "slNo": "Sl No.",
+  "employee": "Employee",
+  "fromDate": "From Date",
+  "toDate": "To Date",
+  "country": "Country",
+  "trainingCategory": "Training Category",
+  "trainingInstitute": "Training Institute",
+  "remarks": "Remarks",
+  "trainingTitle": "Training Title",
+  "sponsoringAgency": "Sponsor Agency",
+  "status": "Status",
+  "action": "Action",
+  "save": "Save",
+  "close": "Close",
+  "select": "Select"
+}

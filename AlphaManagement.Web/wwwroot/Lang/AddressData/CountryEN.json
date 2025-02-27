@@ -1,0 +1,12 @@
+{
+  "Title": "Country Informations",
+  "countryCode": "Country Code",
+  "countryName": "Country Name(EN)",
+  "countryNameBn": "Country Name(BN)",
+  "shortName": "ShortName",
+  "isActive": "",
+  "latitude": "",
+  "longitude": "",
+  "action": "Action"
+
+}

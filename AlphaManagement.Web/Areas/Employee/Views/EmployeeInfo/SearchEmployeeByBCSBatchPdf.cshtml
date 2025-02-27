@@ -1,0 +1,53 @@
+﻿@model EmpolyeeDetailsByBCSForPDF
+@{
+    ViewData["Title"] = "Employee List";
+    Layout = "~/Views/Shared/_PrintViewPolice.cshtml";
+}
+
+<h4 style="text-align:center;">@Model.pMCorrectionDataModels?.FirstOrDefault()?.bcsBatch</h4>
+
+<div class="tab-content mt-4" id="myTabContent">
+
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <table class="table table-bordered table-striped" style="width:100%" id="tblData">
+                <thead>
+                    <tr>
+                        <th>নং</th>
+                        <th>নাম ও বিপি নম্বর</th>
+                        <th>বর্তমান পদবি</th>
+                        <th>পিতা ও মাতার নাম</th>
+                        <th>বর্তমান কর্মস্থল</th>
+                        <th>স্থায়ী ঠিকানা</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        var i = 1;
+                        string text= "জনাব";
+                    }
+                    @foreach (var item in Model.pMCorrectionDataModels)
+                    {
+                        <tr style="width:100%">
+                            <td width="5%">@i</td>
+                            <td width="20%">
+                                @text @item.fullName (@AlphaManagement.Web.Helpers.LanguageProcessing.EnglishToBangla(@item?.empCode))
+                            </td>
+                            <td width="13%">@item?.rankName</td>
+                            <td width="20%">
+                                <label>পিতার নাম: @item?.fatherName</label> <br />
+                                <label>মাতার নাম: @item?.motherName</label> 
+                           </td>
+                            <td width="17%">@item?.workingPlace</td>
+                            <td width="25%">@item?.address</td>
+                        </tr>
+                        i++;
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

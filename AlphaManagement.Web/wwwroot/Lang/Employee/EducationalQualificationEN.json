@@ -1,0 +1,15 @@
+{
+  "Title": "Education Qualification Informations",
+  "slNo": "Sl No.",
+  "employee": "Employee",
+  "institution": "Institution/College",
+  "result": "Result",
+  "majorGroup": "Major Group",
+  "grade": "Grade",
+  "passingYear": "Passing Year",
+  "degree": "Degree",
+  "organization": "Organization",
+  "reldegreesubject": "Relational degrees",
+  "action": "Action",
+  "select": "Select"
+}
