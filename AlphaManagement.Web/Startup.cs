@@ -157,8 +157,8 @@ namespace AlphaManagement.Web
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(40);
                 //options.ExpireTimeSpan = TimeSpan.FromSeconds(20);
 
-                options.LoginPath = "/Auth/Account/Login";
-                //options.LoginPath = "/Auth/Account/UserLogin";
+                //options.LoginPath = "/Auth/Account/Login";
+                options.LoginPath = "/Auth/Account/UserLogin";
                 options.AccessDeniedPath = "/Home/AccessDenied";
                 options.SlidingExpiration = true;
             });
