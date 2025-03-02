@@ -341,132 +341,83 @@ namespace AlphaManagement.Web.Areas.Employee.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(string empIdentityUserSessionToken)
+        public async Task<IActionResult> Index(int Id)
         {
             try
             {
 
 
-                var id = Convert.ToInt32(empIdentityUserSessionToken);
-                var _empInfo = _employeeService.GetBasicEmployeeInfoById(id);
-                if (_empInfo?.employeeCode != User.Identity.Name || _empInfo == null)
-                {
-                    //var userAgent = Request.Headers["User-Agent"].ToString();
-                    //var mechineName = Environment.MachineName;
-
-                    //var remote = HttpContext.Connection.RemoteIpAddress;
-                    //var local = HttpContext.Connection.LocalIpAddress;
-                    //string userip = remote.ToString();
-                    //string useripLocal = local.ToString();
-
-                    //UnauthorizeUserLog userLog = new UnauthorizeUserLog
-                    //{
-                    //    userId = User.Identity.Name,
-                    //    logTime = DateTime.Now,
-                    //    status = 1,
-                    //    ipAddress = userip,
-                    //    pcName = mechineName,
-                    //    browserName = userAgent,
-                    //    temptationString = empIdentityUserSessionToken,
-                    //};
-                    //int ipId = await accessLogHistoryService.SaveUnauthorizeUserLog(userLog);
-
-                    return RedirectToAction("Not404Found", "Home");
-                }
-
-                //if (id == string.Empty || id == null)
+                //var id = Convert.ToInt32(empIdentityUserSessionToken);
+                //var _empInfo = _employeeService.GetBasicEmployeeInfoById(id);
+                //if (_empInfo?.employeeCode != User.Identity.Name || _empInfo == null)
                 //{
-                //    id = User.Identity.Name;
-                //}
+                    
 
-                //if(id!= User.Identity.Name)
-                //{
                 //    return RedirectToAction("Not404Found", "Home");
                 //}
 
-                //ApplicationUser applicationUser = await _userManager.FindByNameAsync(id);
-                var userInfo = await userInfoes.GetUserInfoByUser(_empInfo?.employeeCode);
-                if (userInfo == null)
-                {
-                    return RedirectToAction("Not404Found", "Home");
-                }
-                //var userInfo = await userInfoes.GetUserInfoBeforeRegisterById(Convert.ToInt32(user));
-                EmployeeInfo employeeInfo = new EmployeeInfo();
-                var empInfo = await userInfoes.GetUserInfoByUserId(userInfo.Id);
-                if (empInfo == null)
-                {
-                    employeeInfo = new EmployeeInfo();
-                }
-                else
-                {
-                    employeeInfo = empInfo;
-                }
+               
+                //var userInfo = await userInfoes.GetUserInfoByUser(_empInfo?.employeeCode);
+                //if (userInfo == null)
+                //{
+                //    return RedirectToAction("Not404Found", "Home");
+                //}
+                //EmployeeInfo employeeInfo = new EmployeeInfo();
+                //var empInfo = await userInfoes.GetUserInfoByUserId(userInfo.Id);
+                
 
 
                 var model = new EmployeeInfoViewModel
                 {
-                    educationalQualifications = _educationalQualification.GetAll().Where(x => x.employeeId == empInfo.Id).ToList(),
-                    addressInformations = _addressInformation.GetAll().Where(x => x.employeeInfoId == empInfo.Id).ToList(),
-                    presentAdd = await _employeeService.GetAddressByEmpIdType(empInfo.Id, "Present Address"),
-                    permanentAdd = await _employeeService.GetAddressByEmpIdType(empInfo.Id, "Permanent Address"),
-                    spouseAdd = await _employeeService.GetAddressByEmpIdType(empInfo.Id, "Spouse Address"),
-                    maternalFamilyAdd = await _employeeService.GetAddressByEmpIdType(empInfo.Id, "Maternal Family Address"),
-                    ApplicationUserId = userInfo.Id,
-                    branch = _repoBranch.GetAll(),
-                    medicalInfo = await _employeeService.GetMedicalInfoByEmpId(empInfo.Id),
-                    section = _repoSection.GetAll(),
+                    educationalQualifications = _educationalQualification.GetAll().Where(x => x.employeeId == Id).ToList(),
+                    addressInformations = _addressInformation.GetAll().Where(x => x.employeeInfoId == Id).ToList(),
+                    presentAdd = await _employeeService.GetAddressByEmpIdType(Id, "Present Address"),
+                    permanentAdd = await _employeeService.GetAddressByEmpIdType(Id, "Permanent Address"),
+                    spouseAdd = await _employeeService.GetAddressByEmpIdType(Id, "Spouse Address"),
+                    maternalFamilyAdd = await _employeeService.GetAddressByEmpIdType(Id, "Maternal Family Address"),
+                    
                     designations = _repoDesignation.GetAll(),
                     rank = _repoRank.GetAll(),
-                    diseases = _disease.GetAll(),
                     religions = _repoReligion.GetAll().OrderBy(x => x.name),
                     districts = _district.GetAll().OrderBy(x => x.districtName),
-                    thanas = _repoThana.GetAll().OrderBy(x => x.thanaName),
-                    unionwards = _repoUnionWord.GetAll().OrderBy(x => x.unionName),
+                    
                     bCSBatches = _repoBCSBatch.GetAll(),
                     pHQTRTypes = _repoPHQTRType.GetAll(),
-                    specialBranchUnitsALL = _repoBranch.GetAll(),
-                    employeeInfo = employeeInfo,
+                    
                     organizations = _organizationService.GetAll().OrderBy(x => x.organizationName),
-                    levelofEducations = _lavelofEducation.GetAll().OrderBy(x => x.levelofeducationName),
                     results = _result.GetAll().OrderBy(x => x.resultName),
                     Divisions = _division.GetAll().OrderBy(x => x.divisionName),
-                    sections = _section.GetAll().OrderBy(x => x.Name),
                     specialBranchUnits = await _employeeService.GetSpecialBranchUnitParent(),
-                    diseasesList = await _employeeService.GetDiseases(),
-                    Vaccines = await _employeeService.GetVaccines(),
-                    applicationUser = userInfo,
-                    relations = _relation.GetAll().OrderBy(x => x.relationName),
-                    offenses = _offense.GetAll().OrderBy(x => x.offense),
+                    
                     spouseRelations = _spouseRelation.GetAll().OrderBy(x => x.relationName),
                     trainingInstitutes = _trainingInstitute.GetAll().OrderBy(x => x.trainingInstituteName),
                     trainingCategories = _trainingCategory.GetAll().OrderBy(x => x.trainingCategoryName),
-                    naturalPunishments = _naturalPunishment.GetAll(),
-                    spouses = _spouse.GetAll(),
+                    
                     banks = _banks.GetAll().OrderBy(x => x.bankName),
-                    photograph = await _employeeService.GetEmployeePhotographByEmpId(empInfo.Id),
-                    signature = await _employeeService.GetEmployeeSignatureByEmpId(empInfo.Id),
+                    photograph = await _employeeService.GetEmployeePhotographByEmpId(Id),
+                    signature = await _employeeService.GetEmployeeSignatureByEmpId(Id),
+                   
+
+                    spousesInfo = await _employeeService.GetSpouseInfoByEmpId(Id),
+
+                    assignments = await _employeeService.GetAssignmentInfoByEmpId(Id),
+                    employeeReturnReasons = await _employeeService.GetEmployeeReturnReasonByEmpId(Id),
+
+                    educationalQualification = await _employeeService.GetEducationalQualificationInfoByEmpId(Id),
+                    awardEntries = await _employeeService.GetAwardInfoByEmpId(Id),
+                    awardList = _repoAward.GetAll().OrderBy(x => x.awardName),
+                    promotionLogs = await _employeeService.GetPromotionInfoByEmpId(Id),
+                    traningLogs = await _employeeService.GetTraningLogInfoByEmpId(Id),
+                    
+                    foreignTravels = await _employeeService.GetForeignTravelsById(Id),
+                    countries = _repoCountry.GetAll().OrderBy(x => x.countryName),
+
+
                     fLang = _lang.PerseLang("Employee/EmployeeInfoEN.json", "Employee/EmployeeInfoBN.json", Request.Cookies["lang"]),
                     fLangaward = _award.PerseLang("Employee/AwardEntryEN.json", "Employee/AwardEntryBN.json", Request.Cookies["lang"]),
                     fLangDiciplinary = _disiplinary.PerseLang("Employee/DisciplinaryActionEN.json", "Employee/DisciplinaryActionBN.json", Request.Cookies["lang"]),
                     flangeducation = _education.PerseLang("Employee/EducationalQualificationEN.json", "Employee/EducationalQualificationBN.json", Request.Cookies["lang"]),
                     fLangtraining = _training.PerseLang("Employee/TraningLogEN.json", "Employee/TraningLogBN.json", Request.Cookies["lang"]),
-
-                    spousesInfo = await _employeeService.GetSpouseInfoByEmpId(empInfo.Id),
-
-                    assignments = await _employeeService.GetAssignmentInfoByEmpId(empInfo.Id),
-                    employeeReturnReasons = await _employeeService.GetEmployeeReturnReasonByEmpId(empInfo.Id),
-
-                    educationalQualification = await _employeeService.GetEducationalQualificationInfoByEmpId(empInfo.Id),
-                    awardEntries = await _employeeService.GetAwardInfoByEmpId(empInfo.Id),
-                    awardEntryList = _repoAwardEntry.GetAll().OrderBy(x => x.awardName),
-                    awardList = _repoAward.GetAll().OrderBy(x => x.awardName),
-                    promotionLogs = await _employeeService.GetPromotionInfoByEmpId(empInfo.Id),
-                    traningLogs = await _employeeService.GetTraningLogInfoByEmpId(empInfo.Id),
-                    disciplinaryActions = await _employeeService.GetDisciplinaryByEmpId(empInfo.Id),
-                    addressInformation = await _employeeService.GetAddressInformationByEmpId(empInfo.Id),
-                    foreignTravels = await _employeeService.GetForeignTravelsById(empInfo.Id),
-                    countries = _repoCountry.GetAll().OrderBy(x => x.countryName),
-                    ACRInfo = await _employeeService.GetEmployeeACRInfo(empInfo.Id)
 
                 };
                 return View(model);
@@ -477,6 +428,62 @@ namespace AlphaManagement.Web.Areas.Employee.Controllers
             }
 
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Index([FromForm] EmployeeViewModel model)
+        {
+            try
+            {
+                ApplicationUser applicationUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                //var empInfo = _employeeService.GetBasicEmployeeInfoById((int)model.empId);
+                EmployeeInfo empInfo = new EmployeeInfo();
+                empInfo.Id = model.empId;
+                empInfo.ApplicationUserId = applicationUser.Id;
+                empInfo.nameBangla = model.nameBangla;
+                empInfo.nameEnglish = model.nameEnglish;
+                empInfo.employeeCode = model.bpNo;
+                empInfo.rankId = model.rankId;
+                empInfo.designation = model.designation;
+                empInfo.designationsId = model.designationsId;
+                empInfo.fatherNameEnglish = model.fatherNameEnglish;
+                empInfo.motherNameEnglish = model.motherNameEnglish;
+                empInfo.gender = model.gender;
+                empInfo.sectionName = model.sectionName;
+                empInfo.sectionId = model.sectionId;
+                empInfo.nationalID = model.nationalID;
+                empInfo.homeDistrict = model.homeDistrict;
+                empInfo.dateOfBirth = model.dateOfBirth;
+                empInfo.LPRDate = model.lprDate;
+                empInfo.bloodGroup = model.bloodGroup;
+                empInfo.height = model.height;
+                empInfo.weight = model.weight;
+                empInfo.identificationSign = model.identificationSign;
+                empInfo.religionId = model.religionId;
+                empInfo.maritalStatus = model.maritalStatus;
+                empInfo.tribal = model.tribal;
+                empInfo.passportNo = model.passportNo;
+                empInfo.rationId = model.rationId;
+                empInfo.drivingLicense = model.drivingLicense;
+                empInfo.branchId = model.specialBranchUnitId;
+                empInfo.pHQTRTypeId = model.PhqTrType;
+                empInfo.countryId = model.PhqCountry;
+                empInfo.attachmentBranchId = model.attachmentBranchId;
+                empInfo.isApproved = 1;
+
+                int id = await _employeeService.SaveEmployeeInformation(empInfo);
+                model.empId = id;
+
+                return Json(model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
 
         public async Task<IActionResult> AdminEmployeeIndex(string empIdentityUserSessionToken)
         {
@@ -869,59 +876,7 @@ namespace AlphaManagement.Web.Areas.Employee.Controllers
             return Json(training);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Index([FromForm] EmployeeViewModel model)
-        {
-            try
-            {
-                ApplicationUser applicationUser = await _userManager.FindByNameAsync(User.Identity.Name);
-                var empInfo = _employeeService.GetBasicEmployeeInfoById((int)model.empId);
-                empInfo.Id = model.empId;
-                empInfo.ApplicationUserId = applicationUser.Id;
-                empInfo.nameBangla = model.nameBangla;
-                empInfo.nameEnglish = model.nameEnglish;
-                empInfo.employeeCode = model.bpNo;
-                empInfo.rankId = model.rankId;
-                empInfo.designation = model.designation;
-                empInfo.designationsId = model.designationsId;
-                empInfo.fatherNameEnglish = model.fatherNameEnglish;
-                empInfo.motherNameEnglish = model.motherNameEnglish;
-                empInfo.gender = model.gender;
-                empInfo.sectionName = model.sectionName;
-                empInfo.sectionId = model.sectionId;
-                empInfo.nationalID = model.nationalID;
-                empInfo.homeDistrict = model.homeDistrict;
-                empInfo.dateOfBirth = model.dateOfBirth;
-                empInfo.LPRDate = model.lprDate;
-                empInfo.bloodGroup = model.bloodGroup;
-                empInfo.height = model.height;
-                empInfo.weight = model.weight;
-                empInfo.identificationSign = model.identificationSign;
-                empInfo.religionId = model.religionId;
-                empInfo.maritalStatus = model.maritalStatus;
-                empInfo.tribal = model.tribal;
-                empInfo.passportNo = model.passportNo;
-                empInfo.rationId = model.rationId;
-                empInfo.drivingLicense = model.drivingLicense;
-                empInfo.branchId = model.specialBranchUnitId;
-                empInfo.pHQTRTypeId = model.PhqTrType;
-                empInfo.countryId = model.PhqCountry;
-                empInfo.attachmentBranchId = model.attachmentBranchId;
-                empInfo.isApproved = 2;
-
-                int id = await _employeeService.SaveEmployeeInformation(empInfo);
-                model.empId = id;
-
-                return Json(model);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
+        
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> SaveMoreInfo([FromForm] EmployeeViewModel model)

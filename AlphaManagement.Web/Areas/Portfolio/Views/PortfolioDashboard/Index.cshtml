@@ -53,7 +53,7 @@
             <div class="page-head">
                 <h4 class="mt-2 mb-2">Dashboard</h4>
             </div>
-            <div class="row">
+            @* <div class="row">
                 <div class="col-md-12 col-12">
                     <div class="flexMainBox">
                         <div class="flexDiv">
@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="col-md-8 col-12">
                                             <h2 class="m-0 counter textStyle">@Model.totalRegistration?.ToString("0,0")</h2>
-                                            <p class="textStyle">Total Registration</p>
+                                            <p class="textStyle">All Employee</p>
                                         </div>
                                     </div>
                                 </div>
@@ -135,94 +135,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 col-12">
-                    <div class="flexMainBox">
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=0&periodType=todays">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4 col-12">
-                                            @*<div class="text-center"><i class="ti ti-user" style=""></i></div>*@
-                                            <div class="text-center"><i class="mdi mdi-account-multiple-plus" style="background:#926327"></i></div>
-                                        </div>
-
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.todaysTotalRegistration?.ToString("0,0")</h2>
-                                            <p class="textStyle">Today's Registration</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=2&periodType=todays">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center text-center">
-                                        <div class="col-md-4 col-12">
-                                            <div class="text-center"><i class="mdi mdi-account-convert" style="background:#af7174"></i></div>
-                                        </div>
-                                        @*<div class="col-4">
-                            <div class="inlinesparkline">Loading..</div>
-                        </div>*@
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.todaysOnGoing?.ToString("0,0")</h2>
-                                            <p class="textStyle">Today's On Going</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=3&periodType=todays">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4 col-12">
-                                            <div class="text-center"><i class="mdi mdi-account-location" style="background:#165f58"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.todaysFinalSubmit?.ToString("0,0")</h2>
-                                            <p class="textStyle">Today's Final Submit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Employee/EmployeeInfoHistory/AdminCheckedUpdatedEmployeeListForAdmin?id=1">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4 col-12">
-                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#82d9f1"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.todaycheckedItem?.ToString("0,0")</h2>
-                                            <p class="textStyle">Today's Checked List</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=4&periodType=todays">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4">
-                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#5fca80"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.todaysVarified?.ToString("0,0")</h2>
-                                            <p class="textStyle">Today's Verified</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> *@
+             
 
 
             <div class="row">
@@ -300,27 +214,16 @@
 
                 <div class="col-lg-8 col-sm-12">
                     <div class="card m-b-30">
-                        <div class="card-body">
-                            @*<h5 class="header-title pb-3"></h5>
-                                <div id="morris-bar-chart"></div>*@
+                        <div class="card-body">                           
 
                             <h5 class="header-title pb-3">Batch Total Completed</h5>
                             <div class="sales-chartbat teamCompleted">
-                                @*<canvas id="team-chart"></canvas>*@
                             </div>
 
                         </div>
                     </div>
                 </div>
 
-                @*<div class="col-lg-4 col-sm-12">
-                        <div class="card m-b-30">
-                            <div class="card-body">
-                                <h5 class="header-title pb-3"></h5>
-                                <div id="extra-area-chart"></div>
-                            </div>
-                        </div>
-                    </div>*@
 
                 <div class="col-lg-12 col-sm-12">
                     <div class="card m-b-30">
@@ -333,15 +236,14 @@
                                             <thead>
                                                 <tr>
                                                     <td>SL.NO</td>
-                                                    <td>Gradation</td>
-                                                    <td>Photo</td>
+                                                    @* <td>Gradation</td> *@
+                                                    @* <td>Photo</td> *@
                                                     <td>Name</td>
                                                     <td>BP No</td>
                                                     <td>Rank</td>
                                                     <td>Unit</td>
                                                     <td>BCS Batch</td>
-                                                    <td>Status</td>
-                                                    <td>Mark</td>
+                                                    <td>%</td>
                                                     <td>Action</td>
                                                 </tr>
                                             </thead>
@@ -357,22 +259,22 @@
                                                     {
                                                 <tr>
                                                     <td>@i</td>
-                                                    <td>@item.gradationSerial</td>
-                                                    @if (item.imageUrl == null)
+                                                    @*<td>@item.gradationSerial</td>
+                                                            @if (item.imageUrl == null)
                                                     {
                                                         <td> <img src="~/logo/defaultprofile.jpg" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
                                                     }
                                                     else
                                                     {
                                                         <td> <img src="@baseImageUrl/@item.imageUrl" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
-                                                    }
+                                                    } *@
                                                     <td>@item.nameEnglish</td>
                                                     <td>@item.employeeCode</td>
                                                     <td>@item.rankName</td>
                                                     <td>@item.sectionName</td>
                                                     <td>@item.batchName</td>
 
-                                                    <td>
+                                                    @*<td>
                                                         @if (item.isApproved == 1)
                                                         {
                                                             currentStaus = "Registered";
@@ -422,7 +324,7 @@
                                                             <div style="text-align:center; color:ghostwhite" role="progressbar">@currentStaus</div>
                                                         </div>
 
-                                                    </td>
+                                                    </td>*@
 
                                                     @if (item.statusMark >= 70)
                                                     {
@@ -446,10 +348,9 @@
                                                     </td>
 
                                                     <td width="10%">
-                                                        @*<a class="btn btn-sm btn-primary" href="/Portfolio/PortfolioDashboard/EmployeeDetails?id=@item.employeeCode" target="_blank"><i class="mdi mdi-account-card-details"></i></a>*@
 
                                                         <a class="btn btn-sm btn-primary d-inline" href="javascript:void(0)" onclick="window.open('/Portfolio/PortfolioDashboard/EmployeeDetails?empIdentityUserSessionToken=@item.Id')" target="_blank" title="Details"><i class="mdi mdi-account-card-details"></i></a>
-                                                        @*<a class="btn btn-sm btn-info d-inline" style="margin-left:5px" href="javascript:void(0)" onclick="window.open('/Portfolio/PortfolioDashboard/EmployeeInfoReportViewPDF?empIdentityUserSessionToken=@item.Id')" target="_blank" title="Print Preview"><i class="fa fa-print"></i></a>*@
+                                                      
 
                                                     </td>
                                                 </tr>

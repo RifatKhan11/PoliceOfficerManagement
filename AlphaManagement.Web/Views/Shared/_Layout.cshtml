@@ -17,6 +17,138 @@
         -webkit-text-fill-color: transparent;
     }
 </style>
+<style>
+    .sb-custom-toggle-rightArr {
+        top: 45%;
+        position: fixed;
+        right: 20.5%;
+        z-index: 555;
+    }
+
+    .sb-custom-toggle-rightArrRem {
+        top: 50%;
+        position: fixed;
+        right: 1.5%;
+        z-index: 555;
+    }
+
+    @@media (max-width: 480px) { /* Slidebar width on extra small screens. */
+        .sb-custom-toggle-rightArr {
+            top: 60%;
+            position: fixed;
+            right: 55.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 481px) { /* Slidebar width on small screens. */
+        .sb-custom-toggle-rightArr {
+            top: 55%;
+            position: fixed;
+            right: 50.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 768px) { /* Slidebar width on small screens. */
+        .sb-custom-toggle-rightArr {
+            top: 55%;
+            position: fixed;
+            right: 45.5%;
+            z-index: 555;
+        }
+
+        .sb-custom-toggle-rightArrRem {
+            top: 50%;
+            position: fixed;
+            right: 2.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 992px) { /* Slidebar width on medium screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 40.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 1000px) { /* Slidebar width on large screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 35.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 1200px) { /* Slidebar width on large screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 31.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 1320px) { /* Slidebar width on large screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 29%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 1420px) { /* Slidebar width on large screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 26%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 1580px) { /* Slidebar width on large screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 24.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 1660px) { /* Slidebar width on large screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 23.5%;
+            z-index: 555;
+        }
+    }
+
+    @@media (min-width: 1900px) { /* Slidebar width on large screens. */
+        .sb-custom-toggle-rightArr {
+            top: 45%;
+            position: fixed;
+            right: 20.5%;
+            z-index: 555;
+        }
+    }
+
+    .connectedSortable {
+        height: 400px;
+    }
+
+
+    @@media screen and (min-height: 870px) {
+        .connectedSortable {
+            height: 600px;
+        }
+    }
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,10 +158,10 @@
     <meta name="author" content="Mannat Themes">
     <meta name="keyword" content="">
 
-    <title>ALPHA</title>
+    <title>Employee Management</title>
 
     <!-- Theme icon -->
-    <link rel="shortcut icon" href="~/images/faviconp.ico">
+    @* <link rel="shortcut icon" href="~/images/faviconp.ico"> *@
     <!-- Datatable -->
     <link href="~/plugins/nestable/jquery.nestable.css" rel="stylesheet" />
     <link href="~/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
@@ -55,512 +187,55 @@
     <section>
         <!-- sidebar left start-->
         <div class="sidebar-left">
-            <div class="sidebar-left-info">
-
-                <div class="user-box">
-                    <div class="d-flex justify-content-center">
-                        @if (emp.imageUrl == null || emp.imageUrl == "")
-                        {
-                            <img src="~/images/users/userImage.jpg" alt="" class="img-fluid rounded-circle">
-                        }
-                        else
-                        {
-                            <img src="http://portfolio.police.gov.bd/@emp?.imageUrl" alt="" class="img-fluid rounded-circle">
-                        }
-                    </div>
-                    <div class="text-center text-white mt-2">
-                        <h6>@emp?.empName</h6>
-                        <p class="text-muted m-0">@emp?.rankName</p>
-
-                    </div>
-
-                    <div class="text-center text-white mt-4 mb-0">
-                        <a href="javascript:void(0)" style="display: flex; justify-content: center; align-items: center" id="changePassword" data-toggle="modal" data-target="#changePasswordModal">Change Password</a>
-                    </div>
-                </div>
+            <div class="sidebar-left-info">             
 
                 <!--sidebar nav start-->
+              
+             
+                
                 <ul class="side-navigation mt-0">
 
-                    @{
-                        var user = User.Identity.Name;
-                        if (emp.roleName.Contains("Super Admin"))
-                        {
-                            <li class="active">
-                                <a href="/Home/DashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-                            <li>
-                                <a href="~/Portfolio/PortfolioDashboard/index"><i class="mdi mdi-worker"></i><span>Portfolio Dashboard</span></a>
-                            </li>
-                            <li class="menu-list">
-                                <a href="#">
-                                    <i class="mdi mdi-google-circles-extended"></i>
-                                    <span>
-                                        Gradation Information <span class="badge badge-primary noti-arrow pull-right"></span>
-                                    </span>
-                                </a>
-                                <ul class="child-list">
-                                    <li><a href="~/Employee/EmployeeGradation/index">Current Officers</a></li>
-                                    <li><a href="~/Employee/EmployeeGradation/GradationUpgradationPendingList">Pending For Upgradation</a></li>
-                                    <li><a href="~/Employee/EmployeeGradation/RetiredEmployeeGradation">Retired Officers</a></li>
-                                    <li><a href="~/Portfolio/PortfolioDashboard/EmployeeListNew">Portfolio Data Uplode</a></li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                @*<a href="/Employee/EmployeeProfile/Employeelist">
-                        <i class="mdi mdi-account-settings-variant"></i>
-                        <span>Profile</span>
-                    </a>*@
-                                <a href="/Employee/EmployeeInfo/EmployeeList">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Profile</span>
-                                </a>
+                    <li class="">
+                        <a href="/Portfolio/PortfolioDashboard/index"><i class="mdi mdi-worker"></i><span>Dashboard</span></a>
+                    </li>
 
-                            </li>
-                            <li class="menu-list">
-                                <a href="">
-                                    <i class="mdi mdi-google-circles-extended"></i> <span>
-                                        Settings <span class="badge badge-primary noti-arrow pull-right"></span>
-                                    </span>
-                                </a>
-                                <ul class="child-list">
-                                    <li><a href="~/Employee/UserInfo/UserList">User</a></li>
-                                    <li><a href="~/Auth/Account/UserRoleCreate">User Role</a></li>
-                                    <li><a href="~/Auth/Account/AssaignRoleToUser">User Role Assign</a></li>
-                                    <li><a href="~/Auth/Account/Register">User Registration</a></li>
-                                    <li><a href="~/Portfolio/PortfolioDashboard">Portfolio Dashboard</a></li>
-                                </ul>
-                            </li>
+                @*<li class="active">
+                        <a href="/Home/DashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
+                    </li> *@
+                  
+                    <li class="">
+                        <a href="/Employee/EmployeeInfo/EmployeeList">
+                            <i class="mdi mdi-account-settings-variant"></i>
+                            <span>Search</span>
+                        </a>
+                    </li>
 
-                            <li class="menu-list">
-                                <a href=""><i class="mdi mdi-buffer"></i> <span>Master Data</span></a>
-                                <ul class="child-list">
-                                    <li><a href="/Home/GridMenuPage">Create Master</a></li>
-                                    <li><a href="/Employee/EmployeeProfile/PRLEmployeeList">PRL List</a></li>
-                                    <li><a href="/Home/GridMenuAddressPage">Create Address Info</a></li>
-                                </ul>
-                            </li>
+                    <li class="menu-list">
+                        <a href="">
+                            <i class="mdi mdi-google-circles-extended"></i> <span>
+                                Settings <span class="badge badge-primary noti-arrow pull-right"></span>
+                            </span>
+                        </a>
+                        <ul class="child-list" style="">
+                            <li><a href="/Employee/UserInfo/UserList">User</a></li>
+                            <li><a href="/Auth/Account/UserRoleCreate">User Role</a></li>
+                            <li><a href="/Auth/Account/AssaignRoleToUser">User Role Assign</a></li>
+                            <li><a href="/Auth/Account/Register">User Registration</a></li>                           
+                        </ul>
+                    </li>
 
-                            <li class="menu-list">
-                                <a href=""><i class="mdi mdi-book-multiple" aria-hidden="true"></i><span>Posting</span></a>
-                                <ul class="child-list">
-                                    <li><a href="~/Employee/Assignment/EmployeePosting">New Posting</a></li>
-                                    <li><a href="#">View Place Of Posting</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="menu-list">
-                                <a href="/Home/DashBoard"><i class="fa fa-database"></i> <span>Over Due Posting</span></a>
-                            </li>
-                            <li class="">
-
-                                <a href="/Employee/Assignment/EmployeePosting"><i class="fa fa-telegram"></i> <span>New Posting</span></a>
-
-                            </li>
-                            <li class="">
-                                <a href="/Home/DashBoard"><i class="fa fa-sitemap"></i> <span>Organogram</span></a>
-                            </li>
-                            <li class="">
-                                <a href="#"><i class="fa fa-cubes"></i> <span>Postition Vacancy</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/EnrollFrezzList"><i class="fa fa-bandcamp"></i> <span>Officers' Freez List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/PendingAssignList"><i class=" mdi mdi-format-list-numbers"></i> <span>Pending Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentMaster"><i class=" mdi mdi-format-list-numbers"></i> <span>Posted Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentPostMaster"><i class="fa  fa-wheelchair"></i> <span>Waiting Posted Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentMasterApprove"><i class="fa  fa-arrows"></i> <span>Approved Posted Officers' List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentReturnList">
-                                    <i class=" mdi mdi-google-circles-group"></i> <span>Return List</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/CompletedPostingList"><i class="fa fa-bars"></i> <span>Order Archive</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/DashBoard/Article47ForAdmin"><i class="fa fa-bookmark-o"></i> <span>Article 47 Request</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeIndexAdditional"><i class="fa fa-line-chart"></i> <span>Additional Internal Posting</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeIndex"><i class="fa fa-bullhorn"></i> <span>Internal Posting</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/InternalPendingAssignList"><i class="fa fa-bullhorn"></i> <span>Created Internal Posting</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeListHeadQuater"><i class="fa fa-line-chart"></i> <span>Internal Employee List</span></a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("Departmental User"))
-                        {
-                            <li class="active">
-                                <a href="/Home/DepartmentalDashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-
-                            <li>
-                                <a href="~/Employee/EmployeeInfo/EmployeeList"><i class="mdi mdi-worker"></i><span>Personal Profile</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/EmployeeInfoHistory/AdminCheckedEmployeeList"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("Portfolio Checker"))
-                        {
-                            <li class="active">
-                                <a href="/Home/PortfolioCheckerDashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/EmployeeInfoHistory/AdminCheckedEmployeeList"><i class="mdi mdi-gauge"></i> <span>Checked Employee List</span></a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("PHQ Approver"))
-                        {
-                            <li class="active">
-                                <a href="/Home/PHQAdminDashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-
-                            <li class="active">
-                                <a href="/Home/DashBoard"><i class="mdi mdi-gauge"></i> <span>Alpha Dashboard</span></a>
-                            </li>
-                            <li>
-                                <a href="~/Portfolio/PortfolioDashboard/index"><i class="mdi mdi-worker"></i><span>Portfolio Dashboard</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/EmployeeProfile/Employeelist">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Profile</span>
-                                </a>
-
-                            </li>
-                            <li class="menu-list">
-                                <a href="">
-                                    <i class="mdi mdi-google-circles-extended"></i> <span>
-                                        Settings <span class="badge badge-primary noti-arrow pull-right"></span>
-                                    </span>
-                                </a>
-                                <ul class="child-list">
-                                    <li><a href="~/Employee/UserInfo/UserList">User</a></li>
-                                    <li><a href="~/Auth/Account/UserRoleCreate">User Role</a></li>
-                                    <li><a href="~/Auth/Account/AssaignRoleToUser">User Role Assign</a></li>
-                                    <li><a href="~/Auth/Account/Register">User Registration</a></li>
-                                    <li><a href="~/Portfolio/PortfolioDashboard">Portfolio Dashboard</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="menu-list">
-                                <a href=""><i class="mdi mdi-buffer"></i> <span>Master Data</span></a>
-                                <ul class="child-list">
-                                    <li><a href="/Home/GridMenuPage">Create Master</a></li>
-                                    <li><a href="/Employee/EmployeeProfile/PRLEmployeeList">PRL List</a></li>
-                                    <li><a href="/Home/GridMenuAddressPage">Create Address Info</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="menu-list">
-                                <a href=""><i class="mdi mdi-book-multiple" aria-hidden="true"></i><span>Posting</span></a>
-                                <ul class="child-list">
-                                    <li><a href="~/Employee/Assignment/EmployeePosting">New Posting</a></li>
-                                    <li><a href="#">View Place Of Posting</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="menu-list">
-                                <a href="/Home/DashBoard"><i class="fa fa-database"></i> <span>Over Due Posting</span></a>
-                            </li>
-                            <li class="">
-
-                                <a href="/Employee/Assignment/EmployeePosting"><i class="fa fa-telegram"></i> <span>New Posting</span></a>
-
-                            </li>
-                            <li class="">
-                                <a href="/Home/DashBoard"><i class="fa fa-sitemap"></i> <span>Organogram</span></a>
-                            </li>
-                            <li class="">
-                                <a href="#"><i class="fa fa-cubes"></i> <span>Postition Vacancy</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/EnrollFrezzList"><i class="fa fa-bandcamp"></i> <span>Officers' Freez List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/PendingAssignList"><i class=" mdi mdi-format-list-numbers"></i> <span>Pending Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentMaster"><i class=" mdi mdi-format-list-numbers"></i> <span>Posted Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentPostMaster"><i class="fa  fa-wheelchair"></i> <span>Waiting Posted Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentMasterApprove"><i class="fa  fa-arrows"></i> <span>Approved Posted Officers' List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentReturnList">
-                                    <i class=" mdi mdi-google-circles-group"></i> <span>Return List</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/CompletedPostingList"><i class="fa fa-bookmark-o"></i> <span>Order Archive</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/DashBoard/Article47ForAdmin"><i class="fa fa-bookmark-o"></i> <span>Article 47 Request</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeIndexAdditional"><i class="fa fa-line-chart"></i> <span>Additional Internal Posting</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeIndex"><i class="fa fa-bullhorn"></i> <span>Internal Posting</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/InternalPendingAssignList"><i class="fa fa-bullhorn"></i> <span>Created Internal Posting</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeListHeadQuater"><i class="fa fa-line-chart"></i> <span>Internal Employee List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AllLockedAssignmentMaster"><i class="fa fa-bookmark-o"></i> <span>ALL Locked Information</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AllAssignmentMasterCopy"><i class="fa fa-bookmark-o"></i> <span>Order Copy Information</span></a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("IGP"))
-                        {
-                            <li class="active">
-                                <a href="/Home/IGPDashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentPostMaster"><i class="fa  fa-wheelchair"></i> <span>Waiting Posted Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentMasterApprove"><i class="fa  fa-arrows"></i> <span>Approved Posted Officers' List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/CompletedPostingList"><i class="fa fa-bookmark-o"></i> <span>Order Archive</span></a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("Reserve Office"))
-                        {
-                            <li class="active">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeListHeadQuaterReserve"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-                        }
-                        else if (emp.roleName == "ACR Entry Operator" || emp.roleName == "Intel Report Entry Operator")
-                        {
-                            <li class="">
-                                <a href="/Employee/EmployeeProfile/Employeelist">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Profile</span>
-                                </a>
-
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("Admin"))
-                        {
-                            <li class="active">
-                                <a href="/Home/AdminDashBoard"><i class="mdi mdi-gauge"></i> <span>Dashboard</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Home/AdminDashBoard"><i class="fa fa-database"></i> <span>Over Due Posting</span></a>
-                            </li>
-
-                            <li class="">
-
-                                <a href="/Employee/Assignment/EmployeePosting"><i class="fa fa-telegram"></i> <span>New Posting</span></a>
-
-                            </li>
-
-                            <li class="">
-                                <a href="#"><i class="fa fa-cubes"></i> <span>Postition Vacancy</span></a>
-                            </li>
+                    <li class="menu-list">
+                        <a href=""><i class="mdi mdi-buffer"></i> <span>Master Data</span></a>
+                        <ul class="child-list" style="">
+                            <li><a href="/Home/GridMenuPage">Create Master</a></li>
+                            <li><a href="/Home/GridMenuAddressPage">Create Address Info</a></li>
+                        </ul>
+                    </li>
 
 
-                            <li class="">
-                                <a href="/Employee/Assignment/EnrollFrezzList"><i class="fa fa-bandcamp"></i> <span>Officers' Freez List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentMaster"><i class="fa fa-users"></i> <span>Enlisted Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/PendingAssignList"><i class=" mdi mdi-format-list-numbers"></i> <span>Pending Officers' List</span></a>
-                            </li>
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentPostMaster"><i class="fa  fa-wheelchair"></i> <span>Waiting Posted Officers' List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentReturnList"><i class="mdi mdi-google-circles-group"></i> <span>Return List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AssignmentMasterApprove"><i class="fa  fa-arrows"></i> <span>Approved Posted Officers' List</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/CreatedReportList"><i class="fa  fa-arrows"></i> <span>Created Report for Posted Officers'</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/CompletedPostingList"><i class="fa fa-bookmark-o"></i> <span>Order Archive</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AllLockedAssignmentMaster"><i class="fa fa-bookmark-o"></i> <span>ALL Locked Information</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/Assignment/AllAssignmentMasterCopy"><i class="fa fa-bookmark-o"></i> <span>Order Copy Information</span></a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/DashBoard/Article47ForAdmin"><i class="fa fa-bookmark-o"></i> <span>Article 47 Request</span></a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("Traning1"))
-                        {
-                            <li class="">
-                                <a href="/Portfolio/TrainingSkill/Index">
-                                    <i class="mdi mdi-gauge"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/TrainingSkill/EmployeeIndex">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Officers' List</span>
-                                </a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("BPA"))
-                        {
-                            <li class="">
-                                <a href="/Employee/EmployeeProfile/Employeelist">
-                                    <i class="mdi mdi-gauge"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/TrainingSkill/EmployeeIndex">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Officers' List</span>
-                                </a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("SB"))
-                        {
-                            <li class="">
-                                <a href="/Employee/EmployeeProfile/Employeelist">
-                                    <i class="mdi mdi-gauge"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/TrainingSkill/EmployeeIndex">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Officers' List</span>
-                                </a>
-                            </li>
-                        }
-
-                        else if (emp.roleName.Contains("Disciplinary Action Entry Operator"))
-                        {
-                            <li class="">
-                                <a href="/Portfolio/TrainingSkill/DisciplinaryAndAction">
-                                    <i class="mdi mdi-gauge"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/TrainingSkill/EmployeeIndex">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Officers' List</span>
-                                </a>
-                            </li>
-                        }
-
-                        else if (emp.roleName.Contains("Medical"))
-                        {
-                            <li class="">
-                                <a href="/Employee/EmployeeProfile/EmployeeMedicalInfo">
-                                    <i class="mdi mdi-gauge"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Portfolio/TrainingSkill/EmployeeIndex">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Officers' List</span>
-                                </a>
-                            </li>
-                        }
-                        else if (emp.roleName.Contains("PM1 Gradation"))
-                        {
-                            <li class="">
-                                <a href="/Employee/EmployeeGradation/index">
-                                    <i class="mdi mdi-gauge"></i>
-                                    <span>Current Officers</span>
-                                </a>
-                            </li>
-
-                            <li class="">
-                                <a href="/Employee/EmployeeGradation/RetiredEmployeeGradation">
-                                    <i class="mdi mdi-account-settings-variant"></i>
-                                    <span>Retired Officers</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="/Home/GridMenuPagePM1">
-                                    <i class="mdi mdi-buffer"></i>
-                                    <span>Master Data</span>
-                                </a>
-
-                            </li>
-                            <li class="">
-                                <a href="/InternalPosting/InternalEmployee/EmployeeListHeadQuater"><i class="fa fa-line-chart"></i> <span>Internal Employee List</span></a>
-                            </li>
-
-                        }
-
-                    }
 
                 </ul><!--sidebar nav end-->
+                <!--sidebar nav end-->
             </div>
         </div><!-- sidebar left end-->
         <div class="body-content">
@@ -568,50 +243,23 @@
             <div class="header-section" style="background-color:#040825">
                 <!--logo and logo icon start-->
                 <div class="logo">
-                    <a href="/">
-                        <span class="logo-img pl-1">
-                            <img src="~/logo/goldPolice.PNG" style="width:55px;height:55px;" />
-                        </span>
-                        <!--<i class="fa fa-maxcdn"></i>-->
-                        @*<span class="brand-name">ALPHA Management</span>*@
-                    </a>
+                   
+                    <a class="toggle-btn" id="toggleBtnMenu"><i class="ti ti-menu text-light"></i></a>
                 </div>
 
                 <!--toggle button start-->
-                <a class="toggle-btn" id="toggleBtnMenu"><i class="ti ti-menu text-light"></i></a>
+                
                 <!--toggle button end-->
                 <!--mega menu start-->
                 <div id="navbar-collapse-1" class="navbar-collapse collapse mega-menu">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav">                      
 
-
-                        @*<li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>*@
-                        @*<li class="search-content mt-2">
-                            <img src="~/logo/headquarterLogo.PNG" style="width:50px;height:50px;" />
-                        </li>*@
-
-                        @*<li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                        <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                        <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>*@
-
-                        <li class="search-content">
-                            @*<a href="/">
-                                <span class="logo-img pl-1">
-                                    <img src="~/logo/Alpha_Logo2.PNG" style="width:55px;height:55px;" />
-                                </span>
-                                <span class="brand-name">ALPHA</span>
-                            </a>*@
-                            @*<h1 class="text-center" style="color:#101636;font-family: 'Orbitron', cursive;">Alpha Management</h1>*@
-                            @*<h1 class="text-center" id="brandtext" style="color:#ff6a00!important;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Alpha Management</h1>*@
+                        <li class="search-content">                            
                             <h1 class="text-center mb-0" id="brandtext" style="color:#ff6a00!important;font-family:Arial;font-weight:bolder;padding-top:6px;">
-                                A L P H A
-                                @*<img src="~/logo/Alpha_E1.png" style="width:80px;height:65px;" />*@
+                               Employee Management                                
                             </h1>
-
                         </li>
-                        @*<li>
-                            <h1 class="text-center" id="brandtext" style="color:#ff6a00!important;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">&nbsp; Alpha</h1>
-                        </li>*@
+                        
                         <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>
 
 
@@ -632,26 +280,13 @@
                             </li>
 
                             <li class="mt-1">
-                                <a href="javascript:;" data-toggle="modal" data-target="#logoutModal">
-                                    @if (emp?.imageUrl == null || emp?.imageUrl == "")
-                                    {
+                                <a href="javascript:;" data-toggle="modal" data-target="#logoutModal">                                    
                                         <img src="~/images/users/userImage.jpg" alt="" class="img-fluid rounded-circle" style="height:50px;width:50px;">
-
-                                    }
-                                    else
-                                    {
-                                        <img src="http://portfolio.police.gov.bd/@emp?.imageUrl" alt="" class="img-fluid rounded-circle" style="height:40px;width:40px;">
-                                    }
+                                    
                                 </a>
-                                @*<div class="dropdown-menu dropdown-menu-right profile-menu" >
-                                    <a class="dropdown-item" href="/Auth/Account/Logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
-                                </div>*@
+                                
                             </li>
-                            @*<li>
-                                <div class="sb-toggle-right">
-                                    <i class="mdi mdi-apps"></i>
-                                </div>
-                            </li>*@
+                            
                         </ul>
                     </div><!--right notification end-->
                 </div>
@@ -659,15 +294,13 @@
             <!-- header section end-->
 
             <div class="container-fluid">
-                @*<partial name="_CookieConsentPartial" />*@
+                
                 @RenderBody()
-            </div><!--end container-->
-            <!--footer section start-->
+            </div>
             <footer class="footer">
                 @DateTime.Now.Year &copy; OPUS TECHNOLOGY LTD.
             </footer>
-            <!--footer section end-->
-            <!-- Right Slidebar start -->
+            
             <br />
             <div class="sb-slidebar sb-right sb-style-overlay" style="margin-top: 60px;">
 
@@ -728,8 +361,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        @*<img src="~/images/Aloha New Logo.png" style="height:50px;" />*@
-                        @*<h5 class="modal-title" id="exampleModalLabel">Change Password </h5>*@
+                       
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -783,146 +415,9 @@
 
         <!--end body content-->
     </section>
-    @*<div class="sb-custom-toggle-right sb-custom-toggle-rightArrRem" id="enlistArr" style="">
-            <i class="fa fa-chevron-left fa-4x" style="width:10px;color:darkolivegreen;opacity:.3"></i>
-        </div>*@
-    <style>
-        .sb-custom-toggle-rightArr {
-            top: 45%;
-            position: fixed;
-            right: 20.5%;
-            z-index: 555;
-        }
-
-        .sb-custom-toggle-rightArrRem {
-            top: 50%;
-            position: fixed;
-            right: 1.5%;
-            z-index: 555;
-        }
-
-        @@media (max-width: 480px) { /* Slidebar width on extra small screens. */
-            .sb-custom-toggle-rightArr {
-                top: 60%;
-                position: fixed;
-                right: 55.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 481px) { /* Slidebar width on small screens. */
-            .sb-custom-toggle-rightArr {
-                top: 55%;
-                position: fixed;
-                right: 50.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 768px) { /* Slidebar width on small screens. */
-            .sb-custom-toggle-rightArr {
-                top: 55%;
-                position: fixed;
-                right: 45.5%;
-                z-index: 555;
-            }
-            .sb-custom-toggle-rightArrRem {
-                top: 50%;
-                position: fixed;
-                right: 2.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 992px) { /* Slidebar width on medium screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 40.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 1000px) { /* Slidebar width on large screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 35.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 1200px) { /* Slidebar width on large screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 31.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 1320px) { /* Slidebar width on large screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 29%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 1420px) { /* Slidebar width on large screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 26%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 1580px) { /* Slidebar width on large screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 24.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 1660px) { /* Slidebar width on large screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 23.5%;
-                z-index: 555;
-            }
-        }
-
-        @@media (min-width: 1900px) { /* Slidebar width on large screens. */
-            .sb-custom-toggle-rightArr {
-                top: 45%;
-                position: fixed;
-                right: 20.5%;
-                z-index: 555;
-            }
-        }
-
-        .connectedSortable {
-            height: 400px;
-        }
-
-
-        @@media screen and (min-height: 870px) {
-            .connectedSortable {
-                height: 600px;
-            }
-        }
-    </style>
-    @*<div class="container">
-            <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>*@
+    
+  
+    
 
     <!-- jQuery -->
     <script src="~/js/jquery-3.2.1.min.js"></script>
@@ -1045,7 +540,6 @@
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-            //location.reload(true);
         }
 
         function getCookie(name) {
@@ -1072,9 +566,7 @@
                                         <input type="hidden" name="empRank" value="${rankId}"/>
                                         <div class="dd-handle row fontStyle" style="background-color:${color};height: 70px;border-radius: 10px;padding: 0;margin: 0;padding-top: 4px;color: black;font-weight: bold;"><span class="col-11">${name} </span><span class="col-1 badge float-right" style="background-color: white;color:red; height: 23px;width: 20px;" onclick="removeFromSelectedDiv(${id})"><i class="fa fa-times fa-1x"></i></span></div>
                                     </li>`;
-                //var selectedEmpArr = JSON.parse(localStorage.getItem('EmpData') || '[]');
-                //selectedEmpArr.push(id);
-                //localStorage.setItem('EmpData', JSON.stringify(selectedEmpArr));
+                
             }
             $('#selectedEmpList').append(data)
             var counter = $('#selEmpDiv li').length;
@@ -1106,7 +598,6 @@
                         data: form.serialize(),
                         type: 'POST',
                         success: function (res) {
-                            //alert(res.status);
                             if (res.status == 1) {
                                 window.location.href = '/Employee/Assignment/EmployeePostingConfirmNew?refNum=' + res.refNumber;
                             }
@@ -1140,16 +631,10 @@
                 return false;
             }
             window.location.href = '/Employee/EmployeeInfo/allSearch?filter=' + filter;
-            //window.open('/Home/allSearch?filter=' + filter);
         }
 
         jQuery(document).ready(function ($) {
-            //var empList = localStorage.getItem('EmpData');
-            //var newEmpList = empList.replace('[', '').replace(']','');
-            //var eList = newEmpList.split(',');
-            //$.each(eList, function (i, v) {
-            //    Common.Ajax('GET', '/Employee/EmployeeInfo/EmployeeInfoById/' + v, [], 'json', ajaxEmployeeInfo, false);
-            //});
+           
 
             $('#txtFilter').keydown(function (event) {
                 var keyCode = (event.keyCode ? event.keyCode : event.which);
@@ -1160,26 +645,7 @@
             });
 
 
-            //var lang = getCookie('lang');
-            //if (lang == 'en') {
-            //    $('#lanBAN').html('বাংলা');
-            //} else {
-            //    $('#lanBAN').html('ENG');
-            //}
-
-            //$('#lanBAN').click(function () { setCookie('lang', 'bn', 30); });
-            //$('#lanBAN').change(function () {
-            //    if (lang == 'en') {
-            //        setCookie('lang', 'bn', 30);
-            //        $('#lnEnglish').html('বাংলা');
-            //        $('#lnBangla').html('English');
-            //    } else {
-            //        setCookie('lang', 'en', 30);
-            //        $('#lnBangla').html('বাংলা');
-            //        $('#lnEnglish').html('English');
-            //    }
-
-            //});
+           
 
 
             var body = jQuery('body');
@@ -1188,7 +654,6 @@
 
             $("#toggleBtnMenu").click(function () {
                 body.toggleClass('sidebar-collapsed');
-                //$("p").toggleClass("main");
             });
 
 
@@ -1207,12 +672,10 @@
         });
 
         function ajaxEmployeeInfo(responce) {
-            //$('#selectedEmpList').append(`<li>${responce.employeeCode}</li>`);
 
         }
 
         function ajaxEmployeeProfile(res) {
-            //console.log(res);
             $('#sEmpName').html(res.employeeInfo ?.nameEnglish);
             $('#sEmpBP').html(res.employeeInfo ?.employeeCode);
             $('#sEmpRank').html(res.employeeInfo ?.rank ?.rankName);
@@ -1220,19 +683,14 @@
             $('#bCSBatch').html(res.employeeInfo ?.BCSBatches ?.batchName);
             $('#homeDistrict').html(res.addressInformation ?.District ?.districtName);
             $('#education').html(res.educationalQualifications ?.degree ?.degreeName);
-            //alert(res.photograph ?.url);
             if (res.photograph ?.url == '' || res.photograph ?.url == null || res.photograph ?.url == 'undefined') {
                 $('#sEmpImage').attr('src', '~/' + res.photograph ?.url);
             } else {
                 $('#sEmpImage').attr('src', '~/images/users/userImage.jpg');
             }
-
-            //console.log(res);
         }
 
-                        //$('.clsEmpId').click(function () {
-                        //    alert()
-                        //})
+                        
     </script>
 
     @RenderSection("Scripts", required: false)

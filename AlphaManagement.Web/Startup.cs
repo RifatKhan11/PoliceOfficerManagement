@@ -152,13 +152,10 @@ namespace AlphaManagement.Web
 
             services.ConfigureApplicationCookie(options =>
             {
-                // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(40);
-                //options.ExpireTimeSpan = TimeSpan.FromSeconds(20);
+                options.ExpireTimeSpan = TimeSpan.FromDays(365);
 
-                //options.LoginPath = "/Auth/Account/Login";
-                options.LoginPath = "/Auth/Account/UserLogin";
+                options.LoginPath = "/Auth/Account/Login";
                 options.AccessDeniedPath = "/Home/AccessDenied";
                 options.SlidingExpiration = true;
             });
@@ -169,13 +166,7 @@ namespace AlphaManagement.Web
                 configureOptions.TokenValidationParameters = tokenValidationParameters;
                 configureOptions.SaveToken = true;
             });
-            
-            //services.AddAuthorization(Options =>
-            //{
-            //    Options.AddPolicy("AlphaMobile", policy => policy.RequireClaim("Roles", "IGP"));
-            //    Options.AddPolicy("AlphaMobile", policy => policy.RequireClaim("Roles", "Super Admin"));
-            //});
-
+                        
             #endregion
 
             #region Areas Config

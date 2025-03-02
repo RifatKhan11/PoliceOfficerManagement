@@ -72,26 +72,26 @@ namespace AlphaManagement.Web.Areas.Portfolio.Controllers
         {
             EmployeePortfolioDashBoardViewModel model = new EmployeePortfolioDashBoardViewModel
             {
-               // registration = await _employeeService.GetStatusWiseEmployeeCount(1),
-                onGoing = await _employeeService.GetStatusWiseEmployeeCount(2),
-                finalSubmit = await _employeeService.GetStatusWiseEmployeeCount(3),
-                varified = await _employeeService.GetStatusWiseEmployeeCount(4),
-                returned = await _employeeService.GetStatusWiseEmployeeCount(6),
-                checkedItem = await _employeeService.GetCheckedEmployeeCount(2),
-                todaycheckedItem = await _employeeService.GetCheckedEmployeeCount(0),
+               
+                //onGoing = await _employeeService.GetStatusWiseEmployeeCount(2),
+                //finalSubmit = await _employeeService.GetStatusWiseEmployeeCount(3),
+                //varified = await _employeeService.GetStatusWiseEmployeeCount(4),
+                //returned = await _employeeService.GetStatusWiseEmployeeCount(6),
+                //checkedItem = await _employeeService.GetCheckedEmployeeCount(2),
+                //todaycheckedItem = await _employeeService.GetCheckedEmployeeCount(0),
                 //   employeeInfoList = await _employeeService.GetEmployeeInfoList(0)
                 employeeInfosViewModelFor_SPs = await _employeeService.GetEmployeeInfoListForSp(User.Identity.Name, 0, 0, 0, 0, "All"),
 
                // todaysRegistration = await _employeeService.GetTodaysEmployeesStatusWise(1),
-                todaysOnGoing = await _employeeService.GetTodaysEmployeesStatusWise(2),
-                todaysFinalSubmit = await _employeeService.GetTodaysEmployeesStatusWise(3),
-                todaysVarified = await _employeeService.GetTodaysEmployeesStatusWise(4),
-                todaysReturned = await _employeeService.GetTodaysEmployeesStatusWise(6),
+                //todaysOnGoing = await _employeeService.GetTodaysEmployeesStatusWise(2),
+                //todaysFinalSubmit = await _employeeService.GetTodaysEmployeesStatusWise(3),
+                //todaysVarified = await _employeeService.GetTodaysEmployeesStatusWise(4),
+                //todaysReturned = await _employeeService.GetTodaysEmployeesStatusWise(6),
 
             };
             //  model.registred = await _employeeService.GetStatusWiseEmployeeCount(0);
-            model.totalRegistration = model.onGoing + model.finalSubmit;// + model.varified + model.returned + model.checkedItem;
-            model.todaysTotalRegistration =  model.todaysOnGoing + model.todaysFinalSubmit + model.todaysVarified + model.todaysReturned;
+            //model.totalRegistration = model.onGoing + model.finalSubmit;// + model.varified + model.returned + model.checkedItem;
+            //model.todaysTotalRegistration =  model.todaysOnGoing + model.todaysFinalSubmit + model.todaysVarified + model.todaysReturned;
             model.unitList = await _employeeService.GetUnitWiseEmployeeCount();
             return View(model);
         }

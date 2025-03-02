@@ -95,7 +95,7 @@ namespace AlphaManagement.Web.Areas.Auth.Controllers
                 {
                     var users = await _userManager.FindByIdAsync(userInfos.Id);
                     var roless = await _userManager.GetRolesAsync(users);
-                    if (userInfos.isActive == 1 && (roless.Contains("Super Admin") || roless.Contains("Admin") || roless.Contains("PHQ Approver") || roless.Contains("Sub-Admin") || roless.Contains("IGP") || roless.Contains("Disciplinary Action Entry Operator") || roless.Contains("ACR Entry Operator") || roless.Contains("BPA") || roless.Contains("SB") || roless.Contains("Medical") || roless.Contains("Traning1") || roless.Contains("PM1 Gradation")))
+                    if (userInfos.isActive == 1)
                     {
                         var result = await _signInManager.PasswordSignInAsync(model.Name, model.Password, model.RememberMe, lockoutOnFailure: true);
                         if (result.Succeeded)
@@ -117,104 +117,11 @@ namespace AlphaManagement.Web.Areas.Auth.Controllers
 
                             await _accessLogHistoryService.SaveUserLogHistory(userLog);
                             var user = await _userManager.FindByIdAsync(userInfos.Id);
-                            var roles = await _userManager.GetRolesAsync(user);
-
-                            if (roles.Contains("IGP"))
-                            {
-                                return RedirectToAction("IGPDashboard", "Home");
-                            }
-                            else if (roles.Contains("Admin"))
-                            {
-                                return RedirectToAction("AdminDashboard", "Home");
-                            }
-                            else if (roles.Contains("Sub-Admin"))
-                            {
-                                return RedirectToAction("AdminDashboard", "Home");
-                            }
-                            else if (roles.Contains("PHQ Approver"))
-                            {
-                                return RedirectToAction("PHQAdminDashBoard", "Home");
-                            }
-                            else if (roles.Contains("Super Admin"))
-                            {
-                                return RedirectToAction("Dashboard", "Home");
-                            }
-                            else if (roles.Contains("General User"))
-                            {
-                                return RedirectToAction("Index", "Dashboard", new { empIdentityUserSessionToken = model.Name, Area = "Portfolio" });
-                            }
-                            else if(roles.Contains("ACR Entry Operator"))
-                            {
-                                return RedirectToAction("ACRDisiplinaryVerify", "Account", new { UserId = user.Id, Area = "Auth" });
-                            }
-                            else if (roles.Contains("Departmental User"))
-                            {
-                                return RedirectToAction("DepartmentalDashBoard", "PortfolioDashboard");
-                            }
-                            else if (roles.Contains("Portfolio Checker"))
-                            {
-                                return RedirectToAction("PortfolioCheckerDashBoard", "PortfolioDashboard");
-                            }
-                            else if (roles.Contains("Traning1"))
-                            {
-                                return RedirectToAction("Index", "TrainingSkill", new { Area = "Portfolio" });
-                            }
-                            else if (roles.Contains("Disciplinary Action Entry Operator"))
-                            {
-                                return RedirectToAction("DisciplinaryAndAction", "TrainingSkill", new { Area = "Portfolio" });
-                            }
-                            else if (roles.Contains("BPA"))
-                            {
-                                return RedirectToAction("BPAinfoList", "DisciplinaryAction", new { Area = "Employee" });
-                            }
-                            else if (roles.Contains("SB"))
-                            {
-                                return RedirectToAction("SBinfoList", "DisciplinaryAction", new { Area = "Employee" });
-                            }
-                            else if (roles.Contains("Medical"))
-                            {
-                                return RedirectToAction("EmployeeMedicalInfo", "TrainingSkill", new { Area = "Portfolio" });
-                            }
-                            else if (roles.Contains("PM1 Gradation"))
-                            {
-                                return RedirectToAction("Index", "EmployeeGradation", new { Area = "Employee" });
-                            }
-                            else
-                            {
-                                return RedirectToLocal(returnUrl);
-                            }
+                            var roles = await _userManager.GetRolesAsync(user);                            
+                            return RedirectToAction("Index", "PortfolioDashboard", new { Area = "Portfolio" });
+                            
 
 
-                        }
-                        else
-                        {
-                            ModelState.AddModelError(string.Empty, "Invalid username or password.");
-                            return View(model);
-                        }
-                    }
-                    else if (userInfos.isActive == 1 && roless.Contains("Departmental User"))
-                    {
-                        var result = await _signInManager.PasswordSignInAsync(model.Name, model.Password, model.RememberMe, lockoutOnFailure: true);
-                        if (result.Succeeded)
-                        {
-                            var ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                            var userAgent = Request.Headers["User-Agent"].ToString();
-                            var mechineName = Environment.MachineName;
-
-                            UserLogHistory userLog = new UserLogHistory
-                            {
-                                userId = model.Name,
-                                logTime = DateTime.Now,
-                                status = 1,
-                                ipAddress = ip,
-                                pcName = mechineName,
-                                browserName = userAgent
-                            };
-
-                            await _accessLogHistoryService.SaveUserLogHistory(userLog);
-                            var user = await _userManager.FindByIdAsync(userInfos.Id);
-                            var roles = await _userManager.GetRolesAsync(user);
-                            return RedirectToAction("DepartmentalDashBoard", "Home");
                         }
                         else
                         {
@@ -461,6 +368,7 @@ namespace AlphaManagement.Web.Areas.Auth.Controllers
                         otpCode= otpnumber,
                         userRole= model.RoleId,
                         statusId=1
+                     
                     };
                     var userSave = await userInfoes.SaveUserInfo(userInf);
                     return Json("User Created");

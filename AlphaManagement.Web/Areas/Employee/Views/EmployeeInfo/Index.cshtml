@@ -134,29 +134,10 @@
     }
 </style>
 
-<div class="col-md-12 col-12 ">
-    <div class="card-header fixed-top" id="heading-0" style="cursor:pointer;background-color:#040158;top: 31px;margin:30px ;padding: 5px;z-index: 991 !important;">
-        <h2 class="mb-0 text-center " id="fnt" style="font-family:'Times New Roman';color:white">
-            <span>Officer's Portfolio, Bangladesh Police</span>
-
-            <a href="/Portfolio/Dashboard/Index" class="pull-right" style="font-size:25px;"><i class="fa fa-home fa-2x"></i></a>
-        </h2>
-
-    </div>
-</div>
 
 
 <div class="row">
-    @{
-        var inactive = "";
-    }
-
-    @if (Model.employeeInfo?.isApproved == 3 || Model.employeeInfo?.isApproved == 4 || Model.employeeInfo?.isApproved == 8)
-    {
-        inactive = "disabled";
-    }
-
-
+   
     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
         <div id="accordion" role="tablist" class="m-b-30">
             <div class="card" id="personlDiv">
@@ -178,7 +159,7 @@
                     <div class="card-body">
                         <div class="general-label">
                             <form id="FormId" enctype="multipart/form-data">
-                                <input type="hidden" id="empId" name="empId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" id="empId" name="empId" value="@Model?.employeeInfo?.Id" />
                                 <div class="row">
                                     <div class="card-body">
 
@@ -187,27 +168,29 @@
 
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
 
+                                                
+                                                <div class="form-group row">
+                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.bpNo <span style="color:red">*</span></label>
+                                                    <div class="col-md-8 col-12">
+                                                        <input class="form-control" type="text" id="bpNo" data-parsley-required="true" name="bpNo">
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.nameBangla <span style="color:red">*</span></label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.nameBangla" data-parsley-required="true" id="nameBangla" name="nameBangla">
+                                                        <input class="form-control" type="text" value="@Model?.employeeInfo?.nameBangla" data-parsley-required="true" id="nameBangla" name="nameBangla">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.nameEnglish <span style="color:red">*</span></label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.nameEnglish" data-parsley-required="true" id="nameEnglish" name="nameEnglish">
-                                                        <input type="hidden" id="txtEnglishName" value="@Model.employeeInfo?.nameEnglish" />
+                                                        <input class="form-control" type="text" value="@Model?.employeeInfo?.nameEnglish" data-parsley-required="true" id="nameEnglish" name="nameEnglish">
+                                                        <input type="hidden" id="txtEnglishName" value="@Model?.employeeInfo?.nameEnglish" />
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
-                                                    <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.bpNo <span style="color:red">*</span></label>
-                                                    <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" id="bpNo" data-parsley-required="true" name="bpNo" value="@Model.applicationUser?.bpNo" readonly>
-                                                    </div>
-                                                </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.rankId <span style="color:red">*</span></label>
@@ -216,7 +199,7 @@
                                                             <option value="">@Model.fLang.select</option>
                                                             @foreach (var item in Model.rank)
                                                             {
-                                                                if (item.Id == Model.employeeInfo?.rankId)
+                                                                if (item.Id == Model?.employeeInfo?.rankId)
                                                                 {
                                                                     <option value="@item.Id" selected>@item.rankName</option>
                                                                 }
@@ -236,7 +219,7 @@
                                                             <option value="">Select</option>
                                                             @foreach (var item in Model.specialBranchUnits.OrderBy(x => x.branchUnitName))
                                                             {
-                                                                if (item.Id == Model.employeeInfo?.branchId)
+                                                                if (item.Id == Model?.employeeInfo?.branchId)
                                                                 {
                                                                     <option value="@item.Id" selected>@item.branchUnitName</option>
                                                                 }
@@ -246,9 +229,9 @@
                                                                 }
                                                             }
                                                         </select>
-                                                        @*<label style="color:red;display:none;" id="MotherUnitTextDiv">Attached To : <span id="MotherUnitText">@Model.employeeInfo?.attachmentBranch?.branchUnitName</span></label>*@
+                                                        @*<label style="color:red;display:none;" id="MotherUnitTextDiv">Attached To : <span id="MotherUnitText">@Model?.employeeInfo?.attachmentBranch?.branchUnitName</span></label>*@
                                                         <input type="hidden" name="specialBranchUnitId" id="specialBranchUnitIdFinal" value="0" />
-                                                        <input type="hidden" name="attachmentBranchId" id="attachmentBranchId" value="@Model.employeeInfo?.attachmentBranchId" />
+                                                        <input type="hidden" name="attachmentBranchId" id="attachmentBranchId" value="@Model?.employeeInfo?.attachmentBranchId" />
                                                     </div>
                                                     <div class="col-md-2 col-12 p-0 m-0">
                                                         @*<a class="btn btn-sm btn-success" id="AddMotherUnit" style="color:white" title="Attached" data-toggle="modal" data-target="#AddMotherUnitModal"><i class="fa fa-plus-square"></i></a>*@
@@ -266,7 +249,7 @@
                                                 <div class="form-group row" id="MotherUnitTextDiv" style="display:none">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">Attached To : <span style="color:red">*</span></label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" id="MotherUnitText" data-parsley-required="true" name="MotherUnitText" value="@Model.employeeInfo?.attachmentBranch?.branchUnitName" readonly>
+                                                        <input class="form-control" type="text" id="MotherUnitText" data-parsley-required="true" name="MotherUnitText" value="@Model?.employeeInfo?.attachmentBranch?.branchUnitName" readonly>
                                                     </div>
                                                 </div>
 
@@ -286,7 +269,7 @@
                                                             <option value="">Select One</option>
                                                             @foreach (var item in Model.pHQTRTypes)
                                                             {
-                                                                if (item.Id == Model.employeeInfo?.pHQTRTypeId)
+                                                                if (item.Id == Model?.employeeInfo?.pHQTRTypeId)
                                                                 {
                                                                     <option value="@item.Id" selected>@item.trTypeName</option>
                                                                 }
@@ -303,7 +286,7 @@
                                                             <option value="">Select Country</option>
                                                             @foreach (var item in Model.countries)
                                                             {
-                                                                if (item.Id == Model.employeeInfo?.countryId)
+                                                                if (item.Id == Model?.employeeInfo?.countryId)
                                                                 {
                                                                     <option value="@item.Id" selected>@item.countryName</option>
                                                                 }
@@ -317,14 +300,14 @@
 
                                                 </div>
 
-                                                @*<div class="form-group row" id="DivPhqCountry" style="display:none">
+                                                @* @*<div class="form-group row" id="DivPhqCountry" style="display:none">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">Country<span style="color:red">*</span></label>
                                                         <div class="col-md-8 col-12">
                                                             <select class="select2 form-control mb-3 custom-select" style="width: 100%;" id="PhqCountry" name="PhqCountry">
                                                                 <option value="">Select One</option>
                                                                 @foreach (var item in Model.countries)
                                                                 {
-                                                                    if (item.Id == Model.employeeInfo?.countryId)
+                                                                    if (item.Id == Model?.employeeInfo?.countryId)
                                                                     {
                                                                         <option value="@item.Id" selected>@item.countryName</option>
                                                                     }
@@ -335,7 +318,7 @@
                                                                 }
                                                             </select>
                                                         </div>
-                                                    </div>*@
+                                                    </div>*@ 
 
                                                 <div class="form-group row" id="DivSubSubbranch" style="display:none">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">Sub Sub Unit <span style="color:red">*</span></label>
@@ -351,7 +334,7 @@
                                                             <option value="">@Model.fLang.select</option>
                                                             @foreach (var item in Model.designations)
                                                             {
-                                                                if (item.Id == Model.employeeInfo?.designationsId)
+                                                                if (item.Id == Model?.employeeInfo?.designationsId)
                                                                 {
                                                                     <option value="@item.Id" selected>@item.designationName</option>
                                                                 }
@@ -403,7 +386,6 @@
                                                             <h4 class="modal-title" id="myModalLabelsign"></h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            @*<div id="upload-demosign" class="center-block"></div>*@
                                                             <div class="row">
                                                                 <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
                                                                     <div class="col-lg-7 col-md-7 col-sm-7 p-0 m-0">
@@ -479,9 +461,8 @@
                                                                 <input type="file" class="item-imgsign file center-block" />
                                                             </label>
                                                         }
-                                                        <input type="hidden" name="employeeID" id="personalEmployeeID" value="@Model.employeeInfo?.Id" />
+                                                        <input type="hidden" name="employeeID" id="personalEmployeeID" value="@Model?.employeeInfo?.Id" />
                                                         <input type="file" id="fileinput" class="d-none" />
-                                                        @*<input type="file" id="Photoinput" class="center-block d-none" name="file_photo" />*@
                                                     </div>
                                                     <div class="col-md-1 col-12">
 
@@ -496,22 +477,22 @@
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.dateOfBirth <span style="color:red">*</span></label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" id="mdate" data-parsley-required="true" name="dateOfBirth" value="@Model.employeeInfo?.dateOfBirth?.ToString("dd-MMM-yyyy")" readonly>
-                                                        <input type="hidden" name="lprDate" id="hdnLPRDate" value="@Model.employeeInfo?.LPRDate?.ToString("dd-MMM-yyyy")">
+                                                        <input class="form-control" type="text" id="mdate" data-parsley-required="true" name="dateOfBirth" value="@Model?.employeeInfo?.dateOfBirth?.ToString("dd-MMM-yyyy")" readonly>
+                                                        <input type="hidden" name="lprDate" id="hdnLPRDate" value="@Model?.employeeInfo?.LPRDate?.ToString("dd-MMM-yyyy")">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">Father's Name <span style="color:red">*</span></label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.fatherNameEnglish" data-parsley-required="true" id="fatherNameEnglish" name="fatherNameEnglish">
+                                                        <input class="form-control" type="text" value="@Model?.employeeInfo?.fatherNameEnglish" data-parsley-required="true" id="fatherNameEnglish" name="fatherNameEnglish">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">Mother's Name<span style="color:red">*</span></label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.motherNameEnglish" data-parsley-required="true" id="motherNameEnglish" name="motherNameEnglish">
+                                                        <input class="form-control" type="text" value="@Model?.employeeInfo?.motherNameEnglish" data-parsley-required="true" id="motherNameEnglish" name="motherNameEnglish">
                                                     </div>
                                                 </div>
 
@@ -519,9 +500,9 @@
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.gender</label>
                                                     <div class="col-md-8 col-12">
                                                         <select class="form-control" name="gender" id="gender">
-                                                            @if (Model.employeeInfo.gender != null)
+                                                            @if (Model?.employeeInfo?.gender != null)
                                                             {
-                                                                <option value="@Model.employeeInfo.gender">@Model.employeeInfo.gender</option>
+                                                                <option value="@Model?.employeeInfo?.gender">@Model?.employeeInfo?.gender</option>
                                                             }
                                                             else
                                                             {
@@ -537,28 +518,28 @@
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.nationalID <span style="color:red">*</span></label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.nationalID" maxlength="17" data-parsley-required="true" id="nationalID" name="nationalID">
+                                                        <input class="form-control" type="text" value="@Model?.employeeInfo?.nationalID" maxlength="17" data-parsley-required="true" id="nationalID" name="nationalID">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">Driving License</label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" id="drivingLicense" value="@Model.employeeInfo?.drivingLicense" name="drivingLicense">
+                                                        <input class="form-control" type="text" id="drivingLicense" value="@Model?.employeeInfo?.drivingLicense" name="drivingLicense">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.passportNo</label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" value="@Model.employeeInfo?.passportNo" id="passportNo" name="passportNo">
+                                                        <input class="form-control" type="text" value="@Model?.employeeInfo?.passportNo" id="passportNo" name="passportNo">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.tribal</label>
                                                     <div class="col-md-8 col-12 mt-2">
-                                                        @if (Model.employeeInfo.tribal != null)
+                                                        @if (Model?.employeeInfo?.tribal != null)
                                                         {
                                                             <input class="form-control" type="checkbox" id="tribal" checked name="tribal">
                                                         }
@@ -579,7 +560,7 @@
                                                             <option value="">@Model.fLang.select</option>
                                                             @foreach (var item in Model.religions)
                                                             {
-                                                                if (item.Id == Model.employeeInfo.religionId)
+                                                                if (item.Id == Model?.employeeInfo?.religionId)
                                                                 {
                                                                     <option value="@item.Id" selected>@item.name</option>
                                                                 }
@@ -596,15 +577,7 @@
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.maritalStatus</label>
                                                     <div class="col-md-8 col-12">
                                                         <select class="form-control" name="maritalStatus" id="maritalStatus">
-
-                                                            @*@if (Model.employeeInfo.maritalStatus != null)
-                                                                {
-                                                                    <option value="@Model.employeeInfo?.maritalStatus" selected>@Model.employeeInfo?.maritalStatus</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value="">@Model.fLang.select</option>
-                                                                }*@
+                                                           
                                                             <option value="">@Model.fLang.select</option>
                                                             <option value="Divorced">Divorced</option>
                                                             <option value="Married">Married</option>
@@ -620,9 +593,9 @@
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.bloodGroup</label>
                                                     <div class="col-md-8 col-12">
                                                         <select class="select2 form-control mb-3 custom-select" style="width: 100%;" name="bloodGroup" id="bloodGroup">
-                                                            @if (Model.employeeInfo.bloodGroup != null)
+                                                            @if (Model?.employeeInfo?.bloodGroup != null)
                                                             {
-                                                                <option value="@Model.employeeInfo?.bloodGroup" selected>@Model.employeeInfo?.bloodGroup</option>
+                                                                <option value="@Model?.employeeInfo?.bloodGroup" selected>@Model?.employeeInfo?.bloodGroup</option>
                                                             }
                                                             else
                                                             {
@@ -647,7 +620,7 @@
                                                             <option>Select</option>
                                                             @for (int i = 131; i < 215; i++)
                                                             {
-                                                                @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model.employeeInfo.height))
+                                                                @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model?.employeeInfo?.height))
                                                                 {
                                                                     <option value="@i" selected>@i</option>
                                                                 }
@@ -657,7 +630,6 @@
                                                                 }
                                                             }
                                                         </select>
-                                                        @*<input class="form-control" data-parsley-type="number" min="137" max="243" value="@Model.employeeInfo?.height" id="height" name="height">*@
                                                     </div>
                                                 </div>
 
@@ -668,7 +640,7 @@
                                                             <option>Select</option>
                                                             @for (int i = 30; i < 200; i++)
                                                             {
-                                                                @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model.employeeInfo.weight))
+                                                                @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model?.employeeInfo?.weight))
                                                                 {
                                                                     <option value="@i" selected>@i</option>
                                                                 }
@@ -685,20 +657,20 @@
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.identificationSign</label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" id="identificationSign" value="@Model.employeeInfo?.identificationSign" name="identificationSign">
+                                                        <input class="form-control" type="text" id="identificationSign" value="@Model?.employeeInfo?.identificationSign" name="identificationSign">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="example-search-input" class="col-md-4 col-12 col-form-label">Ration Id</label>
                                                     <div class="col-md-8 col-12">
-                                                        <input class="form-control" type="text" id="rationId" value="@Model.employeeInfo?.rationId" name="rationId">
+                                                        <input class="form-control" type="text" id="rationId" value="@Model?.employeeInfo?.rationId" name="rationId">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row float-right">
                                                     <div class="pr-2 mr-4">
                                                         <input type="reset" class="btn btn-danger btn-sm mt-4 mb-4" name="name" onclick="refresh()" value="Refresh" />
-                                                        <input type="submit" class="btn btn-primary btn-sm mt-4 mb-4" id="submitaaa" name="name" @inactive value="Save" />
+                                                        <input type="submit" class="btn btn-primary btn-sm mt-4 mb-4" id="submitaaa" name="name"  value="Save" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -727,7 +699,7 @@
                     <div class="card-body">
                         <div class="col-12">
                             <form id="frmMorePersonal">
-                                <input type="hidden" id="moreEmpId" name="empId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" id="moreEmpId" name="empId" value="@Model?.employeeInfo?.Id" />
                                 <div class="row">
                                     <div class="card col-12">
                                         <div class="card-header"><h5>Bank Information</h5></div>
@@ -742,7 +714,7 @@
                                                                 <option value="">Select</option>
                                                                 @foreach (var item in Model.banks)
                                                                 {
-                                                                    if (item.Id == Model.employeeInfo?.banksId)
+                                                                    if (item.Id == Model?.employeeInfo?.banksId)
                                                                     {
                                                                         <option value="@item.Id" selected>@item.bankName</option>
                                                                     }
@@ -752,10 +724,9 @@
                                                                     }
                                                                 }
                                                             </select>
-                                                            @*<input class="col-7 form-control" style="height:28px;" type="text" placeholder="AC Number" id="salaryAccountNo" value="@Model.employeeInfo?.salaryAccountNo" name="salaryAccountNo" />*@
                                                         </div>
                                                         <div class="col-md-4 col-12">
-                                                            <input class="form-control" type="text" placeholder="AC Number" id="salaryAccountNo" value="@Model.employeeInfo?.salaryAccountNo" data-parsley-required="true" name="salaryAccountNo" style="height:35px;" />
+                                                            <input class="form-control" type="text" placeholder="AC Number" id="salaryAccountNo" value="@Model?.employeeInfo?.salaryAccountNo" data-parsley-required="true" name="salaryAccountNo" style="height:35px;" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -768,7 +739,7 @@
                                                                 <option value="">Select</option>
                                                                 @foreach (var item in Model.banks)
                                                                 {
-                                                                    if (item.Id == Model.employeeInfo?.otherBanksId)
+                                                                    if (item.Id == Model?.employeeInfo?.otherBanksId)
                                                                     {
                                                                         <option value="@item.Id" selected>@item.bankName</option>
                                                                     }
@@ -781,7 +752,7 @@
                                                         </div>
 
                                                         <div class="col-md-4 col-12">
-                                                            <input class=" form-control" type="text" style="height:35px" placeholder="AC Number" id="otherBankAccountNo" value="@Model.employeeInfo?.otherBankAccountNo" name="otherBankAccountNo" />
+                                                            <input class=" form-control" type="text" style="height:35px" placeholder="AC Number" id="otherBankAccountNo" value="@Model?.employeeInfo?.otherBankAccountNo" name="otherBankAccountNo" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -807,7 +778,7 @@
                                                                 @foreach (var data in Model.bCSBatches)
                                                                 {
 
-                                                                    if (data.Id == Model.employeeInfo.bCSBatchId)
+                                                                    if (data.Id == Model?.employeeInfo?.bCSBatchId)
                                                                     {
                                                                         <option value="@data.Id" selected>@data.batchName</option>
                                                                     }
@@ -823,7 +794,7 @@
                                                                 @for (int i = 1; i < 250; i++)
                                                                 {
 
-                                                                    @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model.employeeInfo.bcsPosition))
+                                                                    @if (Convert.ToDecimal(i) == Convert.ToDecimal(Model?.employeeInfo?.bcsPosition))
                                                                     {
                                                                         <option value="@i" selected>@i</option>
                                                                     }
@@ -845,8 +816,7 @@
                                                                     <option value="@i">@i</option>
                                                                 }
                                                             </select>
-                                                            @*<input type="text" class="col-7 form-control" name="departmentalPromotionYear" id="departmentalPromotionYear" placeholder="Year" value="@Model.employeeInfo?.departmentalPromotionYear" style="display:none"/>*@
-                                                            @*<input class="col-7 form-control text-center" id="meritPosition" name="bcsPosition" type="text" value="@Model.employeeInfo?.bcsPosition" placeholder="BCS Merit Position" />*@
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -855,7 +825,6 @@
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.status<span style="color:red">*</span></label>
                                                         <div class="col-md-8 col-12">
                                                             <select class="form-control" name="status" id="activityStatus" data-parsley-required="true" required>
-                                                                @*<option value="@Model.employeeInfo?.activityStatus">@Model.employeeInfo?.activityStatus</option>*@
                                                                 <option value="In-Service">In-Service</option>
                                                                 <option value="PRL">PRL</option>
                                                                 <option value="Suspended">Suspended</option>
@@ -869,7 +838,7 @@
                                                     <div class="form-group row">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">Joining Date Of Service<span style="color:red">*</span></label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" name="joiningDateGovt" value="@Model.employeeInfo?.joiningDateGovtService?.ToString("dd-MMM-yyyy")" id="joiningDateGovt" data-parsley-required="true" readonly>
+                                                            <input class="form-control" type="text" name="joiningDateGovt" value="@Model?.employeeInfo?.joiningDateGovtService?.ToString("dd-MMM-yyyy")" id="joiningDateGovt" data-parsley-required="true" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -877,7 +846,7 @@
                                                     <div class="form-group row">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">Joining Date Of Present Unit <span style="color:red">*</span></label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" value="@Model.employeeInfo?.joiningDatePresentWorkstation?.ToString("dd-MMM-yyyy")" id="joiningDatePresentWorkstation" name="joiningDatePresentWorkstation" data-parsley-required="true" readonly>
+                                                            <input class="form-control" type="text" value="@Model?.employeeInfo?.joiningDatePresentWorkstation?.ToString("dd-MMM-yyyy")" id="joiningDatePresentWorkstation" name="joiningDatePresentWorkstation" data-parsley-required="true" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -887,16 +856,15 @@
                                                     <div class="form-group row">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.servicePeriod</label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" id="servicePeriod" value="@Model.employeeInfo?.servicePeriod" name="servicePeriod" readonly>
+                                                            <input class="form-control" type="text" id="servicePeriod" value="@Model?.employeeInfo?.servicePeriod" name="servicePeriod" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                                     <div class="form-group row">
-                                                        @*<label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.retiredDate</label>*@
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">Date of Retirement</label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" name="LPRDateShow" id="LPRDate" value="@Model.employeeInfo?.LPRDate?.ToString("dd-MMM-yyyy")" readonly>
+                                                            <input class="form-control" type="text" name="LPRDateShow" id="LPRDate" value="@Model?.employeeInfo?.LPRDate?.ToString("dd-MMM-yyyy")" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -915,7 +883,7 @@
                                                     <div class="form-group row">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.emailPersonal <span style="color:red">*</span></label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="email" required="required" id="emailPersonal" value="@Model.employeeInfo?.emailAddressPersonal" name="emailPersonal">
+                                                            <input class="form-control" type="email" required="required" id="emailPersonal" value="@Model?.employeeInfo?.emailAddressPersonal" name="emailPersonal">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -923,7 +891,7 @@
                                                     <div class="form-group row">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.mobileNumberPersonal <span style="color:red">*</span></label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="number" maxlength="11" data-parsley-required="true" required id="mobileNumberPersonal" value="@Model.employeeInfo?.mobileNumberPersonal" name="mobileNumberPersonal">
+                                                            <input class="form-control" type="number" maxlength="11" data-parsley-required="true" required id="mobileNumberPersonal" value="@Model?.employeeInfo?.mobileNumberPersonal" name="mobileNumberPersonal">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -933,7 +901,7 @@
                                                     <div class="form-group row">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.emailOffice</label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="email" id="emailOffice" value="@Model.employeeInfo?.emailAddress" name="emailOffice">
+                                                            <input class="form-control" type="email" id="emailOffice" value="@Model?.employeeInfo?.emailAddress" name="emailOffice">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -941,7 +909,7 @@
                                                     <div class="form-group row">
                                                         <label for="example-search-input" class="col-md-4 col-12 col-form-label">@Model.fLang.mobileNumberOffice </label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="number" maxlength="11" id="mobileNumberOffice" value="@Model.employeeInfo?.mobileNumberOffice" name="mobileNumberOffice">
+                                                            <input class="form-control" type="number" maxlength="11" id="mobileNumberOffice" value="@Model?.employeeInfo?.mobileNumberOffice" name="mobileNumberOffice">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -956,14 +924,14 @@
                                                     <div class="form-group row">
                                                         <label for="instagramId" class="col-md-4 col-12 col-form-label">Instagram(url)</label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" id="instagramId" value="@Model.employeeInfo?.extraActivity" name="extraActivity">
+                                                            <input class="form-control" type="text" id="instagramId" value="@Model?.employeeInfo?.extraActivity" name="extraActivity">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group row">
                                                         <label for="skypeId" class="col-md-4 col-12 col-form-label">Twitter(url)</label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" id="skypeId" value="@Model.employeeInfo?.skypeId" name="skypeId">
+                                                            <input class="form-control" type="text" id="skypeId" value="@Model?.employeeInfo?.skypeId" name="skypeId">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -971,14 +939,14 @@
                                                     <div class="form-group row">
                                                         <label for="facebookId" class="col-md-4 col-12 col-form-label">Facebook(url)</label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" id="facebookId" value="@Model.employeeInfo?.facebookId" name="facebookId">
+                                                            <input class="form-control" type="text" id="facebookId" value="@Model?.employeeInfo?.facebookId" name="facebookId">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group row">
                                                         <label for="linkdInId" class="col-md-4 col-12 col-form-label">Linkedin(url)</label>
                                                         <div class="col-md-8 col-12">
-                                                            <input class="form-control" type="text" id="linkdInId" value="@Model.employeeInfo?.linkdInId" name="linkdInId">
+                                                            <input class="form-control" type="text" id="linkdInId" value="@Model?.employeeInfo?.linkdInId" name="linkdInId">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -993,7 +961,7 @@
                                                     <div class="form-group row">
                                                         <label for="instagramId" class="col-md-4 col-12 col-form-label">Skills</label>
                                                         <div class="col-md-8 col-12">
-                                                            <textarea class="form-control" id="skillId" name="extraSkill">@Model.employeeInfo?.extraSkill</textarea>
+                                                            <textarea class="form-control" id="skillId" name="extraSkill">@Model?.employeeInfo?.extraSkill</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1001,7 +969,7 @@
                                                     <div class="form-group row">
                                                         <label for="instagramId" class="col-md-4 col-12 col-form-label">Extra Curricular Activities</label>
                                                         <div class="col-md-8 col-12">
-                                                            <textarea class="form-control" id="extraActivityId" name="extraActivitys">@Model.employeeInfo?.extraActivitys</textarea>
+                                                            <textarea class="form-control" id="extraActivityId" name="extraActivitys">@Model?.employeeInfo?.extraActivitys</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1011,7 +979,7 @@
                                 </div>
                                 <div class="float-right">
                                     <input type="reset" class="btn btn-danger btn-sm mt-4 mb-4" name="name" onclick="refresh()" value="Refresh" />
-                                    <input type="submit" class="btn btn-primary btn-sm mt-4 mb-4" name="name" @inactive value="Save" />
+                                    <input type="submit" class="btn btn-primary btn-sm mt-4 mb-4" name="name"  value="Save" />
                                 </div>
                             </form>
 
@@ -1069,7 +1037,7 @@
                                                         <td>@Model?.permanentAdd?.unionWard?.unionName</td>
                                                         <td>@Model?.permanentAdd?.postCode</td>
                                                         <td>
-                                                            <button class="btn btn-success btn-sm" onclick="parAddEditOpen()" @inactive><i class="fa fa-edit"></i></button> || <button type="button" onclick="deleteParAdd(@Model?.permanentAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger" @inactive style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                            <button class="btn btn-success btn-sm" onclick="parAddEditOpen()" ><i class="fa fa-edit"></i></button> || <button type="button" onclick="deleteParAdd(@Model?.permanentAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger"  style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                         </td>
                                                     </tr>
                                                 }
@@ -1088,14 +1056,14 @@
                                                     <div><b>Post Code:</b> @Model?.presentAdd?.postCode</div>
                                                 </div>
                                                 <div class="card-footer" style="text-align:center;padding: 0;">
-                                                    <button type="button" onclick="parAddEditOpen()" @inactive class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deletePerAdd(@Model?.permanentAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                    <button type="button" onclick="parAddEditOpen()"  class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deletePerAdd(@Model?.permanentAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="display:none" id="parAddEdit">
                                         <form id="permanentAddressInfo">
-                                            <input type="hidden" name="empId" value="@Model.employeeInfo?.Id" />
+                                            <input type="hidden" name="empId" value="@Model?.employeeInfo?.Id" />
                                             <input type="hidden" name="addressId" id="permanentAddressId" value="0" />
                                             <input type="hidden" name="addressType" id="permanentAddressType" value="Permanent Address" />
                                             <div asp-validation-summary="All" class="text-danger"></div>
@@ -1104,7 +1072,6 @@
                                                 <label for="refEmail" class="col-sm-4 col-form-label">Address</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" name="AddressDetails" id="permanentAddressDetails" value="@Model.permanentAdd?.addressDetails" />
-                                                    @*<textarea class="form-control" name="AddressDetails" id="AddressDetails">@Model.permanentAdd?.addressDetails</textarea>*@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -1191,7 +1158,7 @@
                                     <h5 class="d-inline">Present Address</h5>
                                     <div class="float-right">
                                         <label class="col-form-label">Same As Permanent Address</label>
-                                        <input type="checkbox" id="perAddCheck" @inactive onclick="sameAsPresent('@Model.employeeInfo?.Id')" style="margin-left:10px" />
+                                        <input type="checkbox" id="perAddCheck"  onclick="sameAsPresent('@Model?.employeeInfo?.Id')" style="margin-left:10px" />
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -1219,7 +1186,7 @@
                                                         <td>@Model?.presentAdd?.unionWard?.unionName</td>
                                                         <td>@Model?.presentAdd?.postCode</td>
                                                         <td>
-                                                            <button class="btn btn-success btn-sm" @inactive onclick="preAddEditOpen()"><i class="fa fa-edit"></i></button> || <button type="button" onclick="deletePreAdd(@Model?.presentAdd?.Id)" @inactive class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                            <button class="btn btn-success btn-sm"  onclick="preAddEditOpen()"><i class="fa fa-edit"></i></button> || <button type="button" onclick="deletePreAdd(@Model?.presentAdd?.Id)"  class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                         </td>
                                                     </tr>
                                                 }
@@ -1238,14 +1205,14 @@
                                                     <div><b>Post Code:</b> @Model?.presentAdd?.postCode</div>
                                                 </div>
                                                 <div class="card-footer" style="text-align:center;padding: 0;">
-                                                    <button type="button" onclick="preAddEditOpen()" @inactive class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" onclick="deletePreAdd(@Model?.presentAdd?.Id)" @inactive class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                    <button type="button" onclick="preAddEditOpen()"  class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" onclick="deletePreAdd(@Model?.presentAdd?.Id)"  class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="display:none" id="preAddEdit">
                                         <form id="presentAddressInfo">
-                                            <input type="hidden" name="empId" value="@Model.employeeInfo?.Id" />
+                                            <input type="hidden" name="empId" value="@Model?.employeeInfo?.Id" />
                                             <input type="hidden" name="addressId" id="presentAddressId" value="0" />
                                             <input type="hidden" name="addressType" id="presentAddressType" value="Present Address" />
                                             <div asp-validation-summary="All" class="text-danger"></div>
@@ -1362,7 +1329,7 @@
                                                     <td>@Model?.spouseAdd?.unionWard?.unionName</td>
                                                     <td>@Model?.spouseAdd?.postCode</td>
                                                     <td>
-                                                        <button class="btn btn-success btn-sm" @inactive onclick="spouseAddEditOpen()"><i class="fa fa-edit"></i></button> || <button type="button" onclick="deleteSpouseAdd(@Model?.spouseAdd?.Id)" @inactive class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                        <button class="btn btn-success btn-sm"  onclick="spouseAddEditOpen()"><i class="fa fa-edit"></i></button> || <button type="button" onclick="deleteSpouseAdd(@Model?.spouseAdd?.Id)"  class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -1380,14 +1347,14 @@
                                                     <div><b>Post Code:</b> @Model?.spouseAdd?.postCode</div>
                                                 </div>
                                                 <div class="card-footer" style="text-align:center;padding: 0;">
-                                                    <button type="button" onclick="spouseAddEditOpen()" @inactive class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteSpouseAdd(@Model?.spouseAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                    <button type="button" onclick="spouseAddEditOpen()"  class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteSpouseAdd(@Model?.spouseAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="display:none" id="spouseAddEdit">
                                         <form id="spouseAddressInfo">
-                                            <input type="hidden" name="empId" value="@Model.employeeInfo?.Id" />
+                                            <input type="hidden" name="empId" value="@Model?.employeeInfo?.Id" />
                                             <input type="hidden" name="addressId" id="spouseAddressId" value="0" />
                                             <input type="hidden" name="addressType" id="spouseAddressType" value="Spouse Address" />
                                             <div asp-validation-summary="All" class="text-danger"></div>
@@ -1396,7 +1363,6 @@
                                                 <label for="refEmail" class="col-sm-4 col-form-label">Address</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" name="AddressDetails" id="spouseAddressDetails" value="@Model.spouseAdd?.addressDetails" />
-                                                    @*<textarea class="form-control" name="AddressDetails" id="AddressDetails">@Model.spouseAdd?.addressDetails</textarea>*@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -1503,7 +1469,7 @@
                                                     <td>@Model?.maternalFamilyAdd?.unionWard?.unionName</td>
                                                     <td>@Model?.maternalFamilyAdd?.postCode</td>
                                                     <td>
-                                                        <button class="btn btn-success btn-sm" onclick="inLawAddEditOpen()" @inactive><i class="fa fa-edit"></i></button> || <button type="button" onclick="deleteInLawAdd(@Model?.maternalFamilyAdd?.Id)" @inactive class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                        <button class="btn btn-success btn-sm" onclick="inLawAddEditOpen()" ><i class="fa fa-edit"></i></button> || <button type="button" onclick="deleteInLawAdd(@Model?.maternalFamilyAdd?.Id)"  class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -1521,14 +1487,14 @@
                                                     <div><b>Post Code:</b> @Model?.maternalFamilyAdd?.postCode</div>
                                                 </div>
                                                 <div class="card-footer" style="text-align:center;padding: 0;">
-                                                    <button type="button" @inactive onclick="inLawAddEditOpen()" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteInLawAdd(@Model?.maternalFamilyAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                    <button type="button"  onclick="inLawAddEditOpen()" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteInLawAdd(@Model?.maternalFamilyAdd?.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="display:none" id="inLawAddEdit">
                                         <form id="maternalFamilyAddressInfo">
-                                            <input type="hidden" name="empId" value="@Model.employeeInfo?.Id" />
+                                            <input type="hidden" name="empId" value="@Model?.employeeInfo?.Id" />
                                             <input type="hidden" name="addressId" id="maternalAddressId" value="0" />
                                             <input type="hidden" name="addressType" id="maternalAddressType" value="Maternal Family Address" />
                                             <div asp-validation-summary="All" class="text-danger"></div>
@@ -1648,8 +1614,8 @@
                                         <div class="card-body">
                                             @*<h5 class="header-title">Edit Table With Button</h5>*@
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#JobHistroy2" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Job History</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshJobHistory('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#JobHistroy2" href="#" data-backdrop="static" data-keyboard="false" >Add Job History</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshJobHistory('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="jobHisListView">
                                                     <div class="table-responsive">
                                                         <table class="table tblassign" id="my-table">
@@ -1702,8 +1668,8 @@
                                                                             }
                                                                         </td>
                                                                         <td class="text-nowrap">
-                                                                            <button title="Edit" type="button" @inactive onclick="jobHistoryUpdate(@assignment.Id,'@assignment.specialBranchUnitId','@assignment.rankId','@assignment.Remarks','@assignment.StartDate','@assignment.EndDate','@assignment.servicePeriod','@assignment.sectionId','@assignment.isDelete','@assignment.designationName')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                            <button title="Delete" type="button" @inactive onclick="deleteJobInfo(@assignment.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                            <button title="Edit" type="button"  onclick="jobHistoryUpdate(@assignment.Id,'@assignment.specialBranchUnitId','@assignment.rankId','@assignment.Remarks','@assignment.StartDate','@assignment.EndDate','@assignment.servicePeriod','@assignment.sectionId','@assignment.isDelete','@assignment.designationName')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                            <button title="Delete" type="button"  onclick="deleteJobInfo(@assignment.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
 
                                                                         </td>
                                                                     </tr>
@@ -1760,7 +1726,7 @@
                                                                         <div><b>Unit:</b> @assignment.specialBranchUnit?.branchUnitName</div>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" @inactive onclick="jobHistoryUpdate(@assignment.Id,'@assignment.specialBranchUnitId','@assignment.rankId','@assignment.Remarks','@assignment.StartDate','@assignment.EndDate','@assignment.servicePeriod','@assignment.sectionId','@assignment.isDelete','@assignment.designationName')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteJobInfo(@assignment.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button"  onclick="jobHistoryUpdate(@assignment.Id,'@assignment.specialBranchUnitId','@assignment.rankId','@assignment.Remarks','@assignment.StartDate','@assignment.EndDate','@assignment.servicePeriod','@assignment.sectionId','@assignment.isDelete','@assignment.designationName')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteJobInfo(@assignment.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1848,7 +1814,7 @@
 
                         <div class="modal-body">
                             <form id="jobhistory">
-                                <input type="hidden" name="empId" id="jobEmId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="empId" id="jobEmId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="empJobHistoryId" id="empJobHistoryId" value="0" />
                                 <input type="hidden" name="jobSpecialBranchUnitId" id="jobSpecialBranchUnitIdFinal" value="" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -2013,8 +1979,8 @@
                                         <div class="card-body">
                                             @*<h5 class="header-title">Edit Table With Button</h5>*@
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#promotion" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Promotion Info</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshPromotion('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#promotion" href="#" data-backdrop="static" data-keyboard="false" >Add Promotion Info</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshPromotion('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="proHisListView">
                                                     <div class="table-responsive">
                                                         <table class="table" id="my-table">
@@ -2044,8 +2010,8 @@
                                                                         <td>@item.goNumber</td>
                                                                         <td>@item.remark</td>
                                                                         <td class="text-nowrap">
-                                                                            <button type="button" @inactive onclick="promotionUpdate(@item.Id,'@item.date','@item.rankId','@item.goDate','@item.remark','@item.goNumber')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                            <button type="button" @inactive onclick="deletePromotion(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                            <button type="button"  onclick="promotionUpdate(@item.Id,'@item.date','@item.rankId','@item.goDate','@item.remark','@item.goNumber')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                            <button type="button"  onclick="deletePromotion(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                     l++;
@@ -2073,7 +2039,7 @@
                                                                         <div><b>Remarks:</b> @item.remark</div>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" @inactive onclick="promotionUpdate(@item.Id,'@item.date','@item.rankId','@item.goDate','@item.remark','@item.goNumber')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" onclick="deletePromotion(@item.Id)" @inactive class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button"  onclick="promotionUpdate(@item.Id,'@item.date','@item.rankId','@item.goDate','@item.remark','@item.goNumber')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" onclick="deletePromotion(@item.Id)"  class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2106,7 +2072,7 @@
 
                         <div class="modal-body">
                             <form id="promotionInfo">
-                                <input type="hidden" name="empId" id="promotionEmId" value="@Model.employeeInfo.Id" />
+                                <input type="hidden" name="empId" id="promotionEmId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="promotionId" id="promotionId" value="0" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
                                 <div class="row">
@@ -2205,8 +2171,8 @@
                                         <div class="card-body">
                                             @*<h5 class="header-title">Edit Table With Button</h5>*@
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#EducationInformation" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Educational Info</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshEducation('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#EducationInformation" href="#" data-backdrop="static" data-keyboard="false" >Add Educational Info</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshEducation('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="eduListView">
                                                     <div class="table-responsive">
                                                         <table class="table" id="my-table">
@@ -2285,8 +2251,8 @@
                                                                         </td>
                                                                         @{var levelofEducation = item.degree?.levelofeducationId;}
                                                                         <td class="text-nowrap">
-                                                                            <button type="button" @inactive onclick="educationUpdate(@item.Id,'@item.degree?.levelofeducationId','@item.degreeId','@item.reldegreesubjectId','@item.organizationId','@item.institution','@item.resultId',@item.passingYear,'@item.grade')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                            <button type="button" @inactive onclick="deleteEducation(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                            <button type="button"  onclick="educationUpdate(@item.Id,'@item.degree?.levelofeducationId','@item.degreeId','@item.reldegreesubjectId','@item.organizationId','@item.institution','@item.resultId',@item.passingYear,'@item.grade')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                            <button type="button"  onclick="deleteEducation(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                     m++;
@@ -2362,7 +2328,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" @inactive onclick="educationUpdate(@item.Id,'@item.degree?.levelofeducationId','@item.degreeId','@item.reldegreesubjectId','@item.organizationId','@item.institution','@item.resultId',@item.passingYear,'@item.grade')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteEducation(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button"  onclick="educationUpdate(@item.Id,'@item.degree?.levelofeducationId','@item.degreeId','@item.reldegreesubjectId','@item.organizationId','@item.institution','@item.resultId',@item.passingYear,'@item.grade')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteEducation(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2394,7 +2360,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="education">
-                                <input type="hidden" name="empId" id="educationEmId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="empId" id="educationEmId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="empEducationId" id="empEducationId" value="0" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
                                 <div class="row">
@@ -2584,8 +2550,8 @@
                                                 <div class="card-body">
                                                     @*<h5 class="header-title">Edit Table With Button</h5>*@
                                                     <div class="">
-                                                        <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#TrainingInformation" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Training Info</a>
-                                                        <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshLocalTraining('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                        <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#TrainingInformation" href="#" data-backdrop="static" data-keyboard="false" >Add Training Info</a>
+                                                        <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshLocalTraining('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                         <div class="bs-example" id="localTrListView">
                                                             <div class="table-responsive">
                                                                 <table class="table" id="my-table">
@@ -2619,8 +2585,8 @@
                                                                                 <td>@item?.fromDate?.ToString("dd-MMM-yyyy")</td>
                                                                                 <td>@item?.toDate?.ToString("dd-MMM-yyyy")</td>
                                                                                 <td class="text-nowrap">
-                                                                                    <button type="button" @inactive onclick="trainingUpdate(@item.Id,'@item.trainingType','@item.trainingCategoryId','@item.trainingTitle','@item.trainingInstituteId','@item.fromDate','@item.toDate','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                                    <button type="button" @inactive onclick="deleteLocalTr(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                                    <button type="button"  onclick="trainingUpdate(@item.Id,'@item.trainingType','@item.trainingCategoryId','@item.trainingTitle','@item.trainingInstituteId','@item.fromDate','@item.toDate','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                                    <button type="button"  onclick="deleteLocalTr(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                                 </td>
                                                                             </tr>
                                                                             n++;
@@ -2675,7 +2641,7 @@
 
                                                                             </div>
                                                                             <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                                <button type="button" @inactive onclick="trainingUpdate(@item.Id,'@item.trainingType','@item.trainingCategoryId','@item.trainingTitle','@item.trainingInstituteId','@item.fromDate','@item.toDate','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteLocalTr(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                                <button type="button"  onclick="trainingUpdate(@item.Id,'@item.trainingType','@item.trainingCategoryId','@item.trainingTitle','@item.trainingInstituteId','@item.fromDate','@item.toDate','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteLocalTr(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -2711,8 +2677,8 @@
                                                 <div class="card-body">
                                                     @*<h5 class="header-title">Edit Table With Button</h5>*@
                                                     <div class="">
-                                                        <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#ForeignTrainingInformation" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Training Info</a>
-                                                        <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshForeignTraining('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                        <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#ForeignTrainingInformation" href="#" data-backdrop="static" data-keyboard="false" >Add Training Info</a>
+                                                        <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshForeignTraining('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                         <div class="bs-example" id="forignTrListView">
                                                             <div class="table-responsive">
                                                                 <table class="table" id="foreignTable">
@@ -2746,8 +2712,8 @@
                                                                                 <td>@item?.toDate?.ToString("dd-MMM-yyyy")</td>
                                                                                 <td>@item?.remarks</td>
                                                                                 <td class="text-nowrap">
-                                                                                    <button type="button" @inactive onclick="fortrainingUpdate(@item.Id,'@item.trainingTitle','@item.fromDate','@item.toDate','@item.countryId','@item.sponsoringAgency','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                                    <button type="button" @inactive onclick="deleteForeignTr(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                                    <button type="button"  onclick="fortrainingUpdate(@item.Id,'@item.trainingTitle','@item.fromDate','@item.toDate','@item.countryId','@item.sponsoringAgency','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                                    <button type="button"  onclick="deleteForeignTr(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                                 </td>
                                                                             </tr>
                                                                             mm++;
@@ -2804,7 +2770,7 @@
                                                                                 </table>
                                                                             </div>
                                                                             <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                                <button type="button" @inactive onclick="fortrainingUpdate(@item.Id,'@item.trainingTitle','@item.fromDate','@item.toDate','@item.countryId','@item.sponsoringAgency','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" onclick="deleteForeignTr(@item.Id)" @inactive class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                                <button type="button"  onclick="fortrainingUpdate(@item.Id,'@item.trainingTitle','@item.fromDate','@item.toDate','@item.countryId','@item.sponsoringAgency','@item.referenceNumber','@item.remarks')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" onclick="deleteForeignTr(@item.Id)"  class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -2837,7 +2803,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="training">
-                                <input type="hidden" name="empId" id="trainingEmId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="empId" id="trainingEmId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="empTrainingId" id="empTrainingId" value="0" />
                                 <input type="hidden" name="trainingTypes" id="trainingTypeId" value="local" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -2952,7 +2918,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="frmfortraining">
-                                <input type="hidden" name="empId" id="FTrainingEmId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="empId" id="FTrainingEmId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="empTrainingId" id="forempTrainingId" value="0" />
                                 <input type="hidden" name="trainingTypes" id="foreignTrainingTypeId" value="foreign" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -3094,8 +3060,8 @@
                                         <div class="card-body">
                                             @*<h5 class="header-title">Edit Table With Button</h5>*@
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#award-modal" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Award Info</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshAward('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#award-modal" href="#" data-backdrop="static" data-keyboard="false" >Add Award Info</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshAward('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="awardListView">
                                                     <div class="table-responsive">
                                                         <table class="table " id="my-table">
@@ -3129,8 +3095,8 @@
                                                                         <td>@item.purpose</td>
                                                                         <td>@item.awardDate.ToString("dd-MMM-yyyy")</td>
                                                                         <td class="text-nowrap">
-                                                                            <button type="button" @inactive onclick="awardUpdate(@item.Id,'@item.awardId','@item.awardName','@item.referenceNumber','@item.purpose','@item.awardDate')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                            <button type="button" @inactive onclick="deleteAwardInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                            <button type="button"  onclick="awardUpdate(@item.Id,'@item.awardId','@item.awardName','@item.referenceNumber','@item.purpose','@item.awardDate')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                            <button type="button"  onclick="deleteAwardInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                     o++;
@@ -3166,7 +3132,7 @@
                                                                         <div><b>Award Date:</b> @item.awardDate.ToString("dd-MMM-yyyy")</div>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" @inactive onclick="awardUpdate(@item.Id,'@item.awardId','@item.awardName','@item.referenceNumber','@item.purpose','@item.awardDate')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteAwardInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button"  onclick="awardUpdate(@item.Id,'@item.awardId','@item.awardName','@item.referenceNumber','@item.purpose','@item.awardDate')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteAwardInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -3197,7 +3163,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="awardInfo">
-                                <input type="hidden" name="empId" id="awardEmId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="empId" id="awardEmId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="empAwardId" id="empAwardId" value="0" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -3270,7 +3236,7 @@
             </div>
             <!--Award Model End-->
             <!--Medical End-->
-            <div class="card">
+            @* <div class="card">
                 <div class="card-header" id="heading-medical" data-toggle="collapse" data-target="#collapse-Medical" style="cursor:pointer">
                     <h5 class="mb-0">
                         <a class="collapsed text-muted" data-toggle="collapse" href="#collapse-Medical" aria-expanded="false" aria-controls="collapse-Medical">
@@ -3292,8 +3258,8 @@
                                     <div class="card m-b-30">
                                         <div class="card-body">
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#medical-Modal" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Medical Info</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshMedical('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#medical-Modal" href="#" data-backdrop="static" data-keyboard="false" >Add Medical Info</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshMedical('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="medicalListView">
                                                     <div class="table-responsive">
                                                         <table class="table " id="medicalTbl">
@@ -3336,7 +3302,7 @@
                                                                         <td>@Vaccinated</td>
                                                                         <td>@item.year</td>
                                                                         <td>@item.lastCheckupHistory</td>
-                                                                        <td><button type="button" @inactive onclick="deleteMedicalInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button></td>
+                                                                        <td><button type="button"  onclick="deleteMedicalInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button></td>
                                                                     </tr>
                                                                     medSl++;
                                                                 }
@@ -3395,7 +3361,7 @@
                                                                         <div><b>Observation:</b> @item.lastCheckupHistory</div>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" onclick="deleteMedicalInfo(@item.Id)" @inactive class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button" onclick="deleteMedicalInfo(@item.Id)"  class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -3411,10 +3377,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> *@
             <!--Medical End-->
             <!--Medical Model Start-->
-            <div class="modal fade bd-example-modal-lg" id="medical-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            @* <div class="modal fade bd-example-modal-lg" id="medical-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
 
@@ -3426,7 +3392,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="medicalInfo">
-                                <input type="hidden" name="empId" id="medicalEmId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="empId" id="medicalEmId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="empMedicalId" id="empMedicalId" value="0" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -3474,28 +3440,7 @@
                                         </div>
                                     </div>
 
-                                    @*<div class="col-lg-12 col-sm-12">
-                                            <div class="card text-center bg-white m-b-30">
-                                                <div class="card-header">
-                                                    Vaccines
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="col-md-12" style="border:medium;border-color:#808080;border-radius:5px;">
-                                                        @foreach (var item in Model.Vaccines.OrderBy(x => x.vaccineName))
-                                                        {
-                                                            <div class="form-check-inline my-2">
-                                                                <label class="cr-styled">
-                                                                    <input type="checkbox" name="vaccineIds" value="@item.Id">
-                                                                    <i class="fa"></i>
-                                                                    @item.vaccineName
-                                                                </label>
-                                                            </div>
-                                                        }
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>*@
+                                   
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">@Model.fLangaward.close</button>
@@ -3507,7 +3452,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> *@
 
             <!--UNMission Start-->
             <div class="card">
@@ -3532,8 +3477,8 @@
                                     <div class="card m-b-30">
                                         <div class="card-body">
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#ForeignTravelModalUN" href="#" data-backdrop="static" data-keyboard="false" @inactive>UN Mission Info</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshForeignTravelUN('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#ForeignTravelModalUN" href="#" data-backdrop="static" data-keyboard="false" >UN Mission Info</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshForeignTravelUN('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="frnTrvlListViewUN">
                                                     <div class="table-responsive">
                                                         <table class="table" id="ForeignTravel-tableUN">
@@ -3561,8 +3506,8 @@
                                                                         <td>@item.travelEndDate?.ToString("dd-MMM-yyyy")</td>
                                                                         <td>@item.travelDuration</td>
                                                                         <td class="text-nowrap">
-                                                                            <button type="button" @inactive onclick="foreignTravelUpdateUN(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                            <button type="button" @inactive onclick="deleteForeignTravelUN(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                            <button type="button"  onclick="foreignTravelUpdateUN(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                            <button type="button"  onclick="deleteForeignTravelUN(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                     slUN++;
@@ -3593,7 +3538,7 @@
                                                                         <div><b>Duration:</b> @item.travelDuration</div>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" @inactive onclick="foreignTravelUpdateUN(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteForeignTravelUN(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button"  onclick="foreignTravelUpdateUN(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteForeignTravelUN(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -3624,7 +3569,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="frmForeignTravelUN" method="post">
-                                <input type="hidden" name="employeeId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="employeeId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="ForeignTravelId" id="ForeignTravelIdUN" value="0" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -3712,7 +3657,7 @@
             </div>
             <!--UNMission Modal END-->
             <!--ForeignTravel Start-->
-            <div class="card">
+            @* <div class="card">
                 <div class="card-header" id="heading-address" data-toggle="collapse" data-target="#collapse-ForeignTravel" style="cursor:pointer">
                     <h5 class="mb-0">
                         <a class="collapsed text-muted" data-toggle="collapse" href="#collapse-ForeignTravel" aria-expanded="false" aria-controls="collapse-address">
@@ -3734,8 +3679,8 @@
                                     <div class="card m-b-30">
                                         <div class="card-body">
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#ForeignTravelModal" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Foreign Travel Info</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshForeignTravel('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#ForeignTravelModal" href="#" data-backdrop="static" data-keyboard="false" >Add Foreign Travel Info</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshForeignTravel('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="frnTrvlListView">
                                                     <div class="table-responsive">
                                                         <table class="table" id="ForeignTravel-table">
@@ -3765,8 +3710,8 @@
                                                                         <td>@item.travelEndDate?.ToString("dd-MMM-yyyy")</td>
                                                                         <td>@item.travelDuration</td>
                                                                         <td class="text-nowrap">
-                                                                            <button type="button" @inactive onclick="foreignTravelUpdate(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                            <button type="button" @inactive onclick="deleteForeignTravel(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                            <button type="button"  onclick="foreignTravelUpdate(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                            <button type="button"  onclick="deleteForeignTravel(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                     sl++;
@@ -3800,7 +3745,7 @@
                                                                         <div><b>Duration:</b> @item.travelDuration</div>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" @inactive onclick="foreignTravelUpdate(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteForeignTravel(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button"  onclick="foreignTravelUpdate(@item.Id,@item.countryId,'@item.referenceNumber','@item.travelPurpose','@item.travelDate?.ToString("dd-MMM-yyyy")','@item.travelEndDate?.ToString("dd-MMM-yyyy")','@item.travelDuration')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteForeignTravel(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -3816,7 +3761,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> *@
             <!--ForeignTravel Start-->
             <!--ForeignTravel Modal sTART-->
             <div class="modal fade bd-example-modal-lg" id="ForeignTravelModal" tabindex="-1" role="dialog" aria-labelledby="ForeignTravelModalLabel" aria-hidden="true">
@@ -3831,7 +3776,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="frmForeignTravel" method="post">
-                                <input type="hidden" name="employeeId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="employeeId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="ForeignTravelId" id="ForeignTravelId" value="0" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -3942,8 +3887,8 @@
                                     <div class="card m-b-30">
                                         <div class="card-body">
                                             <div class="">
-                                                <a class="btn float-right text-light btn-sm mb-2 @inactive" style="background-color:#4B0080!important" data-toggle="modal" data-target="#exampleModal" href="#" data-backdrop="static" data-keyboard="false" @inactive>Add Family Info</a>
-                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshFamily('@Model.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
+                                                <a class="btn float-right text-light btn-sm mb-2 " style="background-color:#4B0080!important" data-toggle="modal" data-target="#exampleModal" href="#" data-backdrop="static" data-keyboard="false" >Add Family Info</a>
+                                                <a class="btn float-right text-light btn-sm mb-2" style="background-color:#4b0080;margin-right:10px" title="Refresh" onclick="refreshFamily('@Model?.employeeInfo?.Id')"><i class="fa fa-refresh"></i></a>
                                                 <div class="bs-example" id="familyListView">
                                                     <div class="table-responsive">
                                                         <table class="table" id="my-table">
@@ -3987,8 +3932,8 @@
                                                                         <td>@spouse.remarks</td>
 
                                                                         <td class="text-nowrap">
-                                                                            <button type="button" @inactive onclick="Edit(@spouse.Id,'@spouse.spouseRelationId','@spouse.spouseName','@spouse.fatherName','@spouse.motherName','@spouse.bloodGroup','@spouse.maritalStatus','@spouse.districtId','@spouse.birthCertificate','@spouse.dateOfBirth','@spouse.email','@spouse.occupation','@spouse.remarks','@spouse.contact')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                                                            <button type="button" @inactive onclick="deleteFamilyInfo(@spouse.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                            <button type="button"  onclick="Edit(@spouse.Id,'@spouse.spouseRelationId','@spouse.spouseName','@spouse.fatherName','@spouse.motherName','@spouse.bloodGroup','@spouse.maritalStatus','@spouse.districtId','@spouse.birthCertificate','@spouse.dateOfBirth','@spouse.email','@spouse.occupation','@spouse.remarks','@spouse.contact')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                                                            <button type="button"  onclick="deleteFamilyInfo(@spouse.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                     k++;
@@ -4064,7 +4009,7 @@
                                                                         </table>
                                                                     </div>
                                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                                        <button type="button" @inactive onclick="Edit(@item.Id,'@item.spouseRelationId','@item.spouseName','@item.fatherName','@item.motherName','@item.bloodGroup','@item.maritalStatus','@item.districtId','@item.birthCertificate','@item.dateOfBirth','@item.email','@item.occupation','@item.remarks','@item.contact')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteFamilyInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                                        <button type="button"  onclick="Edit(@item.Id,'@item.spouseRelationId','@item.spouseName','@item.fatherName','@item.motherName','@item.bloodGroup','@item.maritalStatus','@item.districtId','@item.birthCertificate','@item.dateOfBirth','@item.email','@item.occupation','@item.remarks','@item.contact')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteFamilyInfo(@item.Id)" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -4084,31 +4029,15 @@
 
             <div class="mt-3 mb-5 float-right form-inline" id="btnShow">
                 <div class="form-group" style="padding-right:20px;color:black;">
-                    @if (Model.employeeInfo.isApproved == 3)
-                    {
-                        <label class="cr-styled">
-                            <input type="checkbox" checked style="border-color:black!important;">
-                            <i class="fa"></i>&nbsp;
-                            <span style="font-weight:bold;font-size:20px!important;">I do hereby declare that all the information given above is true and correct to the best of my knowledge and belief.</span>
-                        </label>
-                    }
-                    else
-                    {
-                        <label class="cr-styled">
-                            <input type="checkbox" id="ckConfirmation" style="border-color:black!important;">
-                            <i class="fa"></i>&nbsp;
-                            <span style="font-weight:bold;font-size:20px!important;">I do hereby declare that all the information given above is true and correct to the best of my knowledge and belief.</span>
-                        </label>
-                    }
-
+                    
                 </div>
                 <div id="finalBtnDiv">
                     <button class="btn btn-success text-light btn-sm" type="button" disabled style="margin-right:10px;color:red" id="finalFormConfirm">Final Submit</button>
-                    <a class="btn btn-info text-light btn-sm" href="javascript:void(0)" onclick="window.open('/Employee/EmployeeInfo/EmployeeInfoReportViewPDF?empIdentityUserSessionToken=@Model.employeeInfo.Id')" target="_blank">Preview</a>
-                    @*<a class="btn btn-info text-light btn-sm" href="/Employee/EmployeeInfo/EmployeeInfoReportViewPDF?id=@Model.applicationUser?.bpNo" target="_blank">Preview</a>*@
+                    <a class="btn btn-info text-light btn-sm" href="javascript:void(0)" onclick="window.open('/Employee/EmployeeInfo/EmployeeInfoReportViewPDF?empIdentityUserSessionToken=@Model?.employeeInfo?.Id')" target="_blank">Preview</a>
                 </div>
             </div>
             <!--FamilyInfo Modal Start-->
+           
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -4121,7 +4050,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="frmFamily">
-                                <input type="hidden" name="empId" id="emId" value="@Model.employeeInfo?.Id" />
+                                <input type="hidden" name="empId" id="emId" value="@Model?.employeeInfo?.Id" />
                                 <input type="hidden" name="spouseId" id="spouseId" value="0" />
                                 <div asp-validation-summary="All" class="text-danger"></div>
                                 <div class="row">
@@ -4311,12 +4240,9 @@
     </div>
 
 </div><!--end row-->
-@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>*@
-@*<script src="~/plugins/responsive-table/js/rwd-table.min.js" type="text/javascript"></script>*@
 
 @section Scripts{
-    @*<script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js" type="text/javascript" crossorigin="anonymous"></script>*@
+   
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" crossorigin="anonymous"></script>
@@ -4324,7 +4250,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
     <script src="~/js/custom.js"></script>
-    @*<script src="~/js/signcrop.js"></script>*@
     <script type="text/javascript">
 
 
@@ -5038,7 +4963,7 @@
                                     title: 'Saved', type: 'success', confirmButtonColor: '#007ACC', confirmButtonText: `OK!`
                                 }).then(function () {
                                     $('#ForeignTravelModalUN').modal('hide')
-                                    refreshForeignTravelUN('@Model.employeeInfo.Id');
+                                    refreshForeignTravelUN('@Model?.employeeInfo?.Id');
                                     clearForeignUN();
                                 })
                             }
@@ -5117,8 +5042,8 @@
                             <td>${eDate}</td>
                             <td>${duration}</td>
                             <td class="text-nowrap">
-                                <button type="button" @inactive onclick="foreignTravelUpdateUN(${v.Id}, ${v.countryId},'${refNum}','${v.travelPurpose}','${sDate}','${eDate}','${v.travelDuration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                <button type="button" @inactive onclick="deleteForeignTravelUN(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                <button type="button"  onclick="foreignTravelUpdateUN(${v.Id}, ${v.countryId},'${refNum}','${v.travelPurpose}','${sDate}','${eDate}','${v.travelDuration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                <button type="button"  onclick="deleteForeignTravelUN(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                             </td>
                         </tr>`;
                 dataDiv += `<div class="col-12" id="fortrvlCardUN-${v.Id}">
@@ -5138,7 +5063,7 @@
                                         <div><b>Duration:</b> ${duration}</div>
                                     </div>
                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                        <button type="button" @inactive onclick="foreignTravelUpdateUN(${v.Id}, ${v.countryId},'${refNum}','${v.travelPurpose}','${sDate}','${eDate}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button @inactive type="button" onclick="deleteForeignTravelUN(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                        <button type="button"  onclick="foreignTravelUpdateUN(${v.Id}, ${v.countryId},'${refNum}','${v.travelPurpose}','${sDate}','${eDate}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button  type="button" onclick="deleteForeignTravelUN(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                     </div>
                                 </div>
                             </div>`
@@ -5185,8 +5110,8 @@
                             <td>${eDate}</td>
                             <td>${duration}</td>
                             <td class="text-nowrap">
-                                <button type="button" @inactive onclick="foreignTravelUpdate(${v.Id}, ${v.countryId},'${v.referenceNumber}','${v.travelPurpose}','${sDate}','${eDate}','${v.travelDuration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                <button type="button" @inactive onclick="deleteForeignTravel(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                <button type="button"  onclick="foreignTravelUpdate(${v.Id}, ${v.countryId},'${v.referenceNumber}','${v.travelPurpose}','${sDate}','${eDate}','${v.travelDuration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                <button type="button"  onclick="deleteForeignTravel(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                             </td>
                         </tr>`;
                 dataDiv += `<div class="col-12" id="fortrvlCard-${v.Id}">
@@ -5209,7 +5134,7 @@
                                         <div><b>Duration:</b> ${duration}</div>
                                     </div>
                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                        <button type="button" @inactive onclick="foreignTravelUpdate(${v.Id}, ${v.countryId},'${v.referenceNumber}','${v.travelPurpose}','${sDate}','${eDate}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button @inactive type="button" onclick="deleteForeignTravel(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                        <button type="button"  onclick="foreignTravelUpdate(${v.Id}, ${v.countryId},'${v.referenceNumber}','${v.travelPurpose}','${sDate}','${eDate}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button  type="button" onclick="deleteForeignTravel(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                     </div>
                                 </div>
                             </div>`
@@ -5355,7 +5280,7 @@
                                         <td>${Vaccinated}</td>
                                         <td>${year}</td>
                                         <td>${lastCheckupHistory}</td>
-                                        <td><button  @inactive type="button" onclick="deleteMedicalInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button></td>
+                                        <td><button   type="button" onclick="deleteMedicalInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button></td>
                                     </tr>`;
                 dataCard += `<div class="col-12" id="medCardId-${v.Id}">
                                                 <div class="card" style="margin-left:-20px;margin-right:-20px;font-size:20px;line-height:normal">
@@ -5379,7 +5304,7 @@
                                                         <div><b>Observation:</b> ${lastCheckupHistory}</div>
                                                     </div>
                                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                                        <button type="button" @inactive onclick="deleteMedicalInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                                        <button type="button"  onclick="deleteMedicalInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                                     </div>
                                                 </div>
                                             </div>`
@@ -6267,8 +6192,8 @@
                     <td>${contact}</td>
                     <td>${remarks}</td>
                         <td>
-                         <button type="button" @inactive onclick="Edit(${v.Id},'${v.spouseRelationId}','${name}','${fName}','${mName}','${bloodGroup}','${meritalStatus}','${v.districtId}','${nid}','${dob}','${email}','${occupation}','${remarks}','${contact}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                          <button type="button" @inactive onclick="deleteFamilyInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                         <button type="button"  onclick="Edit(${v.Id},'${v.spouseRelationId}','${name}','${fName}','${mName}','${bloodGroup}','${meritalStatus}','${v.districtId}','${nid}','${dob}','${email}','${occupation}','${remarks}','${contact}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                          <button type="button"  onclick="deleteFamilyInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                        </td>
                         </tr>`;
                 familyCard+=`<div class="col-12" id="famCard-${v.Id}">
@@ -6333,7 +6258,7 @@
                                         </table>
                                     </div>
                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                        <button type="button" @inactive onclick="Edit(${v.Id},'${v.spouseRelationId}','${name}','${fName}','${mName}','${bloodGroup}','${meritalStatus}','${v.districtId}','${nid}','${dob}','${email}','${occupation}','${remarks}','${contact}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button @inactive type="button" onclick="deleteFamilyInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                        <button type="button"  onclick="Edit(${v.Id},'${v.spouseRelationId}','${name}','${fName}','${mName}','${bloodGroup}','${meritalStatus}','${v.districtId}','${nid}','${dob}','${email}','${occupation}','${remarks}','${contact}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button  type="button" onclick="deleteFamilyInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                     </div>
                                 </div>
                             </div>`
@@ -6461,8 +6386,8 @@
                     <td>${remark}</td>
                     <td>${servicePre}</td>
                         <td>
-                         <button type="button" @inactive onclick="jobHistoryUpdate(${value.Id},'${value.specialBranchUnitId}','${value.rankId}','${remark}','${start}','${end}','${servicePre}','${value.sectionId}','${value.isDelete}','${value.designationName}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                          <button type="button" @inactive onclick="deleteJobInfo(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                         <button type="button"  onclick="jobHistoryUpdate(${value.Id},'${value.specialBranchUnitId}','${value.rankId}','${remark}','${start}','${end}','${servicePre}','${value.sectionId}','${value.isDelete}','${value.designationName}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                          <button type="button"  onclick="deleteJobInfo(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                        </td>
                         </tr>`
                 optionCard += `<div class="col-12" id="jobCard-${value.Id}">
@@ -6479,7 +6404,7 @@
                                         <div><b>Unit:</b> ${value.specialBranchUnit.branchUnitName}</div>
                                     </div>
                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                        <button type="button" @inactive onclick="jobHistoryUpdate(${value.Id},'${value.specialBranchUnitId}','${value.rankId}','${remark}','${start}','${end}','${servicePre}','${value.sectionId}','${value.isDelete}','${value.designationName}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteJobInfo(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                        <button type="button"  onclick="jobHistoryUpdate(${value.Id},'${value.specialBranchUnitId}','${value.rankId}','${remark}','${start}','${end}','${servicePre}','${value.sectionId}','${value.isDelete}','${value.designationName}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteJobInfo(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                     </div>
                                 </div>
                             </div>`
@@ -6633,8 +6558,8 @@
                     <td>${item.passingYear}</td>
                     <td>${results}</td>
                     <td>
-                        <button type="button" @inactive onclick="educationUpdate( ${item.Id},'${item.degree.levelofeducationId}','${item.degreeId}','${item.reldegreesubjectId}','${item.organizationId}','${institute}','${item.resultId}','${item.passingYear}','${item.grade}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                        <button type="button" @inactive  onclick="deleteEducation(${item.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                        <button type="button"  onclick="educationUpdate( ${item.Id},'${item.degree.levelofeducationId}','${item.degreeId}','${item.reldegreesubjectId}','${item.organizationId}','${institute}','${item.resultId}','${item.passingYear}','${item.grade}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                        <button type="button"   onclick="deleteEducation(${item.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                     </td>
                     </tr>`
                 eduCard+=`<div class="col-12" id="eduCard-${item.Id}">
@@ -6654,7 +6579,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer" style="text-align:center;padding: 0;">
-                                    <button type="button" @inactive  onclick="educationUpdate( ${item.Id},'${item.degree.levelofeducationId}','${item.degreeId}','${item.reldegreesubjectId}','${item.organizationId}','${item.institution}','${item.resultId}','${item.passingYear}','${item.grade}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteEducation(${item.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                    <button type="button"   onclick="educationUpdate( ${item.Id},'${item.degree.levelofeducationId}','${item.degreeId}','${item.reldegreesubjectId}','${item.organizationId}','${item.institution}','${item.resultId}','${item.passingYear}','${item.grade}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteEducation(${item.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                 </div>
                             </div>
                         </div>`
@@ -6748,8 +6673,8 @@
                     <td>${toDate}</td>
 
                         <td>
-                         <button type="button" @inactive onclick="trainingUpdate( ${value.Id},'${value.trainingType}','${value.trainingCategoryId}','${value.trainingTitle}','${value.trainingInstituteId}','${value.fromDate}','${value.toDate}','${ref}','${value.remarks}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                          <button type="button" @inactive onclick="deleteLocalTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                         <button type="button"  onclick="trainingUpdate( ${value.Id},'${value.trainingType}','${value.trainingCategoryId}','${value.trainingTitle}','${value.trainingInstituteId}','${value.fromDate}','${value.toDate}','${ref}','${value.remarks}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                          <button type="button"  onclick="deleteLocalTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                        </td>
                         </tr>`;
                 trainingCard+=`<div class="col-12" id="domCard-${value.Id}">
@@ -6790,7 +6715,7 @@
                             </table>
                         </div>
                         <div class="card-footer" style="text-align:center;padding: 0;">
-                            <button type="button" @inactive onclick="trainingUpdate( ${value.Id},'${value.trainingType}','${value.trainingCategoryId}','${value.trainingTitle}','${value.trainingInstituteId}','${value.fromDate}','${value.toDate}','${ref}','${value.remarks}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button  @inactive type="button" onclick="deleteLocalTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                            <button type="button"  onclick="trainingUpdate( ${value.Id},'${value.trainingType}','${value.trainingCategoryId}','${value.trainingTitle}','${value.trainingInstituteId}','${value.fromDate}','${value.toDate}','${ref}','${value.remarks}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button   type="button" onclick="deleteLocalTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                         </div>
                     </div>
                 </div>`
@@ -6877,8 +6802,8 @@
                     <td>${duration}</td>
 
                         <td>
-                         <button type="button" @inactive onclick="fortrainingUpdate( ${value.Id},'${value.trainingTitle}','${fromDate}','${toDate}','${value.countryId}','${institute}','${ref}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                          <button type="button"  @inactive onclick="deleteForeignTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                         <button type="button"  onclick="fortrainingUpdate( ${value.Id},'${value.trainingTitle}','${fromDate}','${toDate}','${value.countryId}','${institute}','${ref}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                          <button type="button"   onclick="deleteForeignTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                        </td>
                         </tr>`;
                 foriegnCard+=`<div class="col-12" id="forCardRem-${value.Id}">
@@ -6923,7 +6848,7 @@
                                             </table>
                                     </div>
                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                        <button type="button" @inactive onclick="fortrainingUpdate( ${value.Id},'${value.trainingTitle}','${fromDate}','${toDate}','${value.countryId}','${institute}','${ref}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button" @inactive onclick="deleteForeignTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                        <button type="button"  onclick="fortrainingUpdate( ${value.Id},'${value.trainingTitle}','${fromDate}','${toDate}','${value.countryId}','${institute}','${ref}','${duration}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button type="button"  onclick="deleteForeignTr(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                     </div>
                                 </div>
                             </div>`
@@ -7059,8 +6984,8 @@
                                 <td>${purpose}</td>
                                 <td>${date}</td>
                                 <td class="text-nowrap">
-                                    <button type="button" @inactive onclick="awardUpdate(${v.Id},'${v.awardId}','${v.awardName}','${v.referenceNumber}','${purpose}','${date}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                                    <button type="button" @inactive onclick="deleteAwardInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                    <button type="button"  onclick="awardUpdate(${v.Id},'${v.awardId}','${v.awardName}','${v.referenceNumber}','${purpose}','${date}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                                    <button type="button"  onclick="deleteAwardInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                 </td>
                             </tr>`;
                 dataCard += `<div class="col-12" id="awrdCardId-${v.Id}">
@@ -7075,7 +7000,7 @@
                                         <div><b>Award Date:</b> ${date}</div>
                                     </div>
                                     <div class="card-footer" style="text-align:center;padding: 0;">
-                                        <button @inactive type="button" onclick="awardUpdate(${v.Id},'${v.awardId}','${v.awardName}','${v.referenceNumber}','${purpose}','${date}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button @inactive type="button" onclick="deleteAwardInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                        <button  type="button" onclick="awardUpdate(${v.Id},'${v.awardId}','${v.awardName}','${v.referenceNumber}','${purpose}','${date}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button  type="button" onclick="deleteAwardInfo(${v.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                     </div>
                                 </div>
                             </div>`
@@ -7555,8 +7480,8 @@
                     <td>${refNum}</td >
                     <td>${remarks}</td>
                         <td>
-                         <button type="button" @inactive onclick="promotionUpdate(${value.Id},'${proStDate}','${value.rankId}','${proEdDate}','${remarks}','${refNum}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
-                          <button type="button" @inactive onclick="deletePromotion(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                         <button type="button"  onclick="promotionUpdate(${value.Id},'${proStDate}','${value.rankId}','${proEdDate}','${remarks}','${refNum}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button>
+                          <button type="button"  onclick="deletePromotion(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                        </td>
                         </tr>`
                 promotionCard += `<div class="col-12" id="proDel-${value.Id}">
@@ -7572,7 +7497,7 @@
                                             <div><b>Remarks:</b> ${remarks}</div>
                                         </div>
                                         <div class="card-footer" style="text-align:center;padding: 0;">
-                                            <button type="button" @inactive onclick="promotionUpdate(${value.Id},'${proStDate}','${value.rankId}','${proEdDate}','${remarks}','${refNum}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button @inactive type="button" onclick="deletePromotion(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
+                                            <button type="button"  onclick="promotionUpdate(${value.Id},'${proStDate}','${value.rankId}','${proEdDate}','${remarks}','${refNum}')" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;"><span class="ti-pencil"></span></button> || <button  type="button" onclick="deletePromotion(${value.Id})" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none; margin: 5px;"><span class="ti-trash"></span></button>
                                         </div>
                                     </div>
                                 </div>`
@@ -7842,7 +7767,7 @@
                 data = '';
             }
 
-            var sectionId = '@Model.employeeInfo.sectionId';
+            var sectionId = '@Model?.employeeInfo?.sectionId';
 
             $.each(responce, function (i, v) {
                 if (sectionId == v.Id) {
@@ -7968,7 +7893,7 @@
         $(document).ready(function () {
 
 
-            var country = '@Model.employeeInfo?.countryId'
+            var country = '@Model?.employeeInfo?.countryId'
             if (country != '' || country > 0)
              {
                 $('#DivPhqCountry').show();
@@ -7976,7 +7901,7 @@
                 $('#divTRType').addClass('col-md-4');
              }
 
-            var trtype = '@Model.employeeInfo?.pHQTRTypeId'
+            var trtype = '@Model?.employeeInfo?.pHQTRTypeId'
             if (trtype != '' || trtype > 0)
              {
                 $('#DivPhqTrType').show();
@@ -8046,18 +7971,18 @@
 
             });
 
-            if ('@Model.employeeInfo.Id' > 0) {
-                $('#activityStatus').val('@Model.employeeInfo?.pabx');
-                $('#maritalStatus').val('@Model.employeeInfo.maritalStatus');
-                $('#specialBranchUnitIdFinal').val('@Model.employeeInfo?.branchId');
+            if ('@Model?.employeeInfo?.Id' > 0) {
+                $('#activityStatus').val('@Model?.employeeInfo?.pabx');
+                $('#maritalStatus').val('@Model?.employeeInfo?.maritalStatus');
+                $('#specialBranchUnitIdFinal').val('@Model?.employeeInfo?.branchId');
 
-                //alert('@Model.employeeInfo?.branchId');
-              //  Common.Ajax('GET', '/global/api/GetSpecialBranchUnitById/' + '@Model.employeeInfo?.branchId', [], 'json', ajaxBranchUnit);
-                Common.Ajax('GET', '/MasterData/SpecialBranchUnit/GetSpecialBranchUnit/' + '@Model.employeeInfo?.branchId', [], 'json', ajaxBranchUnit, false);
+                //alert('@Model?.employeeInfo?.branchId');
+              //  Common.Ajax('GET', '/global/api/GetSpecialBranchUnitById/' + '@Model?.employeeInfo?.branchId', [], 'json', ajaxBranchUnit);
+                Common.Ajax('GET', '/MasterData/SpecialBranchUnit/GetSpecialBranchUnit/' + '@Model?.employeeInfo?.branchId', [], 'json', ajaxBranchUnit, false);
 
             }
-            if ('@Model.employeeInfo.sectionId' != null) {
-                $('#postingPlaceId').val('@Model.employeeInfo?.sectionId').trigger('change');
+            if ('@Model?.employeeInfo?.sectionId' != null) {
+                $('#postingPlaceId').val('@Model?.employeeInfo?.sectionId').trigger('change');
             }
             if('@Model.presentAdd?.divisionId' == "")
             {
@@ -8091,7 +8016,7 @@
                 $('#inLowAddCard').hide();
                 $('#inLawAddEdit').show();
             }
-            if('@Model.employeeInfo?.bCSBatchId' == 23)
+            if('@Model?.employeeInfo?.bCSBatchId' == 23)
             {
                 $('#meritPosition').hide();
                 $('#departmentalPromotionYear').show();
@@ -8159,14 +8084,14 @@
                     data = '<option value="">Select</option>';
                 }
 
-                var sectionId= '@Model.employeeInfo.sectionId';
+                var sectionId= '@Model?.employeeInfo?.sectionId';
 
                 $.each(responce, function (i, v) {
                     if (sectionId == v.Id) {
                         data += `<option value="${v.Id}" selected>${v.Name},${v.specialBranchUnit.districts.districtName}</option>`
                         @*if (sectionId == 657) {
                             $("#DivPhqTrType").show();
-                            Common.Ajax('GET', '/global/api/GetPHQTRTypeById/' + '@Model.employeeInfo.sectionId', [], 'json', ajaxPhqTrType);
+                            Common.Ajax('GET', '/global/api/GetPHQTRTypeById/' + '@Model?.employeeInfo?.sectionId', [], 'json', ajaxPhqTrType);
                         } else {
                             $("#DivPhqTrType").hide();
                         }*@
@@ -8570,7 +8495,7 @@
                     var preAdd = $('#preAddList tbody tr')
                     if (parAdd.length == 1 && preAdd.length == 1) {
                         $.ajax({
-                            url: '/Employee/EmployeeInfo/EmployeeInfoConfirmation?id=@Model.employeeInfo.Id',
+                            url: '/Employee/EmployeeInfo/EmployeeInfoConfirmation?id=@Model?.employeeInfo?.Id',
                             type: 'GET',
                             success: function (rec) {
                                 if (rec == "Success") {
@@ -8861,7 +8786,7 @@
 
         $(document).ready(function () {
 
-            var mbranch = '@Model.employeeInfo?.attachmentBranchId'
+            var mbranch = '@Model?.employeeInfo?.attachmentBranchId'
             if (mbranch != '' || mbranch > 0) {
                 $('#MotherUnitTextDiv').show();
                 $('#attachedCheckbox').prop("checked", true);
@@ -8968,9 +8893,9 @@
 
             //})
 
-            if ('@Model.employeeInfo.LPRDate' == '' && '@Model.employeeInfo.dateOfBirth' != '') {
+            if ('@Model?.employeeInfo?.LPRDate' == '' && '@Model?.employeeInfo?.dateOfBirth' != '') {
 
-                var str = '@Model.employeeInfo.dateOfBirth?.ToString("dd-MM-yyyy")';
+                var str = '@Model?.employeeInfo?.dateOfBirth?.ToString("dd-MM-yyyy")';
                 if (/^\d{2}\-\d{2}\-\d{4}$/i.test(str)) {
 
                     var parts = str.split("-");

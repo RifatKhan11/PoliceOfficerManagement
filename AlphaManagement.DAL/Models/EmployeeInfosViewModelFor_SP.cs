@@ -17,7 +17,7 @@ namespace AlphaManagement.DAL.Models
         public string imageUrl { get; set; }
         public int? statusMark { get; set; }
         public int? isApproved { get; set; }
-        public int? gradationSerial { get; set; }
+        //public int? gradationSerial { get; set; }
     }
 
     public class UnitWiseEmployeeInfosViewModelFor_SP

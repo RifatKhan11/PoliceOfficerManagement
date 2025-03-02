@@ -18,7 +18,7 @@
         <thead>
             <tr>
                 <td width="3%">SL. No</td>
-                <td>Photo</td>
+                @* <td>Photo</td> *@
                 <td>Name</td>
                 <td>BP No</td>
                 <td>Rank</td>
@@ -39,14 +39,14 @@
                 {
                     <tr>
                         <td>@i</td>
-                        @if (item.imageUrl == null)
+                        @*@if (item.imageUrl == null)
                         {
                             <td> <img src="~/logo/defaultprofile.jpg" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
                         }
                         else
                         {
                             <td> <img src="@baseImageUrl/@item.imageUrl" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
-                        }
+                        }*@
 
                         <td>@item.nameEnglish</td>
                         <td>@item.employeeCode</td>
@@ -99,9 +99,7 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            //$('#tblTable').DataTable();
-
-
+           
         })
 
 
