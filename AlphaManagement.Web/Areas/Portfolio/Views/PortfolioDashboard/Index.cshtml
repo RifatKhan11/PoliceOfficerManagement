@@ -53,91 +53,7 @@
             <div class="page-head">
                 <h4 class="mt-2 mb-2">Dashboard</h4>
             </div>
-            @* <div class="row">
-                <div class="col-md-12 col-12">
-                    <div class="flexMainBox">
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=0&periodType=All">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4 col-12">
-                                            <div class="text-center"><i class="mdi mdi-account-multiple" style="background:#d8851e"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.totalRegistration?.ToString("0,0")</h2>
-                                            <p class="textStyle">All Employee</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=2&periodType=All">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center text-center">
-                                        <div class="col-md-4 col-12">
-
-                                            <div class="text-center"><i class="mdi mdi-account-settings" style="background:#ef7e82"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.onGoing?.ToString("0,0")</h2>
-                                            <p class="textStyle">On Going</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=3&periodType=All">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4 col-12">
-                                            <div class="text-center"><i class="ti ti-user" style="background:#24cebe"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.finalSubmit?.ToString("0,0")</h2>
-                                            <p class="textStyle">Final Submit</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Employee/EmployeeInfoHistory/AdminCheckedUpdatedEmployeeListForAdmin?id=0">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4 col-12">
-                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#82d9f1"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.checkedItem?.ToString("0,0")</h2>
-                                            <p class="textStyle">Checked Officer's List</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flexDiv">
-                            <a href="/Portfolio/PortfolioDashboard/EmployeeList/?statusId=4&periodType=All">
-                                <div class="widget-box bg-white m-b-30">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-md-4 col-12">
-                                            <div class="text-center"><i class="mdi mdi-account-check" style="background:#51b36f"></i></div>
-                                        </div>
-                                        <div class="col-md-8 col-12">
-                                            <h2 class="m-0 counter textStyle">@Model.varified?.ToString("0,0")</h2>
-                                            <p class="textStyle">Verified</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-            </div> *@
-             
-
+            
 
             <div class="row">
                 <div class="col-lg-8 col-sm-12 col-12">
@@ -236,8 +152,7 @@
                                             <thead>
                                                 <tr>
                                                     <td>SL.NO</td>
-                                                    @* <td>Gradation</td> *@
-                                                    @* <td>Photo</td> *@
+                                                   
                                                     <td>Name</td>
                                                     <td>BP No</td>
                                                     <td>Rank</td>
@@ -259,72 +174,14 @@
                                                     {
                                                 <tr>
                                                     <td>@i</td>
-                                                    @*<td>@item.gradationSerial</td>
-                                                            @if (item.imageUrl == null)
-                                                    {
-                                                        <td> <img src="~/logo/defaultprofile.jpg" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td> <img src="@baseImageUrl/@item.imageUrl" style="width:70px;height:70px" class="img-fluid" alt="" /></td>
-                                                    } *@
+                                                    
                                                     <td>@item.nameEnglish</td>
                                                     <td>@item.employeeCode</td>
                                                     <td>@item.rankName</td>
                                                     <td>@item.sectionName</td>
                                                     <td>@item.batchName</td>
 
-                                                    @*<td>
-                                                        @if (item.isApproved == 1)
-                                                        {
-                                                            currentStaus = "Registered";
-                                                            currentStausColor = "gray";
-                                                        }
-                                                        else if (item.isApproved == 2)
-                                                        {
-                                                            currentStaus = "On Going";
-                                                            currentStausColor = "#0094ff";
-                                                        }
-                                                        else if (item.isApproved == 3)
-                                                        {
-                                                            currentStaus = "Final Submited";
-                                                            currentStausColor = "#1d9414";
-                                                        }
-                                                        else if (item.isApproved == 4)
-                                                        {
-                                                            currentStaus = "Verified";
-                                                            currentStausColor = "#ff00dc";
-                                                        }
-                                                        else if (item.isApproved == 5)
-                                                        {
-                                                            currentStaus = "Returned";
-                                                            currentStausColor = "#ffd800";
-                                                        }
-                                                        else if (item.isApproved == 6)
-                                                        {
-                                                            currentStaus = "Checked By Checker";
-                                                            currentStausColor = "#ff006e";
-                                                        }
-                                                        else if (item.isApproved == 7)
-                                                        {
-                                                            currentStaus = "Checked By Editor";
-                                                            currentStausColor = "#b6ff00";
-                                                        }
-                                                        else if (item.isApproved == 8)
-                                                        {
-                                                            currentStaus = "Verify By Checker";
-                                                            currentStausColor = "#934a03";
-                                                        }
-                                                        else
-                                                        {
-                                                            currentStaus = "On Going";
-                                                            currentStausColor = "#0094ff";
-                                                        }
-                                                        <div class="" style="width:100%; background-color:@currentStausColor;border-radius:5px;">
-                                                            <div style="text-align:center; color:ghostwhite" role="progressbar">@currentStaus</div>
-                                                        </div>
-
-                                                    </td>*@
+                                                    
 
                                                     @if (item.statusMark >= 70)
                                                     {
